@@ -9,8 +9,8 @@ class RouteGenerator {
     switch(settings.name) {
       case 'login':
         return MaterialPageRoute(builder: (_) => Login());
-      case 'dashboard':
-        return MaterialPageRoute(builder: (_) => Dashboard());
+      // case 'dashboard':
+      //   return MaterialPageRoute(builder: (_) => Dashboard());
       
       default:
         return _errorRoute();

@@ -1,11 +1,15 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/models/auth/jwt_model.dart';
+import 'package:foosball_mobile_app/models/other/dashboar_param.dart';
 import 'package:foosball_mobile_app/route_generator.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:foosball_mobile_app/state/user_state.dart';
+import 'package:foosball_mobile_app/widgets/Dashboard.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
+final userState = UserState(); // Instantiate the store
 
 class MyHttpOverrides extends HttpOverrides{
   @override
@@ -37,10 +41,10 @@ void main() async {
       exp: decodedToken["exp"], 
       iat: decodedToken["iat"]
     );
-    // Maybe we can put the id and organisationId into some kind of state management here
-
-    // <--
-
+    // Putting userid and currentOrganisationId to mobx store
+    userState.setUserId(int.parse(jwtObject.name));
+    userState.setCurrentOrganisationId(int.parse(jwtObject.currentOrganisationId));
+  
     bool isTokenExpired = JwtDecoder.isExpired(token);
     if (isTokenExpired == false) {
       theRoute = 'dashboard';
@@ -59,6 +63,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  DashboardParam param = DashboardParam(data: '', userState: userState);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -67,6 +72,9 @@ class _MyAppState extends State<MyApp> {
         backgroundColor: Colors.white
       ),
       initialRoute: widget.initialRoute,
+      routes: {
+        'dashboard': (context) => Dashboard(param: param),
+      },
       onGenerateRoute: RouteGenerator.generateRoute,
     );
   }

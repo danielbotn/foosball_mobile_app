@@ -27,6 +27,12 @@ class _LoginState extends State<Login> {
   Duration get loginTime => Duration(milliseconds: 2250);
 
   Future<String?> _authUser(LoginData data) async {
+    final storage = new FlutterSecureStorage();
+    String? value = await storage.read(key: "jwt_token");
+    if (value != null) {
+      await storage.delete(key: "jwt_token");
+    }
+
     String? baseUrl = kReleaseMode ? dotenv.env['REST_URL_PATH_PROD'] : dotenv.env['REST_URL_PATH_DEV'];
     if (baseUrl != null) {
       var url = Uri.parse(baseUrl + '/api/Auth/login');
@@ -46,7 +52,6 @@ class _LoginState extends State<Login> {
       }
       else {
         var loginResponse = LoginResponse.fromJson(jsonDecode(response.body));
-        final storage = new FlutterSecureStorage();
         await storage.write(key: "jwt_token", value: loginResponse.token);
 
         return null;
@@ -79,7 +84,6 @@ class _LoginState extends State<Login> {
       onSignup: _authUser,
       onRecoverPassword: _recoverPassword,
       onSubmitAnimationCompleted: () {
-        print('Response status: danni ====== ');
         Navigator.of(context).pushNamed('dashboard');
       },
     );
