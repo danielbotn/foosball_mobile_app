@@ -8,7 +8,9 @@ import 'package:foosball_mobile_app/state/user_state.dart';
 class DashboardMatchesChart extends StatefulWidget {
   final UserState userState;
   final UserStatsResponse? userStatsResponse;
-  DashboardMatchesChart({Key? key, required this.userState, required this.userStatsResponse}) : super(key: key);
+  DashboardMatchesChart(
+      {Key? key, required this.userState, required this.userStatsResponse})
+      : super(key: key);
 
   @override
   _DashboardMatchesChartState createState() => _DashboardMatchesChartState();
@@ -17,29 +19,29 @@ class DashboardMatchesChart extends StatefulWidget {
 class _DashboardMatchesChartState extends State<DashboardMatchesChart> {
   //state
   List<MatchesChart> data = [];
- 
+
   _setChartData() {
     data = [
-    MatchesChart(
-      name: "Matches",
-      matches: this.widget.userStatsResponse!.totalMatches,
-      barColor: charts.ColorUtil.fromDartColor(Colors.blue),
-    ),
-    MatchesChart(
-      name: "Won",
-      matches: this.widget.userStatsResponse!.totalMatchesWon,
-      barColor: charts.ColorUtil.fromDartColor(Colors.green),
-    ),
-    MatchesChart(
-      name: "Lost",
-      matches: this.widget.userStatsResponse!.totalMatchesLost,
-      barColor: charts.ColorUtil.fromDartColor(Colors.red),
-    )
-  ];
+      MatchesChart(
+        name: "Matches",
+        matches: this.widget.userStatsResponse!.totalMatches,
+        barColor: charts.ColorUtil.fromDartColor(Colors.blue),
+      ),
+      MatchesChart(
+        name: "Won",
+        matches: this.widget.userStatsResponse!.totalMatchesWon,
+        barColor: charts.ColorUtil.fromDartColor(Colors.green),
+      ),
+      MatchesChart(
+        name: "Lost",
+        matches: this.widget.userStatsResponse!.totalMatchesLost,
+        barColor: charts.ColorUtil.fromDartColor(Colors.red),
+      )
+    ];
   }
 
   @override
-  void initState()  {
+  void initState() {
     super.initState();
     print('testing: ' + this.widget.userStatsResponse!.totalMatches.toString());
     _setChartData();
@@ -49,12 +51,11 @@ class _DashboardMatchesChartState extends State<DashboardMatchesChart> {
   Widget build(BuildContext context) {
     List<charts.Series<MatchesChart, String>> series = [
       charts.Series(
-        id: "developers",
-        data: data,
-        domainFn: (MatchesChart series, _) => series.name,
-        measureFn: (MatchesChart series, _) => series.matches,
-        colorFn: (MatchesChart series, _) => series.barColor
-      )
+          id: "developers",
+          data: data,
+          domainFn: (MatchesChart series, _) => series.name,
+          measureFn: (MatchesChart series, _) => series.matches,
+          colorFn: (MatchesChart series, _) => series.barColor)
     ];
 
     return Container(
