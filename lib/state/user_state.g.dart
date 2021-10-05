@@ -41,6 +41,21 @@ mixin _$UserState on _UserState, Store {
     });
   }
 
+  final _$tokenAtom = Atom(name: '_UserState.token');
+
+  @override
+  String get token {
+    _$tokenAtom.reportRead();
+    return super.token;
+  }
+
+  @override
+  set token(String value) {
+    _$tokenAtom.reportWrite(value, super.token, () {
+      super.token = value;
+    });
+  }
+
   final _$_UserStateActionController = ActionController(name: '_UserState');
 
   @override
@@ -66,10 +81,22 @@ mixin _$UserState on _UserState, Store {
   }
 
   @override
+  void setToken(String pToken) {
+    final _$actionInfo =
+        _$_UserStateActionController.startAction(name: '_UserState.setToken');
+    try {
+      return super.setToken(pToken);
+    } finally {
+      _$_UserStateActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 userId: ${userId},
-currentOrganisationId: ${currentOrganisationId}
+currentOrganisationId: ${currentOrganisationId},
+token: ${token}
     ''';
   }
 }

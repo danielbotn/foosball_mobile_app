@@ -14,6 +14,9 @@ abstract class _UserState with Store {
   @observable
   int currentOrganisationId = 0;
 
+  @observable
+  String token = "";
+
   @action
   void setUserId(int pUserId) {
     userId = pUserId;
@@ -22,5 +25,10 @@ abstract class _UserState with Store {
   @action
   void setCurrentOrganisationId(int pcurrentOrganisationId) {
     currentOrganisationId = pcurrentOrganisationId;
+  }
+
+  @action
+  void setToken(String pToken) {
+    token = pToken;
   }
 }

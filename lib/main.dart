@@ -5,7 +5,7 @@ import 'package:foosball_mobile_app/models/other/dashboar_param.dart';
 import 'package:foosball_mobile_app/route_generator.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
-import 'package:foosball_mobile_app/widgets/Dashboard.dart';
+import 'package:foosball_mobile_app/widgets/dashboard.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -44,6 +44,7 @@ void main() async {
     // Putting userid and currentOrganisationId to mobx store
     userState.setUserId(int.parse(jwtObject.name));
     userState.setCurrentOrganisationId(int.parse(jwtObject.currentOrganisationId));
+    userState.setToken(token);
   
     bool isTokenExpired = JwtDecoder.isExpired(token);
     if (isTokenExpired == false) {

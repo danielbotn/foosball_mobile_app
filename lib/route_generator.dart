@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:foosball_mobile_app/widgets/Dashboard.dart';
-import 'package:foosball_mobile_app/widgets/Login.dart';
+import 'package:foosball_mobile_app/widgets/login.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
