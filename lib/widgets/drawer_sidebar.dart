@@ -15,6 +15,7 @@ class DrawerSideBar extends StatelessWidget {
         child: ListView(
           // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
+          
           children: [
             const DrawerHeader(
               decoration: BoxDecoration(

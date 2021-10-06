@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:foosball_mobile_app/api/User.dart';
 import 'package:foosball_mobile_app/models/charts/user_stats_response.dart';
 import 'package:foosball_mobile_app/models/other/dashboar_param.dart';
+import 'package:foosball_mobile_app/widgets/dashboard_goals_chart.dart';
 import 'package:foosball_mobile_app/widgets/dashboard_matches_chart.dart';
 import 'drawer_sidebar.dart';
 import 'package:flutter/foundation.dart';
@@ -54,21 +55,28 @@ class _DashboardState extends State<Dashboard> {
     return MaterialApp(
         title: 'Dashboard',
         home: Scaffold(
-          appBar: AppBar(title: Text('$firstName' + ' $lastName')),
+          appBar: AppBar(
+            title: Text('$firstName' + ' $lastName',
+                style: TextStyle(color: Colors.green[500])),
+            iconTheme: IconThemeData(color: Colors.grey[700]),
+            backgroundColor: Colors.white,
+          ),
           drawer: DrawerSideBar(userState: widget.param.userState),
           body: FutureBuilder(
             future: user.getUserStats(),
             builder: (context, AsyncSnapshot<UserStatsResponse> snapshot) {
               if (snapshot.hasData) {
-                return GridView.count(
-                  primary: false,
-                  padding: const EdgeInsets.all(20),
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                  crossAxisCount: 1,
+                return Column(
                   children: <Widget>[
                     Container(
+                      height: 200,
                       child: DashboardMatchesChart(
+                          userState: widget.param.userState,
+                          userStatsResponse: snapshot.data),
+                    ),
+                    Container(
+                      height: 200,
+                      child: DashboardGoalsChart(
                           userState: widget.param.userState,
                           userStatsResponse: snapshot.data),
                     ),

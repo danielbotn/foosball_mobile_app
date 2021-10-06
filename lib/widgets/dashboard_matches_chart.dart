@@ -19,7 +19,7 @@ class DashboardMatchesChart extends StatefulWidget {
 class _DashboardMatchesChartState extends State<DashboardMatchesChart> {
   //state
   List<MatchesChart> data = [];
-
+  Color dude = Colors.pink[50] as Color;
   _setChartData() {
     data = [
       MatchesChart(
@@ -35,7 +35,7 @@ class _DashboardMatchesChartState extends State<DashboardMatchesChart> {
       MatchesChart(
         name: "Lost",
         matches: this.widget.userStatsResponse!.totalMatchesLost,
-        barColor: charts.ColorUtil.fromDartColor(Colors.red),
+        barColor: charts.ColorUtil.fromDartColor(Colors.pink),
       )
     ];
   }
@@ -59,11 +59,10 @@ class _DashboardMatchesChartState extends State<DashboardMatchesChart> {
     ];
 
     return Container(
-      height: 300,
-      padding: EdgeInsets.all(25),
+      padding: EdgeInsets.all(0),
       child: Card(
         child: Padding(
-          padding: const EdgeInsets.all(9.0),
+          padding: const EdgeInsets.all(2.0),
           child: Column(
             children: <Widget>[
               Text(
