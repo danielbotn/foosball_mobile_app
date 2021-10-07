@@ -5,37 +5,32 @@ import 'package:foosball_mobile_app/models/charts/user_stats_response.dart';
 import 'package:foosball_mobile_app/models/charts/matches_chart.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 
-class DashboardMatchesChart extends StatefulWidget {
+class DashboardMatchesPieChart extends StatefulWidget {
   final UserState userState;
   final UserStatsResponse? userStatsResponse;
-  DashboardMatchesChart(
+  DashboardMatchesPieChart(
       {Key? key, required this.userState, required this.userStatsResponse})
       : super(key: key);
 
   @override
-  _DashboardMatchesChartState createState() => _DashboardMatchesChartState();
+  _DashboardMatchesPieChartState createState() => _DashboardMatchesPieChartState();
 }
 
-class _DashboardMatchesChartState extends State<DashboardMatchesChart> {
+class _DashboardMatchesPieChartState extends State<DashboardMatchesPieChart> {
   //state
   List<MatchesChart> data = [];
   Color dude = Colors.pink[50] as Color;
   _setChartData() {
     data = [
       MatchesChart(
-        name: "Matches",
-        matches: this.widget.userStatsResponse!.totalMatches,
-        barColor: charts.ColorUtil.fromDartColor(Color.fromRGBO(255,136,0, .9)),
-      ),
-      MatchesChart(
         name: "Won",
         matches: this.widget.userStatsResponse!.totalMatchesWon,
-       barColor: charts.ColorUtil.fromDartColor(Color.fromRGBO(127,211,29, .9)),
+        barColor: charts.ColorUtil.fromDartColor(Colors.green[400] as Color),
       ),
       MatchesChart(
         name: "Lost",
         matches: this.widget.userStatsResponse!.totalMatchesLost,
-        barColor: charts.ColorUtil.fromDartColor(Color.fromRGBO(112,193,255, .9)),
+        barColor: charts.ColorUtil.fromDartColor(Colors.pink),
       )
     ];
   }
@@ -70,7 +65,7 @@ class _DashboardMatchesChartState extends State<DashboardMatchesChart> {
                 style: Theme.of(context).textTheme.bodyText1,
               ),
               Expanded(
-                child: charts.BarChart(series, animate: true),
+                child: charts.PieChart(series, animate: true),
               )
             ],
           ),

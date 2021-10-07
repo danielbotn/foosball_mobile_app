@@ -25,12 +25,12 @@ class _DashboardGoalsChartState extends State<DashboardGoalsChart> {
       GoalsChart(
         name: "Scored",
         goals: this.widget.userStatsResponse!.totalGoalsScored,
-        barColor: charts.ColorUtil.fromDartColor(Colors.green),
+        barColor: charts.ColorUtil.fromDartColor(Color.fromRGBO(127,211,29, .9)),
       ),
       GoalsChart(
         name: "Recieved",
         goals: this.widget.userStatsResponse!.totalGoalsReceived,
-        barColor: charts.ColorUtil.fromDartColor(Colors.red),
+        barColor: charts.ColorUtil.fromDartColor(Color.fromRGBO(112,193,255, .9)),
       )
     ];
   }
@@ -53,10 +53,10 @@ class _DashboardGoalsChartState extends State<DashboardGoalsChart> {
     ];
 
     return Container(
-      padding: EdgeInsets.all(5),
+      padding: EdgeInsets.all(0),
       child: Card(
         child: Padding(
-          padding: const EdgeInsets.all(9.0),
+          padding: const EdgeInsets.all(2.0),
           child: Column(
             children: <Widget>[
               Text(

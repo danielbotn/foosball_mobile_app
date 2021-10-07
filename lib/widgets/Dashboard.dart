@@ -20,6 +20,7 @@ class _DashboardState extends State<Dashboard> {
   // State
   String firstName = "";
   String lastName = "";
+  String email = "";
   UserStatsResponse userStatsResponse = UserStatsResponse(
       userId: 0,
       totalMatches: 0,
@@ -39,6 +40,7 @@ class _DashboardState extends State<Dashboard> {
       setState(() {
         firstName = value.firstName;
         lastName = value.lastName;
+        email = value.email;
       });
     });
 
@@ -56,8 +58,6 @@ class _DashboardState extends State<Dashboard> {
         title: 'Dashboard',
         home: Scaffold(
           appBar: AppBar(
-            title: Text('$firstName' + ' $lastName',
-                style: TextStyle(color: Colors.green[500])),
             iconTheme: IconThemeData(color: Colors.grey[700]),
             backgroundColor: Colors.white,
           ),
@@ -68,17 +68,34 @@ class _DashboardState extends State<Dashboard> {
               if (snapshot.hasData) {
                 return Column(
                   children: <Widget>[
-                    Container(
-                      height: 200,
-                      child: DashboardMatchesChart(
-                          userState: widget.param.userState,
-                          userStatsResponse: snapshot.data),
+                     Card(
+                      elevation: 5,
+                      child: ListTile(
+                        leading: Icon(Icons.email, color: Colors.grey),
+                        title: Text('$firstName' + ' $lastName'),
+                        subtitle: Text('$email'),
+                        trailing: Icon(Icons.food_bank),
+                      ),
                     ),
-                    Container(
-                      height: 200,
-                      child: DashboardGoalsChart(
-                          userState: widget.param.userState,
-                          userStatsResponse: snapshot.data),
+                    Row(
+                      children: <Widget>[
+                        Expanded(
+                            flex: 1,
+                            child: Container(
+                              height: 200,
+                              child: DashboardMatchesChart(
+                                  userState: widget.param.userState,
+                                  userStatsResponse: snapshot.data),
+                            )),
+                        Expanded(
+                            flex: 1,
+                            child: Container(
+                              height: 200,
+                              child: DashboardGoalsChart(
+                                  userState: widget.param.userState,
+                                  userStatsResponse: snapshot.data),
+                            )),
+                      ],
                     ),
                   ],
                 );
