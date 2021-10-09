@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:foosball_mobile_app/api/Organisation.dart';
 import 'package:foosball_mobile_app/api/User.dart';
 import 'package:foosball_mobile_app/models/charts/user_stats_response.dart';
+import 'package:foosball_mobile_app/models/organisation/organisation_response.dart';
 import 'package:foosball_mobile_app/models/other/dashboar_param.dart';
 import 'package:foosball_mobile_app/widgets/dashboard_goals_chart.dart';
 import 'package:foosball_mobile_app/widgets/dashboard_matches_chart.dart';
@@ -23,6 +26,7 @@ class _DashboardState extends State<Dashboard> {
   String firstName = "";
   String lastName = "";
   String email = "";
+  String organisationName = "";
   UserStatsResponse userStatsResponse = UserStatsResponse(
       userId: 0,
       totalMatches: 0,
@@ -30,6 +34,7 @@ class _DashboardState extends State<Dashboard> {
       totalMatchesLost: 0,
       totalGoalsScored: 0,
       totalGoalsReceived: 0);
+  late Future<UserStatsResponse> userStatsFuture;
 
   @override
   void initState() {
@@ -47,20 +52,30 @@ class _DashboardState extends State<Dashboard> {
       });
     });
 
-    user.getUserStats().then((value) {
-      setState(() {
-        userStatsResponse = value;
-      });
+    userStatsFuture = getUserStatsData();
+  }
 
-      int organisationId = this.widget.param.userState.currentOrganisationId;
+  // To do put functions here
+  Future<UserStatsResponse> getUserStatsData() async {
+    String token = this.widget.param.userState.token;
+    User user = new User(token: token);
+    Organisation organisation = new Organisation(token: token);
+    var userStatsData = await user.getUserStats();
+    userStatsResponse = userStatsData;
+     int organisationId = this.widget.param.userState.currentOrganisationId;
       organisation.getOrganisationById(organisationId).then((value) {
         if (value.statusCode == 200) {
           print('200 success');
+           var organisationResponse = OrganisationResponse.fromJson(jsonDecode(value.body));
+           setState(() {
+             organisationName = organisationResponse.name;
+          });
         } else {
           print('some error has accoured');
         }
       });
-    });
+    
+    return userStatsData;
   }
 
   @override
@@ -75,7 +90,7 @@ class _DashboardState extends State<Dashboard> {
           ),
           drawer: DrawerSideBar(userState: widget.param.userState),
           body: FutureBuilder(
-            future: user.getUserStats(),
+            future: userStatsFuture,
             builder: (context, AsyncSnapshot<UserStatsResponse> snapshot) {
               if (snapshot.hasData) {
                 return Column(
@@ -86,7 +101,7 @@ class _DashboardState extends State<Dashboard> {
                         leading: Icon(Icons.email, color: Colors.grey),
                         title: Text('$firstName' + ' $lastName'),
                         subtitle: Text('$email'),
-                        trailing: Icon(Icons.food_bank),
+                        trailing: Text('$organisationName'),
                       ),
                     ),
                     Row(
