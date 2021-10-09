@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:foosball_mobile_app/api/Organisation.dart';
 import 'package:foosball_mobile_app/api/User.dart';
 import 'package:foosball_mobile_app/models/charts/user_stats_response.dart';
 import 'package:foosball_mobile_app/models/other/dashboar_param.dart';
@@ -36,7 +37,8 @@ class _DashboardState extends State<Dashboard> {
     String token = this.widget.param.userState.token;
     String userId = this.widget.param.userState.userId.toString();
     User user = new User(token: token);
-    
+    Organisation organisation = new Organisation(token: token);
+
     user.getUser(userId).then((value) {
       setState(() {
         firstName = value.firstName;
@@ -48,6 +50,15 @@ class _DashboardState extends State<Dashboard> {
     user.getUserStats().then((value) {
       setState(() {
         userStatsResponse = value;
+      });
+
+      int organisationId = this.widget.param.userState.currentOrganisationId;
+      organisation.getOrganisationById(organisationId).then((value) {
+        if (value.statusCode == 200) {
+          print('200 success');
+        } else {
+          print('some error has accoured');
+        }
       });
     });
   }
