@@ -1,6 +1,9 @@
 
+import 'package:foosball_mobile_app/models/auth/jwt_model.dart';
 import 'package:foosball_mobile_app/models/auth/login_response.dart';
 import 'package:foosball_mobile_app/models/auth/error_response.dart';
+import 'package:foosball_mobile_app/models/other/dashboar_param.dart';
+import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -9,6 +12,7 @@ import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/foundation.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 
 const users = const {
   'dribbble@gmail.com': '12345',
@@ -16,14 +20,17 @@ const users = const {
 };
 
 class Login extends StatefulWidget {
-  Login({Key? key}) : super(key: key);
+  //props
+  final UserState userState;
+  Login({Key? key, required this.userState}) : super(key: key);
 
   @override
   _LoginState createState() => _LoginState();
 }
 
 class _LoginState extends State<Login> {
-
+  // State
+  late DashboardParam dashboardData;
   Duration get loginTime => Duration(milliseconds: 2250);
 
   Future<String?> _authUser(LoginData data) async {
@@ -53,14 +60,25 @@ class _LoginState extends State<Login> {
       else {
         var loginResponse = LoginResponse.fromJson(jsonDecode(response.body));
         await storage.write(key: "jwt_token", value: loginResponse.token);
-
+        UserState dude = new UserState();
+        Map<String, dynamic> decodedToken = JwtDecoder.decode(loginResponse.token);
+        JwtModel jwtObject = new JwtModel(
+          name: decodedToken["name"], 
+          currentOrganisationId: decodedToken["CurrentOrganisationId"], 
+          nbf: decodedToken["nbf"], 
+          exp: decodedToken["exp"], 
+          iat: decodedToken["iat"]
+        );
+        this.widget.userState.setUserId(loginResponse.id);
+        this.widget.userState.setCurrentOrganisationId(int.parse(jwtObject.currentOrganisationId));
+        this.widget.userState.setToken(loginResponse.token);
+        dashboardData = DashboardParam(data: 'gaur', userState: this.widget.userState);
         return null;
       }
     }
   }
 
   Future<String> _recoverPassword(String name) {
-    print('Name: $name');
     return Future.delayed(loginTime).then((_) {
       if (!users.containsKey(name)) {
         return 'User not exists';
@@ -84,7 +102,11 @@ class _LoginState extends State<Login> {
       onSignup: _authUser,
       onRecoverPassword: _recoverPassword,
       onSubmitAnimationCompleted: () {
-        Navigator.of(context).pushNamed('dashboard');
+        Navigator.pushNamed(
+          context,
+          'dashboard',
+          arguments: dashboardData,
+        );
       },
     );
   }

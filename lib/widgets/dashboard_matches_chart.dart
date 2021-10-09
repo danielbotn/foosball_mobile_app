@@ -30,7 +30,7 @@ class _DashboardMatchesChartState extends State<DashboardMatchesChart> {
       MatchesChart(
         name: "Won",
         matches: this.widget.userStatsResponse!.totalMatchesWon,
-       barColor: charts.ColorUtil.fromDartColor(Color.fromRGBO(127,211,29, .9)),
+        barColor: charts.ColorUtil.fromDartColor(Color.fromRGBO(127,211,29, .9)),
       ),
       MatchesChart(
         name: "Lost",

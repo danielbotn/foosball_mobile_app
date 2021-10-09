@@ -10,7 +10,8 @@ import 'package:flutter/foundation.dart';
 
 class Dashboard extends StatefulWidget {
   final DashboardParam param;
-  Dashboard({Key? key, required this.param}) : super(key: key);
+  final String danni;
+  Dashboard({Key? key, required this.param, required this.danni}) : super(key: key);
 
   @override
   _DashboardState createState() => _DashboardState();
@@ -35,7 +36,7 @@ class _DashboardState extends State<Dashboard> {
     String token = this.widget.param.userState.token;
     String userId = this.widget.param.userState.userId.toString();
     User user = new User(token: token);
-
+    
     user.getUser(userId).then((value) {
       setState(() {
         firstName = value.firstName;
@@ -69,7 +70,7 @@ class _DashboardState extends State<Dashboard> {
                 return Column(
                   children: <Widget>[
                      Card(
-                      elevation: 5,
+                      // elevation: 5,
                       child: ListTile(
                         leading: Icon(Icons.email, color: Colors.grey),
                         title: Text('$firstName' + ' $lastName'),
