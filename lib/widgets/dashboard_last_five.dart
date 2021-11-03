@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/api/User.dart';
 import 'package:foosball_mobile_app/models/user/user_last_ten.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
+import 'loading.dart';
 
 class DashBoardLastFive extends StatefulWidget {
   DashBoardLastFive({Key? key, required this.userState}) : super(key: key);
@@ -61,10 +62,10 @@ class _DashBoardLastFiveState extends State<DashBoardLastFive> {
 
   Color? getColorOfMatch(UserLastTen userLastTenObject) {
     Color? result;
-    if (userLastTenObject.userScore > userLastTenObject.opponentUserOrTeamScore) {
+    if (userLastTenObject.userScore >
+        userLastTenObject.opponentUserOrTeamScore) {
       result = Colors.green[400];
-    }
-    else {
+    } else {
       result = Colors.red[400];
     }
     return result;
@@ -84,14 +85,16 @@ class _DashBoardLastFiveState extends State<DashBoardLastFive> {
               String headline = getHeadline(lastTenMatches![index]);
               String score = getScore(lastTenMatches![index]);
               Color? colorOfMatch = getColorOfMatch(lastTenMatches![index]);
-              String formattedDate = DateFormat('dd-MM-yyyy | kk:mm').format(lastTenMatches![index].dateOfGame);
+              String formattedDate = DateFormat('dd-MM-yyyy | kk:mm')
+                  .format(lastTenMatches![index].dateOfGame);
+              String wonOrLostSymbol =
+                  colorOfMatch == Colors.green[400] ? 'W' : 'L';
+
               return Card(
-                // elevation: 6,
-                // margin: EdgeInsets.all(10),
                 child: ListTile(
                     leading: CircleAvatar(
                       child: Text(
-                        "L",
+                        wonOrLostSymbol,
                         style: TextStyle(
                           color: Colors.white,
                         ),
@@ -105,7 +108,7 @@ class _DashBoardLastFiveState extends State<DashBoardLastFive> {
             },
           ));
         } else {
-          return Text('Loading...');
+          return Loading();
         }
       },
     ));

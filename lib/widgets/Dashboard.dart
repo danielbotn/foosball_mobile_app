@@ -14,6 +14,8 @@ import 'package:foosball_mobile_app/widgets/headline.dart';
 import 'drawer_sidebar.dart';
 import 'package:flutter/foundation.dart';
 
+import 'loading.dart';
+
 class Dashboard extends StatefulWidget {
   final DashboardParam param;
   final String danni;
@@ -137,7 +139,7 @@ class _DashboardState extends State<Dashboard> {
                   ],
                 );
               } else {
-                return Text('Loading...');
+                return Loading();
               }
             },
           ),
