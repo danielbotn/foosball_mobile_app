@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:foosball_mobile_app/api/Organisation.dart';
@@ -8,7 +7,10 @@ import 'package:foosball_mobile_app/models/charts/user_stats_response.dart';
 import 'package:foosball_mobile_app/models/organisation/organisation_response.dart';
 import 'package:foosball_mobile_app/models/other/dashboar_param.dart';
 import 'package:foosball_mobile_app/widgets/dashboard_goals_chart.dart';
+import 'package:foosball_mobile_app/widgets/dashboard_last_five.dart';
 import 'package:foosball_mobile_app/widgets/dashboard_matches_chart.dart';
+import 'package:foosball_mobile_app/widgets/dashboard_quick_actions.dart';
+import 'package:foosball_mobile_app/widgets/headline.dart';
 import 'drawer_sidebar.dart';
 import 'package:flutter/foundation.dart';
 
@@ -124,6 +126,14 @@ class _DashboardState extends State<Dashboard> {
                             )),
                       ],
                     ),
+                    Headline(headline: "Quick Actions"),
+                    QuicActions(),
+                    Headline(headline: "Last Ten matches"),
+                    Expanded(
+                      flex: 1,
+                      child: DashBoardLastFive(userState: this.widget.param.userState,)
+                    )
+                    
                   ],
                 );
               } else {
