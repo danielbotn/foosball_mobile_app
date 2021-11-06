@@ -54,6 +54,8 @@ class _DashboardState extends State<Dashboard> {
         lastName = value.lastName;
         email = value.email;
       });
+      // Set user information to global state??
+      this.widget.param.userState.setUserInfoGlobalObject(int.parse(userId), value.firstName, value.lastName, value.email, value.currentOrganisationId);
     });
 
     userStatsFuture = getUserStatsData();
