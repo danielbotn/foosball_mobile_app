@@ -38,7 +38,6 @@ class _DashboardMatchesPieChartState extends State<DashboardMatchesPieChart> {
   @override
   void initState() {
     super.initState();
-    print('testing: ' + this.widget.userStatsResponse!.totalMatches.toString());
     _setChartData();
   }
 

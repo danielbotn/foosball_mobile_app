@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:foosball_mobile_app/api/Dato_CMS.dart';
 import 'package:foosball_mobile_app/api/Organisation.dart';
 import 'package:foosball_mobile_app/api/User.dart';
 import 'package:foosball_mobile_app/models/charts/user_stats_response.dart';
@@ -19,7 +20,8 @@ import 'loading.dart';
 class Dashboard extends StatefulWidget {
   final DashboardParam param;
   final String danni;
-  Dashboard({Key? key, required this.param, required this.danni}) : super(key: key);
+  Dashboard({Key? key, required this.param, required this.danni})
+      : super(key: key);
 
   @override
   _DashboardState createState() => _DashboardState();
@@ -46,7 +48,14 @@ class _DashboardState extends State<Dashboard> {
     String token = this.widget.param.userState.token;
     String userId = this.widget.param.userState.userId.toString();
     User user = new User(token: token);
-    Organisation organisation = new Organisation(token: token);
+    DatoCMS datoCMS = new DatoCMS(token: token);
+
+    datoCMS.getHardcodedStrings("is").then((value) {
+     if (value != null) {
+       // hardcoded strings put into global state
+       this.widget.param.userState.setHardcodedStrings(value);
+     }
+    });
 
     user.getUser(userId).then((value) {
       setState(() {
@@ -55,7 +64,12 @@ class _DashboardState extends State<Dashboard> {
         email = value.email;
       });
       // Set user information to global state??
-      this.widget.param.userState.setUserInfoGlobalObject(int.parse(userId), value.firstName, value.lastName, value.email, value.currentOrganisationId);
+      this.widget.param.userState.setUserInfoGlobalObject(
+          int.parse(userId),
+          value.firstName,
+          value.lastName,
+          value.email,
+          value.currentOrganisationId);
     });
 
     userStatsFuture = getUserStatsData();
@@ -68,19 +82,19 @@ class _DashboardState extends State<Dashboard> {
     Organisation organisation = new Organisation(token: token);
     var userStatsData = await user.getUserStats();
     userStatsResponse = userStatsData;
-     int organisationId = this.widget.param.userState.currentOrganisationId;
-      organisation.getOrganisationById(organisationId).then((value) {
-        if (value.statusCode == 200) {
-          print('200 success');
-           var organisationResponse = OrganisationResponse.fromJson(jsonDecode(value.body));
-           setState(() {
-             organisationName = organisationResponse.name;
-          });
-        } else {
-          print('some error has accoured');
-        }
-      });
-    
+    int organisationId = this.widget.param.userState.currentOrganisationId;
+    organisation.getOrganisationById(organisationId).then((value) {
+      if (value.statusCode == 200) {
+        var organisationResponse =
+            OrganisationResponse.fromJson(jsonDecode(value.body));
+        setState(() {
+          organisationName = organisationResponse.name;
+        });
+      } else {
+        print('some error has accoured');
+      }
+    });
+
     return userStatsData;
   }
 
@@ -101,7 +115,7 @@ class _DashboardState extends State<Dashboard> {
               if (snapshot.hasData) {
                 return Column(
                   children: <Widget>[
-                     Card(
+                    Card(
                       // elevation: 5,
                       child: ListTile(
                         leading: Icon(Icons.email, color: Colors.grey),
@@ -134,10 +148,10 @@ class _DashboardState extends State<Dashboard> {
                     QuicActions(),
                     Headline(headline: "Last Ten matches"),
                     Expanded(
-                      flex: 1,
-                      child: DashBoardLastFive(userState: this.widget.param.userState,)
-                    )
-                    
+                        flex: 1,
+                        child: DashBoardLastFive(
+                          userState: this.widget.param.userState,
+                        ))
                   ],
                 );
               } else {

@@ -43,7 +43,6 @@ class _DashboardMatchesChartState extends State<DashboardMatchesChart> {
   @override
   void initState() {
     super.initState();
-    print('testing: ' + this.widget.userStatsResponse!.totalMatches.toString());
     _setChartData();
   }
 

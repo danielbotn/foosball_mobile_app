@@ -1,3 +1,4 @@
+import 'package:foosball_mobile_app/models/cms/hardcoded_strings.dart';
 import 'package:foosball_mobile_app/models/user/user_info_global.dart';
 import 'package:mobx/mobx.dart';
 
@@ -26,16 +27,30 @@ abstract class _UserState with Store {
       email: "",
       currentOrganisationId: 0);
 
+  @observable
+  HardcodedStrings hardcodedStrings = new HardcodedStrings(
+      matches: "",
+      newGame: "",
+      quickActions: "",
+      lastTenMatches: "",
+      statistics: "",
+      history: "",
+      leagues: "",
+      pricing: "",
+      settings: "",
+      about: "",
+      logout: "");
+
   @action
   void setUserInfoGlobalObject(int userId, String firstName, String lastName,
-      String email, int currrentOrganisationId) {
-      UserInfoGlobal tmp = new UserInfoGlobal(
-          userId: userId,
-          firstName: firstName,
-          lastName: lastName,
-          email: email,
-          currentOrganisationId: currentOrganisationId);
-          
+    String email, int currrentOrganisationId) {
+    UserInfoGlobal tmp = new UserInfoGlobal(
+        userId: userId,
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        currentOrganisationId: currentOrganisationId);
+
     userInfoGlobal = tmp;
   }
 
@@ -52,5 +67,10 @@ abstract class _UserState with Store {
   @action
   void setToken(String pToken) {
     token = pToken;
+  }
+
+  @action
+  void setHardcodedStrings(HardcodedStrings pHardcodedStrings) {
+    hardcodedStrings = pHardcodedStrings;
   }
 }

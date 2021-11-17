@@ -56,7 +56,50 @@ mixin _$UserState on _UserState, Store {
     });
   }
 
+  final _$userInfoGlobalAtom = Atom(name: '_UserState.userInfoGlobal');
+
+  @override
+  UserInfoGlobal get userInfoGlobal {
+    _$userInfoGlobalAtom.reportRead();
+    return super.userInfoGlobal;
+  }
+
+  @override
+  set userInfoGlobal(UserInfoGlobal value) {
+    _$userInfoGlobalAtom.reportWrite(value, super.userInfoGlobal, () {
+      super.userInfoGlobal = value;
+    });
+  }
+
+  final _$hardcodedStringsAtom = Atom(name: '_UserState.hardcodedStrings');
+
+  @override
+  HardcodedStrings get hardcodedStrings {
+    _$hardcodedStringsAtom.reportRead();
+    return super.hardcodedStrings;
+  }
+
+  @override
+  set hardcodedStrings(HardcodedStrings value) {
+    _$hardcodedStringsAtom.reportWrite(value, super.hardcodedStrings, () {
+      super.hardcodedStrings = value;
+    });
+  }
+
   final _$_UserStateActionController = ActionController(name: '_UserState');
+
+  @override
+  void setUserInfoGlobalObject(int userId, String firstName, String lastName,
+      String email, int currrentOrganisationId) {
+    final _$actionInfo = _$_UserStateActionController.startAction(
+        name: '_UserState.setUserInfoGlobalObject');
+    try {
+      return super.setUserInfoGlobalObject(
+          userId, firstName, lastName, email, currrentOrganisationId);
+    } finally {
+      _$_UserStateActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void setUserId(int pUserId) {
@@ -92,11 +135,24 @@ mixin _$UserState on _UserState, Store {
   }
 
   @override
+  void setHardcodedStrings(HardcodedStrings pHardcodedStrings) {
+    final _$actionInfo = _$_UserStateActionController.startAction(
+        name: '_UserState.setHardcodedStrings');
+    try {
+      return super.setHardcodedStrings(pHardcodedStrings);
+    } finally {
+      _$_UserStateActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 userId: ${userId},
 currentOrganisationId: ${currentOrganisationId},
-token: ${token}
+token: ${token},
+userInfoGlobal: ${userInfoGlobal},
+hardcodedStrings: ${hardcodedStrings}
     ''';
   }
 }
