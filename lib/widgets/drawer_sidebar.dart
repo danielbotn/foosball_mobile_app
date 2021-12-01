@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
+import 'package:foosball_mobile_app/widgets/Settings.dart';
 
 class DrawerSideBar extends StatelessWidget {
   final UserState userState;
@@ -71,7 +72,10 @@ class DrawerSideBar extends StatelessWidget {
               leading: Icon(Icons.settings),
               title: new Text('$settings'),
               onTap: () {
-                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Settings()),
+                );
               }),
           new Divider(),
           new ListTile(

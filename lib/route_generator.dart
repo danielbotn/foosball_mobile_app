@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/widgets/Dashboard.dart';
+import 'package:foosball_mobile_app/widgets/Settings.dart';
 import 'package:foosball_mobile_app/widgets/Single_game.dart';
 import 'package:foosball_mobile_app/widgets/login.dart';
-
 import 'models/other/dashboar_param.dart';
 
 class RouteGenerator {
@@ -25,6 +25,12 @@ class RouteGenerator {
       case 'singlegame':
         if (args is String) {
           return MaterialPageRoute(builder: (_) => SingleGame(test: 'test'));
+        } else {
+          return _errorRoute();
+        }
+      case 'settings':
+        if (args is String) {
+          return MaterialPageRoute(builder: (_) => Settings());
         } else {
           return _errorRoute();
         }
