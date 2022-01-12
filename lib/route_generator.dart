@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:foosball_mobile_app/main.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/widgets/Dashboard.dart';
 import 'package:foosball_mobile_app/widgets/Settings.dart';
 import 'package:foosball_mobile_app/widgets/Single_game.dart';
 import 'package:foosball_mobile_app/widgets/login.dart';
-import 'models/other/dashboar_param.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -17,8 +17,8 @@ class RouteGenerator {
           return _errorRoute();
         }
       case 'dashboard':
-        if (args is DashboardParam) {
-          return MaterialPageRoute(builder: (_) => Dashboard(param: args, danni: 'daniel'));
+        if (args is UserState) {
+          return MaterialPageRoute(builder: (_) => Dashboard(param: args));
         } else {
           return _errorRoute();
         }
@@ -30,7 +30,7 @@ class RouteGenerator {
         }
       case 'settings':
         if (args is String) {
-          return MaterialPageRoute(builder: (_) => Settings());
+          return MaterialPageRoute(builder: (_) => Settings(userState: userState));
         } else {
           return _errorRoute();
         }

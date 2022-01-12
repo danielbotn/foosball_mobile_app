@@ -4,6 +4,7 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:foosball_mobile_app/models/charts/user_stats_response.dart';
 import 'package:foosball_mobile_app/models/charts/matches_chart.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
+import 'package:foosball_mobile_app/utils/app_color.dart';
 
 class DashboardMatchesPieChart extends StatefulWidget {
   final UserState userState;
@@ -26,11 +27,13 @@ class _DashboardMatchesPieChartState extends State<DashboardMatchesPieChart> {
         name: "Won",
         matches: this.widget.userStatsResponse!.totalMatchesWon,
         barColor: charts.ColorUtil.fromDartColor(Colors.green[400] as Color),
+         
       ),
       MatchesChart(
         name: "Lost",
         matches: this.widget.userStatsResponse!.totalMatchesLost,
         barColor: charts.ColorUtil.fromDartColor(Colors.pink),
+       
       )
     ];
   }
@@ -49,7 +52,9 @@ class _DashboardMatchesPieChartState extends State<DashboardMatchesPieChart> {
           data: data,
           domainFn: (MatchesChart series, _) => series.name,
           measureFn: (MatchesChart series, _) => series.matches,
-          colorFn: (MatchesChart series, _) => series.barColor)
+          colorFn: (MatchesChart series, _) => series.barColor,
+      ),
+          
     ];
 
     return Container(

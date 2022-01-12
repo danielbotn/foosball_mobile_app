@@ -1,12 +1,15 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:foosball_mobile_app/api/Dato_CMS.dart';
 import 'package:foosball_mobile_app/api/Organisation.dart';
 import 'package:foosball_mobile_app/api/User.dart';
+import 'package:foosball_mobile_app/main.dart';
 import 'package:foosball_mobile_app/models/charts/user_stats_response.dart';
 import 'package:foosball_mobile_app/models/organisation/organisation_response.dart';
-import 'package:foosball_mobile_app/models/other/dashboar_param.dart';
+import 'package:foosball_mobile_app/state/user_state.dart';
+import 'package:foosball_mobile_app/utils/app_color.dart';
 import 'package:foosball_mobile_app/widgets/dashboard_goals_chart.dart';
 import 'package:foosball_mobile_app/widgets/dashboard_last_five.dart';
 import 'package:foosball_mobile_app/widgets/dashboard_matches_chart.dart';
@@ -18,10 +21,8 @@ import 'package:flutter/foundation.dart';
 import 'loading.dart';
 
 class Dashboard extends StatefulWidget {
-  final DashboardParam param;
-  final String danni;
-  Dashboard({Key? key, required this.param, required this.danni})
-      : super(key: key);
+  final UserState param;
+  Dashboard({Key? key, required this.param}) : super(key: key);
 
   @override
   _DashboardState createState() => _DashboardState();
@@ -42,19 +43,21 @@ class _DashboardState extends State<Dashboard> {
       totalGoalsReceived: 0);
   late Future<UserStatsResponse> userStatsFuture;
 
+  late UserState userStateState;
+
   @override
   void initState() {
     super.initState();
-    String token = this.widget.param.userState.token;
-    String userId = this.widget.param.userState.userId.toString();
+    String token = this.widget.param.token;
+    String userId = this.widget.param.userId.toString();
     User user = new User(token: token);
     DatoCMS datoCMS = new DatoCMS(token: token);
 
-    datoCMS.getHardcodedStrings("is").then((value) {
-     if (value != null) {
-       // hardcoded strings put into global state
-       this.widget.param.userState.setHardcodedStrings(value);
-     }
+    datoCMS.getHardcodedStrings(this.widget.param.language).then((value) {
+      if (value != null) {
+        // hardcoded strings put into global state
+        this.widget.param.setHardcodedStrings(value);
+      }
     });
 
     user.getUser(userId).then((value) {
@@ -64,7 +67,7 @@ class _DashboardState extends State<Dashboard> {
         email = value.email;
       });
       // Set user information to global state??
-      this.widget.param.userState.setUserInfoGlobalObject(
+      this.widget.param.setUserInfoGlobalObject(
           int.parse(userId),
           value.firstName,
           value.lastName,
@@ -73,16 +76,33 @@ class _DashboardState extends State<Dashboard> {
     });
 
     userStatsFuture = getUserStatsData();
+    getTheme();
+
+    setState(() {
+      userStateState = this.widget.param;
+    });
+  }
+
+  Future<void> getTheme() async {
+    final storage = new FlutterSecureStorage();
+    String? darkTheme = await storage.read(key: 'dark_theme');
+    setState(() {
+      if (darkTheme == 'true') {
+        this.widget.param.setDarkmode(true);
+      } else {
+        this.widget.param.setDarkmode(false);
+      }
+    });
   }
 
   // To do put functions here
   Future<UserStatsResponse> getUserStatsData() async {
-    String token = this.widget.param.userState.token;
+    String token = this.widget.param.token;
     User user = new User(token: token);
     Organisation organisation = new Organisation(token: token);
     var userStatsData = await user.getUserStats();
     userStatsResponse = userStatsData;
-    int organisationId = this.widget.param.userState.currentOrganisationId;
+    int organisationId = this.widget.param.currentOrganisationId;
     organisation.getOrganisationById(organisationId).then((value) {
       if (value.statusCode == 200) {
         var organisationResponse =
@@ -100,60 +120,81 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    User user = new User(token: this.widget.param.userState.token);
+    bool darkMode = widget.param.darkmode;
+
     return MaterialApp(
         title: 'Dashboard',
         home: Scaffold(
           appBar: AppBar(
-            iconTheme: IconThemeData(color: Colors.grey[700]),
-            backgroundColor: Colors.white,
-          ),
-          drawer: DrawerSideBar(userState: widget.param.userState),
+              iconTheme: darkMode
+                  ? IconThemeData(color: AppColors.white)
+                  : IconThemeData(color: Colors.grey[700]),
+              backgroundColor:
+                  darkMode ? AppColors.darkModeBackground : AppColors.white),
+          drawer: DrawerSideBar(userState: widget.param),
+          onDrawerChanged: (isOpen) {
+            setState(() {
+              userStateState = widget.param;
+            });
+          },
           body: FutureBuilder(
             future: userStatsFuture,
             builder: (context, AsyncSnapshot<UserStatsResponse> snapshot) {
               if (snapshot.hasData) {
-                return Column(
-                  children: <Widget>[
-                    Card(
-                      // elevation: 5,
-                      child: ListTile(
-                        leading: Icon(Icons.email, color: Colors.grey),
-                        title: Text('$firstName' + ' $lastName'),
-                        subtitle: Text('$email'),
-                        trailing: Text('$organisationName'),
-                      ),
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                            flex: 1,
-                            child: Container(
-                              height: 200,
-                              child: DashboardMatchesChart(
-                                  userState: widget.param.userState,
-                                  userStatsResponse: snapshot.data),
-                            )),
-                        Expanded(
-                            flex: 1,
-                            child: Container(
-                              height: 200,
-                              child: DashboardGoalsChart(
-                                  userState: widget.param.userState,
-                                  userStatsResponse: snapshot.data),
-                            )),
-                      ],
-                    ),
-                    Headline(headline: "Quick Actions"),
-                    QuicActions(),
-                    Headline(headline: "Last Ten matches"),
-                    Expanded(
-                        flex: 1,
-                        child: DashBoardLastFive(
-                          userState: this.widget.param.userState,
-                        ))
-                  ],
-                );
+                return Theme(
+                    data: darkMode ? ThemeData.dark() : ThemeData.light(),
+                    child: Container(
+                        color: darkMode
+                            ? AppColors.darkModeBackground
+                            : AppColors.white,
+                        child: Column(
+                          children: <Widget>[
+                            Card(
+                              // elevation: 5,
+                              child: ListTile(
+                                leading: Icon(Icons.email, color: Colors.grey),
+                                title: Text('$firstName' + ' $lastName'),
+                                subtitle: Text('$email'),
+                                trailing: Text('$organisationName'),
+                              ),
+                            ),
+                            Row(
+                              children: <Widget>[
+                                Expanded(
+                                    flex: 1,
+                                    child: Container(
+                                      height: 200,
+                                      child: DashboardMatchesChart(
+                                        userState: userStateState,
+                                        userStatsResponse: snapshot.data,
+                                      ),
+                                    )),
+                                Expanded(
+                                    flex: 1,
+                                    child: Container(
+                                      height: 200,
+                                      child: DashboardGoalsChart(
+                                          userState: userStateState,
+                                          userStatsResponse: snapshot.data),
+                                    )),
+                              ],
+                            ),
+                            Headline(
+                                headline: userStateState
+                                    .hardcodedStrings.quickActions,
+                                userState: userState),
+                            QuicActions(userState: userState),
+                            Headline(
+                                headline: userStateState
+                                    .hardcodedStrings.lastTenMatches,
+                                userState: userState),
+                            Expanded(
+                                flex: 1,
+                                child: DashBoardLastFive(
+                                  userState: this.widget.param,
+                                ))
+                          ],
+                        )));
               } else {
                 return Loading();
               }

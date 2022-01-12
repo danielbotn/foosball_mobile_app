@@ -4,6 +4,7 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:foosball_mobile_app/models/charts/goals_chart.dart';
 import 'package:foosball_mobile_app/models/charts/user_stats_response.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
+import 'package:foosball_mobile_app/utils/app_color.dart';
 
 class DashboardGoalsChart extends StatefulWidget {
   final UserState userState;
@@ -23,14 +24,16 @@ class _DashboardGoalsChartState extends State<DashboardGoalsChart> {
   _setChartData() {
     data = [
       GoalsChart(
-        name: "Scored",
+        name: this.widget.userState.hardcodedStrings.scored,
         goals: this.widget.userStatsResponse!.totalGoalsScored,
-        barColor: charts.ColorUtil.fromDartColor(Color.fromRGBO(127,211,29, .9)),
+        barColor:
+            charts.ColorUtil.fromDartColor(Color.fromRGBO(127, 211, 29, .9)),
       ),
       GoalsChart(
-        name: "Recieved",
+        name: this.widget.userState.hardcodedStrings.recieved,
         goals: this.widget.userStatsResponse!.totalGoalsReceived,
-        barColor: charts.ColorUtil.fromDartColor(Color.fromRGBO(112,193,255, .9)),
+        barColor:
+            charts.ColorUtil.fromDartColor(Color.fromRGBO(112, 193, 255, .9)),
       )
     ];
   }
@@ -43,6 +46,9 @@ class _DashboardGoalsChartState extends State<DashboardGoalsChart> {
 
   @override
   Widget build(BuildContext context) {
+    
+    _setChartData();
+
     List<charts.Series<GoalsChart, String>> series = [
       charts.Series(
           id: "developers",
@@ -60,11 +66,35 @@ class _DashboardGoalsChartState extends State<DashboardGoalsChart> {
           child: Column(
             children: <Widget>[
               Text(
-                "Goals",
+                this.widget.userState.hardcodedStrings.goals,
                 style: Theme.of(context).textTheme.bodyText1,
               ),
               Expanded(
-                child: charts.BarChart(series, animate: true),
+                child: charts.BarChart(series,
+                    animate: true,
+                    domainAxis: charts.OrdinalAxisSpec(
+                      renderSpec: charts.SmallTickRendererSpec(
+                        labelStyle: charts.TextStyleSpec(
+                          fontSize: 12,
+                          color: charts.ColorUtil.fromDartColor(
+                            widget.userState.darkmode
+                                ? AppColors.white
+                                : AppColors.textBlack,
+                          ),
+                        ),
+                      ),
+                    ),
+                    primaryMeasureAxis: charts.NumericAxisSpec(
+                      renderSpec: charts.GridlineRendererSpec(
+                        labelStyle: charts.TextStyleSpec(
+                          fontSize: 12,
+                          color: charts.ColorUtil.fromDartColor(
+                              widget.userState.darkmode
+                                  ? AppColors.white
+                                  : AppColors.textBlack),
+                        ),
+                      ),
+                    )),
               )
             ],
           ),

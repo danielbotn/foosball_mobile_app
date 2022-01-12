@@ -4,6 +4,7 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:foosball_mobile_app/models/charts/user_stats_response.dart';
 import 'package:foosball_mobile_app/models/charts/matches_chart.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
+import 'package:foosball_mobile_app/utils/app_color.dart';
 
 class DashboardMatchesChart extends StatefulWidget {
   final UserState userState;
@@ -17,27 +18,36 @@ class DashboardMatchesChart extends StatefulWidget {
 }
 
 class _DashboardMatchesChartState extends State<DashboardMatchesChart> {
-  //state
+  // state variables
   List<MatchesChart> data = [];
   Color dude = Colors.pink[50] as Color;
+  
+  // sets the data for the chart
   _setChartData() {
-    data = [
+    var d = [
       MatchesChart(
-        name: "Matches",
+        name: this.widget.userState.hardcodedStrings.matches,
         matches: this.widget.userStatsResponse!.totalMatches,
-        barColor: charts.ColorUtil.fromDartColor(Color.fromRGBO(255,136,0, .9)),
+        barColor:
+            charts.ColorUtil.fromDartColor(Color.fromRGBO(255, 136, 0, .9)),
       ),
       MatchesChart(
-        name: "Won",
+        name: this.widget.userState.hardcodedStrings.won,
         matches: this.widget.userStatsResponse!.totalMatchesWon,
-        barColor: charts.ColorUtil.fromDartColor(Color.fromRGBO(127,211,29, .9)),
+        barColor:
+            charts.ColorUtil.fromDartColor(Color.fromRGBO(127, 211, 29, .9)),
       ),
       MatchesChart(
-        name: "Lost",
+        name: this.widget.userState.hardcodedStrings.lost,
         matches: this.widget.userStatsResponse!.totalMatchesLost,
-        barColor: charts.ColorUtil.fromDartColor(Color.fromRGBO(112,193,255, .9)),
+        barColor:
+            charts.ColorUtil.fromDartColor(Color.fromRGBO(112, 193, 255, .9)),
       )
     ];
+
+    setState(() {
+      data = d;
+    });
   }
 
   @override
@@ -48,13 +58,17 @@ class _DashboardMatchesChartState extends State<DashboardMatchesChart> {
 
   @override
   Widget build(BuildContext context) {
+
+    _setChartData();
+    
     List<charts.Series<MatchesChart, String>> series = [
       charts.Series(
-          id: "developers",
-          data: data,
-          domainFn: (MatchesChart series, _) => series.name,
-          measureFn: (MatchesChart series, _) => series.matches,
-          colorFn: (MatchesChart series, _) => series.barColor)
+        id: "developers",
+        data: data,
+        domainFn: (MatchesChart series, _) => series.name,
+        measureFn: (MatchesChart series, _) => series.matches,
+        colorFn: (MatchesChart series, _) => series.barColor,
+      ),
     ];
 
     return Container(
@@ -65,12 +79,34 @@ class _DashboardMatchesChartState extends State<DashboardMatchesChart> {
           child: Column(
             children: <Widget>[
               Text(
-                "Matches",
+                this.widget.userState.hardcodedStrings.matches,
                 style: Theme.of(context).textTheme.bodyText1,
               ),
+              // change label style of BarChart to fit the theme
               Expanded(
-                child: charts.BarChart(series, animate: true),
-              )
+                child: charts.BarChart(series,
+                    animate: true,
+                    domainAxis: charts.OrdinalAxisSpec(
+                      renderSpec: charts.SmallTickRendererSpec(
+                        labelStyle: charts.TextStyleSpec(
+                          fontSize: 12,
+                          color: charts.ColorUtil.fromDartColor(
+                            widget.userState.darkmode ?  AppColors.white : AppColors.textBlack,
+                          ),
+                        ),
+                      ),
+                    ),
+                    primaryMeasureAxis: charts.NumericAxisSpec(
+                      renderSpec: charts.GridlineRendererSpec(
+                        labelStyle: charts.TextStyleSpec(
+                          fontSize: 12,
+                          color: charts.ColorUtil.fromDartColor(
+                            widget.userState.darkmode ?  AppColors.white : AppColors.textBlack
+                          ),
+                        ),
+                      ),
+                    )),
+              ),
             ],
           ),
         ),

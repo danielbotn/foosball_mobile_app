@@ -20,6 +20,9 @@ abstract class _UserState with Store {
   String token = "";
 
   @observable
+  String language = "";
+
+  @observable
   UserInfoGlobal userInfoGlobal = new UserInfoGlobal(
       userId: 0,
       firstName: "",
@@ -39,7 +42,23 @@ abstract class _UserState with Store {
       pricing: "",
       settings: "",
       about: "",
-      logout: "");
+      logout: "",
+      language: "",
+      darkTheme : "",
+      lightTheme : "",
+      changePassword : "",
+      enableNotifications : "",
+      common: "",
+      security: "",
+      won: "",
+      lost: "",
+      scored: "",
+      recieved: "",
+      goals: "",
+      );
+  
+  @observable
+  bool darkmode = false;
 
   @action
   void setUserInfoGlobalObject(int userId, String firstName, String lastName,
@@ -72,5 +91,15 @@ abstract class _UserState with Store {
   @action
   void setHardcodedStrings(HardcodedStrings pHardcodedStrings) {
     hardcodedStrings = pHardcodedStrings;
+  }
+
+  @action
+  void setDarkmode(bool pDarkmode) {
+    darkmode = pDarkmode;
+  }
+
+  @action
+  void setLanguage(String pLanguage) {
+    language = pLanguage;
   }
 }

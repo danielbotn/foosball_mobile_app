@@ -56,6 +56,21 @@ mixin _$UserState on _UserState, Store {
     });
   }
 
+  final _$languageAtom = Atom(name: '_UserState.language');
+
+  @override
+  String get language {
+    _$languageAtom.reportRead();
+    return super.language;
+  }
+
+  @override
+  set language(String value) {
+    _$languageAtom.reportWrite(value, super.language, () {
+      super.language = value;
+    });
+  }
+
   final _$userInfoGlobalAtom = Atom(name: '_UserState.userInfoGlobal');
 
   @override
@@ -83,6 +98,21 @@ mixin _$UserState on _UserState, Store {
   set hardcodedStrings(HardcodedStrings value) {
     _$hardcodedStringsAtom.reportWrite(value, super.hardcodedStrings, () {
       super.hardcodedStrings = value;
+    });
+  }
+
+  final _$darkmodeAtom = Atom(name: '_UserState.darkmode');
+
+  @override
+  bool get darkmode {
+    _$darkmodeAtom.reportRead();
+    return super.darkmode;
+  }
+
+  @override
+  set darkmode(bool value) {
+    _$darkmodeAtom.reportWrite(value, super.darkmode, () {
+      super.darkmode = value;
     });
   }
 
@@ -146,13 +176,37 @@ mixin _$UserState on _UserState, Store {
   }
 
   @override
+  void setDarkmode(bool pDarkmode) {
+    final _$actionInfo = _$_UserStateActionController.startAction(
+        name: '_UserState.setDarkmode');
+    try {
+      return super.setDarkmode(pDarkmode);
+    } finally {
+      _$_UserStateActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setLanguage(String pLanguage) {
+    final _$actionInfo = _$_UserStateActionController.startAction(
+        name: '_UserState.setLanguage');
+    try {
+      return super.setLanguage(pLanguage);
+    } finally {
+      _$_UserStateActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 userId: ${userId},
 currentOrganisationId: ${currentOrganisationId},
 token: ${token},
+language: ${language},
 userInfoGlobal: ${userInfoGlobal},
-hardcodedStrings: ${hardcodedStrings}
+hardcodedStrings: ${hardcodedStrings},
+darkmode: ${darkmode}
     ''';
   }
 }

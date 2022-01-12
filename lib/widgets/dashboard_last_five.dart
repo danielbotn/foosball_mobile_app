@@ -91,6 +91,7 @@ class _DashBoardLastFiveState extends State<DashBoardLastFive> {
                   colorOfMatch == Colors.green[400] ? 'W' : 'L';
 
               return Card(
+                margin: EdgeInsets.zero,
                 child: ListTile(
                     leading: CircleAvatar(
                       child: Text(

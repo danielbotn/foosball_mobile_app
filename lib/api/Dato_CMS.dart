@@ -14,7 +14,7 @@ class DatoCMS {
         ? dotenv.env['REST_URL_PATH_PROD']
         : dotenv.env['REST_URL_PATH_DEV'];
     if (baseUrl != null) {
-      var json = {"language": 'is'};
+      var json = {"language": '$language'};
 
       Uri outgoingUri = new Uri(
           scheme: 'https',

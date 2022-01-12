@@ -1,15 +1,17 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/models/auth/jwt_model.dart';
-import 'package:foosball_mobile_app/models/other/dashboar_param.dart';
 import 'package:foosball_mobile_app/route_generator.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
+import 'package:foosball_mobile_app/utils/app_theme.dart';
+import 'package:foosball_mobile_app/utils/theme_notifier.dart';
 import 'package:foosball_mobile_app/widgets/Login.dart';
 import 'package:foosball_mobile_app/widgets/Settings.dart';
 import 'package:foosball_mobile_app/widgets/dashboard.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:provider/provider.dart';
 
 final userState = UserState(); // Instantiate the store
 
@@ -54,7 +56,16 @@ void main() async {
     }
   }
 
-  runApp(MyApp(initialRoute: theRoute));
+   runApp(
+    ChangeNotifierProvider<ThemeNotifier>(
+      create: (BuildContext context) {
+        return ThemeNotifier(
+          ThemeMode.dark,
+        );
+      },
+      child: MyApp(initialRoute: theRoute),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -66,24 +77,19 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  DashboardParam param = DashboardParam(data: '', userState: userState);
+  UserState param = userState;
   @override
   Widget build(BuildContext context) {
+    final themeNotifier = Provider.of<ThemeNotifier>(context);
     return MaterialApp(
-      theme: ThemeData(
-        primaryColor: Color(0xff2980b9),
-        backgroundColor: Colors.white
-      ),
-      darkTheme: ThemeData(
-        primarySwatch: Colors.deepPurple,
-        accentColor: Colors.deepPurple,
-        brightness: Brightness.dark,
-      ),
+      theme: AppTheme().lightTheme,
+      darkTheme: AppTheme().darkTheme,
+      themeMode: themeNotifier.getThemeMode(),
       initialRoute: widget.initialRoute,
       routes: {
-        'dashboard': (context) => Dashboard(param: param, danni: 'dannidan'),
+        'dashboard': (context) => Dashboard(param: param),
         'login': (context) => Login(userState: userState),
-        'settings': (context) => Settings(),
+        'settings': (context) => Settings(userState: userState),
       },
       onGenerateRoute: RouteGenerator.generateRoute,
     );

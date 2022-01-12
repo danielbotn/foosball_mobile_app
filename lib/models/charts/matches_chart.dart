@@ -9,7 +9,7 @@ class MatchesChart {
     {
       required this.name,
       required this.matches,
-      required this.barColor
+      required this.barColor,
     }
   );
 }

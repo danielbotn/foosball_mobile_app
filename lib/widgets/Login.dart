@@ -3,7 +3,6 @@ import 'package:foosball_mobile_app/api/Auth.dart';
 import 'package:foosball_mobile_app/models/auth/jwt_model.dart';
 import 'package:foosball_mobile_app/models/auth/login_response.dart';
 import 'package:foosball_mobile_app/models/auth/error_response.dart';
-import 'package:foosball_mobile_app/models/other/dashboar_param.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -24,13 +23,14 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   // State
-  late DashboardParam dashboardData;
+  late UserState dashboardData;
   Duration get loginTime => Duration(milliseconds: 2250);
 
   Future<String?> loginUser(LoginData data) async {
     Auth auth = new Auth();
     final storage = new FlutterSecureStorage();
     String? value = await storage.read(key: "jwt_token");
+    String? langFromStorage = await storage.read(key: "language");
     if (value != null) {
       await storage.delete(key: "jwt_token");
     }
@@ -53,7 +53,14 @@ class _LoginState extends State<Login> {
         this.widget.userState.setUserId(loginResponse.id);
         this.widget.userState.setCurrentOrganisationId(int.parse(jwtObject.currentOrganisationId));
         this.widget.userState.setToken(loginResponse.token);
-        dashboardData = DashboardParam(data: '', userState: this.widget.userState);
+
+        if (langFromStorage != null) {
+          this.widget.userState.setLanguage(langFromStorage);
+        } else {
+          await storage.write(key: "language", value: "en");
+          this.widget.userState.setLanguage('en');
+        }
+        dashboardData = this.widget.userState;
         return null;
     }
   }
