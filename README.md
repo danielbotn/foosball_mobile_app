@@ -1,19 +1,58 @@
-# foosball_mobile_app
+# Foosball Mobile App ⚽
 
-A new Flutter project.
+`Foosball Mobile App`, A mobile app written in `Flutter` and uses the `Dart` programming language.
 
-## Getting Started
+The mobile app interacts with a `Dot net core REST api`.
 
-This project is a starting point for a Flutter application.
+[![forthebadge](http://forthebadge.com/images/badges/built-with-love.svg)]![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)[![forthebadge](http://forthebadge.com/images/badges/makes-people-smile.svg)](http://forthebadge.com)
+</div>
 
-A few resources to get you started if this is your first Flutter project:
+# Development
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+Run the project with the following command
+```sh
+flutter run
+```
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+or run the program with the debugger withing `Visual studio code` if you have the `Flutter` and `Dart` extension.
 
-- flutter packages pub run build_runner build
-- ctrl + shift + b
+
+## Env variables
+
+Secrets are added to `secrets.json` file with `dotnet user-secrets`
+
+To run the project. The following variables are needed. Mainly used for testing.
+
+```bash
+JWT_TOKEN_TEST=
+USERNAME_TEST=
+PASSWOR_TEST=
+REST_URL_PATH_DEV=
+REST_URL_PATH_PROD=
+
+DEV_HOST=
+DEV_PORT=
+PROD_HOST=
+PROD_PORT=
+
+```
+
+## Technology
+
+[Flutter](https://flutter.dev/)
+[Dart] (https://dart.dev/)
+
+## Code Rules
+
+To Do!
+
+Right click on project file and choose `Format code`
+
+## Testing
+
+To Do!
+
+## Thanks
+
+**Foosball** © 2022+, Mossfellsbær City. Released under the [MIT License].<br>
+Authored and maintained by Daniel Freyr Sigurdsson. With help from [contributors].
