@@ -35,6 +35,9 @@ HardcodedStrings _$HardcodedStringsFromJson(Map<String, dynamic> json) {
     username: json['username'] as String,
     organisation: json['organisation'] as String,
     personalInformation: json['personalInformation'] as String,
+    integration: json['integration'] as String,
+    slack: json['slack'] as String,
+    discord: json['discord'] as String,
   );
 }
 
@@ -67,4 +70,7 @@ Map<String, dynamic> _$HardcodedStringsToJson(HardcodedStrings instance) =>
       'username': instance.username,
       'organisation': instance.organisation,
       'personalInformation': instance.personalInformation,
+      'integration': instance.integration,
+      'slack': instance.slack,
+      'discord': instance.discord,
     };

@@ -59,7 +59,10 @@ abstract class _UserState with Store {
       user: "",
       username: "",
       organisation: "",
-      personalInformation: ""
+      personalInformation: "",
+      integration: "",
+      slack: "",
+      discord: ""
       );
   
   @observable

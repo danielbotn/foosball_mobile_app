@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/api/Dato_CMS.dart';
+import 'package:foosball_mobile_app/icons/custom_icons.dart';
 import 'package:foosball_mobile_app/main.dart';
 import 'package:foosball_mobile_app/models/cms/hardcoded_strings.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
@@ -251,6 +252,29 @@ class _SettingsState extends State<Settings> {
                                 subtitle: userState.userInfoGlobal.currentOrganisationName,
                                 leading: Icon(Icons.business),
                                 onPressed: (BuildContext context) {},
+                              ),
+                            ],
+                          ),
+                          // integrations
+                          SettingsSection(
+                            titlePadding: EdgeInsets.all(20),
+                            title: userState.hardcodedStrings.integration,
+                            tiles: [
+                              SettingsTile(
+                                title: userState.hardcodedStrings.slack,
+                                subtitle: "https://hooks.slack.com/services/T0J5QJQQP/B0J5QJQQQ/0J5QJQQQQ",
+                                leading: Icon(CustomIcons.slack),
+                                onPressed: (BuildContext context) {
+                                  selectLanguagePopup(context);
+                                },
+                              ),
+                              SettingsTile(
+                                title: userState.hardcodedStrings.discord,
+                                subtitle: "https://hooks.discord.com/services/T0J5QJQQP/B0J5QJQQQ/0J5QJQQQQ",
+                                leading: Icon(CustomIcons.discord),
+                                onPressed: (BuildContext context) {
+                                  selectLanguagePopup(context);
+                                },
                               ),
                             ],
                           ),
