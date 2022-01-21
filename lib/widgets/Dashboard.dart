@@ -41,7 +41,13 @@ class _DashboardState extends State<Dashboard> {
       totalMatchesLost: 0,
       totalGoalsScored: 0,
       totalGoalsReceived: 0);
-  late Future<UserStatsResponse> userStatsFuture;
+  late Future<UserStatsResponse>userStatsFuture = Future.value(UserStatsResponse(
+      userId: 0,
+      totalMatches: 0,
+      totalMatchesWon: 0,
+      totalMatchesLost: 0,
+      totalGoalsScored: 0,
+      totalGoalsReceived: 0));
 
   late UserState userStateState;
 
@@ -66,16 +72,18 @@ class _DashboardState extends State<Dashboard> {
         lastName = value.lastName;
         email = value.email;
       });
+      userStatsFuture = getUserStatsData(int.parse(userId), value.currentOrganisationId);
+      
       // Set user information to global state??
       this.widget.param.setUserInfoGlobalObject(
           int.parse(userId),
           value.firstName,
           value.lastName,
           value.email,
-          value.currentOrganisationId);
+          value.currentOrganisationId,
+          organisationName);
     });
 
-    userStatsFuture = getUserStatsData();
     getTheme();
 
     setState(() {
@@ -96,7 +104,7 @@ class _DashboardState extends State<Dashboard> {
   }
 
   // To do put functions here
-  Future<UserStatsResponse> getUserStatsData() async {
+  Future<UserStatsResponse> getUserStatsData(int userId, int currrentOrganisationId) async {
     String token = this.widget.param.token;
     User user = new User(token: token);
     Organisation organisation = new Organisation(token: token);
@@ -110,12 +118,17 @@ class _DashboardState extends State<Dashboard> {
         setState(() {
           organisationName = organisationResponse.name;
         });
+        setGlobal(userId, currrentOrganisationId, organisationResponse.name);
       } else {
         print('some error has accoured');
       }
     });
 
     return userStatsData;
+  }
+
+  setGlobal(int userId, int currrentOrganisationId, String currentOrganisationName) {
+    this.widget.param.setUserInfoGlobalObject(userId, firstName, lastName, email, currrentOrganisationId, currentOrganisationName);
   }
 
   @override
@@ -166,7 +179,7 @@ class _DashboardState extends State<Dashboard> {
                                       height: 200,
                                       child: DashboardMatchesChart(
                                         userState: userStateState,
-                                        userStatsResponse: snapshot.data,
+                                        userStatsResponse: snapshot.data ?? null,
                                       ),
                                     )),
                                 Expanded(
@@ -175,7 +188,7 @@ class _DashboardState extends State<Dashboard> {
                                       height: 200,
                                       child: DashboardGoalsChart(
                                           userState: userStateState,
-                                          userStatsResponse: snapshot.data),
+                                          userStatsResponse: snapshot.data ?? null),
                                     )),
                               ],
                             ),

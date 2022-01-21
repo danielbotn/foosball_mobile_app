@@ -28,7 +28,8 @@ abstract class _UserState with Store {
       firstName: "",
       lastName: "",
       email: "",
-      currentOrganisationId: 0);
+      currentOrganisationId: 0,
+      currentOrganisationName: "",);
 
   @observable
   HardcodedStrings hardcodedStrings = new HardcodedStrings(
@@ -55,6 +56,10 @@ abstract class _UserState with Store {
       scored: "",
       recieved: "",
       goals: "",
+      user: "",
+      username: "",
+      organisation: "",
+      personalInformation: ""
       );
   
   @observable
@@ -62,13 +67,14 @@ abstract class _UserState with Store {
 
   @action
   void setUserInfoGlobalObject(int userId, String firstName, String lastName,
-    String email, int currrentOrganisationId) {
+    String email, int currrentOrganisationId, String currentOrganisationName) {
     UserInfoGlobal tmp = new UserInfoGlobal(
         userId: userId,
         firstName: firstName,
         lastName: lastName,
         email: email,
-        currentOrganisationId: currentOrganisationId);
+        currentOrganisationId: currentOrganisationId,
+        currentOrganisationName: currentOrganisationName);
 
     userInfoGlobal = tmp;
   }

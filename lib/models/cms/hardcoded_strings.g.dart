@@ -31,6 +31,10 @@ HardcodedStrings _$HardcodedStringsFromJson(Map<String, dynamic> json) {
     scored: json['scored'] as String,
     recieved: json['recieved'] as String,
     goals: json['goals'] as String,
+    user: json['user'] as String,
+    username: json['username'] as String,
+    organisation: json['organisation'] as String,
+    personalInformation: json['personalInformation'] as String,
   );
 }
 
@@ -59,4 +63,8 @@ Map<String, dynamic> _$HardcodedStringsToJson(HardcodedStrings instance) =>
       'scored': instance.scored,
       'recieved': instance.recieved,
       'goals': instance.goals,
+      'user': instance.user,
+      'username': instance.username,
+      'organisation': instance.organisation,
+      'personalInformation': instance.personalInformation,
     };

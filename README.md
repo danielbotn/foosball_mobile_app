@@ -21,6 +21,11 @@ flutter run
 
 or run the program with the debugger withing `Visual studio code` if you have the `Flutter` and `Dart` extension.
 
+# Run build runner
+
+```sh
+flutter packages pub run build_runner build
+```
 
 ## Env variables
 

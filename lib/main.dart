@@ -15,19 +15,26 @@ import 'package:provider/provider.dart';
 
 final userState = UserState(); // Instantiate the store
 
-class MyHttpOverrides extends HttpOverrides{
+class MyHttpOverrides extends HttpOverrides {
   @override
-  HttpClient createHttpClient(SecurityContext? context){
+  HttpClient createHttpClient(SecurityContext? context) {
     return super.createHttpClient(context)
-      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
   }
 }
 
- Future<String?> _getJwtToken() async {
-    final storage = new FlutterSecureStorage();
-    String? value = await storage.read(key: "jwt_token");
-    return value;
-  }
+Future<String?> _getJwtToken() async {
+  final storage = new FlutterSecureStorage();
+  String? value = await storage.read(key: "jwt_token");
+  return value;
+}
+
+Future<String?> _getLanguageFromStorage() async {
+  final storage = new FlutterSecureStorage();
+  String? langFromStorage = await storage.read(key: "language");
+  return langFromStorage;
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,24 +46,32 @@ void main() async {
   if (token != null) {
     Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
     JwtModel jwtObject = new JwtModel(
-      name: decodedToken["name"], 
-      currentOrganisationId: decodedToken["CurrentOrganisationId"], 
-      nbf: decodedToken["nbf"], 
-      exp: decodedToken["exp"], 
-      iat: decodedToken["iat"]
-    );
+        name: decodedToken["name"],
+        currentOrganisationId: decodedToken["CurrentOrganisationId"],
+        nbf: decodedToken["nbf"],
+        exp: decodedToken["exp"],
+        iat: decodedToken["iat"]);
     // Putting userid and currentOrganisationId to mobx store
     userState.setUserId(int.parse(jwtObject.name));
-    userState.setCurrentOrganisationId(int.parse(jwtObject.currentOrganisationId));
+    userState
+        .setCurrentOrganisationId(int.parse(jwtObject.currentOrganisationId));
     userState.setToken(token);
-  
+
+    String? langFromStorage = await _getLanguageFromStorage();
+
+    if (langFromStorage != null) {
+      userState.setLanguage(langFromStorage);
+    } else {
+      userState.setLanguage("en");
+    }
+
     bool isTokenExpired = JwtDecoder.isExpired(token);
     if (isTokenExpired == false) {
       theRoute = 'dashboard';
     }
   }
 
-   runApp(
+  runApp(
     ChangeNotifierProvider<ThemeNotifier>(
       create: (BuildContext context) {
         return ThemeNotifier(

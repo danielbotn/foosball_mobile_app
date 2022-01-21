@@ -119,13 +119,18 @@ mixin _$UserState on _UserState, Store {
   final _$_UserStateActionController = ActionController(name: '_UserState');
 
   @override
-  void setUserInfoGlobalObject(int userId, String firstName, String lastName,
-      String email, int currrentOrganisationId) {
+  void setUserInfoGlobalObject(
+      int userId,
+      String firstName,
+      String lastName,
+      String email,
+      int currrentOrganisationId,
+      String currentOrganisationName) {
     final _$actionInfo = _$_UserStateActionController.startAction(
         name: '_UserState.setUserInfoGlobalObject');
     try {
-      return super.setUserInfoGlobalObject(
-          userId, firstName, lastName, email, currrentOrganisationId);
+      return super.setUserInfoGlobalObject(userId, firstName, lastName, email,
+          currrentOrganisationId, currentOrganisationName);
     } finally {
       _$_UserStateActionController.endAction(_$actionInfo);
     }

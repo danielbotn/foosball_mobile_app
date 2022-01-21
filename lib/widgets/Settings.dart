@@ -227,6 +227,33 @@ class _SettingsState extends State<Settings> {
                               ),
                             ],
                           ),
+                          // person section
+                          SettingsSection(
+                            titlePadding: EdgeInsets.all(20),
+                            title: userState.hardcodedStrings.personalInformation,
+                            tiles: [
+                              SettingsTile(
+                                title: userState.hardcodedStrings.username,
+                                subtitle: userState.userInfoGlobal.email,
+                                leading: Icon(Icons.email),
+                                onPressed: (BuildContext context) {
+                                  selectLanguagePopup(context);
+                                },
+                              ),
+                              SettingsTile(
+                                title: userState.hardcodedStrings.user,
+                                subtitle: userState.userInfoGlobal.firstName + " " + userState.userInfoGlobal.lastName,
+                                leading: Icon(Icons.person),
+                                onPressed: (BuildContext context) {},
+                              ),
+                              SettingsTile(
+                                title: userState.hardcodedStrings.organisation,
+                                subtitle: userState.userInfoGlobal.currentOrganisationName,
+                                leading: Icon(Icons.business),
+                                onPressed: (BuildContext context) {},
+                              ),
+                            ],
+                          ),
                           SettingsSection(
                             titlePadding: EdgeInsets.all(20),
                             title: userState.hardcodedStrings.security,
