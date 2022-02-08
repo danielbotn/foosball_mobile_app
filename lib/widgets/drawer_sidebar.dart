@@ -3,6 +3,7 @@ import 'package:foosball_mobile_app/main.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
 import 'package:foosball_mobile_app/widgets/Settings.dart';
+import 'package:foosball_mobile_app/widgets/history.dart';
 
 class DrawerSideBar extends StatefulWidget {
   // Props variables
@@ -19,8 +20,8 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
   String lastName = userState.userInfoGlobal.lastName;
   String email = userState.userInfoGlobal.email;
   String initials = userState.userInfoGlobal.firstName[0] +
-    " " +
-    userState.userInfoGlobal.lastName[0];
+      " " +
+      userState.userInfoGlobal.lastName[0];
   String newGame = userState.hardcodedStrings.newGame;
   String statistics = userState.hardcodedStrings.statistics;
   String history = userState.hardcodedStrings.history;
@@ -29,6 +30,7 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
   String settings = userState.hardcodedStrings.settings;
   String about = userState.hardcodedStrings.about;
   String logout = userState.hardcodedStrings.logout;
+  String organisation = userState.hardcodedStrings.organisation;
 
   // Sets all the state variables on the sidebar
   setAllStates(UserState userStateParam) {
@@ -39,7 +41,7 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
       leagues = userStateParam.hardcodedStrings.leagues;
       pricing = userStateParam.hardcodedStrings.pricing;
       settings = userStateParam.hardcodedStrings.settings;
-      about =  userStateParam.hardcodedStrings.about;
+      about = userStateParam.hardcodedStrings.about;
       logout = userStateParam.hardcodedStrings.logout;
     });
   }
@@ -86,6 +88,20 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
               tileColor: userState.darkmode
                   ? AppColors.darkModeBackground
                   : AppColors.white,
+              leading: Icon(Icons.houseboat,
+                  color: userState.darkmode ? AppColors.white : null),
+              title: new Text('$organisation',
+                  style: TextStyle(
+                      color: userState.darkmode
+                          ? AppColors.white
+                          : AppColors.textBlack)),
+              onTap: () {
+                Navigator.pop(context);
+              }),
+          new ListTile(
+              tileColor: userState.darkmode
+                  ? AppColors.darkModeBackground
+                  : AppColors.white,
               leading: Icon(Icons.graphic_eq,
                   color: userState.darkmode ? AppColors.white : null),
               title: new Text('$statistics',
@@ -107,8 +123,15 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
                       color: userState.darkmode
                           ? AppColors.white
                           : AppColors.textBlack)),
-              onTap: () {
-                Navigator.pop(context);
+              onTap: () async {
+                final UserState userStateFromHistory = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => History(
+                            userState: userState,
+                          )),
+                );
+                setAllStates(userStateFromHistory);
               }),
           new ListTile(
               tileColor: userState.darkmode
@@ -149,7 +172,7 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
                       color: userState.darkmode
                           ? AppColors.white
                           : AppColors.textBlack)),
-              onTap: () async  {
+              onTap: () async {
                 final UserState userStateFromSettings = await Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -199,7 +222,10 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
               onTap: () {
                 Navigator.pop(context);
               }),
-          new Container(height: 100, width: 100, color: userState.darkmode
+          new Container(
+              height: 100,
+              width: 100,
+              color: userState.darkmode
                   ? AppColors.darkModeBackground
                   : AppColors.white),
         ],
@@ -207,4 +233,3 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
     );
   }
 }
-
