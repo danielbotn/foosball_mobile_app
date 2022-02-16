@@ -18,14 +18,29 @@ class _HistoryState extends State<History> {
   late Future<UserStats?> statsFuture;
   late Future<List<HistoryModel?>> historyFuture;
 
+  late ScrollController _controller;
+
   // State variables
   int pageNumber = 1;
   int pageSize = 50;
+  List<HistoryModel?> historylist = [];
+
+  _scrollListener() {
+    // check if we're at the bottom of the scrollable view
+    if (_controller.offset >= _controller.position.maxScrollExtent &&
+        !_controller.position.outOfRange) {
+          setState(() {
+            pageNumber += 1;
+          });
+          historyFuture = getHistory();
+    }
+  }
 
   @override
   void initState() {
+    _controller = ScrollController();
+    _controller.addListener(_scrollListener);
     super.initState();
-
     statsFuture = getStats();
     historyFuture = getHistory();
   }
@@ -39,6 +54,13 @@ class _HistoryState extends State<History> {
   Future<List<HistoryModel?>> getHistory() async {
     HistoryApi hapi = new HistoryApi(token: this.widget.userState.token);
     var history = await hapi.getHistory(pageNumber, pageSize);
+    
+    if (history.length > 0) {
+      setState(() {
+        historylist.addAll(history);
+      });
+    }	
+
     return history;
   }
 
@@ -133,8 +155,9 @@ class _HistoryState extends State<History> {
                   : AppColors.white,
               // add listview with variable two
               child: ListView(
+                controller: _controller,
                 padding: const EdgeInsets.all(8),
-                children: _buildHistoryList(two),
+                children: _buildHistoryList(historylist),
               ),
             );
           } else {
