@@ -120,7 +120,7 @@ class _DashboardState extends State<Dashboard> {
         });
         setGlobal(userId, currrentOrganisationId, organisationResponse.name);
       } else {
-        print('some error has accoured');
+        // To do error handling
       }
     });
 
