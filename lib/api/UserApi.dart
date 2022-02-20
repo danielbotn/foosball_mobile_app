@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:foosball_mobile_app/models/charts/user_stats_response.dart';
@@ -7,10 +6,10 @@ import 'package:foosball_mobile_app/models/user/user_last_ten.dart';
 import 'package:foosball_mobile_app/models/user/user_response.dart';
 import 'package:http/http.dart' as http;
 
-class User {
+class UserApi {
   final String token;
 
-  User({required this.token});
+  UserApi({required this.token});
 
   Future<UserResponse> getUser(String userId) async {
     late UserResponse result;

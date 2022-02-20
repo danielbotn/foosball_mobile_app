@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/api/HistoryApi.dart';
 import 'package:foosball_mobile_app/models/history/historyModel.dart';
 import 'package:foosball_mobile_app/models/history/userStats.dart';
+import 'package:foosball_mobile_app/models/other/TwoPlayersObject.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
+import 'package:foosball_mobile_app/widgets/Settings.dart';
 import 'package:intl/intl.dart';
+
+import 'freehand_match_detail.dart';
 
 class History extends StatefulWidget {
   final UserState userState;
@@ -29,10 +33,10 @@ class _HistoryState extends State<History> {
     // check if we're at the bottom of the scrollable view
     if (_controller.offset >= _controller.position.maxScrollExtent &&
         !_controller.position.outOfRange) {
-          setState(() {
-            pageNumber += 1;
-          });
-          historyFuture = getHistory();
+      setState(() {
+        pageNumber += 1;
+      });
+      historyFuture = getHistory();
     }
   }
 
@@ -54,14 +58,32 @@ class _HistoryState extends State<History> {
   Future<List<HistoryModel?>> getHistory() async {
     HistoryApi hapi = new HistoryApi(token: this.widget.userState.token);
     var history = await hapi.getHistory(pageNumber, pageSize);
-    
+
     if (history.length > 0) {
       setState(() {
         historylist.addAll(history);
       });
-    }	
+    }
 
     return history;
+  }
+
+  _goToMatchDetailScreen(int matchId, String typeOfMatch) {
+    print('typeOfMatch: $typeOfMatch');
+    TwoPlayersObject tpo = new TwoPlayersObject(
+      userState: this.widget.userState,
+      typeOfMatch: typeOfMatch,
+      matchId: matchId,
+    );
+
+    if (typeOfMatch == "FreehandMatch") {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => FreehandMatchDetail(
+            twoPlayersObject: tpo,
+      )));
+    }
   }
 
   List<ListTile> _buildHistoryList(List<HistoryModel?> history) {
@@ -77,6 +99,8 @@ class _HistoryState extends State<History> {
           DateFormat('dd-MM-yyyy | kk:mm').format(history[i]!.dateOfGame);
 
       list.add(ListTile(
+        onTap: () => _goToMatchDetailScreen(
+            history[i]!.matchId, history[i]!.typeOfMatchName),
         title: Text(
             history[i]!.opponentOneFirstName.toString() +
                 " " +

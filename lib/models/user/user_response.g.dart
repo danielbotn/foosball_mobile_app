@@ -14,6 +14,7 @@ UserResponse _$UserResponseFromJson(Map<String, dynamic> json) {
     lastName: json['lastName'] as String,
     createdAt: DateTime.parse(json['createdAt'] as String),
     currentOrganisationId: json['currentOrganisationId'] as int,
+    photoUrl: json['photoUrl'] as String,
   );
 }
 
@@ -25,4 +26,5 @@ Map<String, dynamic> _$UserResponseToJson(UserResponse instance) =>
       'lastName': instance.lastName,
       'createdAt': instance.createdAt.toIso8601String(),
       'currentOrganisationId': instance.currentOrganisationId,
+      'photoUrl': instance.photoUrl,
     };

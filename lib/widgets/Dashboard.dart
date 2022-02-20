@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:foosball_mobile_app/api/Dato_CMS.dart';
 import 'package:foosball_mobile_app/api/Organisation.dart';
-import 'package:foosball_mobile_app/api/User.dart';
+import 'package:foosball_mobile_app/api/UserApi.dart';
 import 'package:foosball_mobile_app/main.dart';
 import 'package:foosball_mobile_app/models/charts/user_stats_response.dart';
 import 'package:foosball_mobile_app/models/organisation/organisation_response.dart';
@@ -56,7 +56,7 @@ class _DashboardState extends State<Dashboard> {
     super.initState();
     String token = this.widget.param.token;
     String userId = this.widget.param.userId.toString();
-    User user = new User(token: token);
+    UserApi user = new UserApi(token: token);
     DatoCMS datoCMS = new DatoCMS(token: token);
 
     datoCMS.getHardcodedStrings(this.widget.param.language).then((value) {
@@ -106,7 +106,7 @@ class _DashboardState extends State<Dashboard> {
   // To do put functions here
   Future<UserStatsResponse> getUserStatsData(int userId, int currrentOrganisationId) async {
     String token = this.widget.param.token;
-    User user = new User(token: token);
+    UserApi user = new UserApi(token: token);
     Organisation organisation = new Organisation(token: token);
     var userStatsData = await user.getUserStats();
     userStatsResponse = userStatsData;

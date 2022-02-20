@@ -1,6 +1,6 @@
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:foosball_mobile_app/api/User.dart';
+import 'package:foosball_mobile_app/api/UserApi.dart';
 import 'package:foosball_mobile_app/models/user/user_last_ten.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'loading.dart';
@@ -26,7 +26,7 @@ class _DashBoardLastFiveState extends State<DashBoardLastFive> {
 
   Future<List<UserLastTen>?> getUserStatsData() async {
     String token = this.widget.userState.token;
-    User user = new User(token: token);
+    UserApi user = new UserApi(token: token);
     var lastTenMatchesData = await user.getLastTenMatches();
     lastTenMatches = lastTenMatchesData;
     return lastTenMatchesData;
@@ -47,8 +47,15 @@ class _DashBoardLastFiveState extends State<DashBoardLastFive> {
           " " +
           userLastTenObject.opponentOneLastName;
     } else if (userLastTenObject.typeOfMatchName == "DoubleFreehandMatch") {
+      String? oponentTwoFirstName, oponentTwoLastName;
+      if (userLastTenObject.opponentTwoFirstName != null) {
+        oponentTwoFirstName = userLastTenObject.opponentTwoFirstName;
+      }
+      if (userLastTenObject.opponentTwoLastName != null) {
+        oponentTwoLastName = userLastTenObject.opponentTwoLastName;
+      }
       result =
-          '${userLastTenObject.opponentOneFirstName} ${userLastTenObject.opponentOneLastName} ${userLastTenObject.opponentTwoFirstName} ${userLastTenObject.opponentTwoLastName}';
+          '${userLastTenObject.opponentOneFirstName} ${userLastTenObject.opponentOneLastName} $oponentTwoFirstName $oponentTwoLastName';
     }
 
     return result;
