@@ -15,6 +15,7 @@ class FreehandMatchModel {
   final String playerTwoPhotoUrl;
   final DateTime startTime;
   final DateTime endTime;
+  final String? totalPlayingTime;
   final int playerOneScore;
   final int playerTwoScore;
   final int upTo;
@@ -33,6 +34,7 @@ class FreehandMatchModel {
       required this.playerTwoPhotoUrl,
       required this.startTime,
       required this.endTime,
+      required this.totalPlayingTime,
       required this.playerOneScore,
       required this.playerTwoScore,
       required this.upTo,

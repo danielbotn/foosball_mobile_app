@@ -5,7 +5,6 @@ import 'package:foosball_mobile_app/models/history/userStats.dart';
 import 'package:foosball_mobile_app/models/other/TwoPlayersObject.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
-import 'package:foosball_mobile_app/widgets/Settings.dart';
 import 'package:intl/intl.dart';
 
 import 'freehand_match_detail.dart';
@@ -80,9 +79,9 @@ class _HistoryState extends State<History> {
       Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => FreehandMatchDetail(
-            twoPlayersObject: tpo,
-      )));
+              builder: (context) => FreehandMatchDetail(
+                    twoPlayersObject: tpo,
+                  )));
     }
   }
 
@@ -98,17 +97,44 @@ class _HistoryState extends State<History> {
       String formattedDate =
           DateFormat('dd-MM-yyyy | kk:mm').format(history[i]!.dateOfGame);
 
+      String? opponentTwoName = "";
+
+      if (history[i]!.opponentTwoFirstName != null &&
+          history[i]!.opponentTwoFirstName != null) {
+        opponentTwoName = (history[i]!.opponentTwoFirstName!) +
+            " " +
+            (history[i]!.opponentTwoLastName!);
+      } else {
+        opponentTwoName = "";
+      }
+
       list.add(ListTile(
         onTap: () => _goToMatchDetailScreen(
             history[i]!.matchId, history[i]!.typeOfMatchName),
-        title: Text(
-            history[i]!.opponentOneFirstName.toString() +
-                " " +
-                history[i]!.opponentOneLastName.toString(),
-            style: TextStyle(
-                color: this.widget.userState.darkmode
-                    ? AppColors.white
-                    : AppColors.textBlack)),
+        title: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+                history[i]!.opponentOneFirstName.toString() +
+                    " " +
+                    history[i]!.opponentOneLastName.toString(),
+                style: TextStyle(
+                    color: this.widget.userState.darkmode
+                        ? AppColors.white
+                        : AppColors.textBlack)),
+            Visibility(
+              visible: opponentTwoName.isNotEmpty,
+              child: Text(
+                opponentTwoName,
+                style: TextStyle(
+                    color: this.widget.userState.darkmode
+                        ? AppColors.white
+                        : AppColors.textBlack),
+              ),
+            ),
+          ],
+        ),
         subtitle: Text(formattedDate,
             style: TextStyle(
                 color: this.widget.userState.darkmode
@@ -154,7 +180,7 @@ class _HistoryState extends State<History> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text('History'),
+          title: Text('History', style : TextStyle(color: this.widget.userState.darkmode ? AppColors.white : AppColors.textBlack)),
           leading: IconButton(
             icon: Icon(Icons.chevron_left),
             onPressed: () {

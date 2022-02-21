@@ -8,6 +8,10 @@ import 'package:foosball_mobile_app/models/other/TwoPlayersObject.dart';
 import 'package:foosball_mobile_app/models/user/user_response.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
 
+import 'freehand_match_card.dart';
+import 'freehand_match_score.dart';
+import 'freehand_match_total_playing_time.dart';
+
 class FreehandMatchDetail extends StatefulWidget {
   // props
   final TwoPlayersObject twoPlayersObject;
@@ -29,10 +33,6 @@ class _FreehandMatchDetailState extends State<FreehandMatchDetail> {
   @override
   void initState() {
     super.initState();
-
-    if (this.widget.twoPlayersObject.typeOfMatch == "FreehandMatch") {
-    } else if (this.widget.twoPlayersObject.typeOfMatch ==
-        "SingleLeagueMatch") {}
 
     freehandGoalsFuture = getFreehandGoals();
     userFuture = getUser();
@@ -60,8 +60,8 @@ class _FreehandMatchDetailState extends State<FreehandMatchDetail> {
   Future<FreehandMatchModel?> getFreehandMatch() async {
     FreehandMatchApi fmapi = new FreehandMatchApi(
         token: this.widget.twoPlayersObject.userState.token);
-    var freehandMatch = await fmapi.getFreehandMatch(
-        this.widget.twoPlayersObject.matchId);
+    var freehandMatch =
+        await fmapi.getFreehandMatch(this.widget.twoPlayersObject.matchId);
     return freehandMatch;
   }
 
@@ -69,7 +69,11 @@ class _FreehandMatchDetailState extends State<FreehandMatchDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text('History'),
+          title: Text('Match Details',
+              style: TextStyle(
+                  color: this.widget.twoPlayersObject.userState.darkmode
+                      ? AppColors.white
+                      : AppColors.textBlack)),
           leading: IconButton(
             icon: Icon(Icons.chevron_left),
             onPressed: () {
@@ -83,58 +87,81 @@ class _FreehandMatchDetailState extends State<FreehandMatchDetail> {
               ? AppColors.darkModeBackground
               : AppColors.white),
       body: FutureBuilder(
-        future: Future.wait([freehandGoalsFuture, userFuture, freehandMatchFuture]),
+        future:
+            Future.wait([freehandGoalsFuture, userFuture, freehandMatchFuture]),
         builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
           if (snapshot.hasData) {
-            var freehandGoals = snapshot.data![0] as List<FreehandGoalsModel>?; //freehand goals
+            var freehandGoals =
+                snapshot.data![0] as List<FreehandGoalsModel>?; //freehand goals
             var userInfo = snapshot.data![1] as UserResponse; //user info
-            var freehandMatch = snapshot.data![2] as FreehandMatchModel?; //freehand match
+            var freehandMatch =
+                snapshot.data![2] as FreehandMatchModel?; //freehand match
 
-            String oponentFirstName, oponentLastName, oponentPhotoUrl = "";
+            String oponentFirstName,
+                oponentLastName,
+                oponentPhotoUrl,
+                userScore,
+                opponentScore = "";
 
             if (freehandMatch!.playerOneId == userInfo.id) {
               oponentFirstName = freehandMatch.playerTwoFirstName;
               oponentLastName = freehandMatch.playerTwoLastName;
               oponentPhotoUrl = freehandMatch.playerTwoPhotoUrl;
+              userScore = freehandMatch.playerOneScore.toString();
+              opponentScore = freehandMatch.playerTwoScore.toString();
             } else {
               oponentFirstName = freehandMatch.playerOneFirstName;
               oponentLastName = freehandMatch.playerOneLastName;
               oponentPhotoUrl = freehandMatch.playerOnePhotoUrl;
+              userScore = freehandMatch.playerTwoScore.toString();
+              opponentScore = freehandMatch.playerOneScore.toString();
             }
 
             return Container(
-                child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Column(
+                color: this.widget.twoPlayersObject.userState.darkmode
+                    ? AppColors.darkModeBackground
+                    : AppColors.white,
+                child: Column(
                   children: [
-                    Row(children: [
-                      Column(children: [
-                        Image.network(userInfo.photoUrl, width: 80, height: 80),
-                      ],),
-                       Column(children: [
-                        Text(userInfo.firstName),
-                        Text(userInfo.lastName),
-                      ],)
-                    ],)
-                  ],
-                ),
-              Column(
-                  children: [
-                    Row(children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        FreehandMatchCard(
+                          userState: this.widget.twoPlayersObject.userState,
+                          userFirstName: userInfo.firstName,
+                          userLastName: userInfo.lastName,
+                          userPhotoUrl: userInfo.photoUrl,
+                          lefOrRight: true,
+                        ),
+                        FreehandMatchCard(
+                          userState: this.widget.twoPlayersObject.userState,
+                          userFirstName: oponentFirstName,
+                          userLastName: oponentLastName,
+                          userPhotoUrl: oponentPhotoUrl,
+                          lefOrRight: false,
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        FreehandMatchScore(
+                          userState: this.widget.twoPlayersObject.userState,
+                          userScore: userScore,
+                        ),
+                        FreehandMatchScore(
+                          userState: this.widget.twoPlayersObject.userState,
+                          userScore: opponentScore,
+                        ),
+                      ],
+                    ),
+                    FreehandMatchTotalPlayingTime(
+                      userState: this.widget.twoPlayersObject.userState,
+                      totalPlayingTime: freehandMatch.totalPlayingTime.toString(),
+                      totalPlayingTimeLabel: "Total Playing Time"),
                      
-                       Column(children: [
-                        Text(oponentFirstName),
-                        Text(oponentLastName)
-                      ],),
-                       Column(children: [
-                        Image.network(oponentPhotoUrl, width: 80, height: 80),
-                      ],),
-                    ],)
                   ],
-                ),
-              ],
-            ));
+                ));
           } else {
             return CircularProgressIndicator();
           }
