@@ -23,10 +23,8 @@ class FreehandMatchApi {
       });
 
       if (response.statusCode == 200) {
-        print('Success: ${response.body}');
         result = FreehandMatchModel.fromJson(jsonDecode(response.body));
       } else {
-        print('Failure: ${response.body}');
         // To do Error handling
         result = null;
       }

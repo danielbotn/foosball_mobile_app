@@ -35,6 +35,10 @@ class HardcodedStrings {
   final String integration;
   final String slack;
   final String discord;
+  final String matchDetails;
+  final String totalPlayingTime;
+  final String newMatch;
+  final String rematch;
 
   HardcodedStrings({
       required this.matches,
@@ -66,7 +70,11 @@ class HardcodedStrings {
       required this.personalInformation,
       required this.integration,
       required this.slack,
-      required this.discord
+      required this.discord,
+      required this.matchDetails,
+      required this.totalPlayingTime,
+      required this.newMatch,
+      required this.rematch
       });
 
   factory HardcodedStrings.fromJson(Map<String, dynamic> item) =>

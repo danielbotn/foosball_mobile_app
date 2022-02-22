@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
-import 'package:foosball_mobile_app/utils/app_color.dart';
+import '../extended_Text.dart';
 
 class FreehandMatchScore extends StatelessWidget {
   final UserState userState;
@@ -22,13 +22,11 @@ class FreehandMatchScore extends StatelessWidget {
               children: [
                 Column(
                   children: [
-                    Text(userScore,
-                        style: TextStyle(
-                          color: this.userState.darkmode
-                              ? AppColors.white
-                              : AppColors.textBlack,
-                          fontSize: 40,
-                        )),
+                    ExtendedText(
+                      text: userScore,
+                      userState: this.userState,
+                      fontSize: 40,
+                    ),
                   ],
                 ),
               ],

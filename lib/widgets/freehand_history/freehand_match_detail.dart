@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/api/FreehandGoalsApi.dart';
 import 'package:foosball_mobile_app/api/FreehandMatchApi.dart';
 import 'package:foosball_mobile_app/api/UserApi.dart';
+import 'package:foosball_mobile_app/main.dart';
 import 'package:foosball_mobile_app/models/freehand-goals/freehand_goals_model.dart';
 import 'package:foosball_mobile_app/models/freehand-matches/freehand_match_model.dart';
 import 'package:foosball_mobile_app/models/other/TwoPlayersObject.dart';
 import 'package:foosball_mobile_app/models/user/user_response.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
 
+import 'freehand_match_buttons.dart';
 import 'freehand_match_card.dart';
+import 'freehand_match_goals.dart';
 import 'freehand_match_score.dart';
 import 'freehand_match_total_playing_time.dart';
 
@@ -40,8 +43,6 @@ class _FreehandMatchDetailState extends State<FreehandMatchDetail> {
   }
 
   Future<List<FreehandGoalsModel>?> getFreehandGoals() async {
-    print('this.widget.twoPlayersObject.matchId)');
-    print(this.widget.twoPlayersObject.matchId);
     FreehandGoalsApi fgapi = new FreehandGoalsApi(
         token: this.widget.twoPlayersObject.userState.token);
     var freehandGoals =
@@ -69,7 +70,7 @@ class _FreehandMatchDetailState extends State<FreehandMatchDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text('Match Details',
+          title: Text(this.widget.twoPlayersObject.userState.hardcodedStrings.matchDetails,
               style: TextStyle(
                   color: this.widget.twoPlayersObject.userState.darkmode
                       ? AppColors.white
@@ -117,6 +118,8 @@ class _FreehandMatchDetailState extends State<FreehandMatchDetail> {
               opponentScore = freehandMatch.playerOneScore.toString();
             }
 
+            // print(freehandGoals![0].oponentPhotoUrl.toString());
+
             return Container(
                 color: this.widget.twoPlayersObject.userState.darkmode
                     ? AppColors.darkModeBackground
@@ -156,10 +159,16 @@ class _FreehandMatchDetailState extends State<FreehandMatchDetail> {
                       ],
                     ),
                     FreehandMatchTotalPlayingTime(
+                        userState: this.widget.twoPlayersObject.userState,
+                        totalPlayingTime:
+                            freehandMatch.totalPlayingTime.toString(),
+                        totalPlayingTimeLabel: this.widget.twoPlayersObject.userState.hardcodedStrings.totalPlayingTime),
+                    FreehandMatchGoals(
                       userState: this.widget.twoPlayersObject.userState,
-                      totalPlayingTime: freehandMatch.totalPlayingTime.toString(),
-                      totalPlayingTimeLabel: "Total Playing Time"),
-                     
+                      freehandGoals: freehandGoals,
+                    ), 
+                    Spacer(),
+                    FreehandMatchButtons(userState: userState)
                   ],
                 ));
           } else {

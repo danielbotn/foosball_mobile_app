@@ -7,7 +7,8 @@ import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
 import 'package:intl/intl.dart';
 
-import 'freehand_match_detail.dart';
+import 'freehand_history/freehand_match_detail.dart';
+
 
 class History extends StatefulWidget {
   final UserState userState;
@@ -68,7 +69,6 @@ class _HistoryState extends State<History> {
   }
 
   _goToMatchDetailScreen(int matchId, String typeOfMatch) {
-    print('typeOfMatch: $typeOfMatch');
     TwoPlayersObject tpo = new TwoPlayersObject(
       userState: this.widget.userState,
       typeOfMatch: typeOfMatch,
@@ -166,8 +166,8 @@ class _HistoryState extends State<History> {
                 height: 5.0,
               ),
               winner == true
-                  ? Text('Won', style: TextStyle(color: Colors.green))
-                  : Text('Lost', style: TextStyle(color: Colors.red)),
+                  ? Text(this.widget.userState.hardcodedStrings.won, style: TextStyle(color: Colors.green))
+                  : Text(this.widget.userState.hardcodedStrings.lost, style: TextStyle(color: Colors.red)),
             ],
           ),
         ),
@@ -180,7 +180,7 @@ class _HistoryState extends State<History> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text('History', style : TextStyle(color: this.widget.userState.darkmode ? AppColors.white : AppColors.textBlack)),
+          title: Text(this.widget.userState.hardcodedStrings.history, style : TextStyle(color: this.widget.userState.darkmode ? AppColors.white : AppColors.textBlack)),
           leading: IconButton(
             icon: Icon(Icons.chevron_left),
             onPressed: () {

@@ -38,6 +38,10 @@ HardcodedStrings _$HardcodedStringsFromJson(Map<String, dynamic> json) {
     integration: json['integration'] as String,
     slack: json['slack'] as String,
     discord: json['discord'] as String,
+    matchDetails: json['matchDetails'] as String,
+    totalPlayingTime: json['totalPlayingTime'] as String,
+    newMatch: json['newMatch'] as String,
+    rematch: json['rematch'] as String,
   );
 }
 
@@ -73,4 +77,8 @@ Map<String, dynamic> _$HardcodedStringsToJson(HardcodedStrings instance) =>
       'integration': instance.integration,
       'slack': instance.slack,
       'discord': instance.discord,
+      'matchDetails': instance.matchDetails,
+      'totalPlayingTime': instance.totalPlayingTime,
+      'newMatch': instance.newMatch,
+      'rematch': instance.rematch,
     };

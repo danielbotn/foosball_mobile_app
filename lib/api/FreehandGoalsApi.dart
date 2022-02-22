@@ -9,22 +9,22 @@ class FreehandGoalsApi {
 
   FreehandGoalsApi({required this.token});
 
-  Future<List<FreehandGoalsModel>?> getFreehandGoals(int id) async {
+  Future<List<FreehandGoalsModel>?> getFreehandGoals(int matchId) async {
     late List<FreehandGoalsModel>? result;
 
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']
         : dotenv.env['REST_URL_PATH_DEV'];
     if (baseUrl != null) {
-      var jsonObject = {"matchId": '$id'};
+      
       Uri outgoingUri = new Uri(
           scheme: 'https',
           host: kReleaseMode ? dotenv.env['PROD_HOST'] : dotenv.env['DEV_HOST'],
           port: kReleaseMode
               ? int.parse(dotenv.env['PROD_PORT'].toString())
               : int.parse(dotenv.env['DEV_PORT'].toString()),
-          path: 'api/FreehandGoals/goals',
-          queryParameters: jsonObject);
+          path: 'api/FreehandGoals/goals/' + matchId.toString(),
+          );
 
 
       var response = await http.get(outgoingUri, headers: {

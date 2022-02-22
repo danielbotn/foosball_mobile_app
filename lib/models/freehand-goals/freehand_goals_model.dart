@@ -6,6 +6,7 @@ part 'freehand_goals_model.g.dart';
 class FreehandGoalsModel {
   final int id;
   final DateTime timeOfGoal;
+  final String goalTimeStopWatch;
   final int matchId;
   final int scoredByUserId;
   final String scoredByUserFirstName;
@@ -23,6 +24,7 @@ class FreehandGoalsModel {
   FreehandGoalsModel(
       {required this.id,
       required this.timeOfGoal,
+      required this.goalTimeStopWatch,
       required this.matchId,
       required this.scoredByUserId,
       required this.scoredByUserFirstName,

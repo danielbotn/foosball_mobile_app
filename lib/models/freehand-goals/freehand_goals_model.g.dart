@@ -10,6 +10,7 @@ FreehandGoalsModel _$FreehandGoalsModelFromJson(Map<String, dynamic> json) {
   return FreehandGoalsModel(
     id: json['id'] as int,
     timeOfGoal: DateTime.parse(json['timeOfGoal'] as String),
+    goalTimeStopWatch: json['goalTimeStopWatch'] as String,
     matchId: json['matchId'] as int,
     scoredByUserId: json['scoredByUserId'] as int,
     scoredByUserFirstName: json['scoredByUserFirstName'] as String,
@@ -29,6 +30,7 @@ Map<String, dynamic> _$FreehandGoalsModelToJson(FreehandGoalsModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'timeOfGoal': instance.timeOfGoal.toIso8601String(),
+      'goalTimeStopWatch': instance.goalTimeStopWatch,
       'matchId': instance.matchId,
       'scoredByUserId': instance.scoredByUserId,
       'scoredByUserFirstName': instance.scoredByUserFirstName,

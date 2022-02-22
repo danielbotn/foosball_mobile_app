@@ -62,7 +62,11 @@ abstract class _UserState with Store {
       personalInformation: "",
       integration: "",
       slack: "",
-      discord: ""
+      discord: "",
+      matchDetails: "",
+      totalPlayingTime: "",
+      newMatch: "",
+      rematch: ""
       );
   
   @observable

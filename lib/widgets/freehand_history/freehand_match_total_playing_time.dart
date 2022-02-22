@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
+import '../extended_Text.dart';
 
 class FreehandMatchTotalPlayingTime extends StatelessWidget {
   final UserState userState;
@@ -21,17 +22,14 @@ class FreehandMatchTotalPlayingTime extends StatelessWidget {
           children: <Widget>[
             Expanded(
               child: ListTile(
-                leading: Icon(Icons.timer, color: this.userState.darkmode ? AppColors.white : AppColors.textBlack),
-                title: Text(totalPlayingTimeLabel,
-                    style: TextStyle(
-                        color: this.userState.darkmode
-                            ? AppColors.white
-                            : AppColors.textBlack)),
-                subtitle: Text(this.totalPlayingTime,
-                    style: TextStyle(
-                        color: this.userState.darkmode
-                            ? AppColors.white
-                            : AppColors.textGrey)),
+                leading: Icon(Icons.timer,
+                    color: this.userState.darkmode
+                        ? AppColors.white
+                        : AppColors.textBlack),
+                title: ExtendedText(
+                    text: totalPlayingTimeLabel, userState: this.userState),
+                subtitle: ExtendedText(
+                    text: this.totalPlayingTime, userState: this.userState),
               ),
             ),
           ],
