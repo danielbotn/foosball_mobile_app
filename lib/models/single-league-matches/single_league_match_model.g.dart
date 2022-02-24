@@ -30,6 +30,7 @@ SingleLeagueMatchModel _$SingleLeagueMatchModelFromJson(
     matchStarted: json['matchStarted'] as bool?,
     matchEnded: json['matchEnded'] as bool?,
     matchPaused: json['matchPaused'] as bool?,
+    totalPlayingTime: json['totalPlayingTime'] as String?,
   );
 }
 
@@ -53,4 +54,5 @@ Map<String, dynamic> _$SingleLeagueMatchModelToJson(
       'matchStarted': instance.matchStarted,
       'matchEnded': instance.matchEnded,
       'matchPaused': instance.matchPaused,
+      'totalPlayingTime': instance.totalPlayingTime,
     };

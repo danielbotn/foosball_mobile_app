@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
-import '../extended_Text.dart';
+import 'extended_Text.dart';
 
-class FreehandMatchTotalPlayingTime extends StatelessWidget {
+class TotalPlayingTime extends StatelessWidget {
   final UserState userState;
   final String totalPlayingTimeLabel;
   final String totalPlayingTime;
-  const FreehandMatchTotalPlayingTime(
+  const TotalPlayingTime(
       {Key? key,
       required this.userState,
       required this.totalPlayingTime,

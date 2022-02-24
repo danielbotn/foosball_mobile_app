@@ -21,6 +21,7 @@ class SingleLeagueMatchModel {
   final bool? matchStarted;
   final bool? matchEnded;
   final bool? matchPaused;
+  final String? totalPlayingTime;
   
 
   SingleLeagueMatchModel(
@@ -40,11 +41,13 @@ class SingleLeagueMatchModel {
       required this.playerTwoScore,
       required this.matchStarted,
       required this.matchEnded,
-      required this.matchPaused
+      required this.matchPaused,
+      required this.totalPlayingTime
       });
 
   factory SingleLeagueMatchModel.fromJson(Map<String, dynamic> item) =>
       _$SingleLeagueMatchModelFromJson(item);
 
   Map<String, dynamic> toJson(item) => _$SingleLeagueMatchModelToJson(item);
+
 }

@@ -23,6 +23,7 @@ class HistoryModel {
   final int userScore;
   final int opponentUserOrTeamScore;
   final DateTime dateOfGame;
+  final int? leagueId;
 
   HistoryModel(
       {
@@ -44,7 +45,9 @@ class HistoryModel {
       required this.opponentTwoPhotoUrl,
       required this.userScore,
       required this.opponentUserOrTeamScore,
-      required this.dateOfGame});
+      required this.dateOfGame,
+      required this.leagueId
+      });
 
   factory HistoryModel.fromJson(Map<String, dynamic> item) =>
       _$HistoryModelFromJson(item);

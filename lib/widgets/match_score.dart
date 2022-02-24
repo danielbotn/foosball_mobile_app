@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
-import '../extended_Text.dart';
+import 'extended_Text.dart';
 
-class FreehandMatchScore extends StatelessWidget {
+class MatchScore extends StatelessWidget {
   final UserState userState;
   final String userScore;
 
-  const FreehandMatchScore({
+  const MatchScore({
     Key? key,
     required this.userState,
     required this.userScore,

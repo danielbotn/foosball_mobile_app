@@ -12,10 +12,10 @@ import 'package:foosball_mobile_app/utils/helpers.dart';
 
 import '../extended_Text.dart';
 import 'freehand_match_buttons.dart';
-import 'freehand_match_card.dart';
+import '../match_card.dart';
 import 'freehand_match_goals.dart';
-import 'freehand_match_score.dart';
-import 'freehand_match_total_playing_time.dart';
+import '../match_score.dart';
+import '../total_playing_time.dart';
 
 class FreehandMatchDetail extends StatefulWidget {
   // props
@@ -122,14 +122,14 @@ class _FreehandMatchDetailState extends State<FreehandMatchDetail> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        FreehandMatchCard(
+                        MatchCard(
                           userState: this.widget.twoPlayersObject.userState,
                           userFirstName: userInfo.firstName,
                           userLastName: userInfo.lastName,
                           userPhotoUrl: userInfo.photoUrl,
                           lefOrRight: true,
                         ),
-                        FreehandMatchCard(
+                        MatchCard(
                           userState: this.widget.twoPlayersObject.userState,
                           userFirstName: oponentFirstName,
                           userLastName: oponentLastName,
@@ -141,17 +141,17 @@ class _FreehandMatchDetailState extends State<FreehandMatchDetail> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        FreehandMatchScore(
+                        MatchScore(
                           userState: this.widget.twoPlayersObject.userState,
                           userScore: userScore,
                         ),
-                        FreehandMatchScore(
+                        MatchScore(
                           userState: this.widget.twoPlayersObject.userState,
                           userScore: opponentScore,
                         ),
                       ],
                     ),
-                    FreehandMatchTotalPlayingTime(
+                    TotalPlayingTime(
                         userState: this.widget.twoPlayersObject.userState,
                         totalPlayingTime:
                             freehandMatch.totalPlayingTime.toString(),

@@ -8,10 +8,17 @@ class SingleLeagueGoalModel {
   final DateTime timeOfGoal;
   final int matchId;
   final int scoredByUserId;
+  final String scoredByUserFirstName;
+  final String scoredByUserLastName;
+  final String scoredByUserPhotoUrl;
   final int opponentId;
+  final String opponentFirstName;
+  final String opponentLastName;
+  final String opponentPhotoUrl;
   final int scorerScore;
   final int opponentScore;
   final bool winnerGoal;
+  final String goalTimeStopWatch;
   
 
   SingleLeagueGoalModel(
@@ -19,10 +26,17 @@ class SingleLeagueGoalModel {
       required this.timeOfGoal,
       required this.matchId,
       required this.scoredByUserId,
+      required this.scoredByUserFirstName,
+      required this.scoredByUserLastName,
+      required this.scoredByUserPhotoUrl,
       required this.opponentId,
+      required this.opponentFirstName,
+      required this.opponentLastName,
+      required this.opponentPhotoUrl,
       required this.scorerScore,
       required this.opponentScore,
       required this.winnerGoal,
+      required this.goalTimeStopWatch
       });
 
   factory SingleLeagueGoalModel.fromJson(Map<String, dynamic> item) =>

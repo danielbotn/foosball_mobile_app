@@ -27,6 +27,7 @@ HistoryModel _$HistoryModelFromJson(Map<String, dynamic> json) {
     userScore: json['userScore'] as int,
     opponentUserOrTeamScore: json['opponentUserOrTeamScore'] as int,
     dateOfGame: DateTime.parse(json['dateOfGame'] as String),
+    leagueId: json['leagueId'] as int?,
   );
 }
 
@@ -51,4 +52,5 @@ Map<String, dynamic> _$HistoryModelToJson(HistoryModel instance) =>
       'userScore': instance.userScore,
       'opponentUserOrTeamScore': instance.opponentUserOrTeamScore,
       'dateOfGame': instance.dateOfGame.toIso8601String(),
+      'leagueId': instance.leagueId,
     };

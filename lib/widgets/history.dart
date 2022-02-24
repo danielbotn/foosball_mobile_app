@@ -69,11 +69,12 @@ class _HistoryState extends State<History> {
     return history;
   }
 
-  _goToMatchDetailScreen(int matchId, String typeOfMatch) {
+  _goToMatchDetailScreen(int matchId, String typeOfMatch, int? leagueId) {
     TwoPlayersObject tpo = new TwoPlayersObject(
       userState: this.widget.userState,
       typeOfMatch: typeOfMatch,
       matchId: matchId,
+      leagueId: leagueId
     );
 
     if (typeOfMatch == "FreehandMatch") {
@@ -119,7 +120,7 @@ class _HistoryState extends State<History> {
 
       list.add(ListTile(
         onTap: () => _goToMatchDetailScreen(
-            history[i]!.matchId, history[i]!.typeOfMatchName),
+            history[i]!.matchId, history[i]!.typeOfMatchName, history[i]!.leagueId),
         title: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
