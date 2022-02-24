@@ -8,7 +8,9 @@ import 'package:foosball_mobile_app/models/freehand-matches/freehand_match_model
 import 'package:foosball_mobile_app/models/other/TwoPlayersObject.dart';
 import 'package:foosball_mobile_app/models/user/user_response.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
+import 'package:foosball_mobile_app/utils/helpers.dart';
 
+import '../extended_Text.dart';
 import 'freehand_match_buttons.dart';
 import 'freehand_match_card.dart';
 import 'freehand_match_goals.dart';
@@ -68,25 +70,20 @@ class _FreehandMatchDetailState extends State<FreehandMatchDetail> {
 
   @override
   Widget build(BuildContext context) {
+    String matchDetails =
+        this.widget.twoPlayersObject.userState.hardcodedStrings.matchDetails;
+    Helpers helpers = Helpers();
     return Scaffold(
       appBar: AppBar(
-          title: Text(this.widget.twoPlayersObject.userState.hardcodedStrings.matchDetails,
-              style: TextStyle(
-                  color: this.widget.twoPlayersObject.userState.darkmode
-                      ? AppColors.white
-                      : AppColors.textBlack)),
+          title: ExtendedText(text: matchDetails, userState: userState),
           leading: IconButton(
             icon: Icon(Icons.chevron_left),
             onPressed: () {
               Navigator.pop(context);
             },
           ),
-          iconTheme: this.widget.twoPlayersObject.userState.darkmode
-              ? IconThemeData(color: AppColors.white)
-              : IconThemeData(color: Colors.grey[700]),
-          backgroundColor: this.widget.twoPlayersObject.userState.darkmode
-              ? AppColors.darkModeBackground
-              : AppColors.white),
+          iconTheme: helpers.getIconTheme(userState.darkmode),
+          backgroundColor: helpers.getBackgroundColor(userState.darkmode)),
       body: FutureBuilder(
         future:
             Future.wait([freehandGoalsFuture, userFuture, freehandMatchFuture]),
@@ -118,12 +115,8 @@ class _FreehandMatchDetailState extends State<FreehandMatchDetail> {
               opponentScore = freehandMatch.playerOneScore.toString();
             }
 
-            // print(freehandGoals![0].oponentPhotoUrl.toString());
-
             return Container(
-                color: this.widget.twoPlayersObject.userState.darkmode
-                    ? AppColors.darkModeBackground
-                    : AppColors.white,
+                color: helpers.getBackgroundColor(userState.darkmode),
                 child: Column(
                   children: [
                     Row(
@@ -162,11 +155,16 @@ class _FreehandMatchDetailState extends State<FreehandMatchDetail> {
                         userState: this.widget.twoPlayersObject.userState,
                         totalPlayingTime:
                             freehandMatch.totalPlayingTime.toString(),
-                        totalPlayingTimeLabel: this.widget.twoPlayersObject.userState.hardcodedStrings.totalPlayingTime),
+                        totalPlayingTimeLabel: this
+                            .widget
+                            .twoPlayersObject
+                            .userState
+                            .hardcodedStrings
+                            .totalPlayingTime),
                     FreehandMatchGoals(
                       userState: this.widget.twoPlayersObject.userState,
                       freehandGoals: freehandGoals,
-                    ), 
+                    ),
                     Spacer(),
                     FreehandMatchButtons(userState: userState)
                   ],

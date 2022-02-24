@@ -5,6 +5,7 @@ import 'package:foosball_mobile_app/models/history/userStats.dart';
 import 'package:foosball_mobile_app/models/other/TwoPlayersObject.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
+import 'package:foosball_mobile_app/widgets/single_league_history/single_league_match_detail.dart';
 import 'package:intl/intl.dart';
 
 import 'freehand_history/freehand_match_detail.dart';
@@ -80,6 +81,14 @@ class _HistoryState extends State<History> {
           context,
           MaterialPageRoute(
               builder: (context) => FreehandMatchDetail(
+                    twoPlayersObject: tpo,
+                  )));
+    }
+    else if(typeOfMatch == "SingleLeagueMatch") {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => SingleLeagueMatchDetail(
                     twoPlayersObject: tpo,
                   )));
     }
