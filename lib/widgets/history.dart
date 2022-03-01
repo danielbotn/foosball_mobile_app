@@ -8,6 +8,7 @@ import 'package:foosball_mobile_app/utils/app_color.dart';
 import 'package:foosball_mobile_app/widgets/single_league_history/single_league_match_detail.dart';
 import 'package:intl/intl.dart';
 
+import 'freehand_double_history/freehand_double_match_detail.dart';
 import 'freehand_history/freehand_match_detail.dart';
 
 
@@ -77,6 +78,8 @@ class _HistoryState extends State<History> {
       leagueId: leagueId
     );
 
+    print('typeOfMatch: $typeOfMatch');
+
     if (typeOfMatch == "FreehandMatch") {
       Navigator.push(
           context,
@@ -84,14 +87,22 @@ class _HistoryState extends State<History> {
               builder: (context) => FreehandMatchDetail(
                     twoPlayersObject: tpo,
                   )));
-    }
-    else if(typeOfMatch == "SingleLeagueMatch") {
+    } else if(typeOfMatch == "SingleLeagueMatch") {
       Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) => SingleLeagueMatchDetail(
                     twoPlayersObject: tpo,
                   )));
+    } else if (typeOfMatch == "DoubleFreehandMatch") {
+       Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => FreehandDoubleMatchDetail(
+                    twoPlayersObject: tpo,
+                  )));
+    } else {
+      // DoubleLeagueMatch
     }
   }
 

@@ -7,9 +7,7 @@ import 'package:foosball_mobile_app/models/freehand-goals/freehand_goals_model.d
 import 'package:foosball_mobile_app/models/freehand-matches/freehand_match_model.dart';
 import 'package:foosball_mobile_app/models/other/TwoPlayersObject.dart';
 import 'package:foosball_mobile_app/models/user/user_response.dart';
-import 'package:foosball_mobile_app/utils/app_color.dart';
 import 'package:foosball_mobile_app/utils/helpers.dart';
-
 import '../extended_Text.dart';
 import 'freehand_match_buttons.dart';
 import '../match_card.dart';
