@@ -8,6 +8,7 @@ import 'package:foosball_mobile_app/utils/app_color.dart';
 import 'package:foosball_mobile_app/widgets/single_league_history/single_league_match_detail.dart';
 import 'package:intl/intl.dart';
 
+import 'double_league_history/double_league_match_detail.dart';
 import 'freehand_double_history/freehand_double_match_detail.dart';
 import 'freehand_history/freehand_match_detail.dart';
 
@@ -102,7 +103,12 @@ class _HistoryState extends State<History> {
                     twoPlayersObject: tpo,
                   )));
     } else {
-      // DoubleLeagueMatch
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => DoubleLeagueMatchDetail(
+                    twoPlayersObject: tpo,
+                  )));
     }
   }
 

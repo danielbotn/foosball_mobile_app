@@ -3,18 +3,20 @@ import 'package:foosball_mobile_app/state/user_state.dart';
 
 import 'extended_Text.dart';
 
-
 class MatchCard extends StatelessWidget {
   final UserState userState;
   final String userFirstName, userLastName, userPhotoUrl;
   final bool lefOrRight;
+  final double? widthAndHeight;
+
   const MatchCard(
       {Key? key,
       required this.userState,
       required this.userFirstName,
       required this.userLastName,
       required this.userPhotoUrl,
-      required this.lefOrRight})
+      required this.lefOrRight,
+      this.widthAndHeight})
       : super(key: key);
 
   @override
@@ -29,7 +31,9 @@ class MatchCard extends StatelessWidget {
                   visible: lefOrRight,
                   child: Column(
                     children: [
-                      Image.network(userPhotoUrl, width: 80, height: 80),
+                      Image.network(userPhotoUrl,
+                          width: widthAndHeight != null ? widthAndHeight : 80,
+                          height: widthAndHeight != null ? widthAndHeight : 80),
                     ],
                   ),
                 ),
@@ -44,7 +48,9 @@ class MatchCard extends StatelessWidget {
                   visible: lefOrRight == false,
                   child: Column(
                     children: [
-                      Image.network(userPhotoUrl, width: 80, height: 80),
+                      Image.network(userPhotoUrl,
+                          width: widthAndHeight != null ? widthAndHeight : 80,
+                          height: widthAndHeight != null ? widthAndHeight : 80),
                     ],
                   ),
                 ),
