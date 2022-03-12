@@ -66,7 +66,9 @@ abstract class _UserState with Store {
       matchDetails: "",
       totalPlayingTime: "",
       newMatch: "",
-      rematch: ""
+      rematch: "",
+      twoPlayers: "",
+      fourPlayers: ""
       );
   
   @observable

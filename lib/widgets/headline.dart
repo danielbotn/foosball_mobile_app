@@ -30,7 +30,6 @@ class Headline extends StatelessWidget {
               alignment: Alignment.centerRight,
               child: Container(
                 margin: const EdgeInsets.only(right: 10),
-                
                 child: Icon(Icons.keyboard_arrow_right, color: userState.darkmode ? AppColors.white : AppColors.grey2),
               ),
             ),

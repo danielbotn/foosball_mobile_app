@@ -72,14 +72,7 @@ void main() async {
   }
 
   runApp(
-    ChangeNotifierProvider<ThemeNotifier>(
-      create: (BuildContext context) {
-        return ThemeNotifier(
-          ThemeMode.dark,
-        );
-      },
-      child: MyApp(initialRoute: theRoute),
-    ),
+    MyApp(initialRoute: theRoute),
   );
 }
 
@@ -95,11 +88,9 @@ class _MyAppState extends State<MyApp> {
   UserState param = userState;
   @override
   Widget build(BuildContext context) {
-    final themeNotifier = Provider.of<ThemeNotifier>(context);
     return MaterialApp(
       theme: AppTheme().lightTheme,
       darkTheme: AppTheme().darkTheme,
-      themeMode: themeNotifier.getThemeMode(),
       initialRoute: widget.initialRoute,
       routes: {
         'dashboard': (context) => Dashboard(param: param),

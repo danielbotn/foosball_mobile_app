@@ -42,6 +42,8 @@ HardcodedStrings _$HardcodedStringsFromJson(Map<String, dynamic> json) {
     totalPlayingTime: json['totalPlayingTime'] as String,
     newMatch: json['newMatch'] as String,
     rematch: json['rematch'] as String,
+    twoPlayers: json['twoPlayers'] as String,
+    fourPlayers: json['fourPlayers'] as String,
   );
 }
 
@@ -81,4 +83,6 @@ Map<String, dynamic> _$HardcodedStringsToJson(HardcodedStrings instance) =>
       'totalPlayingTime': instance.totalPlayingTime,
       'newMatch': instance.newMatch,
       'rematch': instance.rematch,
+      'twoPlayers': instance.twoPlayers,
+      'fourPlayers': instance.fourPlayers,
     };

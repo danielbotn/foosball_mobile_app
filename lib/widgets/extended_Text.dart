@@ -17,7 +17,7 @@ class ExtendedText extends StatelessWidget {
         text,
         style: TextStyle(
           fontSize: fontSize ?? 16,
-          color: colorOverride,
+          color: colorOverride
         ),
       );
     } else {

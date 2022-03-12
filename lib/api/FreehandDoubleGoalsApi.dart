@@ -34,7 +34,6 @@ class FreehandDoubleGoalsApi {
       });
 
       if (response.statusCode == 200) {
-        print(response.body);
         List<FreehandDoubleGoalModel> userLastTen;
         userLastTen = (json.decode(response.body) as List)
             .map((i) => FreehandDoubleGoalModel.fromJson(i))
@@ -42,7 +41,6 @@ class FreehandDoubleGoalsApi {
 
         result = userLastTen;
       } else {
-        print(response.statusCode);
         result = null;
       }
     }

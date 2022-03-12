@@ -90,4 +90,33 @@ class UserApi {
     }
     return result;
   }
+
+   Future<List<UserResponse>?> getUsers() async {
+    late List<UserResponse>? result;
+
+    String? baseUrl = kReleaseMode
+        ? dotenv.env['REST_URL_PATH_PROD']
+        : dotenv.env['REST_URL_PATH_DEV'];
+    if (baseUrl != null) {
+      var url = Uri.parse(baseUrl + '/api/Users');
+
+      var response = await http.get(url, headers: {
+        "Accept": "application/json",
+        "content-type": "application/json",
+        'Authorization': 'Bearer $token',
+      });
+
+      if (response.statusCode == 200) {
+        List<UserResponse> userLastTen;
+        userLastTen = (json.decode(response.body) as List)
+            .map((i) => UserResponse.fromJson(i))
+            .toList();
+
+        result = userLastTen;
+      } else {
+        result = null;
+      }
+    }
+    return result;
+  }
 }

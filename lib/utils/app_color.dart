@@ -20,4 +20,5 @@ class AppColors {
   static const darkThemeShadowColor = Color(0xFF1E2247);
   static const darkModeBackground = const Color(0xff424242);
   static const buttonsLightTheme = const Color(0xff2F80ED);
+  static const lightThemeBackground = Color(0xffFAFAFA);
 }

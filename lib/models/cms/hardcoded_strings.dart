@@ -39,6 +39,8 @@ class HardcodedStrings {
   final String totalPlayingTime;
   final String newMatch;
   final String rematch;
+  final String twoPlayers;
+  final String fourPlayers;
 
   HardcodedStrings({
       required this.matches,
@@ -74,7 +76,9 @@ class HardcodedStrings {
       required this.matchDetails,
       required this.totalPlayingTime,
       required this.newMatch,
-      required this.rematch
+      required this.rematch,
+      required this.twoPlayers,
+      required this.fourPlayers,
       });
 
   factory HardcodedStrings.fromJson(Map<String, dynamic> item) =>

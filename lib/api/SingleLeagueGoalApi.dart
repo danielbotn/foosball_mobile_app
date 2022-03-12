@@ -37,7 +37,6 @@ class SingleLeagueGoalApi {
       });
 
       if (response.statusCode == 200) {
-        print('200 200');
         List<SingleLeagueGoalModel> userLastTen;
         userLastTen = (json.decode(response.body) as List)
             .map((i) => SingleLeagueGoalModel.fromJson(i))
@@ -45,7 +44,6 @@ class SingleLeagueGoalApi {
 
         result = userLastTen;
       } else {
-        print('error error');
         result = null;
       }
     }

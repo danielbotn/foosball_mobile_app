@@ -5,6 +5,8 @@ import 'package:foosball_mobile_app/utils/app_color.dart';
 import 'package:foosball_mobile_app/widgets/Settings.dart';
 import 'package:foosball_mobile_app/widgets/history.dart';
 
+import 'new_game/new_game.dart';
+
 class DrawerSideBar extends StatefulWidget {
   // Props variables
   final UserState userState;
@@ -81,8 +83,15 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
                       color: userState.darkmode
                           ? AppColors.white
                           : AppColors.textBlack)),
-              onTap: () {
-                Navigator.pop(context);
+              onTap: () async {
+                final UserState userStateFromNewGame = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => NewGame(
+                            userState: userState,
+                          )),
+                );
+                setAllStates(userStateFromNewGame);
               }),
           new ListTile(
               tileColor: userState.darkmode

@@ -22,7 +22,6 @@ class _SettingsState extends State<Settings> {
   var selectedLanguage = "";
   bool isSwitched = false;
 
-  late ThemeNotifier themeNotifier;
   var isDarkTheme;
 
   late Future<HardcodedStrings?> hardcodedStringsFuture;
@@ -76,7 +75,6 @@ class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     isDarkTheme = Theme.of(context).brightness == Brightness.dark;
-    themeNotifier = Provider.of<ThemeNotifier>(context);
 
     changeTheme(bool value) async {
       final storage = new FlutterSecureStorage();
@@ -86,10 +84,8 @@ class _SettingsState extends State<Settings> {
       });
       if (value == true) {
         this.widget.userState.setDarkmode(true);
-        themeNotifier.setThemeMode(ThemeMode.light);
       } else {
         this.widget.userState.setDarkmode(false);
-        themeNotifier.setThemeMode(ThemeMode.dark);
       }
     }
 
@@ -172,7 +168,6 @@ class _SettingsState extends State<Settings> {
       }
     }
 
-    // To do, use futurebuilder for language change as done in dashboard.dart file
     return Scaffold(
       appBar: AppBar(
           leading: IconButton(

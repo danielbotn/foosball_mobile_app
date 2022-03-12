@@ -79,8 +79,6 @@ class _HistoryState extends State<History> {
       leagueId: leagueId
     );
 
-    print('typeOfMatch: $typeOfMatch');
-
     if (typeOfMatch == "FreehandMatch") {
       Navigator.push(
           context,

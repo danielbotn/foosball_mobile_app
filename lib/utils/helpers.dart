@@ -19,7 +19,7 @@ class Helpers {
     if (darkMode == true) {
       return AppColors.darkModeBackground;
     } else {
-      return AppColors.white;
+      return AppColors.lightThemeBackground;
     }
   }
 
@@ -101,5 +101,29 @@ class Helpers {
     }
 
     return result;
+  }
+
+  Color getButtonTextColor(bool darkMode, bool isTwoPlayers) {
+    if (darkMode) {
+      return AppColors.blue;
+    } else {
+      if (isTwoPlayers) {
+        return AppColors.textBlack;
+      } else {
+        return AppColors.white;
+      }
+    }
+  }
+
+  Color getNewGameButtonColor(bool darkMode, bool isTwoPlayers) {
+    if (darkMode) {
+      return AppColors.darkModeBackground;
+    } else {
+      if (isTwoPlayers) {
+        return AppColors.white;
+      } else {
+        return AppColors.buttonsLightTheme;
+      }
+    }
   }
 }
