@@ -18,7 +18,7 @@ class StartGameButton extends StatelessWidget {
               child: Container(
                 child: ElevatedButton(
                   onPressed: () => {},
-                  child: Text(userState.hardcodedStrings.newMatch),
+                  child: Text(userState.hardcodedStrings.startGame),
                   style: ElevatedButton.styleFrom(
                       primary: userState.darkmode ? AppColors.lightThemeShadowColor : AppColors.buttonsLightTheme,
                       minimumSize: Size(100, 50)),

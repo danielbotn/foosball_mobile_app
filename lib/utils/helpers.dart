@@ -103,9 +103,17 @@ class Helpers {
     return result;
   }
 
+  Color getCheckMarkColor(bool darkMode) {
+    if (darkMode == true) {
+      return AppColors.lightGreyDarkMode;
+    } else {
+      return AppColors.buttonsLightTheme;
+    }
+  }
+
   Color getButtonTextColor(bool darkMode, bool isTwoPlayers) {
     if (darkMode) {
-      return AppColors.blue;
+      return AppColors.white;
     } else {
       if (isTwoPlayers) {
         return AppColors.textBlack;
@@ -117,7 +125,11 @@ class Helpers {
 
   Color getNewGameButtonColor(bool darkMode, bool isTwoPlayers) {
     if (darkMode) {
-      return AppColors.darkModeBackground;
+      if (isTwoPlayers) {
+        return AppColors.textBlack;
+      } else {
+        return AppColors.textGrey;
+      }
     } else {
       if (isTwoPlayers) {
         return AppColors.white;

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:foosball_mobile_app/main.dart';
 import 'package:foosball_mobile_app/models/user/user_response.dart';
 import 'package:foosball_mobile_app/state/new_game_state.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
+import 'package:foosball_mobile_app/utils/app_color.dart';
+import 'package:foosball_mobile_app/utils/helpers.dart';
 import 'package:provider/provider.dart';
 
 class NewGamePlayers extends StatefulWidget {
@@ -16,10 +19,9 @@ class NewGamePlayers extends StatefulWidget {
 }
 
 class _NewGamePlayersState extends State<NewGamePlayers> {
-  late List<bool> _isChecked;
-
-  // create function _buildHistoryList() with players
-  List<ListTile> _buildHistoryList(List<UserResponse>? users, NewGameState gameState) {
+  Helpers helpers = new Helpers();
+  List<ListTile> _buildPlayersList(
+      List<UserResponse>? users, NewGameState gameState) {
     List<ListTile> list = <ListTile>[];
     for (var i = 0; i < users!.length; i++) {
       list.add(ListTile(
@@ -47,6 +49,7 @@ class _NewGamePlayersState extends State<NewGamePlayers> {
                     visible: true,
                     child: Checkbox(
                       checkColor: Colors.white,
+                      activeColor: helpers.getCheckMarkColor(userState.darkmode),
                       value: gameState.checkedPlayers[i],
                       onChanged: (bool? value) {
                         checkBoxChecked(value, i, users[i]);
@@ -68,21 +71,31 @@ class _NewGamePlayersState extends State<NewGamePlayers> {
 
   void checkBoxChecked(bool? value, int index, UserResponse user) {
     final newGameState = Provider.of<NewGameState>(context, listen: false);
+    bool isChecked = value ?? false;
 
-    bool tmp = value ?? false;
-
-    setState(() {
-      _isChecked[index] = tmp;
-    });
-    newGameState.setCheckedPlayer(index, tmp);
-    setTeamsInStore(tmp, index, user);
+    if (isChecked) {
+      if (newGameState.twoOrFourPlayers) {
+        if (newGameState.playersTeamOne.length < 1 ||
+            newGameState.playersTeamTwo.length < 1) {
+          newGameState.setCheckedPlayer(index, isChecked);
+          setTeamsInStore(isChecked, index, user);
+        }
+      } else {
+        if (newGameState.playersTeamOne.length < 2 ||
+            newGameState.playersTeamTwo.length < 2) {
+          newGameState.setCheckedPlayer(index, isChecked);
+          setTeamsInStore(isChecked, index, user);
+        }
+      }
+    } else {
+      newGameState.setCheckedPlayer(index, isChecked);
+      setTeamsInStore(isChecked, index, user);
+    }
   }
 
   void setTeamsInStore(bool value, int index, UserResponse user) {
     final newGameState = Provider.of<NewGameState>(context, listen: false);
     if (value) {
-      // put into teams
-
       // two players
       if (newGameState.twoOrFourPlayers) {
         if (newGameState.playersTeamOne.length < 1) {
@@ -101,7 +114,7 @@ class _NewGamePlayersState extends State<NewGamePlayers> {
         }
       }
     } else {
-      // maybe remove from teams
+      // remove from teams
       bool playerTeamOne = isPlayerInTeamOne(user);
       bool playerTeamTwo = isPlayerInTeamTwo(user);
 
@@ -128,7 +141,6 @@ class _NewGamePlayersState extends State<NewGamePlayers> {
   void initState() {
     super.initState();
     final newGameState = Provider.of<NewGameState>(context, listen: false);
-    _isChecked = List<bool>.filled(this.widget.players!.length, false);
     newGameState.initializeCheckedPlayers(this.widget.players!.length);
   }
 
@@ -143,7 +155,7 @@ class _NewGamePlayersState extends State<NewGamePlayers> {
           scrollDirection: Axis.vertical,
           shrinkWrap: true,
           padding: const EdgeInsets.all(8),
-          children: _buildHistoryList(this.widget.players, newGameState),
+          children: _buildPlayersList(this.widget.players, newGameState),
         ),
       );
     });

@@ -4,6 +4,7 @@ import 'package:foosball_mobile_app/main.dart';
 import 'package:foosball_mobile_app/models/user/user_response.dart';
 import 'package:foosball_mobile_app/state/new_game_state.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
+import 'package:foosball_mobile_app/utils/app_color.dart';
 import 'package:foosball_mobile_app/utils/helpers.dart';
 import 'package:foosball_mobile_app/widgets/new_game/new_game_oppositions_left.dart';
 import 'package:foosball_mobile_app/widgets/new_game/new_game_vs.dart';
@@ -62,6 +63,7 @@ class _NewGameState extends State<NewGame> {
               return Provider<NewGameState>(
                   create: (_) => NewGameState(),
                   child: Container(
+                    color: helpers.getBackgroundColor(userState.darkmode),
                       child: Theme(
                           data: userState.darkmode
                               ? ThemeData.dark()
@@ -71,7 +73,7 @@ class _NewGameState extends State<NewGame> {
                               userState: userState,
                             ),
                             HeadlineBig(
-                                headline: 'Choose Players',
+                                headline: userState.hardcodedStrings.choosePlayers,
                                 userState: userState,
                                 fontSize: 20,
                                 paddingLeft: 10),
@@ -80,7 +82,7 @@ class _NewGameState extends State<NewGame> {
                               players: snapshot.data,
                             ),
                             HeadlineBig(
-                                headline: 'Match',
+                                headline: userState.hardcodedStrings.match,
                                 userState: userState,
                                 fontSize: 20,
                                 paddingLeft: 10),
