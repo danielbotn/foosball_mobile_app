@@ -51,6 +51,7 @@ abstract class _NewGameState with Store {
   void clearState() {
     playersTeamOne.clear();
     playersTeamTwo.clear();
+    checkedPlayers.clear();
   }
 
   @action

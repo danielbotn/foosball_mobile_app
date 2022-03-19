@@ -7,7 +7,8 @@ class ExtendedText extends StatelessWidget {
   final UserState userState;
   final double? fontSize;
   final Color? colorOverride;
-  const ExtendedText({Key? key, required this.text, required this.userState, this.fontSize, this.colorOverride}) 
+  final bool isBold;
+  const ExtendedText({Key? key, required this.text, required this.userState, this.fontSize, this.colorOverride, this.isBold = false}) 
       : super(key: key);
 
   @override
@@ -17,7 +18,8 @@ class ExtendedText extends StatelessWidget {
         text,
         style: TextStyle(
           fontSize: fontSize ?? 16,
-          color: colorOverride
+          color: colorOverride,
+          fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
         ),
       );
     } else {
@@ -26,6 +28,7 @@ class ExtendedText extends StatelessWidget {
             color:
                 this.userState.darkmode ? AppColors.white : AppColors.textBlack,
             fontSize: fontSize != null ? fontSize : 16,
+            fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
           ));
     }
   }
