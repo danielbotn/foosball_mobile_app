@@ -3,6 +3,8 @@ import 'package:foosball_mobile_app/main.dart';
 import 'package:foosball_mobile_app/models/other/ongoing_game_object.dart';
 import 'package:foosball_mobile_app/state/ongoing_freehand_state.dart';
 import 'package:foosball_mobile_app/utils/helpers.dart';
+import 'package:foosball_mobile_app/widgets/ongoing_freehand_game/player_card.dart';
+import 'package:foosball_mobile_app/widgets/ongoing_freehand_game/player_score.dart';
 import 'package:foosball_mobile_app/widgets/ongoing_freehand_game/time_keeper.dart';
 import 'package:provider/provider.dart';
 import '../extended_Text.dart';
@@ -19,10 +21,24 @@ class OngoingFreehandGame extends StatefulWidget {
 
 class _OngoingFreehandGameState extends State<OngoingFreehandGame> {
   final OngoingFreehandState counter = OngoingFreehandState();
+  String randomString = '';
 
   // used to rebuild widget
   refresh() {
     setState(() {});
+    setRandomString();
+  }
+
+  refreshScoreWidget() {
+    setState(() {});
+  }
+
+  void setRandomString() {
+    Helpers helpers = Helpers();
+    var randomString = helpers.generateRandomString();
+    setState(() {
+      this.randomString = randomString;
+    });
   }
 
   @override
@@ -49,6 +65,51 @@ class _OngoingFreehandGameState extends State<OngoingFreehandGame> {
                     TimeKeeper(
                       ongoingGameObject: widget.ongoingGameObject,
                       counter: counter,
+                      randomString: randomString
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: PlayerCard(
+                            ongoingGameObject: widget.ongoingGameObject,
+                            userState: userState,
+                            isPlayerOne: true,
+                            counter: counter,
+                            notifyParent: refreshScoreWidget,
+                          ),
+                        ),
+                        Expanded(
+                            flex: 1,
+                            child: PlayerScore(
+                              userState: userState,
+                              isPlayerOne: true,
+                              counter: counter
+                            ))
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: PlayerCard(
+                            ongoingGameObject: widget.ongoingGameObject,
+                            userState: userState,
+                            isPlayerOne: false,
+                            counter: counter,
+                            notifyParent: refreshScoreWidget,
+                          ),
+                        ),
+                        Expanded(
+                            flex: 1,
+                            child: PlayerScore(
+                              userState: userState,
+                              isPlayerOne: false,
+                              counter: counter
+                            ))
+                      ],
                     ),
                     Spacer(),
                     OngoingButtons(counter: counter, notifyParent: refresh),

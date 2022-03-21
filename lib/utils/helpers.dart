@@ -1,4 +1,6 @@
 // import 'package:flutter/cupertino.dart';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/models/freehand-double-matches/freehand_double_match_model.dart';
 import 'package:foosball_mobile_app/models/other/freehandDoubleMatchObject.dart';
@@ -137,5 +139,14 @@ class Helpers {
         return AppColors.buttonsLightTheme;
       }
     }
+  }
+
+  String generateRandomString() {
+    var random = new Random();
+    var codeUnits = new List.generate(6, (index) {
+      return random.nextInt(33) + 89;
+    });
+
+    return new String.fromCharCodes(codeUnits);
   }
 }

@@ -10,7 +10,8 @@ import '../extended_Text.dart';
 class TimeKeeper extends StatefulWidget {
   final OngoingGameObject ongoingGameObject;
   final OngoingFreehandState counter;
-  TimeKeeper({Key? key, required this.ongoingGameObject, required this.counter}) : super(key: key);
+  final String randomString;
+  TimeKeeper({Key? key, required this.ongoingGameObject, required this.counter, required this.randomString}) : super(key: key);
 
   @override
   State<TimeKeeper> createState() => _TimeKeeperState();
@@ -28,10 +29,14 @@ class _TimeKeeperState extends State<TimeKeeper> {
 
   @override
   void didUpdateWidget(TimeKeeper oldWidget) {
+    print(oldWidget.counter.isClockPaused);
+    print(this.widget.counter.isClockPaused);
     if (this.widget.counter.isClockPaused) {
       stopTimer(resets: false);
     } else {
-      startTimer(resets: false);
+      if (oldWidget.randomString != widget.randomString) {
+        startTimer(resets: false);
+      }
     }
     super.didUpdateWidget(oldWidget);
   }

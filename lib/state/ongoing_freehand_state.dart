@@ -45,6 +45,18 @@ abstract class _OngoingFreehandState with Store {
     this.playerOne = player;
   }
 
+  // update score of playerOne
+  @action
+  void updatePlayerOneScore(int score) {
+    this.playerOne.score = score;
+  }
+
+  // update score of playerTwo
+  @action
+  void updatePlayerTwoScore(int score) {
+    this.playerTwo.score = score;
+  }
+
   @action
   void setPlayerTwo(UserScoreObject player) {
     this.playerTwo = player;

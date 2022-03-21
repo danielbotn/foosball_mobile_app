@@ -38,7 +38,7 @@ class StartGameButton extends StatelessWidget {
             OngoingGameObject ongoingGameObject = OngoingGameObject(
                 freehandMatchCreateResponse: value,
                 playerOne: newGameState.playersTeamOne[0],
-                playerTwo: newGameState.playersTeamOne[0],
+                playerTwo: newGameState.playersTeamTwo[0],
                 userState: userState);
             // clear state of newGameState
             // newGameState.clearState();

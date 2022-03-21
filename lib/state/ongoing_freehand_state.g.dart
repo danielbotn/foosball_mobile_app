@@ -85,6 +85,28 @@ mixin _$OngoingFreehandState on _OngoingFreehandState, Store {
   }
 
   @override
+  void updatePlayerOneScore(int score) {
+    final _$actionInfo = _$_OngoingFreehandStateActionController.startAction(
+        name: '_OngoingFreehandState.updatePlayerOneScore');
+    try {
+      return super.updatePlayerOneScore(score);
+    } finally {
+      _$_OngoingFreehandStateActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void updatePlayerTwoScore(int score) {
+    final _$actionInfo = _$_OngoingFreehandStateActionController.startAction(
+        name: '_OngoingFreehandState.updatePlayerTwoScore');
+    try {
+      return super.updatePlayerTwoScore(score);
+    } finally {
+      _$_OngoingFreehandStateActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setPlayerTwo(UserScoreObject player) {
     final _$actionInfo = _$_OngoingFreehandStateActionController.startAction(
         name: '_OngoingFreehandState.setPlayerTwo');

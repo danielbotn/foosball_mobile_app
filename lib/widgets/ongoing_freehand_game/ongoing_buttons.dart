@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:foosball_mobile_app/state/ongoing_freehand_state.dart';
-import 'package:provider/provider.dart';
 
 class OngoingButtons extends StatefulWidget {
   final OngoingFreehandState counter;

@@ -4,7 +4,6 @@ import 'package:foosball_mobile_app/main.dart';
 import 'package:foosball_mobile_app/models/user/user_response.dart';
 import 'package:foosball_mobile_app/state/new_game_state.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
-import 'package:foosball_mobile_app/utils/app_color.dart';
 import 'package:foosball_mobile_app/utils/helpers.dart';
 import 'package:provider/provider.dart';
 
