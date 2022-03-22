@@ -22,14 +22,15 @@ class OngoingFreehandGame extends StatefulWidget {
 class _OngoingFreehandGameState extends State<OngoingFreehandGame> {
   final OngoingFreehandState counter = OngoingFreehandState();
   String randomString = '';
+  String randomStringStopClock = '';
 
   // used to rebuild widget
-  refresh() {
+  void refresh() {
     setState(() {});
     setRandomString();
   }
 
-  refreshScoreWidget() {
+  void refreshScoreWidget() {
     setState(() {});
   }
 
@@ -38,6 +39,18 @@ class _OngoingFreehandGameState extends State<OngoingFreehandGame> {
     var randomString = helpers.generateRandomString();
     setState(() {
       this.randomString = randomString;
+    });
+  }
+
+  void stopClockFromChild() {
+    setRandomStringStopClock();
+  }
+
+  void setRandomStringStopClock() {
+    Helpers helpers = Helpers();
+    var randomString = helpers.generateRandomString();
+    setState(() {
+      this.randomStringStopClock = randomString;
     });
   }
 
@@ -65,7 +78,8 @@ class _OngoingFreehandGameState extends State<OngoingFreehandGame> {
                     TimeKeeper(
                       ongoingGameObject: widget.ongoingGameObject,
                       counter: counter,
-                      randomString: randomString
+                      randomString: randomString,
+                      randomStringStopClock: randomStringStopClock
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -78,6 +92,7 @@ class _OngoingFreehandGameState extends State<OngoingFreehandGame> {
                             isPlayerOne: true,
                             counter: counter,
                             notifyParent: refreshScoreWidget,
+                             stopClockFromChild: stopClockFromChild,
                           ),
                         ),
                         Expanded(
@@ -100,6 +115,7 @@ class _OngoingFreehandGameState extends State<OngoingFreehandGame> {
                             isPlayerOne: false,
                             counter: counter,
                             notifyParent: refreshScoreWidget,
+                            stopClockFromChild: stopClockFromChild,
                           ),
                         ),
                         Expanded(

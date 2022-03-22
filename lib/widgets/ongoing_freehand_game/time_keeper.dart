@@ -11,7 +11,15 @@ class TimeKeeper extends StatefulWidget {
   final OngoingGameObject ongoingGameObject;
   final OngoingFreehandState counter;
   final String randomString;
-  TimeKeeper({Key? key, required this.ongoingGameObject, required this.counter, required this.randomString}) : super(key: key);
+  final String randomStringStopClock;
+  TimeKeeper(
+      {Key? key,
+      required this.ongoingGameObject,
+      required this.counter,
+      required this.randomString,
+      required this.randomStringStopClock
+      })
+      : super(key: key);
 
   @override
   State<TimeKeeper> createState() => _TimeKeeperState();
@@ -20,7 +28,7 @@ class TimeKeeper extends StatefulWidget {
 class _TimeKeeperState extends State<TimeKeeper> {
   Duration duration = new Duration();
   Timer? timer;
-  
+
   @override
   void initState() {
     super.initState();
@@ -29,14 +37,16 @@ class _TimeKeeperState extends State<TimeKeeper> {
 
   @override
   void didUpdateWidget(TimeKeeper oldWidget) {
-    print(oldWidget.counter.isClockPaused);
-    print(this.widget.counter.isClockPaused);
     if (this.widget.counter.isClockPaused) {
       stopTimer(resets: false);
     } else {
       if (oldWidget.randomString != widget.randomString) {
         startTimer(resets: false);
       }
+    }
+
+    if (oldWidget.randomStringStopClock != widget.randomStringStopClock) {
+      stopTimer(resets: false);
     }
     super.didUpdateWidget(oldWidget);
   }
@@ -73,41 +83,41 @@ class _TimeKeeperState extends State<TimeKeeper> {
   @override
   Widget build(BuildContext context) {
     String twoDigits(int n) => n.toString().padLeft(2, '0');
-    final hours = duration.inHours;
+    final hours = twoDigits(duration.inHours.remainder(60));
     final minutes = twoDigits(duration.inMinutes.remainder(60));
     final seconds = twoDigits(duration.inSeconds.remainder(60));
-    final hoursString = hours != 0 ? '${hours}h: ' : '';
-    
+    final hoursString = hours != '00' ? '$hours:' : '';
+
     Helpers helpers = Helpers();
     return Observer(builder: (_) {
       return Column(
-            children: [
-              ListTile(
-                tileColor: helpers.getBackgroundColor(widget.ongoingGameObject.userState.darkmode),
-                title: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    ExtendedText(
-                      text: '$hoursString$minutes:$seconds',
-                      userState: this.widget.ongoingGameObject.userState,
-                      fontSize: 22,
-                      isBold: true,
-                    ),
-                  ],
+        children: [
+          ListTile(
+            tileColor: helpers.getBackgroundColor(
+                widget.ongoingGameObject.userState.darkmode),
+            title: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                ExtendedText(
+                  text: '$hoursString$minutes:$seconds',
+                  userState: this.widget.ongoingGameObject.userState,
+                  fontSize: 22,
+                  isBold: true,
                 ),
-               
-                leading: SizedBox(
-                  height: 100,
-                  width: 50,
-                  child: Icon(Icons.watch_later_outlined,
-                      color: widget.ongoingGameObject.userState.darkmode
-                          ? AppColors.white
-                          : null),
-                ),
-              )
-            ],
-          );
+              ],
+            ),
+            leading: SizedBox(
+              height: 100,
+              width: 50,
+              child: Icon(Icons.watch_later_outlined,
+                  color: widget.ongoingGameObject.userState.darkmode
+                      ? AppColors.white
+                      : null),
+            ),
+          )
+        ],
+      );
     });
   }
 }
