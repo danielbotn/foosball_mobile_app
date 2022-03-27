@@ -44,6 +44,11 @@ class HardcodedStrings {
   final String choosePlayers;
   final String match;
   final String startGame;
+  final String chooseTeammate;
+  final String chooseOpponent;
+  final String chooseOpponents;
+  final String matchReport;
+  final String game;
 
   HardcodedStrings({
       required this.matches,
@@ -84,7 +89,12 @@ class HardcodedStrings {
       required this.fourPlayers,
       required this.choosePlayers,
       required this.match,
-      required this.startGame
+      required this.startGame,
+      required this.chooseTeammate,
+      required this.chooseOpponent,
+      required this.chooseOpponents,
+      required this.matchReport,
+      required this.game
       });
 
   factory HardcodedStrings.fromJson(Map<String, dynamic> item) =>

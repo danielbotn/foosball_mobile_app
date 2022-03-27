@@ -47,6 +47,11 @@ HardcodedStrings _$HardcodedStringsFromJson(Map<String, dynamic> json) {
     choosePlayers: json['choosePlayers'] as String,
     match: json['match'] as String,
     startGame: json['startGame'] as String,
+    chooseTeammate: json['chooseTeammate'] as String,
+    chooseOpponent: json['chooseOpponent'] as String,
+    chooseOpponents: json['chooseOpponents'] as String,
+    matchReport: json['matchReport'] as String,
+    game: json['game'] as String,
   );
 }
 
@@ -91,4 +96,9 @@ Map<String, dynamic> _$HardcodedStringsToJson(HardcodedStrings instance) =>
       'choosePlayers': instance.choosePlayers,
       'match': instance.match,
       'startGame': instance.startGame,
+      'chooseTeammate': instance.chooseTeammate,
+      'chooseOpponent': instance.chooseOpponent,
+      'chooseOpponents': instance.chooseOpponents,
+      'matchReport': instance.matchReport,
+      'game': instance.game,
     };

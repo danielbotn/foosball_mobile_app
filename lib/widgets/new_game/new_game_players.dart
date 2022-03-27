@@ -51,7 +51,9 @@ class _NewGamePlayersState extends State<NewGamePlayers> {
                       activeColor: helpers.getCheckMarkColor(userState.darkmode),
                       value: gameState.checkedPlayers[i],
                       onChanged: (bool? value) {
-                        checkBoxChecked(value, i, users[i]);
+                        if (isCheckedLoggedInUser(value, i, users[i]) == false) {
+                          checkBoxChecked(value, i, users[i]);
+                        }
                       },
                     ),
                   )
@@ -66,6 +68,15 @@ class _NewGamePlayersState extends State<NewGamePlayers> {
       ));
     }
     return list;
+  }
+
+  bool isCheckedLoggedInUser(bool? value, int index, UserResponse user)
+  {
+    bool result = false;
+    if (user.id == userState.userId) {
+      result = true;
+    }
+    return result;
   }
 
   void checkBoxChecked(bool? value, int index, UserResponse user) {
@@ -141,6 +152,30 @@ class _NewGamePlayersState extends State<NewGamePlayers> {
     super.initState();
     final newGameState = Provider.of<NewGameState>(context, listen: false);
     newGameState.initializeCheckedPlayers(this.widget.players!.length);
+    checkSelf();
+  }
+
+  void checkSelf() {
+    final newGameState = Provider.of<NewGameState>(context, listen: false);
+    int index = findIndexOfUser();
+    newGameState.setCheckedPlayer(index, true);
+    UserResponse user = this.widget.players![index];
+    newGameState.addPlayerToTeamOne(user);
+  }
+
+  int findIndexOfUser() {
+   int index = 0;
+    List<UserResponse> tmpPlayers;
+    if (widget.players != null) {
+      tmpPlayers = widget.players!;
+      for (var i = 0; i < tmpPlayers.length; i++) {
+        if (tmpPlayers[i].id == widget.userState.userId) {
+          index = i;
+          break;
+        }
+      }
+    } 
+    return index;
   }
 
   @override
