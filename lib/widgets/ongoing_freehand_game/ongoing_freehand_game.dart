@@ -76,11 +76,10 @@ class _OngoingFreehandGameState extends State<OngoingFreehandGame> {
                 child: Column(
                   children: [
                     TimeKeeper(
-                      ongoingGameObject: widget.ongoingGameObject,
-                      counter: counter,
-                      randomString: randomString,
-                      randomStringStopClock: randomStringStopClock
-                    ),
+                        ongoingGameObject: widget.ongoingGameObject,
+                        counter: counter,
+                        randomString: randomString,
+                        randomStringStopClock: randomStringStopClock),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -92,16 +91,15 @@ class _OngoingFreehandGameState extends State<OngoingFreehandGame> {
                             isPlayerOne: true,
                             counter: counter,
                             notifyParent: refreshScoreWidget,
-                             stopClockFromChild: stopClockFromChild,
+                            stopClockFromChild: stopClockFromChild,
                           ),
                         ),
                         Expanded(
                             flex: 1,
                             child: PlayerScore(
-                              userState: userState,
-                              isPlayerOne: true,
-                              counter: counter
-                            ))
+                                userState: userState,
+                                isPlayerOne: true,
+                                counter: counter))
                       ],
                     ),
                     Row(
@@ -121,14 +119,16 @@ class _OngoingFreehandGameState extends State<OngoingFreehandGame> {
                         Expanded(
                             flex: 1,
                             child: PlayerScore(
-                              userState: userState,
-                              isPlayerOne: false,
-                              counter: counter
-                            ))
+                                userState: userState,
+                                isPlayerOne: false,
+                                counter: counter))
                       ],
                     ),
                     Spacer(),
-                    OngoingButtons(counter: counter, notifyParent: refresh),
+                    OngoingButtons(
+                        counter: counter,
+                        notifyParent: refresh,
+                        userState: userState),
                   ],
                 ))));
   }

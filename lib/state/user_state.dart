@@ -76,7 +76,10 @@ abstract class _UserState with Store {
       chooseOpponent: "",
       chooseOpponents: "",
       matchReport: "",
-      game: ""
+      game: "",
+      resume: "",
+      pause: "",
+      close: ""
       );
   
   @observable

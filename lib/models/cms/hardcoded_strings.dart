@@ -49,6 +49,9 @@ class HardcodedStrings {
   final String chooseOpponents;
   final String matchReport;
   final String game;
+  final String resume;
+  final String pause;
+  final String close;
 
   HardcodedStrings({
       required this.matches,
@@ -94,7 +97,10 @@ class HardcodedStrings {
       required this.chooseOpponent,
       required this.chooseOpponents,
       required this.matchReport,
-      required this.game
+      required this.game,
+      required this.resume,
+      required this.pause,
+      required this.close
       });
 
   factory HardcodedStrings.fromJson(Map<String, dynamic> item) =>
