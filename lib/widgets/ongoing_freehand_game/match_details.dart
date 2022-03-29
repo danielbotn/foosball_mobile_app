@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/api/FreehandGoalsApi.dart';
 import 'package:foosball_mobile_app/api/FreehandMatchApi.dart';
-import 'package:foosball_mobile_app/main.dart';
 import 'package:foosball_mobile_app/models/freehand-goals/freehand_goals_model.dart';
 import 'package:foosball_mobile_app/models/freehand-matches/freehand_match_model.dart';
 import 'package:foosball_mobile_app/models/other/freehandMatchDetailObject.dart';
@@ -137,7 +136,9 @@ class _MatchDetailsState extends State<MatchDetails> {
                   ),
                   Spacer(),
                   MatchDetailButtons(
-                      userState: widget.freehandMatchDetailObject.userState)
+                      userState: widget.freehandMatchDetailObject.userState,
+                      freehandMatchDetailObject:
+                          widget.freehandMatchDetailObject),
                 ],
               ),
             );
