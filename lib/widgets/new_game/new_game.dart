@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 
 import '../extended_Text.dart';
 import '../headline_big.dart';
+import '../headline_big_teammates_opponents.dart';
 import 'new_game_buttons.dart';
 import 'new_game_oppostions_right.dart';
 import 'new_game_players.dart';
@@ -26,6 +27,7 @@ class NewGame extends StatefulWidget {
 
 class _NewGameState extends State<NewGame> {
   late Future<List<UserResponse>?> usersFuture;
+  String randomString = '';
 
   @override
   void initState() {
@@ -38,6 +40,13 @@ class _NewGameState extends State<NewGame> {
     UserApi datoCMS = new UserApi(token: this.widget.userState.token);
     var users = await datoCMS.getUsers();
     return users;
+  }
+
+  void setRandomString() {
+    Helpers helpers = new Helpers();
+    setState(() {
+      randomString = helpers.generateRandomString();
+    });
   }
 
   @override
@@ -58,6 +67,7 @@ class _NewGameState extends State<NewGame> {
       body: FutureBuilder(
           future: usersFuture,
           builder: (context, AsyncSnapshot<List<UserResponse>?> snapshot) {
+            
             if (snapshot.hasData) {
               return Provider<NewGameState>(
                   create: (_) => NewGameState(),
@@ -70,15 +80,17 @@ class _NewGameState extends State<NewGame> {
                           child: Column(children: <Widget>[
                             NewGameButtons(
                               userState: userState,
+                              notifyParent: setRandomString
                             ),
-                            HeadlineBig(
-                                headline: userState.hardcodedStrings.choosePlayers,
+                            HeadlineBigTeammatesOpponents(
                                 userState: userState,
                                 fontSize: 20,
-                                paddingLeft: 10),
+                                paddingLeft: 10,
+                                randomString: '',),
                             NewGamePlayers(
                               userState: userState,
                               players: snapshot.data,
+                              notifyParent: setRandomString
                             ),
                             HeadlineBig(
                                 headline: userState.hardcodedStrings.match,

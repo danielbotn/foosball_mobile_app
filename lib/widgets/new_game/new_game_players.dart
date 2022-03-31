@@ -10,7 +10,8 @@ import 'package:provider/provider.dart';
 class NewGamePlayers extends StatefulWidget {
   final UserState userState;
   final List<UserResponse>? players;
-  NewGamePlayers({Key? key, required this.userState, required this.players})
+  final Function() notifyParent;
+  NewGamePlayers({Key? key, required this.userState, required this.players, required this.notifyParent})
       : super(key: key);
 
   @override
@@ -49,10 +50,11 @@ class _NewGamePlayersState extends State<NewGamePlayers> {
                     child: Checkbox(
                       checkColor: Colors.white,
                       activeColor: helpers.getCheckMarkColor(userState.darkmode),
-                      value: gameState.checkedPlayers[i],
+                      value: gameState.checkedPlayers[i].item2,
                       onChanged: (bool? value) {
                         if (isCheckedLoggedInUser(value, i, users[i]) == false) {
                           checkBoxChecked(value, i, users[i]);
+                          this.widget.notifyParent();
                         }
                       },
                     ),
@@ -87,18 +89,18 @@ class _NewGamePlayersState extends State<NewGamePlayers> {
       if (newGameState.twoOrFourPlayers) {
         if (newGameState.playersTeamOne.length < 1 ||
             newGameState.playersTeamTwo.length < 1) {
-          newGameState.setCheckedPlayer(index, isChecked);
+          newGameState.setCheckedPlayer(index, isChecked, user.id);
           setTeamsInStore(isChecked, index, user);
         }
       } else {
         if (newGameState.playersTeamOne.length < 2 ||
             newGameState.playersTeamTwo.length < 2) {
-          newGameState.setCheckedPlayer(index, isChecked);
+          newGameState.setCheckedPlayer(index, isChecked, user.id);
           setTeamsInStore(isChecked, index, user);
         }
       }
     } else {
-      newGameState.setCheckedPlayer(index, isChecked);
+      newGameState.setCheckedPlayer(index, isChecked, user.id);
       setTeamsInStore(isChecked, index, user);
     }
   }
@@ -151,15 +153,16 @@ class _NewGamePlayersState extends State<NewGamePlayers> {
   void initState() {
     super.initState();
     final newGameState = Provider.of<NewGameState>(context, listen: false);
-    newGameState.initializeCheckedPlayers(this.widget.players!.length);
+    // tuple test
+    newGameState.initializeCheckedPlayers(this.widget.players!);
     checkSelf();
   }
 
   void checkSelf() {
     final newGameState = Provider.of<NewGameState>(context, listen: false);
     int index = findIndexOfUser();
-    newGameState.setCheckedPlayer(index, true);
     UserResponse user = this.widget.players![index];
+    newGameState.setCheckedPlayer(index, true, user.id);
     newGameState.addPlayerToTeamOne(user);
   }
 

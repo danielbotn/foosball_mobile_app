@@ -39,6 +39,7 @@ dependencies:
   loading_indicator: ^3.0.2
   settings_ui: ^1.0.0
   provider: ^5.0.0
+  tuple: ^2.0.0
   
 dev_dependencies:
   flutter_test:

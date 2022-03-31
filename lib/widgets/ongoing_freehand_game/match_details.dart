@@ -56,7 +56,7 @@ class _MatchDetailsState extends State<MatchDetails> {
       appBar: AppBar(
           title: ExtendedText(
               text: widget
-                  .freehandMatchDetailObject.userState.hardcodedStrings.newGame,
+                  .freehandMatchDetailObject.userState.hardcodedStrings.matchReport,
               userState: widget.freehandMatchDetailObject.userState),
           leading: IconButton(
             icon: Icon(Icons.chevron_left),

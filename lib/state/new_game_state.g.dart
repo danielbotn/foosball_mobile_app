@@ -57,13 +57,13 @@ mixin _$NewGameState on _NewGameState, Store {
   final _$checkedPlayersAtom = Atom(name: '_NewGameState.checkedPlayers');
 
   @override
-  ObservableList<bool> get checkedPlayers {
+  ObservableList<Tuple2<int, bool>> get checkedPlayers {
     _$checkedPlayersAtom.reportRead();
     return super.checkedPlayers;
   }
 
   @override
-  set checkedPlayers(ObservableList<bool> value) {
+  set checkedPlayers(ObservableList<Tuple2<int, bool>> value) {
     _$checkedPlayersAtom.reportWrite(value, super.checkedPlayers, () {
       super.checkedPlayers = value;
     });
@@ -139,44 +139,55 @@ mixin _$NewGameState on _NewGameState, Store {
   }
 
   @override
-  void setAllCheckedPlayers(List<bool> checkedPlayers) {
+  void setAllCheckedPlayers(List<Tuple2<int, bool>> checkedPlayersTuple) {
     final _$actionInfo = _$_NewGameStateActionController.startAction(
         name: '_NewGameState.setAllCheckedPlayers');
     try {
-      return super.setAllCheckedPlayers(checkedPlayers);
+      return super.setAllCheckedPlayers(checkedPlayersTuple);
     } finally {
       _$_NewGameStateActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void setCheckedPlayer(int index, bool value) {
+  dynamic setCheckedPlayer(int index, bool value, int userId) {
     final _$actionInfo = _$_NewGameStateActionController.startAction(
         name: '_NewGameState.setCheckedPlayer');
     try {
-      return super.setCheckedPlayer(index, value);
+      return super.setCheckedPlayer(index, value, userId);
     } finally {
       _$_NewGameStateActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void initializeCheckedPlayers(int length) {
+  void initializeCheckedPlayers(List<UserResponse> players) {
     final _$actionInfo = _$_NewGameStateActionController.startAction(
         name: '_NewGameState.initializeCheckedPlayers');
     try {
-      return super.initializeCheckedPlayers(length);
+      return super.initializeCheckedPlayers(players);
     } finally {
       _$_NewGameStateActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void setAllCheckedPlayersToFalse(int length) {
+  void setAllCheckedPlayersToFalse() {
     final _$actionInfo = _$_NewGameStateActionController.startAction(
         name: '_NewGameState.setAllCheckedPlayersToFalse');
     try {
-      return super.setAllCheckedPlayersToFalse(length);
+      return super.setAllCheckedPlayersToFalse();
+    } finally {
+      _$_NewGameStateActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setCheckedPlayerToFalseFromUser(UserResponse user) {
+    final _$actionInfo = _$_NewGameStateActionController.startAction(
+        name: '_NewGameState.setCheckedPlayerToFalseFromUser');
+    try {
+      return super.setCheckedPlayerToFalseFromUser(user);
     } finally {
       _$_NewGameStateActionController.endAction(_$actionInfo);
     }

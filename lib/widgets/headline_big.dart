@@ -14,6 +14,7 @@ class HeadlineBig extends StatelessWidget {
   Widget build(BuildContext context) {
     double paddingIsLeft = paddingLeft ?? 10;
     Helpers helpers = new Helpers();
+
     return Container(
       padding: const EdgeInsets.all(8),
       height: 48,

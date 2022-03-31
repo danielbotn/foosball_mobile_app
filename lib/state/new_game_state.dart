@@ -1,5 +1,6 @@
 import 'package:foosball_mobile_app/models/user/user_response.dart';
 import 'package:mobx/mobx.dart';
+import 'package:tuple/tuple.dart';
 
 // Include generated file
 part 'new_game_state.g.dart';
@@ -20,7 +21,7 @@ abstract class _NewGameState with Store {
   ObservableList<UserResponse> playersTeamTwo = ObservableList<UserResponse>();
 
   @observable
-  ObservableList<bool> checkedPlayers = ObservableList<bool>();
+  ObservableList<Tuple2<int, bool>> checkedPlayers = ObservableList<Tuple2<int, bool>>();
 
   @action
   void setTwoOrFourPlayers(bool value) {
@@ -49,36 +50,48 @@ abstract class _NewGameState with Store {
 
   @action
   void clearState() {
-    playersTeamOne.clear();
-    playersTeamTwo.clear();
-    checkedPlayers.clear();
-  }
-
-  @action
-  void setAllCheckedPlayers(List<bool> checkedPlayers) {
-    this.checkedPlayers.clear();
-    this.checkedPlayers.addAll(checkedPlayers);
-  }
-
-  @action
-  void setCheckedPlayer(int index, bool value) {
-    this.checkedPlayers[index] = value;
-  }
-
-  // initalize checkedPlayers
-  @action
-  void initializeCheckedPlayers(int length) {
-    checkedPlayers.clear();
-    for (int i = 0; i < length; i++) {
-      checkedPlayers.add(false);
+    if (playersTeamOne.length > 0) {
+      for (int i = 1; i < playersTeamOne.length; i++) {
+        playersTeamOne.removeAt(i);
+      }
+    }
+    if (playersTeamTwo.length > 0) {
+      playersTeamTwo.clear();
     }
   }
 
-  // clear checkedPlayers
   @action
-  void setAllCheckedPlayersToFalse(int length) {
-     for (int i = 0; i < length; i++) {
-      checkedPlayers[i] = false;
+  void setAllCheckedPlayers(List<Tuple2<int, bool>> checkedPlayersTuple) {
+    this.checkedPlayers.clear();
+    this.checkedPlayers.addAll(checkedPlayersTuple);
+  }
+
+  @action
+  setCheckedPlayer(int index, bool value, int userId) {
+    checkedPlayers[index] = Tuple2(userId, value);
+  }
+
+  @action
+  void initializeCheckedPlayers(List<UserResponse> players) {
+    checkedPlayers.clear();
+    for (int i = 0; i < players.length; i++) {
+      checkedPlayers.add(Tuple2(players[i].id, false));
+    }
+  }
+
+  @action
+  void setAllCheckedPlayersToFalse() {
+    for (int i = 0; i < checkedPlayers.length; i++) {
+      checkedPlayers[i] = Tuple2(checkedPlayers[i].item1, false);
+    }
+  }
+
+  @action
+  void setCheckedPlayerToFalseFromUser(UserResponse user) {
+    for (int i = 0; i < checkedPlayers.length; i++) {
+      if (checkedPlayers[i].item1 == user.id) {
+        checkedPlayers[i] = Tuple2(checkedPlayers[i].item1, false);
+      }
     }
   }
 
