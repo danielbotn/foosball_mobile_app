@@ -11,7 +11,8 @@ class NewGamePlayers extends StatefulWidget {
   final UserState userState;
   final List<UserResponse>? players;
   final Function() notifyParent;
-  NewGamePlayers({Key? key, required this.userState, required this.players, required this.notifyParent})
+  final NewGameState newGameState;
+  NewGamePlayers({Key? key, required this.userState, required this.players, required this.notifyParent, required this.newGameState})
       : super(key: key);
 
   @override
@@ -82,47 +83,45 @@ class _NewGamePlayersState extends State<NewGamePlayers> {
   }
 
   void checkBoxChecked(bool? value, int index, UserResponse user) {
-    final newGameState = Provider.of<NewGameState>(context, listen: false);
     bool isChecked = value ?? false;
 
     if (isChecked) {
-      if (newGameState.twoOrFourPlayers) {
-        if (newGameState.playersTeamOne.length < 1 ||
-            newGameState.playersTeamTwo.length < 1) {
-          newGameState.setCheckedPlayer(index, isChecked, user.id);
+      if (widget.newGameState.twoOrFourPlayers) {
+        if (widget.newGameState.playersTeamOne.length < 1 ||
+            widget.newGameState.playersTeamTwo.length < 1) {
+          widget.newGameState.setCheckedPlayer(index, isChecked, user.id);
           setTeamsInStore(isChecked, index, user);
         }
       } else {
-        if (newGameState.playersTeamOne.length < 2 ||
-            newGameState.playersTeamTwo.length < 2) {
-          newGameState.setCheckedPlayer(index, isChecked, user.id);
+        if (widget.newGameState.playersTeamOne.length < 2 ||
+            widget.newGameState.playersTeamTwo.length < 2) {
+          widget.newGameState.setCheckedPlayer(index, isChecked, user.id);
           setTeamsInStore(isChecked, index, user);
         }
       }
     } else {
-      newGameState.setCheckedPlayer(index, isChecked, user.id);
+      widget.newGameState.setCheckedPlayer(index, isChecked, user.id);
       setTeamsInStore(isChecked, index, user);
     }
   }
 
   void setTeamsInStore(bool value, int index, UserResponse user) {
-    final newGameState = Provider.of<NewGameState>(context, listen: false);
     if (value) {
       // two players
-      if (newGameState.twoOrFourPlayers) {
-        if (newGameState.playersTeamOne.length < 1) {
-          newGameState.addPlayerToTeamOne(user);
+      if (widget.newGameState.twoOrFourPlayers) {
+        if (widget.newGameState.playersTeamOne.length < 1) {
+          widget.newGameState.addPlayerToTeamOne(user);
         } else {
-          if (newGameState.playersTeamTwo.length < 1) {
-            newGameState.addPlayerToTeamTwo(user);
+          if (widget.newGameState.playersTeamTwo.length < 1) {
+            widget.newGameState.addPlayerToTeamTwo(user);
           }
         }
       } else {
         // four players
-        if (newGameState.playersTeamOne.length < 2) {
-          newGameState.addPlayerToTeamOne(user);
+        if (widget.newGameState.playersTeamOne.length < 2) {
+          widget.newGameState.addPlayerToTeamOne(user);
         } else {
-          newGameState.addPlayerToTeamTwo(user);
+          widget.newGameState.addPlayerToTeamTwo(user);
         }
       }
     } else {
@@ -131,39 +130,35 @@ class _NewGamePlayersState extends State<NewGamePlayers> {
       bool playerTeamTwo = isPlayerInTeamTwo(user);
 
       if (playerTeamOne) {
-        newGameState.removePlayerFromTeamOne(user);
+        widget.newGameState.removePlayerFromTeamOne(user);
       }
       if (playerTeamTwo) {
-        newGameState.removePlayerFromTeamTwo(user);
+        widget.newGameState.removePlayerFromTeamTwo(user);
       }
     }
   }
 
   bool isPlayerInTeamOne(UserResponse user) {
-    final newGameState = Provider.of<NewGameState>(context, listen: false);
-    return newGameState.playersTeamOne.contains(user);
+    return widget.newGameState.playersTeamOne.contains(user);
   }
 
   bool isPlayerInTeamTwo(UserResponse user) {
-    final newGameState = Provider.of<NewGameState>(context, listen: false);
-    return newGameState.playersTeamTwo.contains(user);
+    return widget.newGameState.playersTeamTwo.contains(user);
   }
 
   @override
   void initState() {
     super.initState();
-    final newGameState = Provider.of<NewGameState>(context, listen: false);
     // tuple test
-    newGameState.initializeCheckedPlayers(this.widget.players!);
+    widget.newGameState.initializeCheckedPlayers(this.widget.players!);
     checkSelf();
   }
 
   void checkSelf() {
-    final newGameState = Provider.of<NewGameState>(context, listen: false);
     int index = findIndexOfUser();
     UserResponse user = this.widget.players![index];
-    newGameState.setCheckedPlayer(index, true, user.id);
-    newGameState.addPlayerToTeamOne(user);
+    widget.newGameState.setCheckedPlayer(index, true, user.id);
+    widget.newGameState.addPlayerToTeamOne(user);
   }
 
   int findIndexOfUser() {
@@ -184,7 +179,6 @@ class _NewGamePlayersState extends State<NewGamePlayers> {
   @override
   Widget build(BuildContext context) {
     return Observer(builder: (_) {
-      final newGameState = Provider.of<NewGameState>(context, listen: false);
       return Container(
         height: 230,
         // add listview with variable two
@@ -192,7 +186,7 @@ class _NewGamePlayersState extends State<NewGamePlayers> {
           scrollDirection: Axis.vertical,
           shrinkWrap: true,
           padding: const EdgeInsets.all(8),
-          children: _buildPlayersList(this.widget.players, newGameState),
+          children: _buildPlayersList(this.widget.players, widget.newGameState),
         ),
       );
     });

@@ -7,7 +7,10 @@ import '../extended_Text.dart';
 
 class NewGameOppostionsRight extends StatefulWidget {
   final UserState userState;
-  NewGameOppostionsRight({Key? key, required this.userState}) : super(key: key);
+  final NewGameState newGameState;
+  NewGameOppostionsRight(
+      {Key? key, required this.userState, required this.newGameState})
+      : super(key: key);
 
   @override
   State<NewGameOppostionsRight> createState() => _NewGameOppostionsRightState();
@@ -16,9 +19,50 @@ class NewGameOppostionsRight extends StatefulWidget {
 class _NewGameOppostionsRightState extends State<NewGameOppostionsRight> {
   @override
   Widget build(BuildContext context) {
-    return Observer(builder: (_) {
-      final newGameState = Provider.of<NewGameState>(context, listen: false);
-      if (newGameState.twoOrFourPlayers) {
+    if (widget.newGameState.twoOrFourPlayers) {
+      return Padding(
+          padding: const EdgeInsets.only(left: 20),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Visibility(
+                    visible: widget.newGameState.playersTeamTwo.length > 0,
+                    child: Column(
+                      children: [
+                        ExtendedText(
+                            text: widget.newGameState.playersTeamTwo.length > 0
+                                ? widget
+                                    .newGameState.playersTeamTwo[0].firstName
+                                : '',
+                            userState: this.widget.userState),
+                        ExtendedText(
+                            text: widget.newGameState.playersTeamTwo.length > 0
+                                ? widget.newGameState.playersTeamTwo[0].lastName
+                                : '',
+                            userState: this.widget.userState),
+                      ],
+                    ),
+                  ),
+                  Visibility(
+                    visible: widget.newGameState.playersTeamTwo.length > 0,
+                    child: Column(
+                      children: [
+                        Image.network(
+                            widget.newGameState.playersTeamTwo.length > 0
+                                ? widget.newGameState.playersTeamTwo[0].photoUrl
+                                : '',
+                            width: 60,
+                            height: 60),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ));
+    } else {
+      if (widget.newGameState.playersTeamOne.length > 0) {
         return Padding(
             padding: const EdgeInsets.only(left: 20),
             child: Column(
@@ -26,87 +70,74 @@ class _NewGameOppostionsRightState extends State<NewGameOppostionsRight> {
                 Row(
                   children: [
                     Visibility(
-                      visible: newGameState.playersTeamTwo.length > 0,
+                      visible: widget.newGameState.playersTeamOne.length > 1,
                       child: Column(
                         children: [
                           ExtendedText(
-                              text: newGameState.playersTeamTwo.length > 0 ? newGameState.playersTeamTwo[0].firstName : '',
+                              text:
+                                  widget.newGameState.playersTeamOne.length > 1
+                                      ? widget.newGameState.playersTeamOne[1]
+                                          .firstName
+                                      : '',
                               userState: this.widget.userState),
                           ExtendedText(
-                              text: newGameState.playersTeamTwo.length > 0 ? newGameState.playersTeamTwo[0].lastName : '',
-                              userState: this.widget.userState),
-                        ],
-                      ),
-                    ),
-                    Visibility(
-                      visible: newGameState.playersTeamTwo.length > 0,
-                      child: Column(
-                        children: [
-                          Image.network(newGameState.playersTeamTwo.length > 0 ? newGameState.playersTeamTwo[0].photoUrl : '',
-                              width: 60, height: 60),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                
-              ],
-            ));
-      } else {
-        if (newGameState.playersTeamOne.length > 0) {
-          return Padding(
-            padding: const EdgeInsets.only(left: 20),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                     Visibility(
-                      visible: newGameState.playersTeamOne.length > 1,
-                      child: Column(
-                        children: [
-                          ExtendedText(
-                              text: newGameState.playersTeamOne.length > 1 ? newGameState.playersTeamOne[1].firstName : '',
-                              userState: this.widget.userState),
-                          ExtendedText(
-                              text: newGameState.playersTeamOne.length > 1 ? newGameState.playersTeamOne[1].lastName : '',
+                              text:
+                                  widget.newGameState.playersTeamOne.length > 1
+                                      ? widget.newGameState.playersTeamOne[1]
+                                          .lastName
+                                      : '',
                               userState: this.widget.userState),
                         ],
                       ),
                     ),
                     Visibility(
-                      visible: newGameState.playersTeamOne.length > 1,
+                      visible: widget.newGameState.playersTeamOne.length > 1,
                       child: Column(
                         children: [
-                          Image.network(newGameState.playersTeamOne.length > 1 ? newGameState.playersTeamOne[1].photoUrl : '',
-                              width: 60, height: 60),
+                          Image.network(
+                              widget.newGameState.playersTeamOne.length > 1
+                                  ? widget
+                                      .newGameState.playersTeamOne[1].photoUrl
+                                  : '',
+                              width: 60,
+                              height: 60),
                         ],
                       ),
                     ),
-                   
                   ],
                 ),
                 Visibility(
-                  visible: newGameState.twoOrFourPlayers == false &&
-                      newGameState.playersTeamTwo.length > 1,
+                  visible: widget.newGameState.twoOrFourPlayers == false &&
+                      widget.newGameState.playersTeamTwo.length > 1,
                   child: Row(
                     children: [
-                     
                       Column(
                         children: [
                           ExtendedText(
-                              text: newGameState.playersTeamTwo.length > 1 ? newGameState.playersTeamTwo[1].firstName : '',
+                              text:
+                                  widget.newGameState.playersTeamTwo.length > 1
+                                      ? widget.newGameState.playersTeamTwo[1]
+                                          .firstName
+                                      : '',
                               userState: this.widget.userState),
                           ExtendedText(
-                              text: newGameState.playersTeamTwo.length > 1 ? newGameState.playersTeamTwo[1].lastName : '',
+                              text:
+                                  widget.newGameState.playersTeamTwo.length > 1
+                                      ? widget.newGameState.playersTeamTwo[1]
+                                          .lastName
+                                      : '',
                               userState: this.widget.userState),
                         ],
                       ),
-                       Visibility(
+                      Visibility(
                         visible: true,
                         child: Column(
                           children: [
                             Image.network(
-                                newGameState.playersTeamTwo.length > 1 ? newGameState.playersTeamTwo[1].photoUrl : '',
+                                widget.newGameState.playersTeamTwo.length > 1
+                                    ? widget
+                                        .newGameState.playersTeamTwo[1].photoUrl
+                                    : '',
                                 width: 60,
                                 height: 60),
                           ],
@@ -117,11 +148,9 @@ class _NewGameOppostionsRightState extends State<NewGameOppostionsRight> {
                 )
               ],
             ));
-        } else {
-          return Container();
-        }
-        
+      } else {
+        return Container();
       }
-    });
+    }
   }
 }

@@ -28,6 +28,7 @@ class NewGame extends StatefulWidget {
 class _NewGameState extends State<NewGame> {
   late Future<List<UserResponse>?> usersFuture;
   String randomString = '';
+  final newGameState = NewGameState(); // Instantiate the store
 
   @override
   void initState() {
@@ -67,53 +68,55 @@ class _NewGameState extends State<NewGame> {
       body: FutureBuilder(
           future: usersFuture,
           builder: (context, AsyncSnapshot<List<UserResponse>?> snapshot) {
-            
             if (snapshot.hasData) {
-              return Provider<NewGameState>(
-                  create: (_) => NewGameState(),
-                  child: Container(
-                    color: helpers.getBackgroundColor(userState.darkmode),
-                      child: Theme(
-                          data: userState.darkmode
-                              ? ThemeData.dark()
-                              : ThemeData.light(),
-                          child: Column(children: <Widget>[
-                            NewGameButtons(
+              return Container(
+                  color: helpers.getBackgroundColor(userState.darkmode),
+                  child: Theme(
+                      data: userState.darkmode
+                          ? ThemeData.dark()
+                          : ThemeData.light(),
+                      child: Column(children: <Widget>[
+                        NewGameButtons(
+                            userState: userState,
+                            notifyParent: setRandomString,
+                            newGameState: newGameState),
+                        HeadlineBigTeammatesOpponents(
+                          userState: userState,
+                          fontSize: 20,
+                          paddingLeft: 10,
+                          randomString: '',
+                          newGameState: newGameState,
+                        ),
+                        NewGamePlayers(
+                            userState: userState,
+                            players: snapshot.data,
+                            notifyParent: setRandomString,
+                            newGameState: newGameState),
+                        HeadlineBig(
+                            headline: userState.hardcodedStrings.match,
+                            userState: userState,
+                            fontSize: 20,
+                            paddingLeft: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            NewGameOppostionsLeft(
                               userState: userState,
-                              notifyParent: setRandomString
+                              newGameState: newGameState,
                             ),
-                            HeadlineBigTeammatesOpponents(
-                                userState: userState,
-                                fontSize: 20,
-                                paddingLeft: 10,
-                                randomString: '',),
-                            NewGamePlayers(
+                            NewGameVs(newGameState: newGameState,),
+                            NewGameOppostionsRight(
                               userState: userState,
-                              players: snapshot.data,
-                              notifyParent: setRandomString
-                            ),
-                            HeadlineBig(
-                                headline: userState.hardcodedStrings.match,
-                                userState: userState,
-                                fontSize: 20,
-                                paddingLeft: 10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                NewGameOppostionsLeft(
-                                  userState: userState,
-                                ),
-                                NewGameVs(),
-                                NewGameOppostionsRight(
-                                  userState: userState,
-                                )
-                              ],
-                            ),
-                            Spacer(),
-                            StartGameButton(
-                              userState: userState,
+                              newGameState: newGameState,
                             )
-                          ]))));
+                          ],
+                        ),
+                        Spacer(),
+                        StartGameButton(
+                          userState: userState,
+                          newGameState: newGameState,
+                        )
+                      ])));
             } else {
               return Center(
                 child: CircularProgressIndicator(),

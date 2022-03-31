@@ -128,11 +128,11 @@ mixin _$NewGameState on _NewGameState, Store {
   }
 
   @override
-  void clearState() {
+  void clearState(int userId) {
     final _$actionInfo = _$_NewGameStateActionController.startAction(
         name: '_NewGameState.clearState');
     try {
-      return super.clearState();
+      return super.clearState(userId);
     } finally {
       _$_NewGameStateActionController.endAction(_$actionInfo);
     }
@@ -172,11 +172,11 @@ mixin _$NewGameState on _NewGameState, Store {
   }
 
   @override
-  void setAllCheckedPlayersToFalse() {
+  void setAllCheckedPlayersToFalse(int userId) {
     final _$actionInfo = _$_NewGameStateActionController.startAction(
         name: '_NewGameState.setAllCheckedPlayersToFalse');
     try {
-      return super.setAllCheckedPlayersToFalse();
+      return super.setAllCheckedPlayersToFalse(userId);
     } finally {
       _$_NewGameStateActionController.endAction(_$actionInfo);
     }

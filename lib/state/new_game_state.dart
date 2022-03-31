@@ -49,7 +49,7 @@ abstract class _NewGameState with Store {
   }
 
   @action
-  void clearState() {
+  void clearState(int userId) {
     if (playersTeamOne.length > 0) {
       for (int i = 1; i < playersTeamOne.length; i++) {
         playersTeamOne.removeAt(i);
@@ -58,6 +58,7 @@ abstract class _NewGameState with Store {
     if (playersTeamTwo.length > 0) {
       playersTeamTwo.clear();
     }
+    setAllCheckedPlayersToFalse(userId);
   }
 
   @action
@@ -80,9 +81,11 @@ abstract class _NewGameState with Store {
   }
 
   @action
-  void setAllCheckedPlayersToFalse() {
+  void setAllCheckedPlayersToFalse(int userId) {
     for (int i = 0; i < checkedPlayers.length; i++) {
-      checkedPlayers[i] = Tuple2(checkedPlayers[i].item1, false);
+      if (checkedPlayers[i].item1 != userId) {
+        checkedPlayers[i] = Tuple2(checkedPlayers[i].item1, false);
+      }
     }
   }
 

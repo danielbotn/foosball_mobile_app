@@ -10,14 +10,14 @@ class HeadlineBigTeammatesOpponents extends StatelessWidget {
   final double fontSize;
   final double? paddingLeft;
   final String randomString;
+  final NewGameState newGameState;
   HeadlineBigTeammatesOpponents(
-      {required this.userState, required this.fontSize, this.paddingLeft, required this.randomString});
+      {required this.userState, required this.fontSize, this.paddingLeft, required this.randomString, required this.newGameState});
 
   @override
   Widget build(BuildContext context) {
     double paddingIsLeft = paddingLeft ?? 10;
     Helpers helpers = new Helpers();
-    final newGameState = Provider.of<NewGameState>(context, listen: false);
     String headlineString = '';
     if (newGameState.twoOrFourPlayers) {
       headlineString = userState.hardcodedStrings.chooseOpponent;
