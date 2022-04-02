@@ -5,7 +5,6 @@ import 'package:foosball_mobile_app/models/other/freehandMatchDetailObject.dart'
 import 'package:foosball_mobile_app/models/other/ongoing_game_object.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
-
 import '../Dashboard.dart';
 import 'ongoing_freehand_game.dart';
 

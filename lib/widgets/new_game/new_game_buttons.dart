@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:foosball_mobile_app/state/new_game_state.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/helpers.dart';
-import 'package:provider/provider.dart';
 
 class NewGameButtons extends StatefulWidget {
   final UserState userState;
   final Function() notifyParent;
   final NewGameState newGameState;
   NewGameButtons(
-      {Key? key, required this.userState, required this.notifyParent, required this.newGameState})
+      {Key? key,
+      required this.userState,
+      required this.notifyParent,
+      required this.newGameState})
       : super(key: key);
 
   @override

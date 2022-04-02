@@ -6,7 +6,6 @@ import 'package:foosball_mobile_app/models/other/freehandMatchDetailObject.dart'
 import 'package:foosball_mobile_app/models/other/ongoing_game_object.dart';
 import 'package:foosball_mobile_app/state/ongoing_freehand_state.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
-
 import '../extended_Text.dart';
 import 'match_details.dart';
 
@@ -24,8 +23,7 @@ class PlayerCard extends StatefulWidget {
       required this.isPlayerOne,
       required this.counter,
       required this.notifyParent,
-      required this.stopClockFromChild
-      })
+      required this.stopClockFromChild})
       : super(key: key);
 
   @override
@@ -83,11 +81,12 @@ class _PlayerCardState extends State<PlayerCard> {
   void gameIsFinished() {
     // go to the finished screen
     FreehandMatchDetailObject fmdo = new FreehandMatchDetailObject(
-        freehandMatchCreateResponse: widget.ongoingGameObject.freehandMatchCreateResponse,
+        freehandMatchCreateResponse:
+            widget.ongoingGameObject.freehandMatchCreateResponse,
         playerOne: widget.ongoingGameObject.playerOne,
         playerTwo: widget.ongoingGameObject.playerTwo,
         userState: widget.userState);
-        widget.stopClockFromChild();
+    widget.stopClockFromChild();
     Navigator.push(
         context,
         MaterialPageRoute(

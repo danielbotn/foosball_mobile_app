@@ -17,8 +17,7 @@ class TimeKeeper extends StatefulWidget {
       required this.ongoingGameObject,
       required this.counter,
       required this.randomString,
-      required this.randomStringStopClock
-      })
+      required this.randomStringStopClock})
       : super(key: key);
 
   @override

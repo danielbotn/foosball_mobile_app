@@ -8,8 +8,6 @@ import 'package:foosball_mobile_app/utils/helpers.dart';
 import 'package:foosball_mobile_app/widgets/new_game/new_game_oppositions_left.dart';
 import 'package:foosball_mobile_app/widgets/new_game/new_game_vs.dart';
 import 'package:foosball_mobile_app/widgets/new_game/start_game_button.dart';
-import 'package:provider/provider.dart';
-
 import '../extended_Text.dart';
 import '../headline_big.dart';
 import '../headline_big_teammates_opponents.dart';
@@ -104,7 +102,9 @@ class _NewGameState extends State<NewGame> {
                               userState: userState,
                               newGameState: newGameState,
                             ),
-                            NewGameVs(newGameState: newGameState,),
+                            NewGameVs(
+                              newGameState: newGameState,
+                            ),
                             NewGameOppostionsRight(
                               userState: userState,
                               newGameState: newGameState,

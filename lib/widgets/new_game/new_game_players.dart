@@ -5,14 +5,18 @@ import 'package:foosball_mobile_app/models/user/user_response.dart';
 import 'package:foosball_mobile_app/state/new_game_state.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/helpers.dart';
-import 'package:provider/provider.dart';
 
 class NewGamePlayers extends StatefulWidget {
   final UserState userState;
   final List<UserResponse>? players;
   final Function() notifyParent;
   final NewGameState newGameState;
-  NewGamePlayers({Key? key, required this.userState, required this.players, required this.notifyParent, required this.newGameState})
+  NewGamePlayers(
+      {Key? key,
+      required this.userState,
+      required this.players,
+      required this.notifyParent,
+      required this.newGameState})
       : super(key: key);
 
   @override
@@ -50,10 +54,12 @@ class _NewGamePlayersState extends State<NewGamePlayers> {
                     visible: true,
                     child: Checkbox(
                       checkColor: Colors.white,
-                      activeColor: helpers.getCheckMarkColor(userState.darkmode),
+                      activeColor:
+                          helpers.getCheckMarkColor(userState.darkmode),
                       value: gameState.checkedPlayers[i].item2,
                       onChanged: (bool? value) {
-                        if (isCheckedLoggedInUser(value, i, users[i]) == false) {
+                        if (isCheckedLoggedInUser(value, i, users[i]) ==
+                            false) {
                           checkBoxChecked(value, i, users[i]);
                           this.widget.notifyParent();
                         }
@@ -73,8 +79,7 @@ class _NewGamePlayersState extends State<NewGamePlayers> {
     return list;
   }
 
-  bool isCheckedLoggedInUser(bool? value, int index, UserResponse user)
-  {
+  bool isCheckedLoggedInUser(bool? value, int index, UserResponse user) {
     bool result = false;
     if (user.id == userState.userId) {
       result = true;
@@ -162,7 +167,7 @@ class _NewGamePlayersState extends State<NewGamePlayers> {
   }
 
   int findIndexOfUser() {
-   int index = 0;
+    int index = 0;
     List<UserResponse> tmpPlayers;
     if (widget.players != null) {
       tmpPlayers = widget.players!;
@@ -172,7 +177,7 @@ class _NewGamePlayersState extends State<NewGamePlayers> {
           break;
         }
       }
-    } 
+    }
     return index;
   }
 

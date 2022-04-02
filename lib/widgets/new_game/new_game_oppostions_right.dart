@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:foosball_mobile_app/state/new_game_state.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
-import 'package:provider/provider.dart';
 import '../extended_Text.dart';
 
 class NewGameOppostionsRight extends StatefulWidget {

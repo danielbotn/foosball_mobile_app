@@ -6,7 +6,6 @@ import 'package:foosball_mobile_app/models/freehand-matches/freehand_match_model
 import 'package:foosball_mobile_app/models/other/freehandMatchDetailObject.dart';
 import 'package:foosball_mobile_app/utils/helpers.dart';
 import 'package:foosball_mobile_app/widgets/freehand_history/freehand_match_goals.dart';
-
 import '../extended_Text.dart';
 import '../match_score.dart';
 import '../total_playing_time.dart';
@@ -55,8 +54,8 @@ class _MatchDetailsState extends State<MatchDetails> {
     return Scaffold(
       appBar: AppBar(
           title: ExtendedText(
-              text: widget
-                  .freehandMatchDetailObject.userState.hardcodedStrings.matchReport,
+              text: widget.freehandMatchDetailObject.userState.hardcodedStrings
+                  .matchReport,
               userState: widget.freehandMatchDetailObject.userState),
           leading: IconButton(
             icon: Icon(Icons.chevron_left),
