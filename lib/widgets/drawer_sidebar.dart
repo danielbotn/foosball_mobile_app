@@ -84,14 +84,14 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
                           ? AppColors.white
                           : AppColors.textBlack)),
               onTap: () async {
-                final UserState userStateFromNewGame = await Navigator.push(
+                Navigator.of(context).pop();
+                Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => NewGame(
                             userState: userState,
                           )),
                 );
-                setAllStates(userStateFromNewGame);
               }),
           new ListTile(
               tileColor: userState.darkmode
@@ -133,14 +133,14 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
                           ? AppColors.white
                           : AppColors.textBlack)),
               onTap: () async {
-                final UserState userStateFromHistory = await Navigator.push(
+                Navigator.of(context).pop();
+                Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => History(
                             userState: userState,
                           )),
                 );
-                setAllStates(userStateFromHistory);
               }),
           new ListTile(
               tileColor: userState.darkmode
