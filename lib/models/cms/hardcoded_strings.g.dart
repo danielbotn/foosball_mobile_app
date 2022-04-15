@@ -55,6 +55,10 @@ HardcodedStrings _$HardcodedStringsFromJson(Map<String, dynamic> json) {
     resume: json['resume'] as String,
     pause: json['pause'] as String,
     close: json['close'] as String,
+    yes: json['yes'] as String,
+    no: json['no'] as String,
+    cancel: json['cancel'] as String,
+    areYouSureAlert: json['areYouSureAlert'] as String,
   );
 }
 
@@ -107,4 +111,8 @@ Map<String, dynamic> _$HardcodedStringsToJson(HardcodedStrings instance) =>
       'resume': instance.resume,
       'pause': instance.pause,
       'close': instance.close,
+      'yes': instance.yes,
+      'no': instance.no,
+      'cancel': instance.cancel,
+      'areYouSureAlert': instance.areYouSureAlert,
     };

@@ -52,6 +52,10 @@ class HardcodedStrings {
   final String resume;
   final String pause;
   final String close;
+  final String yes;
+  final String no;
+  final String cancel;
+  final String areYouSureAlert;
 
   HardcodedStrings({
       required this.matches,
@@ -100,7 +104,11 @@ class HardcodedStrings {
       required this.game,
       required this.resume,
       required this.pause,
-      required this.close
+      required this.close,
+      required this.yes,
+      required this.no,
+      required this.cancel,
+      required this.areYouSureAlert
       });
 
   factory HardcodedStrings.fromJson(Map<String, dynamic> item) =>

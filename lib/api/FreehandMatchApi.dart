@@ -79,4 +79,38 @@ class FreehandMatchApi {
     }
     return result;
   }
+
+   Future<bool> deleteFreehandMatch(int matchId) async {
+    bool success = false;
+    String? baseUrl = kReleaseMode
+        ? dotenv.env['REST_URL_PATH_PROD']
+        : dotenv.env['REST_URL_PATH_DEV'];
+    if (baseUrl != null) {
+      Uri outgoingUri = new Uri(
+          scheme: 'https',
+          host: kReleaseMode ? dotenv.env['PROD_HOST'] : dotenv.env['DEV_HOST'],
+          port: kReleaseMode
+              ? int.parse(dotenv.env['PROD_PORT'].toString())
+              : int.parse(dotenv.env['DEV_PORT'].toString()),
+          path: 'api/FreehandMatches/' + matchId.toString());
+      var url = outgoingUri;
+      var response = await http.delete(
+        url,
+        headers: {
+          "Accept": "application/json",
+          "content-type": "application/json",
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      if (response.statusCode == 204) {
+        success = true;
+      } else {
+        // To do Error handling
+        success = false;
+      }
+    }
+    return success;
+  }
+
 }

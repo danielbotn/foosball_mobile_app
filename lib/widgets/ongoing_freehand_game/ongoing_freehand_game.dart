@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foosball_mobile_app/api/FreehandMatchApi.dart';
 import 'package:foosball_mobile_app/main.dart';
 import 'package:foosball_mobile_app/models/other/ongoing_game_object.dart';
 import 'package:foosball_mobile_app/state/ongoing_freehand_state.dart';
@@ -7,6 +8,7 @@ import 'package:foosball_mobile_app/widgets/ongoing_freehand_game/player_card.da
 import 'package:foosball_mobile_app/widgets/ongoing_freehand_game/player_score.dart';
 import 'package:foosball_mobile_app/widgets/ongoing_freehand_game/time_keeper.dart';
 import 'package:provider/provider.dart';
+import '../Dashboard.dart';
 import '../extended_Text.dart';
 import 'ongoing_buttons.dart';
 
@@ -54,6 +56,66 @@ class _OngoingFreehandGameState extends State<OngoingFreehandGame> {
     });
   }
 
+  void closeAlertDialog() {
+    // delete freehand game and goals and then navigate back to dashboard
+    FreehandMatchApi freehandMatchApi =
+        new FreehandMatchApi(token: widget.ongoingGameObject.userState.token);
+    freehandMatchApi
+        .deleteFreehandMatch(
+            widget.ongoingGameObject.freehandMatchCreateResponse!.id)
+        .then((value) {
+      if (value == true) {
+        // go to dashboard screen
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Dashboard(
+                      param: widget.ongoingGameObject.userState,
+                    )));
+      }
+    });
+  }
+
+  // Popup menu for language selection
+  Future<void> showAlertModal(BuildContext context) async {
+    switch (await showDialog<String>(
+        context: context,
+        builder: (BuildContext context) {
+          return SimpleDialog(
+            title: Text(widget
+                .ongoingGameObject.userState.hardcodedStrings.areYouSureAlert),
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  SimpleDialogOption(
+                    onPressed: () {
+                      Navigator.pop(context, 'Yes');
+                    },
+                    child: Text(widget
+                        .ongoingGameObject.userState.hardcodedStrings.yes),
+                  ),
+                  SimpleDialogOption(
+                    onPressed: () {
+                      Navigator.pop(context, 'No');
+                    },
+                    child: Text(
+                        widget.ongoingGameObject.userState.hardcodedStrings.no),
+                  ),
+                ],
+              )
+            ],
+          );
+        })) {
+      case 'Yes':
+        stopClockFromChild();
+        closeAlertDialog();
+        break;
+      case 'No':
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Helpers helpers = Helpers();
@@ -62,9 +124,9 @@ class _OngoingFreehandGameState extends State<OngoingFreehandGame> {
             title: ExtendedText(
                 text: userState.hardcodedStrings.newGame, userState: userState),
             leading: IconButton(
-              icon: Icon(Icons.chevron_left),
+              icon: Icon(Icons.close),
               onPressed: () {
-                Navigator.pop(context);
+                showAlertModal(context);
               },
             ),
             iconTheme: helpers.getIconTheme(userState.darkmode),

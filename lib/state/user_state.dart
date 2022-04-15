@@ -79,7 +79,11 @@ abstract class _UserState with Store {
       game: "",
       resume: "",
       pause: "",
-      close: ""
+      close: "",
+      yes: "",
+      no: "",
+      cancel: "",
+      areYouSureAlert: ""
       );
   
   @observable

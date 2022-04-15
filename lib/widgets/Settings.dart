@@ -5,8 +5,6 @@ import 'package:foosball_mobile_app/main.dart';
 import 'package:foosball_mobile_app/models/cms/hardcoded_strings.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
-import 'package:foosball_mobile_app/utils/theme_notifier.dart';
-import 'package:provider/provider.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
