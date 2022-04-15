@@ -76,7 +76,6 @@ class _OngoingFreehandGameState extends State<OngoingFreehandGame> {
     });
   }
 
-  // Popup menu for language selection
   Future<void> showAlertModal(BuildContext context) async {
     switch (await showDialog<String>(
         context: context,
