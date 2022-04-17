@@ -57,7 +57,7 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
     userState.setToken('');
     userState.setCurrentOrganisationId(0);
     userState.setUserId(0);
-    Navigator.push(
+    Navigator.pushReplacement(
         context,
         MaterialPageRoute(
             builder: (context) => Login(
