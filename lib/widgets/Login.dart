@@ -1,4 +1,3 @@
-
 import 'package:foosball_mobile_app/api/Auth.dart';
 import 'package:foosball_mobile_app/models/auth/jwt_model.dart';
 import 'package:foosball_mobile_app/models/auth/login_response.dart';
@@ -10,6 +9,7 @@ import 'package:flutter_login/flutter_login.dart';
 import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter/foundation.dart';
+import 'package:foosball_mobile_app/widgets/Dashboard.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
 class Login extends StatefulWidget {
@@ -41,27 +41,30 @@ class _LoginState extends State<Login> {
       return error.message;
     } else {
       var loginResponse = LoginResponse.fromJson(jsonDecode(loginData.body));
-        await storage.write(key: "jwt_token", value: loginResponse.token);
-        Map<String, dynamic> decodedToken = JwtDecoder.decode(loginResponse.token);
-        JwtModel jwtObject = new JwtModel(
-          name: decodedToken["name"], 
-          currentOrganisationId: decodedToken["CurrentOrganisationId"], 
-          nbf: decodedToken["nbf"], 
-          exp: decodedToken["exp"], 
-          iat: decodedToken["iat"]
-        );
-        this.widget.userState.setUserId(loginResponse.id);
-        this.widget.userState.setCurrentOrganisationId(int.parse(jwtObject.currentOrganisationId));
-        this.widget.userState.setToken(loginResponse.token);
+      await storage.write(key: "jwt_token", value: loginResponse.token);
+      Map<String, dynamic> decodedToken =
+          JwtDecoder.decode(loginResponse.token);
+      JwtModel jwtObject = new JwtModel(
+          name: decodedToken["name"],
+          currentOrganisationId: decodedToken["CurrentOrganisationId"],
+          nbf: decodedToken["nbf"],
+          exp: decodedToken["exp"],
+          iat: decodedToken["iat"]);
+      this.widget.userState.setUserId(loginResponse.id);
+      this
+          .widget
+          .userState
+          .setCurrentOrganisationId(int.parse(jwtObject.currentOrganisationId));
+      this.widget.userState.setToken(loginResponse.token);
 
-        if (langFromStorage != null) {
-          this.widget.userState.setLanguage(langFromStorage);
-        } else {
-          await storage.write(key: "language", value: "en");
-          this.widget.userState.setLanguage('en');
-        }
-        dashboardData = this.widget.userState;
-        return null;
+      if (langFromStorage != null) {
+        this.widget.userState.setLanguage(langFromStorage);
+      } else {
+        await storage.write(key: "language", value: "en");
+        this.widget.userState.setLanguage('en');
+      }
+      dashboardData = this.widget.userState;
+      return null;
     }
   }
 
@@ -75,22 +78,20 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return FlutterLogin(
       theme: LoginTheme(
-      primaryColor: Color(0xff2980b9),
-      buttonTheme: LoginButtonTheme(
-        backgroundColor: Colors.green[300]
-      )
-      ),
+          primaryColor: Color(0xff2980b9),
+          buttonTheme: LoginButtonTheme(backgroundColor: Colors.green[300])),
       title: 'FoosTab',
       // logo: 'assets/images/ecorp-lightblue.png',
       onLogin: loginUser,
       onSignup: loginUser,
       onRecoverPassword: _recoverPassword,
       onSubmitAnimationCompleted: () {
-        Navigator.pushNamed(
-          context,
-          'dashboard',
-          arguments: dashboardData,
-        );
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Dashboard(
+                      param: widget.userState,
+                    )));
       },
     );
   }

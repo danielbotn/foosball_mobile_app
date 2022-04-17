@@ -12,7 +12,6 @@ import 'double_league_history/double_league_match_detail.dart';
 import 'freehand_double_history/freehand_double_match_detail.dart';
 import 'freehand_history/freehand_match_detail.dart';
 
-
 class History extends StatefulWidget {
   final UserState userState;
   History({Key? key, required this.userState}) : super(key: key);
@@ -71,13 +70,40 @@ class _HistoryState extends State<History> {
     return history;
   }
 
+  SizedBox singleOrDoubleMatch(HistoryModel historyObject) {
+    print(historyObject.typeOfMatchName);
+    if (historyObject.typeOfMatchName == 'DoubleFreehandMatch' ||
+        historyObject.typeOfMatchName == 'DoubleLeagueMatch') {
+      String opponentTwoPhotoUrl = '';
+      if (historyObject.opponentTwoPhotoUrl != null) {
+        opponentTwoPhotoUrl = historyObject.opponentTwoPhotoUrl!;
+      }
+      return SizedBox(
+          height: 55,
+          width: 25,
+          child: Column(
+            children: [
+              Image.network(historyObject.opponentOnePhotoUrl),
+              Visibility(
+                visible: opponentTwoPhotoUrl != '',
+                child: Image.network(opponentTwoPhotoUrl),
+              )
+            ],
+          ));
+    } else {
+      return SizedBox(
+          height: 100,
+          width: 50,
+          child: Image.network(historyObject.opponentOnePhotoUrl));
+    }
+  }
+
   _goToMatchDetailScreen(int matchId, String typeOfMatch, int? leagueId) {
     TwoPlayersObject tpo = new TwoPlayersObject(
-      userState: this.widget.userState,
-      typeOfMatch: typeOfMatch,
-      matchId: matchId,
-      leagueId: leagueId
-    );
+        userState: this.widget.userState,
+        typeOfMatch: typeOfMatch,
+        matchId: matchId,
+        leagueId: leagueId);
 
     if (typeOfMatch == "FreehandMatch") {
       Navigator.push(
@@ -86,7 +112,7 @@ class _HistoryState extends State<History> {
               builder: (context) => FreehandMatchDetail(
                     twoPlayersObject: tpo,
                   )));
-    } else if(typeOfMatch == "SingleLeagueMatch") {
+    } else if (typeOfMatch == "SingleLeagueMatch") {
       Navigator.push(
           context,
           MaterialPageRoute(
@@ -94,7 +120,7 @@ class _HistoryState extends State<History> {
                     twoPlayersObject: tpo,
                   )));
     } else if (typeOfMatch == "DoubleFreehandMatch") {
-       Navigator.push(
+      Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) => FreehandDoubleMatchDetail(
@@ -134,8 +160,8 @@ class _HistoryState extends State<History> {
       }
 
       list.add(ListTile(
-        onTap: () => _goToMatchDetailScreen(
-            history[i]!.matchId, history[i]!.typeOfMatchName, history[i]!.leagueId),
+        onTap: () => _goToMatchDetailScreen(history[i]!.matchId,
+            history[i]!.typeOfMatchName, history[i]!.leagueId),
         title: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -165,10 +191,7 @@ class _HistoryState extends State<History> {
                 color: this.widget.userState.darkmode
                     ? AppColors.white
                     : AppColors.textBlack)),
-        leading: SizedBox(
-            height: 100,
-            width: 50,
-            child: Image.network(history[i]!.opponentOnePhotoUrl)),
+        leading: singleOrDoubleMatch(history[i]!),
         trailing: Container(
           width: 60,
           child: Column(
@@ -191,8 +214,10 @@ class _HistoryState extends State<History> {
                 height: 5.0,
               ),
               winner == true
-                  ? Text(this.widget.userState.hardcodedStrings.won, style: TextStyle(color: Colors.green))
-                  : Text(this.widget.userState.hardcodedStrings.lost, style: TextStyle(color: Colors.red)),
+                  ? Text(this.widget.userState.hardcodedStrings.won,
+                      style: TextStyle(color: Colors.green))
+                  : Text(this.widget.userState.hardcodedStrings.lost,
+                      style: TextStyle(color: Colors.red)),
             ],
           ),
         ),
@@ -205,7 +230,11 @@ class _HistoryState extends State<History> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text(this.widget.userState.hardcodedStrings.history, style : TextStyle(color: this.widget.userState.darkmode ? AppColors.white : AppColors.textBlack)),
+          title: Text(this.widget.userState.hardcodedStrings.history,
+              style: TextStyle(
+                  color: this.widget.userState.darkmode
+                      ? AppColors.white
+                      : AppColors.textBlack)),
           leading: IconButton(
             icon: Icon(Icons.chevron_left),
             onPressed: () {

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:foosball_mobile_app/main.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
+import 'package:foosball_mobile_app/widgets/Login.dart';
 import 'package:foosball_mobile_app/widgets/Settings.dart';
 import 'package:foosball_mobile_app/widgets/history.dart';
 
@@ -46,6 +48,21 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
       about = userStateParam.hardcodedStrings.about;
       logout = userStateParam.hardcodedStrings.logout;
     });
+  }
+
+  void logoutUser() async {
+    final storage = new FlutterSecureStorage();
+    await storage.delete(key: "jwt_token");
+    await storage.delete(key: "language");
+    userState.setToken('');
+    userState.setCurrentOrganisationId(0);
+    userState.setUserId(0);
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => Login(
+                  userState: userState,
+                )));
   }
 
   @override
@@ -230,6 +247,7 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
                       color: userState.darkmode ? AppColors.white : null)),
               onTap: () {
                 Navigator.pop(context);
+                logoutUser();
               }),
           new Container(
               height: 100,
