@@ -40,6 +40,18 @@ abstract class _OngoingFreehandState with Store {
   @observable
   int elapsedSeconds = 0;
 
+  // update playerOne
+  @action
+  void updatePlayerOne(UserScoreObject playerOne) {
+    this.playerOne = playerOne;
+  }
+
+  // update playerTwo
+  @action
+  void updatePlayerTwo(UserScoreObject playerTwo) {
+    this.playerTwo = playerTwo;
+  }
+
   @action
   void setPlayer(UserScoreObject player) {
     this.playerOne = player;

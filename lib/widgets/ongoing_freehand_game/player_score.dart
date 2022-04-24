@@ -7,11 +7,14 @@ class PlayerScore extends StatefulWidget {
   final UserState userState;
   final bool isPlayerOne;
   final OngoingFreehandState counter;
+  final String randomString;
   PlayerScore(
       {Key? key,
       required this.userState,
       required this.isPlayerOne,
-      required this.counter})
+      required this.counter,
+      required this.randomString
+      })
       : super(key: key);
 
   @override

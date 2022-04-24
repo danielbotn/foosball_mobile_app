@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:foosball_mobile_app/api/FreehandGoalsApi.dart';
 import 'package:foosball_mobile_app/api/FreehandMatchApi.dart';
 import 'package:foosball_mobile_app/main.dart';
+import 'package:foosball_mobile_app/models/freehand-goals/freehand_goals_model.dart';
+import 'package:foosball_mobile_app/models/freehand-matches/userScoreObject.dart';
 import 'package:foosball_mobile_app/models/other/ongoing_game_object.dart';
 import 'package:foosball_mobile_app/state/ongoing_freehand_state.dart';
 import 'package:foosball_mobile_app/utils/helpers.dart';
@@ -25,6 +28,7 @@ class _OngoingFreehandGameState extends State<OngoingFreehandGame> {
   final OngoingFreehandState counter = OngoingFreehandState();
   String randomString = '';
   String randomStringStopClock = '';
+  String scoreRandomString = '';
 
   // used to rebuild widget
   void refresh() {
@@ -34,6 +38,14 @@ class _OngoingFreehandGameState extends State<OngoingFreehandGame> {
 
   void refreshScoreWidget() {
     setState(() {});
+  }
+
+  void refreshScore() {
+    Helpers helpers = Helpers();
+    String rString = helpers.generateRandomString();
+    setState(() {
+      scoreRandomString = rString;
+    });
   }
 
   void setRandomString() {
@@ -115,21 +127,82 @@ class _OngoingFreehandGameState extends State<OngoingFreehandGame> {
     }
   }
 
+  Future<List<FreehandGoalsModel>?> getAllFreehandGoals(int id) async {
+    FreehandGoalsApi freehandGoalsApi =
+        new FreehandGoalsApi(token: widget.ongoingGameObject.userState.token);
+    return await freehandGoalsApi.getFreehandGoals(id);
+  }
+
+  Future<bool> deleteLastGoal(int lastGoalId, int matchId) async {
+    FreehandGoalsApi freehandGoalsApi =
+        new FreehandGoalsApi(token: widget.ongoingGameObject.userState.token);
+    return await freehandGoalsApi.deleteFreehandGoal(lastGoalId, matchId);
+  }
+
+  void deleteLastScoredGoal() async {
+    if (counter.playerOne.score > 0 || counter.playerTwo.score > 0) {
+      // get all freehand goals
+      var allGoals = await getAllFreehandGoals(
+          widget.ongoingGameObject.freehandMatchCreateResponse!.id);
+      if (allGoals != null) {
+        FreehandGoalsModel lastGoal = allGoals[allGoals.length - 1];
+        var deletedGoal = await deleteLastGoal(lastGoal.id,
+            widget.ongoingGameObject.freehandMatchCreateResponse!.id);
+        if (deletedGoal == true) {
+          if (widget.ongoingGameObject.playerOne.id ==
+              lastGoal.scoredByUserId) {
+            int currentCount = counter.playerOne.score;
+            counter.updatePlayerOneScore(currentCount - 1);
+          } else {
+            int currentCount = counter.playerTwo.score;
+            counter.updatePlayerTwoScore(currentCount - 1);
+          }
+        }
+      }
+    }
+    refreshScoreWidget();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    UserScoreObject playerOne =
+        UserScoreObject(player: widget.ongoingGameObject.playerOne, score: 0);
+    UserScoreObject playerTwo =
+        UserScoreObject(player: widget.ongoingGameObject.playerTwo, score: 0);
+    counter.updatePlayerOne(playerOne);
+    counter.updatePlayerTwo(playerTwo);
+  }
+
   @override
   Widget build(BuildContext context) {
     Helpers helpers = Helpers();
     return Scaffold(
         appBar: AppBar(
-            title: ExtendedText(
-                text: userState.hardcodedStrings.newGame, userState: userState),
-            leading: IconButton(
-              icon: Icon(Icons.close),
-              onPressed: () {
-                showAlertModal(context);
-              },
-            ),
-            iconTheme: helpers.getIconTheme(userState.darkmode),
-            backgroundColor: helpers.getBackgroundColor(userState.darkmode)),
+          title: ExtendedText(
+              text: userState.hardcodedStrings.newGame, userState: userState),
+          leading: IconButton(
+            icon: Icon(Icons.close),
+            onPressed: () {
+              showAlertModal(context);
+            },
+          ),
+          iconTheme: helpers.getIconTheme(userState.darkmode),
+          backgroundColor: helpers.getBackgroundColor(userState.darkmode),
+          actions: <Widget>[
+            Padding(
+                padding: EdgeInsets.only(right: 20.0),
+                child: GestureDetector(
+                  onTap: () {
+                    deleteLastScoredGoal();
+                  },
+                  child: Icon(
+                    Icons.undo,
+                    size: 26.0,
+                  ),
+                )),
+          ],
+        ),
         body: Provider<OngoingFreehandState>(
             create: (_) => OngoingFreehandState(),
             child: Container(
@@ -160,7 +233,8 @@ class _OngoingFreehandGameState extends State<OngoingFreehandGame> {
                             child: PlayerScore(
                                 userState: userState,
                                 isPlayerOne: true,
-                                counter: counter))
+                                counter: counter,
+                                randomString: scoreRandomString))
                       ],
                     ),
                     Row(
@@ -182,7 +256,8 @@ class _OngoingFreehandGameState extends State<OngoingFreehandGame> {
                             child: PlayerScore(
                                 userState: userState,
                                 isPlayerOne: false,
-                                counter: counter))
+                                counter: counter,
+                                randomString: scoreRandomString))
                       ],
                     ),
                     Spacer(),

@@ -11,7 +11,8 @@ class FreehandGoalsApi {
 
   FreehandGoalsApi({required this.token});
 
-  Future<FreehandGoalModel?> createFreehandGoal(FreehandGoalBody freehandGoalBody) async {
+  Future<FreehandGoalModel?> createFreehandGoal(
+      FreehandGoalBody freehandGoalBody) async {
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']
         : dotenv.env['REST_URL_PATH_DEV'];
@@ -26,7 +27,7 @@ class FreehandGoalsApi {
         path: 'api/FreehandGoals',
       );
 
-       var jsonObject = {
+      var jsonObject = {
         "matchId": '${freehandGoalBody.matchId}',
         "scoredByUserId": '${freehandGoalBody.scoredByUserId}',
         "oponentId": '${freehandGoalBody.oponentId}',
@@ -35,11 +36,15 @@ class FreehandGoalsApi {
         "winnerGoal": '${freehandGoalBody.winnerGoal}',
       };
 
-      var response = await http.post(outgoingUri, headers: {
-        "Accept": "application/json",
-        "content-type": "application/json",
-        'Authorization': 'Bearer $token',
-      },body: jsonEncode(jsonObject),);
+      var response = await http.post(
+        outgoingUri,
+        headers: {
+          "Accept": "application/json",
+          "content-type": "application/json",
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode(jsonObject),
+      );
 
       if (response.statusCode == 201) {
         return FreehandGoalModel.fromJson(json.decode(response.body));
@@ -72,14 +77,48 @@ class FreehandGoalsApi {
       });
 
       if (response.statusCode == 200) {
-        List<FreehandGoalsModel> userLastTen;
-        userLastTen = (json.decode(response.body) as List)
+        List<FreehandGoalsModel>? freehandGoals;
+        freehandGoals = (json.decode(response.body) as List)
             .map((i) => FreehandGoalsModel.fromJson(i))
             .toList();
-
-        result = userLastTen;
+    
+        result = freehandGoals;
       } else {
         result = null;
+      }
+    }
+    return result;
+  }
+
+  Future<bool> deleteFreehandGoal(int goalId, int matchId) async {
+    bool result = false;
+    String? baseUrl = kReleaseMode
+        ? dotenv.env['REST_URL_PATH_PROD']
+        : dotenv.env['REST_URL_PATH_DEV'];
+    if (baseUrl != null) {
+      
+      Uri outgoingUri = new Uri(
+          scheme: 'https',
+          host: kReleaseMode ? dotenv.env['PROD_HOST'] : dotenv.env['DEV_HOST'],
+          port: kReleaseMode
+              ? int.parse(dotenv.env['PROD_PORT'].toString())
+              : int.parse(dotenv.env['DEV_PORT'].toString()),
+          path: 'api/FreehandGoals' + '/' + matchId.toString() + '/' + goalId.toString(),
+          );
+      var url = outgoingUri;
+      var response = await http.delete(
+        url,
+        headers: {
+          "Accept": "application/json",
+          "content-type": "application/json",
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      if (response.statusCode == 204) {
+        result = true;
+      } else {
+        result = false;
       }
     }
     return result;
