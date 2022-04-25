@@ -146,9 +146,9 @@ class _OngoingFreehandGameState extends State<OngoingFreehandGame> {
           widget.ongoingGameObject.freehandMatchCreateResponse!.id);
       if (allGoals != null) {
         FreehandGoalsModel lastGoal = allGoals[allGoals.length - 1];
-        var deletedGoal = await deleteLastGoal(lastGoal.id,
+        bool deletedGoal = await deleteLastGoal(lastGoal.id,
             widget.ongoingGameObject.freehandMatchCreateResponse!.id);
-        if (deletedGoal == true) {
+        if (deletedGoal) {
           if (widget.ongoingGameObject.playerOne.id ==
               lastGoal.scoredByUserId) {
             int currentCount = counter.playerOne.score;

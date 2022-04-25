@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:foosball_mobile_app/api/FreehandDoubleGoalsApi.dart';
 import 'package:foosball_mobile_app/api/FreehandDoubleMatchApi.dart';
+import 'package:foosball_mobile_app/models/freehand-double-goals/freehand_double_goal_model.dart';
+import 'package:foosball_mobile_app/models/freehand-double-matches/freehand_double_match_model.dart';
 import 'package:foosball_mobile_app/models/other/ongoing_double_game_object.dart';
 import 'package:foosball_mobile_app/models/user/user_response.dart';
 import 'package:foosball_mobile_app/state/ongoing_double_freehand_state.dart';
@@ -9,7 +12,6 @@ import 'package:foosball_mobile_app/widgets/ongoing_double_freehand_game/buttons
 import 'package:foosball_mobile_app/widgets/ongoing_double_freehand_game/player_card.dart';
 import 'package:foosball_mobile_app/widgets/ongoing_double_freehand_game/player_score.dart';
 import 'package:foosball_mobile_app/widgets/ongoing_double_freehand_game/time_keeper.dart';
-
 import '../extended_Text.dart';
 
 class OngoingDoubleFreehandGame extends StatefulWidget {
@@ -70,11 +72,11 @@ class _OngoingDoubleFreehandGameState extends State<OngoingDoubleFreehandGame> {
 
   void closeAlertDialog() {
     // delete freehand game and goals and then navigate back to dashboard
-    FreehandDoubleMatchApi freehandMatchApi =
-        new FreehandDoubleMatchApi(token: widget.ongoingDoubleGameObject.userState.token);
+    FreehandDoubleMatchApi freehandMatchApi = new FreehandDoubleMatchApi(
+        token: widget.ongoingDoubleGameObject.userState.token);
     freehandMatchApi
-        .deleteDoubleFreehandMatch(
-            widget.ongoingDoubleGameObject.freehandDoubleMatchCreateResponse!.id)
+        .deleteDoubleFreehandMatch(widget
+            .ongoingDoubleGameObject.freehandDoubleMatchCreateResponse!.id)
         .then((value) {
       if (value == true) {
         // go to dashboard screen
@@ -93,8 +95,8 @@ class _OngoingDoubleFreehandGameState extends State<OngoingDoubleFreehandGame> {
         context: context,
         builder: (BuildContext context) {
           return SimpleDialog(
-            title: Text(widget
-                .ongoingDoubleGameObject.userState.hardcodedStrings.areYouSureAlert),
+            title: Text(widget.ongoingDoubleGameObject.userState
+                .hardcodedStrings.areYouSureAlert),
             children: <Widget>[
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -103,15 +105,15 @@ class _OngoingDoubleFreehandGameState extends State<OngoingDoubleFreehandGame> {
                     onPressed: () {
                       Navigator.pop(context, 'Yes');
                     },
-                    child: Text(widget
-                        .ongoingDoubleGameObject.userState.hardcodedStrings.yes),
+                    child: Text(widget.ongoingDoubleGameObject.userState
+                        .hardcodedStrings.yes),
                   ),
                   SimpleDialogOption(
                     onPressed: () {
                       Navigator.pop(context, 'No');
                     },
-                    child: Text(
-                        widget.ongoingDoubleGameObject.userState.hardcodedStrings.no),
+                    child: Text(widget
+                        .ongoingDoubleGameObject.userState.hardcodedStrings.no),
                   ),
                 ],
               )
@@ -127,25 +129,81 @@ class _OngoingDoubleFreehandGameState extends State<OngoingDoubleFreehandGame> {
     }
   }
 
+  Future<List<FreehandDoubleGoalModel>?> getAllDoubleFreehandGames(
+      int matchId) async {
+    FreehandDoubleGoalsApi freehandMatchApi = new FreehandDoubleGoalsApi(
+        token: widget.ongoingDoubleGameObject.userState.token);
+    return await freehandMatchApi.getFreehandDoubleGoals(matchId);
+  }
+
+  Future<bool> deleteGoal(int matchId, int goalId) async {
+    FreehandDoubleGoalsApi freehandMatchApi = new FreehandDoubleGoalsApi(
+        token: widget.ongoingDoubleGameObject.userState.token);
+    return await freehandMatchApi.deleteFreehandDoubleGoal(goalId, matchId);
+  }
+
+  void deleteLastScoredGoal() async {
+    if (ongoingState.teamOne.score > 0 || ongoingState.teamTwo.score > 0) {
+      // Get all goals
+      List<FreehandDoubleGoalModel>? goals = await getAllDoubleFreehandGames(
+          widget.ongoingDoubleGameObject.freehandDoubleMatchCreateResponse!.id);
+      if (goals != null) {
+        // Get last goal
+        FreehandDoubleGoalModel lastGoal = goals.last;
+        // Delete last goal
+        bool success = await deleteGoal(
+            widget
+                .ongoingDoubleGameObject.freehandDoubleMatchCreateResponse!.id,
+            lastGoal.id);
+        if (success) {
+          if (widget.ongoingDoubleGameObject.playerOneTeamA.id ==
+                  lastGoal.scoredByUserId ||
+              widget.ongoingDoubleGameObject.playerTwoTeamA.id == lastGoal.id) {
+            int currentCount = ongoingState.teamOne.score;
+            ongoingState.setScoreTeamOne(currentCount - 1);
+          } else {
+            int currentCount = ongoingState.teamTwo.score;
+            ongoingState.setScoreTeamTwo(currentCount - 1);
+          }
+        }
+      }
+    }
+    refreshScoreWidget();
+  }
+
   @override
   Widget build(BuildContext context) {
     Helpers helpers = Helpers();
     return Scaffold(
         appBar: AppBar(
-            title: ExtendedText(
-                text: widget
-                    .ongoingDoubleGameObject.userState.hardcodedStrings.newGame,
-                userState: widget.ongoingDoubleGameObject.userState),
-            leading: IconButton(
-              icon: Icon(Icons.close),
-              onPressed: () {
-               showAlertModal(context);
-              },
-            ),
-            iconTheme: helpers.getIconTheme(
-                widget.ongoingDoubleGameObject.userState.darkmode),
-            backgroundColor: helpers.getBackgroundColor(
-                widget.ongoingDoubleGameObject.userState.darkmode)),
+          title: ExtendedText(
+              text: widget
+                  .ongoingDoubleGameObject.userState.hardcodedStrings.newGame,
+              userState: widget.ongoingDoubleGameObject.userState),
+          leading: IconButton(
+            icon: Icon(Icons.close),
+            onPressed: () {
+              showAlertModal(context);
+            },
+          ),
+          iconTheme: helpers
+              .getIconTheme(widget.ongoingDoubleGameObject.userState.darkmode),
+          backgroundColor: helpers.getBackgroundColor(
+              widget.ongoingDoubleGameObject.userState.darkmode),
+          actions: <Widget>[
+            Padding(
+                padding: EdgeInsets.only(right: 20.0),
+                child: GestureDetector(
+                  onTap: () {
+                    deleteLastScoredGoal();
+                  },
+                  child: Icon(
+                    Icons.undo,
+                    size: 26.0,
+                  ),
+                )),
+          ],
+        ),
         body: Container(
           color: helpers.getBackgroundColor(
               widget.ongoingDoubleGameObject.userState.darkmode),
