@@ -2,9 +2,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/models/auth/jwt_model.dart';
 import 'package:foosball_mobile_app/route_generator.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_theme.dart';
+import 'package:foosball_mobile_app/utils/preferences_service.dart';
 import 'package:foosball_mobile_app/widgets/Login.dart';
 import 'package:foosball_mobile_app/widgets/Settings.dart';
 import 'package:foosball_mobile_app/widgets/dashboard.dart';
@@ -23,15 +23,15 @@ class MyHttpOverrides extends HttpOverrides {
 }
 
 Future<String?> _getJwtToken() async {
-  final storage = new FlutterSecureStorage();
-  String? value = await storage.read(key: "jwt_token");
+  PreferencesService preferencesService = PreferencesService();
+  String? value = await preferencesService.getJwtToken();
   return value;
 }
 
 Future<String?> _getLanguageFromStorage() async {
-  final storage = new FlutterSecureStorage();
-  String? langFromStorage = await storage.read(key: "language");
-  return langFromStorage;
+  PreferencesService preferencesService = PreferencesService();
+  String? value = await preferencesService.getLanguage();
+  return value;
 }
 
 void main() async {

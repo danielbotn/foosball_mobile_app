@@ -15,6 +15,7 @@ The mobile app interacts with a `Dot net core REST api`.
 # Development
 
 Run the project with the following command
+
 ```sh
 flutter run
 ```

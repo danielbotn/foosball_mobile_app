@@ -6,11 +6,12 @@ import 'package:foosball_mobile_app/models/cms/hardcoded_strings.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
 import 'package:settings_ui/settings_ui.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+import '../utils/preferences_service.dart';
 
 class Settings extends StatefulWidget {
   final UserState userState;
-  Settings({Key? key, required this.userState}) : super(key: key);
+  const Settings({Key? key, required this.userState}) : super(key: key);
 
   @override
   _SettingsState createState() => _SettingsState();
@@ -59,10 +60,10 @@ class _SettingsState extends State<Settings> {
   }
 
   Future<void> getTheme() async {
-    final storage = new FlutterSecureStorage();
-    String? darkTheme = await storage.read(key: 'dark_theme');
+    PreferencesService preferencesService = new PreferencesService();
+    bool? darkTheme = await preferencesService.getDarkTheme();
     setState(() {
-      if (darkTheme == 'true') {
+      if (darkTheme == true) {
         this.widget.userState.setDarkmode(true);
       } else {
         this.widget.userState.setDarkmode(false);
@@ -75,8 +76,8 @@ class _SettingsState extends State<Settings> {
     isDarkTheme = Theme.of(context).brightness == Brightness.dark;
 
     changeTheme(bool value) async {
-      final storage = new FlutterSecureStorage();
-      await storage.write(key: "dark_theme", value: value.toString());
+      PreferencesService preferencesService = new PreferencesService();
+      await preferencesService.setDarkTheme(value);
       setState(() {
         isSwitched = value;
       });
@@ -118,8 +119,8 @@ class _SettingsState extends State<Settings> {
 
     // sets the language that the user chooses
     setLanguage(String value) async {
-      final storage = new FlutterSecureStorage();
-      await storage.write(key: "language", value: value);
+      PreferencesService preferencesService = new PreferencesService();
+      await preferencesService.setLanguage(value);
       setSelectedLanguage(value);
       this.widget.userState.setLanguage(value);
       changeHardcodedStrings(value);
@@ -192,29 +193,29 @@ class _SettingsState extends State<Settings> {
                       child: SettingsList(
                         sections: [
                           SettingsSection(
-                            titlePadding: EdgeInsets.all(20),
-                            title: userState.hardcodedStrings.common,
+                            
+                            title: Text(userState.hardcodedStrings.common,),
                             tiles: [
                               SettingsTile(
-                                title: userState.hardcodedStrings.language,
-                                subtitle: selectedLanguage,
-                                leading: Icon(Icons.language),
+                                title: Text(userState.hardcodedStrings.language),
+                                trailing: Text(selectedLanguage),
+                                leading: const Icon(Icons.language),
                                 onPressed: (BuildContext context) {
                                   selectLanguagePopup(context);
                                 },
                               ),
                               SettingsTile(
-                                title: userState.hardcodedStrings.pricing,
-                                subtitle: 'Premium',
+                                title: Text(userState.hardcodedStrings.pricing),
+                                trailing: const Text('Premium'),
                                 leading: Icon(Icons.money),
                                 onPressed: (BuildContext context) {},
                               ),
                               SettingsTile.switchTile(
-                                title: userState.darkmode
+                                title: Text(userState.darkmode
                                     ? userState.hardcodedStrings.darkTheme
-                                    : userState.hardcodedStrings.lightTheme,
+                                    : userState.hardcodedStrings.lightTheme,),
                                 leading: Icon(Icons.phone_android),
-                                switchValue: userState.darkmode,
+                                initialValue: userState.darkmode,
                                 onToggle: (value) {
                                   changeTheme(value);
                                 },
@@ -223,47 +224,46 @@ class _SettingsState extends State<Settings> {
                           ),
                           // person section
                           SettingsSection(
-                            titlePadding: EdgeInsets.all(20),
-                            title: userState.hardcodedStrings.personalInformation,
+                            
+                            title: Text(userState.hardcodedStrings.personalInformation),
                             tiles: [
                               SettingsTile(
-                                title: userState.hardcodedStrings.username,
-                                subtitle: userState.userInfoGlobal.email,
-                                leading: Icon(Icons.email),
+                                title: Text(userState.hardcodedStrings.username),
+                                description: Text(userState.userInfoGlobal.email),
+                                leading: const Icon(Icons.email),
                                 onPressed: (BuildContext context) {
                                   selectLanguagePopup(context);
                                 },
                               ),
                               SettingsTile(
-                                title: userState.hardcodedStrings.user,
-                                subtitle: userState.userInfoGlobal.firstName + " " + userState.userInfoGlobal.lastName,
+                                title: Text(userState.hardcodedStrings.user),
+                                description: Text(userState.userInfoGlobal.firstName + " " + userState.userInfoGlobal.lastName),
                                 leading: Icon(Icons.person),
                                 onPressed: (BuildContext context) {},
                               ),
                               SettingsTile(
-                                title: userState.hardcodedStrings.organisation,
-                                subtitle: userState.userInfoGlobal.currentOrganisationName,
-                                leading: Icon(Icons.business),
+                                title: Text(userState.hardcodedStrings.organisation),
+                                description: Text(userState.userInfoGlobal.currentOrganisationName),
+                                leading: const Icon(Icons.business),
                                 onPressed: (BuildContext context) {},
                               ),
                             ],
                           ),
                           // integrations
                           SettingsSection(
-                            titlePadding: EdgeInsets.all(20),
-                            title: userState.hardcodedStrings.integration,
+                            title: Text(userState.hardcodedStrings.integration),
                             tiles: [
                               SettingsTile(
-                                title: userState.hardcodedStrings.slack,
-                                subtitle: "https://hooks.slack.com/services/T0J5QJQQP/B0J5QJQQQ/0J5QJQQQQ",
+                                title: Text(userState.hardcodedStrings.slack),
+                                description: Text("https://hooks.slack.com/services/T0J5QJQQP/B0J5QJQQQ/0J5QJQQQQ"),
                                 leading: Icon(CustomIcons.slack),
                                 onPressed: (BuildContext context) {
                                   selectLanguagePopup(context);
                                 },
                               ),
                               SettingsTile(
-                                title: userState.hardcodedStrings.discord,
-                                subtitle: "https://hooks.discord.com/services/T0J5QJQQP/B0J5QJQQQ/0J5QJQQQQ",
+                                title: Text(userState.hardcodedStrings.discord),
+                                description: Text("https://hooks.discord.com/services/T0J5QJQQP/B0J5QJQQQ/0J5QJQQQQ"),
                                 leading: Icon(CustomIcons.discord),
                                 onPressed: (BuildContext context) {
                                   selectLanguagePopup(context);
@@ -272,22 +272,21 @@ class _SettingsState extends State<Settings> {
                             ],
                           ),
                           SettingsSection(
-                            titlePadding: EdgeInsets.all(20),
-                            title: userState.hardcodedStrings.security,
+                            title: Text(userState.hardcodedStrings.security),
                             tiles: [
                               SettingsTile.switchTile(
                                 title:
-                                    userState.hardcodedStrings.changePassword,
-                                leading: Icon(Icons.lock),
-                                switchValue: true,
+                                    Text(userState.hardcodedStrings.changePassword),
+                                leading: const Icon(Icons.lock),
+                                initialValue: true,
                                 onToggle: (bool value) {},
                               ),
                               SettingsTile.switchTile(
-                                title: userState
-                                    .hardcodedStrings.enableNotifications,
+                                title: Text(userState
+                                    .hardcodedStrings.enableNotifications),
                                 enabled: false,
-                                leading: Icon(Icons.notifications_active),
-                                switchValue: true,
+                                leading: const Icon(Icons.notifications_active),
+                                initialValue: true,
                                 onToggle: (value) {},
                               ),
                             ],
@@ -295,7 +294,7 @@ class _SettingsState extends State<Settings> {
                         ],
                       )));
             } else {
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(),
               );
             }
