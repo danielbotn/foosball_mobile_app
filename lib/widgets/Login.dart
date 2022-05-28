@@ -4,13 +4,12 @@ import 'package:foosball_mobile_app/models/auth/login_response.dart';
 import 'package:foosball_mobile_app/models/auth/error_response.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'dart:convert';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:flutter/foundation.dart';
 import 'package:foosball_mobile_app/widgets/Dashboard.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
+
+import '../utils/preferences_service.dart';
 
 class Login extends StatefulWidget {
   //props
@@ -28,11 +27,12 @@ class _LoginState extends State<Login> {
 
   Future<String?> loginUser(LoginData data) async {
     Auth auth = new Auth();
-    final storage = new FlutterSecureStorage();
-    String? value = await storage.read(key: "jwt_token");
-    String? langFromStorage = await storage.read(key: "language");
+    PreferencesService preferencesService = new PreferencesService();
+    String? value = await preferencesService.getJwtToken();
+    String? langFromStorage = await preferencesService.getLanguage();
+  
     if (value != null) {
-      await storage.delete(key: "jwt_token");
+      await preferencesService.deleteJwtToken();
     }
     var loginData = await auth.login(data);
 
@@ -41,7 +41,7 @@ class _LoginState extends State<Login> {
       return error.message;
     } else {
       var loginResponse = LoginResponse.fromJson(jsonDecode(loginData.body));
-      await storage.write(key: "jwt_token", value: loginResponse.token);
+      await preferencesService.setJwtToken(loginResponse.token);
       Map<String, dynamic> decodedToken =
           JwtDecoder.decode(loginResponse.token);
       JwtModel jwtObject = new JwtModel(
@@ -60,7 +60,7 @@ class _LoginState extends State<Login> {
       if (langFromStorage != null) {
         this.widget.userState.setLanguage(langFromStorage);
       } else {
-        await storage.write(key: "language", value: "en");
+        await preferencesService.setLanguage('en');
         this.widget.userState.setLanguage('en');
       }
       dashboardData = this.widget.userState;

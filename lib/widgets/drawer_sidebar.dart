@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:foosball_mobile_app/main.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
+import 'package:foosball_mobile_app/utils/preferences_service.dart';
 import 'package:foosball_mobile_app/widgets/Login.dart';
 import 'package:foosball_mobile_app/widgets/Settings.dart';
 import 'package:foosball_mobile_app/widgets/history.dart';
@@ -51,9 +51,11 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
   }
 
   void logoutUser() async {
-    final storage = new FlutterSecureStorage();
-    await storage.delete(key: "jwt_token");
-    await storage.delete(key: "language");
+    PreferencesService preferencesService = PreferencesService();
+    preferencesService.deleteDarkTheme();
+    preferencesService.deleteLanguage();
+    preferencesService.deleteJwtToken();
+    
     userState.setToken('');
     userState.setCurrentOrganisationId(0);
     userState.setUserId(0);

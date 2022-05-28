@@ -1,7 +1,5 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:foosball_mobile_app/api/Dato_CMS.dart';
 import 'package:foosball_mobile_app/api/Organisation.dart';
 import 'package:foosball_mobile_app/api/UserApi.dart';
@@ -15,9 +13,8 @@ import 'package:foosball_mobile_app/widgets/dashboard_last_five.dart';
 import 'package:foosball_mobile_app/widgets/dashboard_matches_chart.dart';
 import 'package:foosball_mobile_app/widgets/dashboard_quick_actions.dart';
 import 'package:foosball_mobile_app/widgets/headline.dart';
+import '../utils/preferences_service.dart';
 import 'drawer_sidebar.dart';
-import 'package:flutter/foundation.dart';
-
 import 'loading.dart';
 
 class Dashboard extends StatefulWidget {
@@ -92,10 +89,10 @@ class _DashboardState extends State<Dashboard> {
   }
 
   Future<void> getTheme() async {
-    final storage = new FlutterSecureStorage();
-    String? darkTheme = await storage.read(key: 'dark_theme');
+    PreferencesService preferencesService = PreferencesService();
+    bool? darkTheme = await preferencesService.getDarkTheme();
     setState(() {
-      if (darkTheme == 'true') {
+      if (darkTheme == true) {
         this.widget.param.setDarkmode(true);
       } else {
         this.widget.param.setDarkmode(false);

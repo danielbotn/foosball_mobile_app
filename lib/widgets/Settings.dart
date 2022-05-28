@@ -6,7 +6,8 @@ import 'package:foosball_mobile_app/models/cms/hardcoded_strings.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
 import 'package:settings_ui/settings_ui.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+import '../utils/preferences_service.dart';
 
 class Settings extends StatefulWidget {
   final UserState userState;
@@ -59,10 +60,10 @@ class _SettingsState extends State<Settings> {
   }
 
   Future<void> getTheme() async {
-    final storage = new FlutterSecureStorage();
-    String? darkTheme = await storage.read(key: 'dark_theme');
+    PreferencesService preferencesService = new PreferencesService();
+    bool? darkTheme = await preferencesService.getDarkTheme();
     setState(() {
-      if (darkTheme == 'true') {
+      if (darkTheme == true) {
         this.widget.userState.setDarkmode(true);
       } else {
         this.widget.userState.setDarkmode(false);
@@ -75,8 +76,8 @@ class _SettingsState extends State<Settings> {
     isDarkTheme = Theme.of(context).brightness == Brightness.dark;
 
     changeTheme(bool value) async {
-      final storage = new FlutterSecureStorage();
-      await storage.write(key: "dark_theme", value: value.toString());
+      PreferencesService preferencesService = new PreferencesService();
+      await preferencesService.setDarkTheme(value);
       setState(() {
         isSwitched = value;
       });
@@ -118,8 +119,8 @@ class _SettingsState extends State<Settings> {
 
     // sets the language that the user chooses
     setLanguage(String value) async {
-      final storage = new FlutterSecureStorage();
-      await storage.write(key: "language", value: value);
+      PreferencesService preferencesService = new PreferencesService();
+      await preferencesService.setLanguage(value);
       setSelectedLanguage(value);
       this.widget.userState.setLanguage(value);
       changeHardcodedStrings(value);
