@@ -6,10 +6,10 @@ part of 'user_state.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$UserState on _UserState, Store {
-  final _$userIdAtom = Atom(name: '_UserState.userId');
+  late final _$userIdAtom = Atom(name: '_UserState.userId', context: context);
 
   @override
   int get userId {
@@ -24,8 +24,8 @@ mixin _$UserState on _UserState, Store {
     });
   }
 
-  final _$currentOrganisationIdAtom =
-      Atom(name: '_UserState.currentOrganisationId');
+  late final _$currentOrganisationIdAtom =
+      Atom(name: '_UserState.currentOrganisationId', context: context);
 
   @override
   int get currentOrganisationId {
@@ -41,7 +41,7 @@ mixin _$UserState on _UserState, Store {
     });
   }
 
-  final _$tokenAtom = Atom(name: '_UserState.token');
+  late final _$tokenAtom = Atom(name: '_UserState.token', context: context);
 
   @override
   String get token {
@@ -56,7 +56,8 @@ mixin _$UserState on _UserState, Store {
     });
   }
 
-  final _$languageAtom = Atom(name: '_UserState.language');
+  late final _$languageAtom =
+      Atom(name: '_UserState.language', context: context);
 
   @override
   String get language {
@@ -71,7 +72,8 @@ mixin _$UserState on _UserState, Store {
     });
   }
 
-  final _$userInfoGlobalAtom = Atom(name: '_UserState.userInfoGlobal');
+  late final _$userInfoGlobalAtom =
+      Atom(name: '_UserState.userInfoGlobal', context: context);
 
   @override
   UserInfoGlobal get userInfoGlobal {
@@ -86,7 +88,8 @@ mixin _$UserState on _UserState, Store {
     });
   }
 
-  final _$hardcodedStringsAtom = Atom(name: '_UserState.hardcodedStrings');
+  late final _$hardcodedStringsAtom =
+      Atom(name: '_UserState.hardcodedStrings', context: context);
 
   @override
   HardcodedStrings get hardcodedStrings {
@@ -101,7 +104,8 @@ mixin _$UserState on _UserState, Store {
     });
   }
 
-  final _$darkmodeAtom = Atom(name: '_UserState.darkmode');
+  late final _$darkmodeAtom =
+      Atom(name: '_UserState.darkmode', context: context);
 
   @override
   bool get darkmode {
@@ -116,7 +120,8 @@ mixin _$UserState on _UserState, Store {
     });
   }
 
-  final _$_UserStateActionController = ActionController(name: '_UserState');
+  late final _$_UserStateActionController =
+      ActionController(name: '_UserState', context: context);
 
   @override
   void setUserInfoGlobalObject(

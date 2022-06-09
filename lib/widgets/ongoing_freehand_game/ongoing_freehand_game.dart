@@ -11,7 +11,7 @@ import 'package:foosball_mobile_app/widgets/ongoing_freehand_game/player_card.da
 import 'package:foosball_mobile_app/widgets/ongoing_freehand_game/player_score.dart';
 import 'package:foosball_mobile_app/widgets/ongoing_freehand_game/time_keeper.dart';
 import 'package:provider/provider.dart';
-import '../Dashboard.dart';
+import '../dashboard/Dashboard.dart';
 import '../extended_Text.dart';
 import 'ongoing_buttons.dart';
 

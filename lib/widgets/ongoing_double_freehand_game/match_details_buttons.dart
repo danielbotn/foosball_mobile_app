@@ -6,7 +6,7 @@ import 'package:foosball_mobile_app/models/other/ongoing_double_game_object.dart
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
 import 'package:foosball_mobile_app/widgets/ongoing_double_freehand_game/ongoing_double_freehand_game.dart';
-import '../Dashboard.dart';
+import '../dashboard/Dashboard.dart';
 
 class MatchDetailButtons extends StatelessWidget {
   final FreehandDoubleMatchDetailObject data;

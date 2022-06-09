@@ -7,32 +7,31 @@ part of 'double_league_match_model.dart';
 // **************************************************************************
 
 DoubleLeagueMatchModel _$DoubleLeagueMatchModelFromJson(
-    Map<String, dynamic> json) {
-  return DoubleLeagueMatchModel(
-    id: json['id'] as int,
-    teamOneId: json['teamOneId'] as int,
-    teamTwoId: json['teamTwoId'] as int,
-    leagueId: json['leagueId'] as int,
-    startTime: json['startTime'] == null
-        ? null
-        : DateTime.parse(json['startTime'] as String),
-    endTime: json['endTime'] == null
-        ? null
-        : DateTime.parse(json['endTime'] as String),
-    teamOneScore: json['teamOneScore'] as int,
-    teamTwoScore: json['teamTwoScore'] as int,
-    matchStarted: json['matchStarted'] as bool,
-    matchEnded: json['matchEnded'] as bool,
-    matchPaused: json['matchPaused'] as bool,
-    totalPlayingTime: json['totalPlayingTime'] as String?,
-    teamOne: (json['teamOne'] as List<dynamic>)
-        .map((e) => TeamModel.fromJson(e as Map<String, dynamic>))
-        .toList(),
-    teamTwo: (json['teamTwo'] as List<dynamic>)
-        .map((e) => TeamModel.fromJson(e as Map<String, dynamic>))
-        .toList(),
-  );
-}
+        Map<String, dynamic> json) =>
+    DoubleLeagueMatchModel(
+      id: json['id'] as int,
+      teamOneId: json['teamOneId'] as int,
+      teamTwoId: json['teamTwoId'] as int,
+      leagueId: json['leagueId'] as int,
+      startTime: json['startTime'] == null
+          ? null
+          : DateTime.parse(json['startTime'] as String),
+      endTime: json['endTime'] == null
+          ? null
+          : DateTime.parse(json['endTime'] as String),
+      teamOneScore: json['teamOneScore'] as int,
+      teamTwoScore: json['teamTwoScore'] as int,
+      matchStarted: json['matchStarted'] as bool,
+      matchEnded: json['matchEnded'] as bool,
+      matchPaused: json['matchPaused'] as bool,
+      totalPlayingTime: json['totalPlayingTime'] as String?,
+      teamOne: (json['teamOne'] as List<dynamic>)
+          .map((e) => TeamModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      teamTwo: (json['teamTwo'] as List<dynamic>)
+          .map((e) => TeamModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
 
 Map<String, dynamic> _$DoubleLeagueMatchModelToJson(
         DoubleLeagueMatchModel instance) =>

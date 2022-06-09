@@ -6,7 +6,7 @@ import 'package:foosball_mobile_app/models/freehand-matches/freehand_match_model
 import 'package:foosball_mobile_app/models/other/freehandMatchDetailObject.dart';
 import 'package:foosball_mobile_app/utils/helpers.dart';
 import 'package:foosball_mobile_app/widgets/freehand_history/freehand_match_goals.dart';
-import '../Dashboard.dart';
+import '../dashboard/Dashboard.dart';
 import '../extended_Text.dart';
 import '../match_score.dart';
 import '../total_playing_time.dart';

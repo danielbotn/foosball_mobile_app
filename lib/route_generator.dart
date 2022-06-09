@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/main.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
-import 'package:foosball_mobile_app/widgets/Dashboard.dart';
+import 'package:foosball_mobile_app/widgets/dashboard/Dashboard.dart';
 import 'package:foosball_mobile_app/widgets/Settings.dart';
 import 'package:foosball_mobile_app/widgets/Single_game.dart';
 import 'package:foosball_mobile_app/widgets/freehand_history/freehand_match_detail.dart';

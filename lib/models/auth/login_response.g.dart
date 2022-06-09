@@ -6,15 +6,14 @@ part of 'login_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-LoginResponse _$LoginResponseFromJson(Map<String, dynamic> json) {
-  return LoginResponse(
-    id: json['id'] as int,
-    email: json['email'] as String,
-    firstName: json['firstName'] as String,
-    lastName: json['lastName'] as String,
-    token: json['token'] as String,
-  );
-}
+LoginResponse _$LoginResponseFromJson(Map<String, dynamic> json) =>
+    LoginResponse(
+      id: json['id'] as int,
+      email: json['email'] as String,
+      firstName: json['firstName'] as String,
+      lastName: json['lastName'] as String,
+      token: json['token'] as String,
+    );
 
 Map<String, dynamic> _$LoginResponseToJson(LoginResponse instance) =>
     <String, dynamic>{

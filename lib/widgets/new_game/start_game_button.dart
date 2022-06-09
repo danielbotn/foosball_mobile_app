@@ -53,13 +53,13 @@ class StartGameButton extends StatelessWidget {
 
     void startFreehandDoubleGame() {
       FreehandDoubleMatchApi doubleMatchApi =
-          new FreehandDoubleMatchApi(token: userState.token);
-      FreehandDoubleMatchBody fdmb = new FreehandDoubleMatchBody(
+          FreehandDoubleMatchApi(token: userState.token);
+      FreehandDoubleMatchBody fdmb = FreehandDoubleMatchBody(
           playerOneTeamA: newGameState.playersTeamOne[0].id,
           playerTwoTeamA: newGameState.playersTeamOne[1].id,
           playerOneTeamB: newGameState.playersTeamTwo[0].id,
           playerTwoTeamB: newGameState.playersTeamTwo[1].id,
-          organisationId: newGameState.playersTeamOne[0].currentOrganisationId,
+          organisationId: newGameState.playersTeamOne[0].currentOrganisationId as int,
           teamAScore: 0,
           teamBScore: 0,
           nicknameTeamA: null,
@@ -68,7 +68,7 @@ class StartGameButton extends StatelessWidget {
         );
         doubleMatchApi.createNewDoubleFreehandMatch(fdmb).then((value) {
           OngoingDoubleGameObject ongoingDoubleGameObject =
-              new OngoingDoubleGameObject(
+              OngoingDoubleGameObject(
                   freehandDoubleMatchCreateResponse: value,
                   playerOneTeamA: newGameState.playersTeamOne[0],
                   playerTwoTeamA: newGameState.playersTeamOne[1],
@@ -106,12 +106,12 @@ class StartGameButton extends StatelessWidget {
                   onPressed: () => {
                     startGame(),
                   },
-                  child: Text(userState.hardcodedStrings.startGame),
                   style: ElevatedButton.styleFrom(
                       primary: userState.darkmode
                           ? AppColors.lightThemeShadowColor
                           : AppColors.buttonsLightTheme,
                       minimumSize: Size(100, 50)),
+                  child: Text(userState.hardcodedStrings.startGame),
                 ),
               ),
             )),

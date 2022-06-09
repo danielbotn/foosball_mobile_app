@@ -6,10 +6,11 @@ part of 'ongoing_freehand_state.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$OngoingFreehandState on _OngoingFreehandState, Store {
-  final _$playerOneAtom = Atom(name: '_OngoingFreehandState.playerOne');
+  late final _$playerOneAtom =
+      Atom(name: '_OngoingFreehandState.playerOne', context: context);
 
   @override
   UserScoreObject get playerOne {
@@ -24,7 +25,8 @@ mixin _$OngoingFreehandState on _OngoingFreehandState, Store {
     });
   }
 
-  final _$playerTwoAtom = Atom(name: '_OngoingFreehandState.playerTwo');
+  late final _$playerTwoAtom =
+      Atom(name: '_OngoingFreehandState.playerTwo', context: context);
 
   @override
   UserScoreObject get playerTwo {
@@ -39,7 +41,8 @@ mixin _$OngoingFreehandState on _OngoingFreehandState, Store {
     });
   }
 
-  final _$isClockPausedAtom = Atom(name: '_OngoingFreehandState.isClockPaused');
+  late final _$isClockPausedAtom =
+      Atom(name: '_OngoingFreehandState.isClockPaused', context: context);
 
   @override
   bool get isClockPaused {
@@ -54,8 +57,8 @@ mixin _$OngoingFreehandState on _OngoingFreehandState, Store {
     });
   }
 
-  final _$elapsedSecondsAtom =
-      Atom(name: '_OngoingFreehandState.elapsedSeconds');
+  late final _$elapsedSecondsAtom =
+      Atom(name: '_OngoingFreehandState.elapsedSeconds', context: context);
 
   @override
   int get elapsedSeconds {
@@ -70,8 +73,8 @@ mixin _$OngoingFreehandState on _OngoingFreehandState, Store {
     });
   }
 
-  final _$_OngoingFreehandStateActionController =
-      ActionController(name: '_OngoingFreehandState');
+  late final _$_OngoingFreehandStateActionController =
+      ActionController(name: '_OngoingFreehandState', context: context);
 
   @override
   void updatePlayerOne(UserScoreObject playerOne) {

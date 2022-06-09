@@ -9,7 +9,7 @@ class UserResponse {
   final String firstName;
   final String lastName;
   final DateTime createdAt;
-  final int currentOrganisationId;
+  final int? currentOrganisationId;
   final String photoUrl;
 
   UserResponse({required this.id, required this.email, required this.firstName, required this.lastName, required this.createdAt, required this.currentOrganisationId, required this.photoUrl});

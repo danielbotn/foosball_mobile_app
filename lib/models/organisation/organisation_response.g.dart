@@ -6,14 +6,14 @@ part of 'organisation_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-OrganisationResponse _$OrganisationResponseFromJson(Map<String, dynamic> json) {
-  return OrganisationResponse(
-    id: json['id'] as int,
-    name: json['name'] as String,
-    createdAt: DateTime.parse(json['createdAt'] as String),
-    organisationType: json['organisationType'] as int,
-  );
-}
+OrganisationResponse _$OrganisationResponseFromJson(
+        Map<String, dynamic> json) =>
+    OrganisationResponse(
+      id: json['id'] as int,
+      name: json['name'] as String,
+      createdAt: DateTime.parse(json['createdAt'] as String),
+      organisationType: json['organisationType'] as int,
+    );
 
 Map<String, dynamic> _$OrganisationResponseToJson(
         OrganisationResponse instance) =>

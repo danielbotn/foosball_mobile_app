@@ -7,22 +7,21 @@ part of 'freehand_double_goal_model.dart';
 // **************************************************************************
 
 FreehandDoubleGoalModel _$FreehandDoubleGoalModelFromJson(
-    Map<String, dynamic> json) {
-  return FreehandDoubleGoalModel(
-    id: json['id'] as int,
-    scoredByUserId: json['scoredByUserId'] as int,
-    doubleMatchId: json['doubleMatchId'] as int,
-    scorerTeamScore: json['scorerTeamScore'] as int,
-    opponentTeamScore: json['opponentTeamScore'] as int,
-    winnerGoal: json['winnerGoal'] as bool,
-    timeOfGoal: DateTime.parse(json['timeOfGoal'] as String),
-    goalTimeStopWatch: json['goalTimeStopWatch'] as String,
-    firstName: json['firstName'] as String,
-    lastName: json['lastName'] as String,
-    email: json['email'] as String,
-    photoUrl: json['photoUrl'] as String,
-  );
-}
+        Map<String, dynamic> json) =>
+    FreehandDoubleGoalModel(
+      id: json['id'] as int,
+      scoredByUserId: json['scoredByUserId'] as int,
+      doubleMatchId: json['doubleMatchId'] as int,
+      scorerTeamScore: json['scorerTeamScore'] as int,
+      opponentTeamScore: json['opponentTeamScore'] as int,
+      winnerGoal: json['winnerGoal'] as bool,
+      timeOfGoal: DateTime.parse(json['timeOfGoal'] as String),
+      goalTimeStopWatch: json['goalTimeStopWatch'] as String,
+      firstName: json['firstName'] as String,
+      lastName: json['lastName'] as String,
+      email: json['email'] as String,
+      photoUrl: json['photoUrl'] as String,
+    );
 
 Map<String, dynamic> _$FreehandDoubleGoalModelToJson(
         FreehandDoubleGoalModel instance) =>

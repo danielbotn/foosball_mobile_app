@@ -6,10 +6,11 @@ part of 'new_game_state.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$NewGameState on _NewGameState, Store {
-  final _$twoOrFourPlayersAtom = Atom(name: '_NewGameState.twoOrFourPlayers');
+  late final _$twoOrFourPlayersAtom =
+      Atom(name: '_NewGameState.twoOrFourPlayers', context: context);
 
   @override
   bool get twoOrFourPlayers {
@@ -24,7 +25,8 @@ mixin _$NewGameState on _NewGameState, Store {
     });
   }
 
-  final _$playersTeamOneAtom = Atom(name: '_NewGameState.playersTeamOne');
+  late final _$playersTeamOneAtom =
+      Atom(name: '_NewGameState.playersTeamOne', context: context);
 
   @override
   ObservableList<UserResponse> get playersTeamOne {
@@ -39,7 +41,8 @@ mixin _$NewGameState on _NewGameState, Store {
     });
   }
 
-  final _$playersTeamTwoAtom = Atom(name: '_NewGameState.playersTeamTwo');
+  late final _$playersTeamTwoAtom =
+      Atom(name: '_NewGameState.playersTeamTwo', context: context);
 
   @override
   ObservableList<UserResponse> get playersTeamTwo {
@@ -54,7 +57,8 @@ mixin _$NewGameState on _NewGameState, Store {
     });
   }
 
-  final _$checkedPlayersAtom = Atom(name: '_NewGameState.checkedPlayers');
+  late final _$checkedPlayersAtom =
+      Atom(name: '_NewGameState.checkedPlayers', context: context);
 
   @override
   ObservableList<Tuple2<int, bool>> get checkedPlayers {
@@ -69,8 +73,8 @@ mixin _$NewGameState on _NewGameState, Store {
     });
   }
 
-  final _$_NewGameStateActionController =
-      ActionController(name: '_NewGameState');
+  late final _$_NewGameStateActionController =
+      ActionController(name: '_NewGameState', context: context);
 
   @override
   void setTwoOrFourPlayers(bool value) {

@@ -6,15 +6,13 @@ part of 'jwt_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-JwtModel _$JwtModelFromJson(Map<String, dynamic> json) {
-  return JwtModel(
-    name: json['name'] as String,
-    currentOrganisationId: json['currentOrganisationId'] as String,
-    nbf: json['nbf'] as int,
-    exp: json['exp'] as int,
-    iat: json['iat'] as int,
-  );
-}
+JwtModel _$JwtModelFromJson(Map<String, dynamic> json) => JwtModel(
+      name: json['name'] as String,
+      currentOrganisationId: json['currentOrganisationId'] as String,
+      nbf: json['nbf'] as int,
+      exp: json['exp'] as int,
+      iat: json['iat'] as int,
+    );
 
 Map<String, dynamic> _$JwtModelToJson(JwtModel instance) => <String, dynamic>{
       'name': instance.name,

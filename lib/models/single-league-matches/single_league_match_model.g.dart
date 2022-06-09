@@ -7,32 +7,31 @@ part of 'single_league_match_model.dart';
 // **************************************************************************
 
 SingleLeagueMatchModel _$SingleLeagueMatchModelFromJson(
-    Map<String, dynamic> json) {
-  return SingleLeagueMatchModel(
-    id: json['id'] as int,
-    playerOne: json['playerOne'] as int,
-    playerOneFirstName: json['playerOneFirstName'] as String,
-    playerOneLastName: json['playerOneLastName'] as String,
-    playerOnePhotoUrl: json['playerOnePhotoUrl'] as String,
-    playerTwo: json['playerTwo'] as int,
-    playerTwoFirstName: json['playerTwoFirstName'] as String,
-    playerTwoLastName: json['playerTwoLastName'] as String,
-    playerTwoPhotoUrl: json['playerTwoPhotoUrl'] as String,
-    leagueId: json['leagueId'] as int,
-    startTime: json['startTime'] == null
-        ? null
-        : DateTime.parse(json['startTime'] as String),
-    endTime: json['endTime'] == null
-        ? null
-        : DateTime.parse(json['endTime'] as String),
-    playerOneScore: json['playerOneScore'] as int?,
-    playerTwoScore: json['playerTwoScore'] as int?,
-    matchStarted: json['matchStarted'] as bool?,
-    matchEnded: json['matchEnded'] as bool?,
-    matchPaused: json['matchPaused'] as bool?,
-    totalPlayingTime: json['totalPlayingTime'] as String?,
-  );
-}
+        Map<String, dynamic> json) =>
+    SingleLeagueMatchModel(
+      id: json['id'] as int,
+      playerOne: json['playerOne'] as int,
+      playerOneFirstName: json['playerOneFirstName'] as String,
+      playerOneLastName: json['playerOneLastName'] as String,
+      playerOnePhotoUrl: json['playerOnePhotoUrl'] as String,
+      playerTwo: json['playerTwo'] as int,
+      playerTwoFirstName: json['playerTwoFirstName'] as String,
+      playerTwoLastName: json['playerTwoLastName'] as String,
+      playerTwoPhotoUrl: json['playerTwoPhotoUrl'] as String,
+      leagueId: json['leagueId'] as int,
+      startTime: json['startTime'] == null
+          ? null
+          : DateTime.parse(json['startTime'] as String),
+      endTime: json['endTime'] == null
+          ? null
+          : DateTime.parse(json['endTime'] as String),
+      playerOneScore: json['playerOneScore'] as int?,
+      playerTwoScore: json['playerTwoScore'] as int?,
+      matchStarted: json['matchStarted'] as bool?,
+      matchEnded: json['matchEnded'] as bool?,
+      matchPaused: json['matchPaused'] as bool?,
+      totalPlayingTime: json['totalPlayingTime'] as String?,
+    );
 
 Map<String, dynamic> _$SingleLeagueMatchModelToJson(
         SingleLeagueMatchModel instance) =>

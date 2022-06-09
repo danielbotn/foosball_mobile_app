@@ -6,20 +6,18 @@ part of 'userStats.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-UserStats _$UserStatsFromJson(Map<String, dynamic> json) {
-  return UserStats(
-    userId: json['userId'] as int,
-    totalMatches: json['totalMatches'] as int,
-    totalFreehandMatches: json['totalFreehandMatches'] as int,
-    totalDoubleFreehandMatches: json['totalDoubleFreehandMatches'] as int,
-    totalSingleLeagueMatches: json['totalSingleLeagueMatches'] as int,
-    totalDoubleLeagueMatches: json['totalDoubleLeagueMatches'] as int,
-    totalMatchesWon: json['totalMatchesWon'] as int,
-    totalMatchesLost: json['totalMatchesLost'] as int,
-    totalGoalsScored: json['totalGoalsScored'] as int,
-    totalGoalsReceived: json['totalGoalsReceived'] as int,
-  );
-}
+UserStats _$UserStatsFromJson(Map<String, dynamic> json) => UserStats(
+      userId: json['userId'] as int,
+      totalMatches: json['totalMatches'] as int,
+      totalFreehandMatches: json['totalFreehandMatches'] as int,
+      totalDoubleFreehandMatches: json['totalDoubleFreehandMatches'] as int,
+      totalSingleLeagueMatches: json['totalSingleLeagueMatches'] as int,
+      totalDoubleLeagueMatches: json['totalDoubleLeagueMatches'] as int,
+      totalMatchesWon: json['totalMatchesWon'] as int,
+      totalMatchesLost: json['totalMatchesLost'] as int,
+      totalGoalsScored: json['totalGoalsScored'] as int,
+      totalGoalsReceived: json['totalGoalsReceived'] as int,
+    );
 
 Map<String, dynamic> _$UserStatsToJson(UserStats instance) => <String, dynamic>{
       'userId': instance.userId,

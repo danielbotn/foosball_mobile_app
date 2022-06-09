@@ -6,10 +6,11 @@ part of 'ongoing_double_freehand_state.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$OngoingDoubleFreehandState on _OngoingDoubleFreehandState, Store {
-  final _$teamOneAtom = Atom(name: '_OngoingDoubleFreehandState.teamOne');
+  late final _$teamOneAtom =
+      Atom(name: '_OngoingDoubleFreehandState.teamOne', context: context);
 
   @override
   UserDoubleScoreObject get teamOne {
@@ -24,7 +25,8 @@ mixin _$OngoingDoubleFreehandState on _OngoingDoubleFreehandState, Store {
     });
   }
 
-  final _$teamTwoAtom = Atom(name: '_OngoingDoubleFreehandState.teamTwo');
+  late final _$teamTwoAtom =
+      Atom(name: '_OngoingDoubleFreehandState.teamTwo', context: context);
 
   @override
   UserDoubleScoreObject get teamTwo {
@@ -39,8 +41,8 @@ mixin _$OngoingDoubleFreehandState on _OngoingDoubleFreehandState, Store {
     });
   }
 
-  final _$isClockPausedAtom =
-      Atom(name: '_OngoingDoubleFreehandState.isClockPaused');
+  late final _$isClockPausedAtom =
+      Atom(name: '_OngoingDoubleFreehandState.isClockPaused', context: context);
 
   @override
   bool get isClockPaused {
@@ -55,8 +57,8 @@ mixin _$OngoingDoubleFreehandState on _OngoingDoubleFreehandState, Store {
     });
   }
 
-  final _$elapsedSecondsAtom =
-      Atom(name: '_OngoingDoubleFreehandState.elapsedSeconds');
+  late final _$elapsedSecondsAtom = Atom(
+      name: '_OngoingDoubleFreehandState.elapsedSeconds', context: context);
 
   @override
   int get elapsedSeconds {
@@ -71,8 +73,8 @@ mixin _$OngoingDoubleFreehandState on _OngoingDoubleFreehandState, Store {
     });
   }
 
-  final _$_OngoingDoubleFreehandStateActionController =
-      ActionController(name: '_OngoingDoubleFreehandState');
+  late final _$_OngoingDoubleFreehandStateActionController =
+      ActionController(name: '_OngoingDoubleFreehandState', context: context);
 
   @override
   void setTeamOne(UserResponse userOne, UserResponse userTwo, int score) {

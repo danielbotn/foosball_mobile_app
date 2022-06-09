@@ -8,18 +8,18 @@ import 'package:foosball_mobile_app/models/charts/user_stats_response.dart';
 import 'package:foosball_mobile_app/models/organisation/organisation_response.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
-import 'package:foosball_mobile_app/widgets/dashboard_goals_chart.dart';
-import 'package:foosball_mobile_app/widgets/dashboard_last_five.dart';
-import 'package:foosball_mobile_app/widgets/dashboard_matches_chart.dart';
-import 'package:foosball_mobile_app/widgets/dashboard_quick_actions.dart';
+import 'dashboard_goals_chart.dart';
+import 'dashboard_last_five.dart';
+import 'dashboard_matches_chart.dart';
+import 'dashboard_quick_actions.dart';
 import 'package:foosball_mobile_app/widgets/headline.dart';
-import '../utils/preferences_service.dart';
-import 'drawer_sidebar.dart';
-import 'loading.dart';
+import '../../utils/preferences_service.dart';
+import '../drawer_sidebar.dart';
+import '../loading.dart';
 
 class Dashboard extends StatefulWidget {
   final UserState param;
-  Dashboard({Key? key, required this.param}) : super(key: key);
+  const Dashboard({Key? key, required this.param}) : super(key: key);
 
   @override
   _DashboardState createState() => _DashboardState();
@@ -59,7 +59,7 @@ class _DashboardState extends State<Dashboard> {
     datoCMS.getHardcodedStrings(this.widget.param.language).then((value) {
       if (value != null) {
         // hardcoded strings put into global state
-        this.widget.param.setHardcodedStrings(value);
+        widget.param.setHardcodedStrings(value);
       }
     });
 
@@ -69,15 +69,19 @@ class _DashboardState extends State<Dashboard> {
         lastName = value.lastName;
         email = value.email;
       });
-      userStatsFuture = getUserStatsData(int.parse(userId), value.currentOrganisationId);
+      int currentOID = 0;
+      if (value.currentOrganisationId != null) {
+        currentOID = value.currentOrganisationId!;
+      }
+      userStatsFuture = getUserStatsData(int.parse(userId), currentOID);
       
       // Set user information to global state??
-      this.widget.param.setUserInfoGlobalObject(
+      widget.param.setUserInfoGlobalObject(
           int.parse(userId),
           value.firstName,
           value.lastName,
           value.email,
-          value.currentOrganisationId,
+          currentOID,
           organisationName);
     });
 

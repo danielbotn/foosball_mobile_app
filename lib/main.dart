@@ -7,7 +7,7 @@ import 'package:foosball_mobile_app/utils/app_theme.dart';
 import 'package:foosball_mobile_app/utils/preferences_service.dart';
 import 'package:foosball_mobile_app/widgets/Login.dart';
 import 'package:foosball_mobile_app/widgets/Settings.dart';
-import 'package:foosball_mobile_app/widgets/dashboard.dart';
+import 'package:foosball_mobile_app/widgets/dashboard/dashboard.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -34,27 +34,24 @@ Future<String?> _getLanguageFromStorage() async {
   return value;
 }
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  HttpOverrides.global = new MyHttpOverrides();
-  await dotenv.load(fileName: ".env");
-  String? tokenData = await _getJwtToken();
-  String theRoute = 'login';
-  String? token = tokenData;
-  if (token != null) {
-    Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
-    JwtModel jwtObject = new JwtModel(
-        name: decodedToken["name"],
-        currentOrganisationId: decodedToken["CurrentOrganisationId"],
-        nbf: decodedToken["nbf"],
-        exp: decodedToken["exp"],
-        iat: decodedToken["iat"]);
-    // Putting userid and currentOrganisationId to mobx store
-    userState.setUserId(int.parse(jwtObject.name));
-    userState
-        .setCurrentOrganisationId(int.parse(jwtObject.currentOrganisationId));
-    userState.setToken(token);
+ void setJwtInfo(String token) async {
+     Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
+      JwtModel jwtObject = JwtModel(
+          name: decodedToken["name"],
+          currentOrganisationId: decodedToken["CurrentOrganisationId"],
+          nbf: decodedToken["nbf"],
+          exp: decodedToken["exp"],
+          iat: decodedToken["iat"]);
+      userState.setUserId(int.parse(jwtObject.name));
+      // set current organisation id to mobx store if it is not null with tryParse
+      if (jwtObject.currentOrganisationId != "") {
+          userState
+            .setCurrentOrganisationId(int.parse(jwtObject.currentOrganisationId));
+      }
+      userState.setToken(token);
+  }
 
+  void setLanguageInfo() async {
     String? langFromStorage = await _getLanguageFromStorage();
 
     if (langFromStorage != null) {
@@ -62,7 +59,19 @@ void main() async {
     } else {
       userState.setLanguage("en");
     }
+  }
 
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  HttpOverrides.global = MyHttpOverrides();
+  await dotenv.load(fileName: ".env");
+  String? tokenData = await _getJwtToken();
+  String theRoute = 'login';
+  String? token = tokenData;
+  if (token != null) {
+    setJwtInfo(token);
+    setLanguageInfo();
+    
     bool isTokenExpired = JwtDecoder.isExpired(token);
     if (isTokenExpired == false) {
       theRoute = 'dashboard';
