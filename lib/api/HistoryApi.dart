@@ -16,7 +16,7 @@ class HistoryApi {
         : dotenv.env['REST_URL_PATH_DEV'];
     if (baseUrl != null) {
       Uri outgoingUri = new Uri(
-        scheme: 'http',
+        scheme: 'https',
         host: kReleaseMode ? dotenv.env['PROD_HOST'] : dotenv.env['DEV_HOST'],
         port: kReleaseMode
             ? int.parse(dotenv.env['PROD_PORT'].toString())
@@ -48,7 +48,7 @@ class HistoryApi {
     if (baseUrl != null) {
       var json = {"pageNumber": '$pageNumber', "pageSize": '$pageSize'};
       Uri outgoingUri = new Uri(
-          scheme: 'http',
+          scheme: 'https',
           host: kReleaseMode ? dotenv.env['PROD_HOST'] : dotenv.env['DEV_HOST'],
           port: kReleaseMode
               ? int.parse(dotenv.env['PROD_PORT'].toString())
