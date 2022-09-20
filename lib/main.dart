@@ -34,32 +34,32 @@ Future<String?> _getLanguageFromStorage() async {
   return value;
 }
 
- void setJwtInfo(String token) async {
-     Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
-      JwtModel jwtObject = JwtModel(
-          name: decodedToken["name"],
-          currentOrganisationId: decodedToken["CurrentOrganisationId"],
-          nbf: decodedToken["nbf"],
-          exp: decodedToken["exp"],
-          iat: decodedToken["iat"]);
-      userState.setUserId(int.parse(jwtObject.name));
-      // set current organisation id to mobx store if it is not null with tryParse
-      if (jwtObject.currentOrganisationId != "") {
-          userState
-            .setCurrentOrganisationId(int.parse(jwtObject.currentOrganisationId));
-      }
-      userState.setToken(token);
+void setJwtInfo(String token) async {
+  Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
+  JwtModel jwtObject = JwtModel(
+      name: decodedToken["unique_name"],
+      currentOrganisationId: decodedToken["CurrentOrganisationId"],
+      nbf: decodedToken["nbf"],
+      exp: decodedToken["exp"],
+      iat: decodedToken["iat"]);
+  userState.setUserId(int.parse(jwtObject.name));
+  // set current organisation id to mobx store if it is not null with tryParse
+  if (jwtObject.currentOrganisationId != "") {
+    userState
+        .setCurrentOrganisationId(int.parse(jwtObject.currentOrganisationId));
   }
+  userState.setToken(token);
+}
 
-  void setLanguageInfo() async {
-    String? langFromStorage = await _getLanguageFromStorage();
+void setLanguageInfo() async {
+  String? langFromStorage = await _getLanguageFromStorage();
 
-    if (langFromStorage != null) {
-      userState.setLanguage(langFromStorage);
-    } else {
-      userState.setLanguage("en");
-    }
+  if (langFromStorage != null) {
+    userState.setLanguage(langFromStorage);
+  } else {
+    userState.setLanguage("en");
   }
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -71,7 +71,7 @@ void main() async {
   if (token != null) {
     setJwtInfo(token);
     setLanguageInfo();
-    
+
     bool isTokenExpired = JwtDecoder.isExpired(token);
     if (isTokenExpired == false) {
       theRoute = 'dashboard';

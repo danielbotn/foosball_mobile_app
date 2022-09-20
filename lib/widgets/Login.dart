@@ -32,7 +32,7 @@ class _LoginState extends State<Login> {
     PreferencesService preferencesService = new PreferencesService();
     String? value = await preferencesService.getJwtToken();
     String? langFromStorage = await preferencesService.getLanguage();
-  
+
     if (value != null) {
       await preferencesService.deleteJwtToken();
     }
@@ -59,22 +59,20 @@ class _LoginState extends State<Login> {
 
   // void funciton
   void setJwtInfo(LoginResponse loginResponse) async {
-     Map<String, dynamic> decodedToken =
-          JwtDecoder.decode(loginResponse.token);
-      JwtModel jwtObject = JwtModel(
-          name: decodedToken["name"],
-          currentOrganisationId: decodedToken["CurrentOrganisationId"],
-          nbf: decodedToken["nbf"],
-          exp: decodedToken["exp"],
-          iat: decodedToken["iat"]);
-      widget.userState.setUserId(loginResponse.id);
-      // set current organisation id to mobx store if it is not null with tryParse
-      if (jwtObject.currentOrganisationId != "") {
-        widget
-            .userState
-            .setCurrentOrganisationId(int.parse(jwtObject.currentOrganisationId));
-      }
-      widget.userState.setToken(loginResponse.token);
+    Map<String, dynamic> decodedToken = JwtDecoder.decode(loginResponse.token);
+    JwtModel jwtObject = JwtModel(
+        name: decodedToken["unique_name"],
+        currentOrganisationId: decodedToken["CurrentOrganisationId"],
+        nbf: decodedToken["nbf"],
+        exp: decodedToken["exp"],
+        iat: decodedToken["iat"]);
+    widget.userState.setUserId(loginResponse.id);
+    // set current organisation id to mobx store if it is not null with tryParse
+    if (jwtObject.currentOrganisationId != "") {
+      widget.userState
+          .setCurrentOrganisationId(int.parse(jwtObject.currentOrganisationId));
+    }
+    widget.userState.setToken(loginResponse.token);
   }
 
   Future<String> _recoverPassword(String name) {
@@ -83,13 +81,14 @@ class _LoginState extends State<Login> {
     });
   }
 
-   Future<String?> _signupUser(SignupData data) async {
+  Future<String?> _signupUser(SignupData data) async {
     AuthApi auth = AuthApi();
-    
+
     var registerData = await auth.register(data);
 
     if (registerData.statusCode == 201) {
-      var registerResponse = RegisterResponse.fromJson(jsonDecode(registerData.body));
+      var registerResponse =
+          RegisterResponse.fromJson(jsonDecode(registerData.body));
       registrationData = registerResponse;
       return null;
     } else {
@@ -124,20 +123,18 @@ class _LoginState extends State<Login> {
           buttonTheme: LoginButtonTheme(backgroundColor: Colors.green[300])),
       title: 'FoosTab',
       additionalSignupFields: [
-       UserFormField(
-         keyName: 'firstName',
-         displayName: 'First name',
-         fieldValidator: (value)  {
-           return null;
-         }
-       ),
-       UserFormField(
-         keyName: 'lastName',
-         displayName: 'Last name',
-         fieldValidator: (value)  {
-           return null;
-         }
-       )
+        UserFormField(
+            keyName: 'firstName',
+            displayName: 'First name',
+            fieldValidator: (value) {
+              return null;
+            }),
+        UserFormField(
+            keyName: 'lastName',
+            displayName: 'Last name',
+            fieldValidator: (value) {
+              return null;
+            })
       ],
       // logo: 'assets/images/ecorp-lightblue.png',
       onLogin: loginUser,

@@ -22,10 +22,10 @@ class Dashboard extends StatefulWidget {
   const Dashboard({Key? key, required this.param}) : super(key: key);
 
   @override
-  _DashboardState createState() => _DashboardState();
+  DashboardState createState() => DashboardState();
 }
 
-class _DashboardState extends State<Dashboard> {
+class DashboardState extends State<Dashboard> {
   // State
   String firstName = "";
   String lastName = "";

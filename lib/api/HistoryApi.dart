@@ -15,15 +15,14 @@ class HistoryApi {
         ? dotenv.env['REST_URL_PATH_PROD']
         : dotenv.env['REST_URL_PATH_DEV'];
     if (baseUrl != null) {
-
       Uri outgoingUri = new Uri(
-          scheme: 'https',
-          host: kReleaseMode ? dotenv.env['PROD_HOST'] : dotenv.env['DEV_HOST'],
-          port: kReleaseMode
-              ? int.parse(dotenv.env['PROD_PORT'].toString())
-              : int.parse(dotenv.env['DEV_PORT'].toString()),
-          path: 'api/Users/stats',
-          );
+        scheme: 'http',
+        host: kReleaseMode ? dotenv.env['PROD_HOST'] : dotenv.env['DEV_HOST'],
+        port: kReleaseMode
+            ? int.parse(dotenv.env['PROD_PORT'].toString())
+            : int.parse(dotenv.env['DEV_PORT'].toString()),
+        path: 'api/Users/stats',
+      );
 
       var url = outgoingUri;
       var response = await http.get(url, headers: {
@@ -41,22 +40,21 @@ class HistoryApi {
     return result;
   }
 
-   Future<List<HistoryModel?>> getHistory(int pageNumber, int pageSize) async {
+  Future<List<HistoryModel?>> getHistory(int pageNumber, int pageSize) async {
     late List<HistoryModel?> result;
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']
         : dotenv.env['REST_URL_PATH_DEV'];
     if (baseUrl != null) {
-       var json = {"pageNumber": '$pageNumber', "pageSize": '$pageSize'};
+      var json = {"pageNumber": '$pageNumber', "pageSize": '$pageSize'};
       Uri outgoingUri = new Uri(
-          scheme: 'https',
+          scheme: 'http',
           host: kReleaseMode ? dotenv.env['PROD_HOST'] : dotenv.env['DEV_HOST'],
           port: kReleaseMode
               ? int.parse(dotenv.env['PROD_PORT'].toString())
               : int.parse(dotenv.env['DEV_PORT'].toString()),
           path: 'api/Users/stats/history',
-          queryParameters: json
-          );
+          queryParameters: json);
 
       var url = outgoingUri;
       var response = await http.get(url, headers: {
