@@ -14,9 +14,10 @@ import 'freehand_history/freehand_match_detail.dart';
 
 class History extends StatefulWidget {
   final UserState userState;
-  History({Key? key, required this.userState}) : super(key: key);
+  const History({Key? key, required this.userState}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _HistoryState createState() => _HistoryState();
 }
 
@@ -52,16 +53,16 @@ class _HistoryState extends State<History> {
   }
 
   Future<UserStats?> getStats() async {
-    HistoryApi hapi = new HistoryApi(token: this.widget.userState.token);
+    HistoryApi hapi = HistoryApi(token: widget.userState.token);
     var stats = await hapi.getStats();
     return stats;
   }
 
   Future<List<HistoryModel?>> getHistory() async {
-    HistoryApi hapi = new HistoryApi(token: this.widget.userState.token);
+    HistoryApi hapi = HistoryApi(token: widget.userState.token);
     var history = await hapi.getHistory(pageNumber, pageSize);
 
-    if (history.length > 0) {
+    if (history.isNotEmpty) {
       setState(() {
         historylist.addAll(history);
       });
@@ -71,7 +72,6 @@ class _HistoryState extends State<History> {
   }
 
   SizedBox singleOrDoubleMatch(HistoryModel historyObject) {
-    print(historyObject.typeOfMatchName);
     if (historyObject.typeOfMatchName == 'DoubleFreehandMatch' ||
         historyObject.typeOfMatchName == 'DoubleLeagueMatch') {
       String opponentTwoPhotoUrl = '';
@@ -99,8 +99,8 @@ class _HistoryState extends State<History> {
   }
 
   _goToMatchDetailScreen(int matchId, String typeOfMatch, int? leagueId) {
-    TwoPlayersObject tpo = new TwoPlayersObject(
-        userState: this.widget.userState,
+    TwoPlayersObject tpo = TwoPlayersObject(
+        userState: widget.userState,
         typeOfMatch: typeOfMatch,
         matchId: matchId,
         leagueId: leagueId);
@@ -152,9 +152,8 @@ class _HistoryState extends State<History> {
 
       if (history[i]!.opponentTwoFirstName != null &&
           history[i]!.opponentTwoFirstName != null) {
-        opponentTwoName = (history[i]!.opponentTwoFirstName!) +
-            " " +
-            (history[i]!.opponentTwoLastName!);
+        opponentTwoName =
+            "${history[i]!.opponentTwoFirstName!} ${history[i]!.opponentTwoLastName!}";
       } else {
         opponentTwoName = "";
       }
@@ -167,9 +166,7 @@ class _HistoryState extends State<History> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-                history[i]!.opponentOneFirstName.toString() +
-                    " " +
-                    history[i]!.opponentOneLastName.toString(),
+                "${history[i]!.opponentOneFirstName} ${history[i]!.opponentOneLastName}",
                 style: TextStyle(
                     color: this.widget.userState.darkmode
                         ? AppColors.white
@@ -179,7 +176,7 @@ class _HistoryState extends State<History> {
               child: Text(
                 opponentTwoName,
                 style: TextStyle(
-                    color: this.widget.userState.darkmode
+                    color: widget.userState.darkmode
                         ? AppColors.white
                         : AppColors.textBlack),
               ),
@@ -188,11 +185,11 @@ class _HistoryState extends State<History> {
         ),
         subtitle: Text(formattedDate,
             style: TextStyle(
-                color: this.widget.userState.darkmode
+                color: widget.userState.darkmode
                     ? AppColors.white
                     : AppColors.textBlack)),
         leading: singleOrDoubleMatch(history[i]!),
-        trailing: Container(
+        trailing: SizedBox(
           width: 60,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
@@ -201,23 +198,21 @@ class _HistoryState extends State<History> {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Text(
-                      history[i]!.userScore.toString() +
-                          " - " +
-                          history[i]!.opponentUserOrTeamScore.toString(),
+                      "${history[i]!.userScore} - ${history[i]!.opponentUserOrTeamScore}",
                       style: TextStyle(
-                          color: this.widget.userState.darkmode
+                          color: widget.userState.darkmode
                               ? AppColors.white
                               : AppColors.textBlack)),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 5.0,
               ),
               winner == true
-                  ? Text(this.widget.userState.hardcodedStrings.won,
-                      style: TextStyle(color: Colors.green))
-                  : Text(this.widget.userState.hardcodedStrings.lost,
-                      style: TextStyle(color: Colors.red)),
+                  ? Text(widget.userState.hardcodedStrings.won,
+                      style: const TextStyle(color: Colors.green))
+                  : Text(widget.userState.hardcodedStrings.lost,
+                      style: const TextStyle(color: Colors.red)),
             ],
           ),
         ),
@@ -230,31 +225,29 @@ class _HistoryState extends State<History> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text(this.widget.userState.hardcodedStrings.history,
+          title: Text(widget.userState.hardcodedStrings.history,
               style: TextStyle(
-                  color: this.widget.userState.darkmode
+                  color: widget.userState.darkmode
                       ? AppColors.white
                       : AppColors.textBlack)),
           leading: IconButton(
-            icon: Icon(Icons.chevron_left),
+            icon: const Icon(Icons.chevron_left),
             onPressed: () {
               Navigator.pop(context);
             },
           ),
-          iconTheme: this.widget.userState.darkmode
-              ? IconThemeData(color: AppColors.white)
+          iconTheme: widget.userState.darkmode
+              ? const IconThemeData(color: AppColors.white)
               : IconThemeData(color: Colors.grey[700]),
-          backgroundColor: this.widget.userState.darkmode
+          backgroundColor: widget.userState.darkmode
               ? AppColors.darkModeBackground
               : AppColors.white),
       body: FutureBuilder(
         future: Future.wait([statsFuture, historyFuture]),
         builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
           if (snapshot.hasData) {
-            var one = snapshot.data![0]; //stats
-            var two = snapshot.data![1]; //history
             return Container(
-              color: this.widget.userState.darkmode
+              color: widget.userState.darkmode
                   ? AppColors.darkModeBackground
                   : AppColors.white,
               // add listview with variable two
@@ -265,7 +258,7 @@ class _HistoryState extends State<History> {
               ),
             );
           } else {
-            return CircularProgressIndicator();
+            return const CircularProgressIndicator();
           }
         },
       ),

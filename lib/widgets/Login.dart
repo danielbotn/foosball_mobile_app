@@ -119,9 +119,9 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return FlutterLogin(
       theme: LoginTheme(
-          primaryColor: const Color(0xff2980b9),
+          primaryColor: const Color(0xff94bd47),
           buttonTheme: LoginButtonTheme(backgroundColor: Colors.green[300])),
-      title: 'FoosTab',
+      logo: const AssetImage('assets/images/dano-scaled.png'),
       additionalSignupFields: [
         UserFormField(
             keyName: 'firstName',
