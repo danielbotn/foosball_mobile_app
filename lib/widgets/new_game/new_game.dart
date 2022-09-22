@@ -17,7 +17,7 @@ import 'new_game_players.dart';
 
 class NewGame extends StatefulWidget {
   final UserState userState;
-  NewGame({Key? key, required this.userState}) : super(key: key);
+  const NewGame({Key? key, required this.userState}) : super(key: key);
 
   @override
   State<NewGame> createState() => _NewGameState();
@@ -36,13 +36,13 @@ class _NewGameState extends State<NewGame> {
 
   // Get hardcoded strings from datoCMS
   Future<List<UserResponse>?> getAllUsers() async {
-    UserApi datoCMS = new UserApi(token: this.widget.userState.token);
+    UserApi datoCMS = UserApi(token: widget.userState.token);
     var users = await datoCMS.getUsers();
     return users;
   }
 
   void setRandomString() {
-    Helpers helpers = new Helpers();
+    Helpers helpers = Helpers();
     setState(() {
       randomString = helpers.generateRandomString();
     });
@@ -56,7 +56,7 @@ class _NewGameState extends State<NewGame> {
           title: ExtendedText(
               text: userState.hardcodedStrings.newGame, userState: userState),
           leading: IconButton(
-            icon: Icon(Icons.chevron_left),
+            icon: const Icon(Icons.chevron_left),
             onPressed: () {
               Navigator.pop(context);
             },
@@ -111,14 +111,14 @@ class _NewGameState extends State<NewGame> {
                             )
                           ],
                         ),
-                        Spacer(),
+                        const Spacer(),
                         StartGameButton(
                           userState: userState,
                           newGameState: newGameState,
                         )
                       ])));
             } else {
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(),
               );
             }

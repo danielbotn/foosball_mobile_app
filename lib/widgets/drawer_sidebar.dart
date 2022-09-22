@@ -8,13 +8,15 @@ import 'package:foosball_mobile_app/widgets/Settings.dart';
 import 'package:foosball_mobile_app/widgets/history.dart';
 
 import 'new_game/new_game.dart';
+import 'organisation/organisation.dart';
 
 class DrawerSideBar extends StatefulWidget {
   // Props variables
   final UserState userState;
-  DrawerSideBar({Key? key, required this.userState}) : super(key: key);
+  const DrawerSideBar({Key? key, required this.userState}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _DrawerSideBarState createState() => _DrawerSideBarState();
 }
 
@@ -23,9 +25,8 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
   String firstName = userState.userInfoGlobal.firstName;
   String lastName = userState.userInfoGlobal.lastName;
   String email = userState.userInfoGlobal.email;
-  String initials = userState.userInfoGlobal.firstName[0] +
-      " " +
-      userState.userInfoGlobal.lastName[0];
+  String initials =
+      "${userState.userInfoGlobal.firstName[0]} ${userState.userInfoGlobal.lastName[0]}";
   String newGame = userState.hardcodedStrings.newGame;
   String statistics = userState.hardcodedStrings.statistics;
   String history = userState.hardcodedStrings.history;
@@ -55,7 +56,7 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
     preferencesService.deleteDarkTheme();
     preferencesService.deleteLanguage();
     preferencesService.deleteJwtToken();
-    
+
     userState.setToken('');
     userState.setCurrentOrganisationId(0);
     userState.setUserId(0);
@@ -70,15 +71,15 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: new ListView(
+      child: ListView(
         children: <Widget>[
-          new UserAccountsDrawerHeader(
+          UserAccountsDrawerHeader(
             margin: EdgeInsets.only(bottom: 0.0),
-            accountName: new Text("$firstName $lastName",
+            accountName: Text("$firstName $lastName",
                 style: TextStyle(
                   color: userState.darkmode ? Colors.white : Colors.blue,
                 )),
-            accountEmail: new Text("$email",
+            accountEmail: Text(email,
                 style: TextStyle(
                   color: userState.darkmode ? Colors.white : Colors.blue,
                 )),
@@ -88,16 +89,16 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
                   : AppColors.white,
             ),
             currentAccountPicture: CircleAvatar(
-              child: Text('$initials'),
+              child: Text(initials),
             ),
           ),
-          new ListTile(
+          ListTile(
               tileColor: userState.darkmode
                   ? AppColors.darkModeBackground
                   : AppColors.white,
               leading: Icon(Icons.play_circle_filled_sharp,
                   color: userState.darkmode ? AppColors.white : null),
-              title: new Text('$newGame',
+              title: Text(newGame,
                   style: TextStyle(
                       color: userState.darkmode
                           ? AppColors.white
@@ -112,27 +113,34 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
                           )),
                 );
               }),
-          new ListTile(
+          ListTile(
               tileColor: userState.darkmode
                   ? AppColors.darkModeBackground
                   : AppColors.white,
               leading: Icon(Icons.houseboat,
                   color: userState.darkmode ? AppColors.white : null),
-              title: new Text('$organisation',
+              title: Text(organisation,
                   style: TextStyle(
                       color: userState.darkmode
                           ? AppColors.white
                           : AppColors.textBlack)),
-              onTap: () {
-                Navigator.pop(context);
+              onTap: () async {
+                final UserState userStateFromSettings = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => OrgnisationScreen(
+                            userState: userState,
+                          )),
+                );
+                setAllStates(userStateFromSettings);
               }),
-          new ListTile(
+          ListTile(
               tileColor: userState.darkmode
                   ? AppColors.darkModeBackground
                   : AppColors.white,
               leading: Icon(Icons.graphic_eq,
                   color: userState.darkmode ? AppColors.white : null),
-              title: new Text('$statistics',
+              title: Text(statistics,
                   style: TextStyle(
                       color: userState.darkmode
                           ? AppColors.white
@@ -140,13 +148,13 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
               onTap: () {
                 Navigator.pop(context);
               }),
-          new ListTile(
+          ListTile(
               tileColor: userState.darkmode
                   ? AppColors.darkModeBackground
                   : AppColors.white,
               leading: Icon(Icons.history_sharp,
                   color: userState.darkmode ? AppColors.white : null),
-              title: new Text('$history',
+              title: Text(history,
                   style: TextStyle(
                       color: userState.darkmode
                           ? AppColors.white
@@ -161,13 +169,13 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
                           )),
                 );
               }),
-          new ListTile(
+          ListTile(
               tileColor: userState.darkmode
                   ? AppColors.darkModeBackground
                   : AppColors.white,
               leading: Icon(Icons.group,
                   color: userState.darkmode ? AppColors.white : null),
-              title: new Text('$leagues',
+              title: Text(leagues,
                   style: TextStyle(
                       color: userState.darkmode
                           ? AppColors.white
@@ -175,13 +183,13 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
               onTap: () {
                 Navigator.pop(context);
               }),
-          new ListTile(
+          ListTile(
               tileColor: userState.darkmode
                   ? AppColors.darkModeBackground
                   : AppColors.white,
               leading: Icon(Icons.price_change,
                   color: userState.darkmode ? AppColors.white : null),
-              title: new Text('$pricing',
+              title: Text(pricing,
                   style: TextStyle(
                       color: userState.darkmode
                           ? AppColors.white
@@ -189,13 +197,13 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
               onTap: () {
                 Navigator.pop(context);
               }),
-          new ListTile(
+          ListTile(
               tileColor: userState.darkmode
                   ? AppColors.darkModeBackground
                   : AppColors.white,
               leading: Icon(Icons.settings,
                   color: userState.darkmode ? AppColors.white : null),
-              title: new Text('$settings',
+              title: Text(settings,
                   style: TextStyle(
                       color: userState.darkmode
                           ? AppColors.white
@@ -210,7 +218,7 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
                 );
                 setAllStates(userStateFromSettings);
               }),
-          new Container(
+          Container(
             height: 10.0,
             //this does the work for divider
             decoration: BoxDecoration(
@@ -224,13 +232,13 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
                             : AppColors.white,
                         width: 7.0))),
           ),
-          new ListTile(
+          ListTile(
               tileColor: userState.darkmode
                   ? AppColors.darkModeBackground
                   : AppColors.white,
               leading: Icon(Icons.info,
                   color: userState.darkmode ? AppColors.white : null),
-              title: new Text('$about',
+              title: Text(about,
                   style: TextStyle(
                       color: userState.darkmode
                           ? AppColors.white
@@ -238,20 +246,20 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
               onTap: () {
                 Navigator.pop(context);
               }),
-          new ListTile(
+          ListTile(
               tileColor: userState.darkmode
                   ? AppColors.darkModeBackground
                   : AppColors.white,
               leading: Icon(Icons.power_settings_new,
                   color: userState.darkmode ? AppColors.white : null),
-              title: new Text('$logout',
+              title: Text(logout,
                   style: TextStyle(
                       color: userState.darkmode ? AppColors.white : null)),
               onTap: () {
                 Navigator.pop(context);
                 logoutUser();
               }),
-          new Container(
+          Container(
               height: 100,
               width: 100,
               color: userState.darkmode

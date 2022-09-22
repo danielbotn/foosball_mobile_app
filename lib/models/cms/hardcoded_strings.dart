@@ -56,9 +56,10 @@ class HardcodedStrings {
   final String no;
   final String cancel;
   final String areYouSureAlert;
+  final String currentOrganisation;
 
-  HardcodedStrings({
-      required this.matches,
+  HardcodedStrings(
+      {required this.matches,
       required this.newGame,
       required this.quickActions,
       required this.lastTenMatches,
@@ -108,8 +109,8 @@ class HardcodedStrings {
       required this.yes,
       required this.no,
       required this.cancel,
-      required this.areYouSureAlert
-      });
+      required this.areYouSureAlert,
+      required this.currentOrganisation});
 
   factory HardcodedStrings.fromJson(Map<String, dynamic> item) =>
       _$HardcodedStringsFromJson(item);

@@ -23,16 +23,17 @@ abstract class _UserState with Store {
   String language = "";
 
   @observable
-  UserInfoGlobal userInfoGlobal = new UserInfoGlobal(
-      userId: 0,
-      firstName: "",
-      lastName: "",
-      email: "",
-      currentOrganisationId: 0,
-      currentOrganisationName: "",);
+  UserInfoGlobal userInfoGlobal = UserInfoGlobal(
+    userId: 0,
+    firstName: "",
+    lastName: "",
+    email: "",
+    currentOrganisationId: 0,
+    currentOrganisationName: "",
+  );
 
   @observable
-  HardcodedStrings hardcodedStrings = new HardcodedStrings(
+  HardcodedStrings hardcodedStrings = HardcodedStrings(
       matches: "",
       newGame: "",
       quickActions: "",
@@ -45,10 +46,10 @@ abstract class _UserState with Store {
       about: "",
       logout: "",
       language: "",
-      darkTheme : "",
-      lightTheme : "",
-      changePassword : "",
-      enableNotifications : "",
+      darkTheme: "",
+      lightTheme: "",
+      changePassword: "",
+      enableNotifications: "",
       common: "",
       security: "",
       won: "",
@@ -83,16 +84,21 @@ abstract class _UserState with Store {
       yes: "",
       no: "",
       cancel: "",
-      areYouSureAlert: ""
-      );
-  
+      areYouSureAlert: "",
+      currentOrganisation: "");
+
   @observable
   bool darkmode = false;
 
   @action
-  void setUserInfoGlobalObject(int userId, String firstName, String lastName,
-    String email, int currrentOrganisationId, String currentOrganisationName) {
-    UserInfoGlobal tmp = new UserInfoGlobal(
+  void setUserInfoGlobalObject(
+      int userId,
+      String firstName,
+      String lastName,
+      String email,
+      int currrentOrganisationId,
+      String currentOrganisationName) {
+    UserInfoGlobal tmp = UserInfoGlobal(
         userId: userId,
         firstName: firstName,
         lastName: lastName,
