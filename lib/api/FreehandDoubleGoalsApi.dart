@@ -11,23 +11,22 @@ class FreehandDoubleGoalsApi {
 
   FreehandDoubleGoalsApi({required this.token});
 
-  Future<List<FreehandDoubleGoalModel>?> getFreehandDoubleGoals(int matchId) async {
+  Future<List<FreehandDoubleGoalModel>?> getFreehandDoubleGoals(
+      int matchId) async {
     late List<FreehandDoubleGoalModel>? result;
 
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']
         : dotenv.env['REST_URL_PATH_DEV'];
     if (baseUrl != null) {
-      
-      Uri outgoingUri = new Uri(
-          scheme: 'https',
-          host: kReleaseMode ? dotenv.env['PROD_HOST'] : dotenv.env['DEV_HOST'],
-          port: kReleaseMode
-              ? int.parse(dotenv.env['PROD_PORT'].toString())
-              : int.parse(dotenv.env['DEV_PORT'].toString()),
-          path: 'api/FreehandDoubleGoals/goals/' + matchId.toString(),
-          );
-
+      Uri outgoingUri = Uri(
+        scheme: 'https',
+        host: kReleaseMode ? dotenv.env['PROD_HOST'] : dotenv.env['DEV_HOST'],
+        port: kReleaseMode
+            ? int.parse(dotenv.env['PROD_PORT'].toString())
+            : int.parse(dotenv.env['DEV_PORT'].toString()),
+        path: 'api/FreehandDoubleGoals/goals/$matchId',
+      );
 
       var response = await http.get(outgoingUri, headers: {
         "Accept": "application/json",
@@ -49,13 +48,14 @@ class FreehandDoubleGoalsApi {
     return result;
   }
 
-  Future<FreehandDoubleGoalReturn?> createDoubleFreehandGoal(FreehandDoubleGoalBody freehandGoalBody) async {
+  Future<FreehandDoubleGoalReturn?> createDoubleFreehandGoal(
+      FreehandDoubleGoalBody freehandGoalBody) async {
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']
         : dotenv.env['REST_URL_PATH_DEV'];
 
     if (baseUrl != null) {
-      Uri outgoingUri = new Uri(
+      Uri outgoingUri = Uri(
         scheme: 'https',
         host: kReleaseMode ? dotenv.env['PROD_HOST'] : dotenv.env['DEV_HOST'],
         port: kReleaseMode
@@ -64,7 +64,7 @@ class FreehandDoubleGoalsApi {
         path: 'api/FreehandDoubleGoals',
       );
 
-       var jsonObject = {
+      var jsonObject = {
         "doubleMatchId": '${freehandGoalBody.doubleMatchId}',
         "scoredByUserId": '${freehandGoalBody.scoredByUserId}',
         "scorerTeamScore": '${freehandGoalBody.scorerTeamScore}',
@@ -72,11 +72,15 @@ class FreehandDoubleGoalsApi {
         "winnerGoal": '${freehandGoalBody.winnerGoal}',
       };
 
-      var response = await http.post(outgoingUri, headers: {
-        "Accept": "application/json",
-        "content-type": "application/json",
-        'Authorization': 'Bearer $token',
-      },body: jsonEncode(jsonObject),);
+      var response = await http.post(
+        outgoingUri,
+        headers: {
+          "Accept": "application/json",
+          "content-type": "application/json",
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode(jsonObject),
+      );
 
       if (response.statusCode == 201) {
         return FreehandDoubleGoalReturn.fromJson(json.decode(response.body));
@@ -93,15 +97,14 @@ class FreehandDoubleGoalsApi {
         ? dotenv.env['REST_URL_PATH_PROD']
         : dotenv.env['REST_URL_PATH_DEV'];
     if (baseUrl != null) {
-      
-      Uri outgoingUri = new Uri(
-          scheme: 'https',
-          host: kReleaseMode ? dotenv.env['PROD_HOST'] : dotenv.env['DEV_HOST'],
-          port: kReleaseMode
-              ? int.parse(dotenv.env['PROD_PORT'].toString())
-              : int.parse(dotenv.env['DEV_PORT'].toString()),
-          path: 'api/FreehandDoubleGoals' + '/' + matchId.toString() + '/' + goalId.toString(),
-          );
+      Uri outgoingUri = Uri(
+        scheme: 'https',
+        host: kReleaseMode ? dotenv.env['PROD_HOST'] : dotenv.env['DEV_HOST'],
+        port: kReleaseMode
+            ? int.parse(dotenv.env['PROD_PORT'].toString())
+            : int.parse(dotenv.env['DEV_PORT'].toString()),
+        path: 'api/FreehandDoubleGoals/$matchId/$goalId',
+      );
       var url = outgoingUri;
       var response = await http.delete(
         url,

@@ -17,7 +17,7 @@ class FreehandDoubleMatchApi {
         ? dotenv.env['REST_URL_PATH_PROD']
         : dotenv.env['REST_URL_PATH_DEV'];
     if (baseUrl != null) {
-      var url = Uri.parse(baseUrl + '/api/FreehandDoubleMatches/' + matchId.toString());
+      var url = Uri.parse('$baseUrl/api/FreehandDoubleMatches/$matchId');
       var response = await http.get(url, headers: {
         "Accept": "application/json",
         "content-type": "application/json",
@@ -53,7 +53,7 @@ class FreehandDoubleMatchApi {
         "nicknameTeamB": '${freehandMatchBody.nicknameTeamB}',
         "upTo": '${freehandMatchBody.upTo}',
       };
-      Uri outgoingUri = new Uri(
+      Uri outgoingUri = Uri(
           scheme: 'https',
           host: kReleaseMode ? dotenv.env['PROD_HOST'] : dotenv.env['DEV_HOST'],
           port: kReleaseMode
@@ -72,8 +72,8 @@ class FreehandDoubleMatchApi {
       );
 
       if (response.statusCode == 201) {
-        result =
-            FreehandDoubleMatchCreateResponse.fromJson(jsonDecode(response.body));
+        result = FreehandDoubleMatchCreateResponse.fromJson(
+            jsonDecode(response.body));
       } else {
         // To do Error handling
         result = null;
@@ -88,13 +88,13 @@ class FreehandDoubleMatchApi {
         ? dotenv.env['REST_URL_PATH_PROD']
         : dotenv.env['REST_URL_PATH_DEV'];
     if (baseUrl != null) {
-      Uri outgoingUri = new Uri(
+      Uri outgoingUri = Uri(
           scheme: 'https',
           host: kReleaseMode ? dotenv.env['PROD_HOST'] : dotenv.env['DEV_HOST'],
           port: kReleaseMode
               ? int.parse(dotenv.env['PROD_PORT'].toString())
               : int.parse(dotenv.env['DEV_PORT'].toString()),
-          path: 'api/FreehandDoubleMatches/' + matchId.toString());
+          path: 'api/FreehandDoubleMatches/$matchId');
       var url = outgoingUri;
       var response = await http.delete(
         url,

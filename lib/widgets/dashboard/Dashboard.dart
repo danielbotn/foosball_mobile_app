@@ -38,25 +38,26 @@ class DashboardState extends State<Dashboard> {
       totalMatchesLost: 0,
       totalGoalsScored: 0,
       totalGoalsReceived: 0);
-  late Future<UserStatsResponse>userStatsFuture = Future.value(UserStatsResponse(
-      userId: 0,
-      totalMatches: 0,
-      totalMatchesWon: 0,
-      totalMatchesLost: 0,
-      totalGoalsScored: 0,
-      totalGoalsReceived: 0));
+  late Future<UserStatsResponse> userStatsFuture = Future.value(
+      UserStatsResponse(
+          userId: 0,
+          totalMatches: 0,
+          totalMatchesWon: 0,
+          totalMatchesLost: 0,
+          totalGoalsScored: 0,
+          totalGoalsReceived: 0));
 
   late UserState userStateState;
 
   @override
   void initState() {
     super.initState();
-    String token = this.widget.param.token;
-    String userId = this.widget.param.userId.toString();
-    UserApi user = new UserApi(token: token);
-    DatoCMS datoCMS = new DatoCMS(token: token);
+    String token = widget.param.token;
+    String userId = widget.param.userId.toString();
+    UserApi user = UserApi(token: token);
+    DatoCMS datoCMS = DatoCMS(token: token);
 
-    datoCMS.getHardcodedStrings(this.widget.param.language).then((value) {
+    datoCMS.getHardcodedStrings(widget.param.language).then((value) {
       if (value != null) {
         // hardcoded strings put into global state
         widget.param.setHardcodedStrings(value);
@@ -74,21 +75,16 @@ class DashboardState extends State<Dashboard> {
         currentOID = value.currentOrganisationId!;
       }
       userStatsFuture = getUserStatsData(int.parse(userId), currentOID);
-      
+
       // Set user information to global state??
-      widget.param.setUserInfoGlobalObject(
-          int.parse(userId),
-          value.firstName,
-          value.lastName,
-          value.email,
-          currentOID,
-          organisationName);
+      widget.param.setUserInfoGlobalObject(int.parse(userId), value.firstName,
+          value.lastName, value.email, currentOID, organisationName);
     });
 
     getTheme();
 
     setState(() {
-      userStateState = this.widget.param;
+      userStateState = widget.param;
     });
   }
 
@@ -97,21 +93,22 @@ class DashboardState extends State<Dashboard> {
     bool? darkTheme = await preferencesService.getDarkTheme();
     setState(() {
       if (darkTheme == true) {
-        this.widget.param.setDarkmode(true);
+        widget.param.setDarkmode(true);
       } else {
-        this.widget.param.setDarkmode(false);
+        widget.param.setDarkmode(false);
       }
     });
   }
 
   // To do put functions here
-  Future<UserStatsResponse> getUserStatsData(int userId, int currrentOrganisationId) async {
-    String token = this.widget.param.token;
-    UserApi user = new UserApi(token: token);
-    Organisation organisation = new Organisation(token: token);
+  Future<UserStatsResponse> getUserStatsData(
+      int userId, int currrentOrganisationId) async {
+    String token = widget.param.token;
+    UserApi user = UserApi(token: token);
+    Organisation organisation = Organisation(token: token);
     var userStatsData = await user.getUserStats();
     userStatsResponse = userStatsData;
-    int organisationId = this.widget.param.currentOrganisationId;
+    int organisationId = widget.param.currentOrganisationId;
     organisation.getOrganisationById(organisationId).then((value) {
       if (value.statusCode == 200) {
         var organisationResponse =
@@ -128,8 +125,10 @@ class DashboardState extends State<Dashboard> {
     return userStatsData;
   }
 
-  setGlobal(int userId, int currrentOrganisationId, String currentOrganisationName) {
-    this.widget.param.setUserInfoGlobalObject(userId, firstName, lastName, email, currrentOrganisationId, currentOrganisationName);
+  setGlobal(
+      int userId, int currrentOrganisationId, String currentOrganisationName) {
+    widget.param.setUserInfoGlobalObject(userId, firstName, lastName, email,
+        currrentOrganisationId, currentOrganisationName);
   }
 
   @override
@@ -141,7 +140,7 @@ class DashboardState extends State<Dashboard> {
         home: Scaffold(
           appBar: AppBar(
               iconTheme: darkMode
-                  ? IconThemeData(color: AppColors.white)
+                  ? const IconThemeData(color: AppColors.white)
                   : IconThemeData(color: Colors.grey[700]),
               backgroundColor:
                   darkMode ? AppColors.darkModeBackground : AppColors.white),
@@ -166,30 +165,31 @@ class DashboardState extends State<Dashboard> {
                             Card(
                               // elevation: 5,
                               child: ListTile(
-                                leading: Icon(Icons.email, color: Colors.grey),
-                                title: Text('$firstName' + ' $lastName'),
-                                subtitle: Text('$email'),
-                                trailing: Text('$organisationName'),
+                                leading:
+                                    const Icon(Icons.email, color: Colors.grey),
+                                title: Text('$firstName $lastName'),
+                                subtitle: Text(email),
+                                trailing: Text(organisationName),
                               ),
                             ),
                             Row(
                               children: <Widget>[
                                 Expanded(
                                     flex: 1,
-                                    child: Container(
+                                    child: SizedBox(
                                       height: 200,
                                       child: DashboardMatchesChart(
                                         userState: userStateState,
-                                        userStatsResponse: snapshot.data ?? null,
+                                        userStatsResponse: snapshot.data,
                                       ),
                                     )),
                                 Expanded(
                                     flex: 1,
-                                    child: Container(
+                                    child: SizedBox(
                                       height: 200,
                                       child: DashboardGoalsChart(
                                           userState: userStateState,
-                                          userStatsResponse: snapshot.data ?? null),
+                                          userStatsResponse: snapshot.data),
                                     )),
                               ],
                             ),
@@ -205,12 +205,12 @@ class DashboardState extends State<Dashboard> {
                             Expanded(
                                 flex: 1,
                                 child: DashBoardLastFive(
-                                  userState: this.widget.param,
+                                  userState: widget.param,
                                 ))
                           ],
                         )));
               } else {
-                return Loading();
+                return const Loading();
               }
             },
           ),

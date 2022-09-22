@@ -8,12 +8,17 @@ class HeadlineBig extends StatelessWidget {
   final String headline;
   final double fontSize;
   final double? paddingLeft;
-  HeadlineBig({required this.headline, required this.userState, required this.fontSize, this.paddingLeft});
+  const HeadlineBig(
+      {super.key,
+      required this.headline,
+      required this.userState,
+      required this.fontSize,
+      this.paddingLeft});
 
   @override
   Widget build(BuildContext context) {
     double paddingIsLeft = paddingLeft ?? 10;
-    Helpers helpers = new Helpers();
+    Helpers helpers = Helpers();
 
     return Container(
       padding: const EdgeInsets.all(8),
@@ -25,13 +30,12 @@ class HeadlineBig extends StatelessWidget {
             child: Align(
               alignment: Alignment.centerLeft,
               child: Container(
-                margin: EdgeInsets.only(left: paddingIsLeft),
-                child: ExtendedText(
-                  text: headline,
-                  userState: userState,
-                  fontSize: fontSize,
-                )
-              ),
+                  margin: EdgeInsets.only(left: paddingIsLeft),
+                  child: ExtendedText(
+                    text: headline,
+                    userState: userState,
+                    fontSize: fontSize,
+                  )),
             ),
           ),
         ],

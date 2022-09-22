@@ -18,7 +18,7 @@ class PlayerCard extends StatefulWidget {
   final String whichPlayer;
   final Function() notifyParent;
   final Function() stopClockFromChild;
-  PlayerCard(
+  const PlayerCard(
       {Key? key,
       required this.ongoingDoubleGameObject,
       required this.userState,
@@ -64,11 +64,11 @@ class _PlayerCardState extends State<PlayerCard> {
 
   Future<FreehandDoubleGoalReturn?> updateScoreToDatabase() async {
     FreehandDoubleGoalsApi freehandDoubleGoalsApi =
-        new FreehandDoubleGoalsApi(token: '${widget.userState.token}');
+        FreehandDoubleGoalsApi(token: widget.userState.token);
     int upTo =
         widget.ongoingDoubleGameObject.freehandDoubleMatchCreateResponse!.upTo;
 
-    FreehandDoubleGoalBody body = new FreehandDoubleGoalBody(
+    FreehandDoubleGoalBody body = FreehandDoubleGoalBody(
       doubleMatchId:
           widget.ongoingDoubleGameObject.freehandDoubleMatchCreateResponse!.id,
       scoredByUserId: widget.player.id,
@@ -104,15 +104,14 @@ class _PlayerCardState extends State<PlayerCard> {
   }
 
   void gameIsFinished() {
-    FreehandDoubleMatchDetailObject fdmdo =
-        new FreehandDoubleMatchDetailObject(
+    FreehandDoubleMatchDetailObject fdmdo = FreehandDoubleMatchDetailObject(
       userState: widget.userState,
-      freehandMatchCreateResponse: widget.ongoingDoubleGameObject
-          .freehandDoubleMatchCreateResponse,
+      freehandMatchCreateResponse:
+          widget.ongoingDoubleGameObject.freehandDoubleMatchCreateResponse,
       teamOne: widget.ongoingState.teamOne,
       teamTwo: widget.ongoingState.teamTwo,
     );
-    
+
     widget.stopClockFromChild();
 
     Navigator.push(
@@ -142,10 +141,10 @@ class _PlayerCardState extends State<PlayerCard> {
                 children: [
                   ExtendedText(
                       text: widget.player.firstName,
-                      userState: this.widget.userState),
+                      userState: widget.userState),
                   ExtendedText(
                       text: widget.player.lastName,
-                      userState: this.widget.userState),
+                      userState: widget.userState),
                 ],
               ),
             ],

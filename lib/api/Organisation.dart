@@ -9,9 +9,11 @@ class Organisation {
   Future<http.Response> getOrganisationById(int organisationId) async {
     late http.Response result;
 
-    String? baseUrl = kReleaseMode ? dotenv.env['REST_URL_PATH_PROD'] : dotenv.env['REST_URL_PATH_DEV'];
+    String? baseUrl = kReleaseMode
+        ? dotenv.env['REST_URL_PATH_PROD']
+        : dotenv.env['REST_URL_PATH_DEV'];
     if (baseUrl != null) {
-      var url = Uri.parse(baseUrl + '/api/Organisations/' + organisationId.toString());
+      var url = Uri.parse('$baseUrl/api/Organisations/$organisationId');
 
       result = await http.get(url, headers: {
         "Accept": "application/json",

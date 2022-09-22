@@ -24,7 +24,7 @@ class MatchScore extends StatelessWidget {
                   children: [
                     ExtendedText(
                       text: userScore,
-                      userState: this.userState,
+                      userState: userState,
                       fontSize: 40,
                     ),
                   ],

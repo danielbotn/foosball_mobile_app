@@ -6,11 +6,12 @@ import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/widgets/loading.dart';
 
 class DashBoardLastFive extends StatefulWidget {
-  DashBoardLastFive({Key? key, required this.userState}) : super(key: key);
+  const DashBoardLastFive({Key? key, required this.userState})
+      : super(key: key);
   final UserState userState;
 
   @override
-  _DashBoardLastFiveState createState() => _DashBoardLastFiveState();
+  State<DashBoardLastFive> createState() => _DashBoardLastFiveState();
 }
 
 class _DashBoardLastFiveState extends State<DashBoardLastFive> {
@@ -25,8 +26,8 @@ class _DashBoardLastFiveState extends State<DashBoardLastFive> {
   }
 
   Future<List<UserLastTen>?> getUserStatsData() async {
-    String token = this.widget.userState.token;
-    UserApi user = new UserApi(token: token);
+    String token = widget.userState.token;
+    UserApi user = UserApi(token: token);
     var lastTenMatchesData = await user.getLastTenMatches();
     lastTenMatches = lastTenMatchesData;
     return lastTenMatchesData;
@@ -36,16 +37,14 @@ class _DashBoardLastFiveState extends State<DashBoardLastFive> {
     String result = "";
 
     if (userLastTenObject.typeOfMatchName == "SingleLeagueMatch") {
-      result = userLastTenObject.opponentOneFirstName +
-          " " +
-          userLastTenObject.opponentOneLastName;
+      result =
+          "${userLastTenObject.opponentOneFirstName} ${userLastTenObject.opponentOneLastName}";
     } else if (userLastTenObject.typeOfMatchName == "DoubleLeagueMatch") {
       result =
           '${userLastTenObject.opponentOneFirstName} ${userLastTenObject.opponentOneLastName} ${userLastTenObject.opponentTwoFirstName} ${userLastTenObject.opponentTwoLastName}';
     } else if (userLastTenObject.typeOfMatchName == "FreehandMatch") {
-      result = userLastTenObject.opponentOneFirstName +
-          " " +
-          userLastTenObject.opponentOneLastName;
+      result =
+          "${userLastTenObject.opponentOneFirstName} ${userLastTenObject.opponentOneLastName}";
     } else if (userLastTenObject.typeOfMatchName == "DoubleFreehandMatch") {
       String? oponentTwoFirstName, oponentTwoLastName;
       if (userLastTenObject.opponentTwoFirstName != null) {
@@ -62,9 +61,7 @@ class _DashBoardLastFiveState extends State<DashBoardLastFive> {
   }
 
   String getScore(UserLastTen userLastTenObject) {
-    return userLastTenObject.userScore.toString() +
-        ' - ' +
-        userLastTenObject.opponentUserOrTeamScore.toString();
+    return '${userLastTenObject.userScore} - ${userLastTenObject.opponentUserOrTeamScore}';
   }
 
   Color? getColorOfMatch(UserLastTen userLastTenObject) {
@@ -101,13 +98,13 @@ class _DashBoardLastFiveState extends State<DashBoardLastFive> {
                 margin: EdgeInsets.zero,
                 child: ListTile(
                     leading: CircleAvatar(
+                      backgroundColor: colorOfMatch,
                       child: Text(
                         wonOrLostSymbol,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                         ),
                       ),
-                      backgroundColor: colorOfMatch,
                     ),
                     title: Text(headline),
                     subtitle: Text(formattedDate),
@@ -116,7 +113,7 @@ class _DashBoardLastFiveState extends State<DashBoardLastFive> {
             },
           ));
         } else {
-          return Loading();
+          return const Loading();
         }
       },
     ));

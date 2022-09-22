@@ -6,7 +6,7 @@ class Buttons extends StatefulWidget {
   final OngoingDoubleFreehandState ongoingState;
   final Function() notifyParent;
   final UserState userState;
-  Buttons(
+  const Buttons(
       {Key? key,
       required this.ongoingState,
       required this.notifyParent,
@@ -21,7 +21,7 @@ class _ButtonsState extends State<Buttons> {
   @override
   Widget build(BuildContext context) {
     void clockIsPaused() {
-      this.widget.ongoingState.setIsClockPaused(!widget.ongoingState.isClockPaused);
+      widget.ongoingState.setIsClockPaused(!widget.ongoingState.isClockPaused);
       widget.notifyParent();
     }
 
@@ -32,13 +32,11 @@ class _ButtonsState extends State<Buttons> {
             child: Padding(
               padding: const EdgeInsets.only(
                   left: 40.0, right: 40.0, top: 10.0, bottom: 10.0),
-              child: Container(
-                child: ElevatedButton(
-                  onPressed: () => {clockIsPaused()},
-                  child: Text(widget.ongoingState.isClockPaused
-                      ? widget.userState.hardcodedStrings.resume
-                      : widget.userState.hardcodedStrings.pause),
-                ),
+              child: ElevatedButton(
+                onPressed: () => {clockIsPaused()},
+                child: Text(widget.ongoingState.isClockPaused
+                    ? widget.userState.hardcodedStrings.resume
+                    : widget.userState.hardcodedStrings.pause),
               ),
             )),
       ],

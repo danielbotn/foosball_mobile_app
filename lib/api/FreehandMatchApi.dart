@@ -17,8 +17,7 @@ class FreehandMatchApi {
         ? dotenv.env['REST_URL_PATH_PROD']
         : dotenv.env['REST_URL_PATH_DEV'];
     if (baseUrl != null) {
-      var url =
-          Uri.parse(baseUrl + '/api/FreehandMatches/' + matchId.toString());
+      var url = Uri.parse('$baseUrl/api/FreehandMatches/$matchId');
       var response = await http.get(url, headers: {
         "Accept": "application/json",
         "content-type": "application/json",
@@ -51,7 +50,7 @@ class FreehandMatchApi {
         "gameFinished": '${freehandMatchBody.gameFinished}',
         "gamePaused": '${freehandMatchBody.gamePaused}',
       };
-      Uri outgoingUri = new Uri(
+      Uri outgoingUri = Uri(
           scheme: 'https',
           host: kReleaseMode ? dotenv.env['PROD_HOST'] : dotenv.env['DEV_HOST'],
           port: kReleaseMode
@@ -80,19 +79,19 @@ class FreehandMatchApi {
     return result;
   }
 
-   Future<bool> deleteFreehandMatch(int matchId) async {
+  Future<bool> deleteFreehandMatch(int matchId) async {
     bool success = false;
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']
         : dotenv.env['REST_URL_PATH_DEV'];
     if (baseUrl != null) {
-      Uri outgoingUri = new Uri(
+      Uri outgoingUri = Uri(
           scheme: 'https',
           host: kReleaseMode ? dotenv.env['PROD_HOST'] : dotenv.env['DEV_HOST'],
           port: kReleaseMode
               ? int.parse(dotenv.env['PROD_PORT'].toString())
               : int.parse(dotenv.env['DEV_PORT'].toString()),
-          path: 'api/FreehandMatches/' + matchId.toString());
+          path: 'api/FreehandMatches/$matchId');
       var url = outgoingUri;
       var response = await http.delete(
         url,
@@ -112,5 +111,4 @@ class FreehandMatchApi {
     }
     return success;
   }
-
 }

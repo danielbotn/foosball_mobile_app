@@ -14,24 +14,27 @@ class DoubleLeagueGoals extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 20),
-      child: Container(
-        height: 290,
-        child: ListView.builder(
-        shrinkWrap: true,
-        itemCount: goals?.length ?? 0,
-        itemBuilder: (context, index) {
-          String score = goals![index].scorerTeamScore.toString() + "-" + goals![index].opponentTeamScore.toString();
-          String scoredByName = goals![index].scorerFirstName + " " + goals![index].scorerLastName;
-          String timeOfGoal = goals![index].goalTimeStopWatch;
-          return ListTile(
-              leading: ExtendedText(text: score, userState: userState),
-              title: ExtendedText(text: scoredByName, userState: userState),
-              trailing: ExtendedText(text: timeOfGoal, userState: userState, colorOverride: AppColors.textGrey));
-        },
-      ),
-      )
-      
-    );
+        padding: const EdgeInsets.only(left: 20),
+        child: SizedBox(
+          height: 290,
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: goals?.length ?? 0,
+            itemBuilder: (context, index) {
+              String score =
+                  "${goals![index].scorerTeamScore}-${goals![index].opponentTeamScore}";
+              String scoredByName =
+                  "${goals![index].scorerFirstName} ${goals![index].scorerLastName}";
+              String timeOfGoal = goals![index].goalTimeStopWatch;
+              return ListTile(
+                  leading: ExtendedText(text: score, userState: userState),
+                  title: ExtendedText(text: scoredByName, userState: userState),
+                  trailing: ExtendedText(
+                      text: timeOfGoal,
+                      userState: userState,
+                      colorOverride: AppColors.textGrey));
+            },
+          ),
+        ));
   }
 }

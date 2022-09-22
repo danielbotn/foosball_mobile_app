@@ -12,7 +12,7 @@ class TimeKeeper extends StatefulWidget {
   final OngoingDoubleFreehandState counter;
   final String randomString;
   final String randomStringStopClock;
-  TimeKeeper(
+  const TimeKeeper(
       {Key? key,
       required this.ongoingGameObject,
       required this.counter,
@@ -25,7 +25,7 @@ class TimeKeeper extends StatefulWidget {
 }
 
 class _TimeKeeperState extends State<TimeKeeper> {
-  Duration duration = new Duration();
+  Duration duration = const Duration();
   Timer? timer;
 
   @override
@@ -36,7 +36,7 @@ class _TimeKeeperState extends State<TimeKeeper> {
 
   @override
   void didUpdateWidget(TimeKeeper oldWidget) {
-    if (this.widget.counter.isClockPaused) {
+    if (widget.counter.isClockPaused) {
       stopTimer(resets: false);
     } else {
       if (oldWidget.randomString != widget.randomString) {
@@ -51,7 +51,7 @@ class _TimeKeeperState extends State<TimeKeeper> {
   }
 
   void addTime() {
-    final addSeconds = 1;
+    const addSeconds = 1;
     final seconds = duration.inSeconds + addSeconds;
     setState(() {
       duration = Duration(seconds: seconds);
@@ -61,7 +61,7 @@ class _TimeKeeperState extends State<TimeKeeper> {
   }
 
   void reset() {
-    setState(() => duration = Duration());
+    setState(() => duration = const Duration());
     widget.counter.setElapsedSeconds(0);
   }
 
@@ -69,7 +69,7 @@ class _TimeKeeperState extends State<TimeKeeper> {
     if (resets) {
       reset();
     }
-    timer = Timer.periodic(new Duration(seconds: 1), (_) => addTime());
+    timer = Timer.periodic(const Duration(seconds: 1), (_) => addTime());
   }
 
   void stopTimer({bool resets = false}) {
@@ -100,7 +100,7 @@ class _TimeKeeperState extends State<TimeKeeper> {
               children: <Widget>[
                 ExtendedText(
                   text: '$hoursString$minutes:$seconds',
-                  userState: this.widget.ongoingGameObject.userState,
+                  userState: widget.ongoingGameObject.userState,
                   fontSize: 22,
                   isBold: true,
                 ),

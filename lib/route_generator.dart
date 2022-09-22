@@ -12,7 +12,7 @@ import 'models/other/TwoPlayersObject.dart';
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final args = settings.arguments;
-    switch(settings.name) {
+    switch (settings.name) {
       case 'login':
         if (args is UserState) {
           return MaterialPageRoute(builder: (_) => Login(userState: args));
@@ -27,19 +27,22 @@ class RouteGenerator {
         }
       case 'singlegame':
         if (args is String) {
-          return MaterialPageRoute(builder: (_) => SingleGame(test: 'test'));
+          return MaterialPageRoute(
+              builder: (_) => const SingleGame(test: 'test'));
         } else {
           return _errorRoute();
         }
       case 'settings':
         if (args is String) {
-          return MaterialPageRoute(builder: (_) => Settings(userState: userState));
+          return MaterialPageRoute(
+              builder: (_) => Settings(userState: userState));
         } else {
           return _errorRoute();
         }
       case 'matchDetailTwoPlayers':
         if (args is TwoPlayersObject) {
-          return MaterialPageRoute(builder: (_) => FreehandMatchDetail(twoPlayersObject: args));
+          return MaterialPageRoute(
+              builder: (_) => FreehandMatchDetail(twoPlayersObject: args));
         } else {
           return _errorRoute();
         }
@@ -51,13 +54,12 @@ class RouteGenerator {
   static Route<dynamic> _errorRoute() {
     return MaterialPageRoute(builder: (_) {
       return Scaffold(
-        appBar: AppBar(
-          title: Text('Error'),
-        ),
-        body: Center(
-          child: Text('Error'),
-        )
-      );
+          appBar: AppBar(
+            title: const Text('Error'),
+          ),
+          body: const Center(
+            child: Text('Error'),
+          ));
     });
   }
 }

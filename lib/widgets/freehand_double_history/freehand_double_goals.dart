@@ -14,24 +14,27 @@ class FreehandDoubleGoals extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 20),
-      child: Container(
-        height: 290,
-        child: ListView.builder(
-        shrinkWrap: true,
-        itemCount: freehandGoals?.length ?? 0,
-        itemBuilder: (context, index) {
-          String score = freehandGoals![index].scorerTeamScore.toString() + "-" + freehandGoals![index].opponentTeamScore.toString();
-          String scoredByName = freehandGoals![index].firstName + " " + freehandGoals![index].lastName;
-          String timeOfGoal = freehandGoals![index].goalTimeStopWatch;
-          return ListTile(
-              leading: ExtendedText(text: score, userState: userState),
-              title: ExtendedText(text: scoredByName, userState: userState),
-              trailing: ExtendedText(text: timeOfGoal, userState: userState, colorOverride: AppColors.textGrey));
-        },
-      ),
-      )
-      
-    );
+        padding: const EdgeInsets.only(left: 20),
+        child: SizedBox(
+          height: 290,
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: freehandGoals?.length ?? 0,
+            itemBuilder: (context, index) {
+              String score =
+                  "${freehandGoals![index].scorerTeamScore}-${freehandGoals![index].opponentTeamScore}";
+              String scoredByName =
+                  "${freehandGoals![index].firstName} ${freehandGoals![index].lastName}";
+              String timeOfGoal = freehandGoals![index].goalTimeStopWatch;
+              return ListTile(
+                  leading: ExtendedText(text: score, userState: userState),
+                  title: ExtendedText(text: scoredByName, userState: userState),
+                  trailing: ExtendedText(
+                      text: timeOfGoal,
+                      userState: userState,
+                      colorOverride: AppColors.textGrey));
+            },
+          ),
+        ));
   }
 }

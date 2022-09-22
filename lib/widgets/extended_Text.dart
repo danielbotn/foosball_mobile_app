@@ -8,7 +8,13 @@ class ExtendedText extends StatelessWidget {
   final double? fontSize;
   final Color? colorOverride;
   final bool isBold;
-  const ExtendedText({Key? key, required this.text, required this.userState, this.fontSize, this.colorOverride, this.isBold = false}) 
+  const ExtendedText(
+      {Key? key,
+      required this.text,
+      required this.userState,
+      this.fontSize,
+      this.colorOverride,
+      this.isBold = false})
       : super(key: key);
 
   @override
@@ -25,9 +31,8 @@ class ExtendedText extends StatelessWidget {
     } else {
       return Text(text,
           style: TextStyle(
-            color:
-                this.userState.darkmode ? AppColors.white : AppColors.textBlack,
-            fontSize: fontSize != null ? fontSize : 16,
+            color: userState.darkmode ? AppColors.white : AppColors.textBlack,
+            fontSize: fontSize ?? 16,
             fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
           ));
     }

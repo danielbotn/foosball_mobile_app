@@ -15,10 +15,10 @@ import '../utils/preferences_service.dart';
 class Login extends StatefulWidget {
   //props
   final UserState userState;
-  Login({Key? key, required this.userState}) : super(key: key);
+  const Login({Key? key, required this.userState}) : super(key: key);
 
   @override
-  _LoginState createState() => _LoginState();
+  State<Login> createState() => _LoginState();
 }
 
 class _LoginState extends State<Login> {
@@ -29,7 +29,7 @@ class _LoginState extends State<Login> {
 
   Future<String?> loginUser(LoginData data) async {
     AuthApi auth = AuthApi();
-    PreferencesService preferencesService = new PreferencesService();
+    PreferencesService preferencesService = PreferencesService();
     String? value = await preferencesService.getJwtToken();
     String? langFromStorage = await preferencesService.getLanguage();
 
@@ -99,9 +99,6 @@ class _LoginState extends State<Login> {
   }
 
   Future<String?> _signupConfirm(String error, LoginData data) async {
-    var errErr = error;
-    var gaurgaur = data;
-    var gaur = registrationData;
     AuthApi auth = AuthApi();
     var verifyEmailData = await auth.verifyEmail(error, registrationData.id);
 

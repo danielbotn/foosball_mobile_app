@@ -74,7 +74,7 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
       child: ListView(
         children: <Widget>[
           UserAccountsDrawerHeader(
-            margin: EdgeInsets.only(bottom: 0.0),
+            margin: const EdgeInsets.only(bottom: 0.0),
             accountName: Text("$firstName $lastName",
                 style: TextStyle(
                   color: userState.darkmode ? Colors.white : Colors.blue,

@@ -9,26 +9,24 @@ class SingleLeagueGoalApi {
 
   SingleLeagueGoalApi({required this.token});
 
-  Future<List<SingleLeagueGoalModel>?> getSingleLeagueGoals(int leagueId, int matchId) async {
+  Future<List<SingleLeagueGoalModel>?> getSingleLeagueGoals(
+      int leagueId, int matchId) async {
     late List<SingleLeagueGoalModel>? result;
 
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']
         : dotenv.env['REST_URL_PATH_DEV'];
     if (baseUrl != null) {
-
       var jsonObject = {"leagueId": '$leagueId', "matchId": '$matchId'};
-      
-      Uri outgoingUri = new Uri(
+
+      Uri outgoingUri = Uri(
           scheme: 'https',
           host: kReleaseMode ? dotenv.env['PROD_HOST'] : dotenv.env['DEV_HOST'],
           port: kReleaseMode
               ? int.parse(dotenv.env['PROD_PORT'].toString())
               : int.parse(dotenv.env['DEV_PORT'].toString()),
           path: 'api/SingleLeagueGoals/',
-          queryParameters: jsonObject
-          );
-
+          queryParameters: jsonObject);
 
       var response = await http.get(outgoingUri, headers: {
         "Accept": "application/json",

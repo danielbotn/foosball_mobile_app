@@ -28,9 +28,9 @@ class MatchDetailButtons extends StatelessWidget {
 
     void rematch() {
       FreehandDoubleMatchApi matchApi =
-          new FreehandDoubleMatchApi(token: userState.token);
+          FreehandDoubleMatchApi(token: userState.token);
 
-      FreehandDoubleMatchBody fmb = new FreehandDoubleMatchBody(
+      FreehandDoubleMatchBody fmb = FreehandDoubleMatchBody(
           playerOneTeamA: data.teamOne.players[0].id,
           playerTwoTeamA: data.teamOne.players[1].id,
           playerOneTeamB: data.teamTwo.players[0].id,
@@ -43,7 +43,7 @@ class MatchDetailButtons extends StatelessWidget {
           upTo: data.freehandMatchCreateResponse!.upTo);
 
       matchApi.createNewDoubleFreehandMatch(fmb).then((value) {
-        OngoingDoubleGameObject gameObject = new OngoingDoubleGameObject(
+        OngoingDoubleGameObject gameObject = OngoingDoubleGameObject(
           userState: userState,
           freehandDoubleMatchCreateResponse: data.freehandMatchCreateResponse,
           playerOneTeamA: data.teamOne.players[0],
@@ -66,36 +66,32 @@ class MatchDetailButtons extends StatelessWidget {
             flex: 5,
             child: Padding(
               padding: const EdgeInsets.all(4.0),
-              child: Container(
-                child: ElevatedButton(
-                  onPressed: () => {
-                    rematch(),
-                  },
-                  child: Text(userState.hardcodedStrings.rematch),
-                  style: ElevatedButton.styleFrom(
-                      primary: userState.darkmode
-                          ? AppColors.lightThemeShadowColor
-                          : AppColors.buttonsLightTheme,
-                      minimumSize: Size(100, 50)),
-                ),
+              child: ElevatedButton(
+                onPressed: () => {
+                  rematch(),
+                },
+                style: ElevatedButton.styleFrom(
+                    primary: userState.darkmode
+                        ? AppColors.lightThemeShadowColor
+                        : AppColors.buttonsLightTheme,
+                    minimumSize: const Size(100, 50)),
+                child: Text(userState.hardcodedStrings.rematch),
               ),
             )),
         Expanded(
             flex: 5,
             child: Padding(
               padding: const EdgeInsets.all(4.0),
-              child: Container(
-                child: ElevatedButton(
-                  onPressed: () => {
-                    close(),
-                  },
-                  child: Text(userState.hardcodedStrings.close),
-                  style: ElevatedButton.styleFrom(
-                      primary: userState.darkmode
-                          ? AppColors.lightThemeShadowColor
-                          : AppColors.buttonsLightTheme,
-                      minimumSize: Size(100, 50)),
-                ),
+              child: ElevatedButton(
+                onPressed: () => {
+                  close(),
+                },
+                style: ElevatedButton.styleFrom(
+                    primary: userState.darkmode
+                        ? AppColors.lightThemeShadowColor
+                        : AppColors.buttonsLightTheme,
+                    minimumSize: const Size(100, 50)),
+                child: Text(userState.hardcodedStrings.close),
               ),
             )),
       ],

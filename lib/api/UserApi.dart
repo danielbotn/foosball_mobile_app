@@ -17,7 +17,7 @@ class UserApi {
         ? dotenv.env['REST_URL_PATH_PROD']
         : dotenv.env['REST_URL_PATH_DEV'];
     if (baseUrl != null) {
-      var url = Uri.parse(baseUrl + '/api/Users/' + userId);
+      var url = Uri.parse('$baseUrl/api/Users/$userId');
       var response = await http.get(url, headers: {
         "Accept": "application/json",
         "content-type": "application/json",
@@ -39,7 +39,7 @@ class UserApi {
         ? dotenv.env['REST_URL_PATH_PROD']
         : dotenv.env['REST_URL_PATH_DEV'];
     if (baseUrl != null) {
-      var url = Uri.parse(baseUrl + '/api/Users/stats');
+      var url = Uri.parse('$baseUrl/api/Users/stats');
       var response = await http.get(url, headers: {
         "Accept": "application/json",
         "content-type": "application/json",
@@ -48,7 +48,7 @@ class UserApi {
 
       if (response.statusCode == 200) {
         var dta = UserStatsResponse.fromJson(jsonDecode(response.body));
-        result = new UserStatsResponse(
+        result = UserStatsResponse(
             totalGoalsReceived: dta.totalGoalsReceived,
             totalGoalsScored: dta.totalGoalsScored,
             totalMatches: dta.totalMatches,
@@ -69,7 +69,7 @@ class UserApi {
         ? dotenv.env['REST_URL_PATH_PROD']
         : dotenv.env['REST_URL_PATH_DEV'];
     if (baseUrl != null) {
-      var url = Uri.parse(baseUrl + '/api/Users/stats/last-ten-matches');
+      var url = Uri.parse('$baseUrl/api/Users/stats/last-ten-matches');
 
       var response = await http.get(url, headers: {
         "Accept": "application/json",
@@ -91,14 +91,14 @@ class UserApi {
     return result;
   }
 
-   Future<List<UserResponse>?> getUsers() async {
+  Future<List<UserResponse>?> getUsers() async {
     late List<UserResponse>? result;
 
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']
         : dotenv.env['REST_URL_PATH_DEV'];
     if (baseUrl != null) {
-      var url = Uri.parse(baseUrl + '/api/Users');
+      var url = Uri.parse('$baseUrl/api/Users');
 
       var response = await http.get(url, headers: {
         "Accept": "application/json",

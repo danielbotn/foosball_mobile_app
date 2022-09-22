@@ -6,12 +6,12 @@ class Loading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.all(64),
+    return const Padding(
+        padding: EdgeInsets.all(64),
         child: Center(
             child: LoadingIndicator(
                 indicatorType: Indicator.ballPulse,
-                colors: const [Colors.lightGreen],
+                colors: [Colors.lightGreen],
                 strokeWidth: 2,
                 pathBackgroundColor: Colors.black)));
   }

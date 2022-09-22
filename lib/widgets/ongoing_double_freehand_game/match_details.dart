@@ -15,7 +15,7 @@ import '../total_playing_time.dart';
 
 class MatchDetails extends StatefulWidget {
   final FreehandDoubleMatchDetailObject data;
-  MatchDetails({Key? key, required this.data}) : super(key: key);
+  const MatchDetails({Key? key, required this.data}) : super(key: key);
 
   @override
   State<MatchDetails> createState() => _MatchDetailsState();
@@ -35,14 +35,14 @@ class _MatchDetailsState extends State<MatchDetails> {
 
   Future<List<FreehandDoubleGoalModel>?> getFreehandGoals(int matchId) async {
     FreehandDoubleGoalsApi freehandGoalsApi =
-        new FreehandDoubleGoalsApi(token: widget.data.userState.token);
+        FreehandDoubleGoalsApi(token: widget.data.userState.token);
     var freehandGoals = await freehandGoalsApi.getFreehandDoubleGoals(matchId);
     return freehandGoals;
   }
 
   Future<FreehandDoubleMatchModel?> getFreehandMatch(int matchId) async {
     FreehandDoubleMatchApi freehandMatchApi =
-        new FreehandDoubleMatchApi(token: widget.data.userState.token);
+        FreehandDoubleMatchApi(token: widget.data.userState.token);
     var freehandMatch = await freehandMatchApi.getDoubleFreehandMatch(matchId);
     return freehandMatch;
   }
@@ -55,7 +55,7 @@ class _MatchDetailsState extends State<MatchDetails> {
             text: widget.data.userState.hardcodedStrings.matchReport,
             userState: widget.data.userState),
         leading: IconButton(
-          icon: Icon(Icons.chevron_left),
+          icon: const Icon(Icons.chevron_left),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -126,14 +126,14 @@ class _MatchDetailsState extends State<MatchDetails> {
                     userState: widget.data.userState,
                     freehandGoals: goals,
                   ),
-                  Spacer(),
+                  const Spacer(),
                   MatchDetailButtons(
                       data: widget.data, userState: widget.data.userState)
                 ],
               ),
             );
           } else {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }

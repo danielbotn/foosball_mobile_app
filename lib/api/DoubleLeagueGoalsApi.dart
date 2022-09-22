@@ -16,16 +16,14 @@ class DoubleLeagueGoalsApi {
         ? dotenv.env['REST_URL_PATH_PROD']
         : dotenv.env['REST_URL_PATH_DEV'];
     if (baseUrl != null) {
-      
-      Uri outgoingUri = new Uri(
-          scheme: 'https',
-          host: kReleaseMode ? dotenv.env['PROD_HOST'] : dotenv.env['DEV_HOST'],
-          port: kReleaseMode
-              ? int.parse(dotenv.env['PROD_PORT'].toString())
-              : int.parse(dotenv.env['DEV_PORT'].toString()),
-          path: 'api/DoubleLeagueGoals/match/' + matchId.toString(),
-          );
-
+      Uri outgoingUri = Uri(
+        scheme: 'https',
+        host: kReleaseMode ? dotenv.env['PROD_HOST'] : dotenv.env['DEV_HOST'],
+        port: kReleaseMode
+            ? int.parse(dotenv.env['PROD_PORT'].toString())
+            : int.parse(dotenv.env['DEV_PORT'].toString()),
+        path: 'api/DoubleLeagueGoals/match/$matchId',
+      );
 
       var response = await http.get(outgoingUri, headers: {
         "Accept": "application/json",

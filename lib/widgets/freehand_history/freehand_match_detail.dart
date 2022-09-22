@@ -18,13 +18,13 @@ import '../total_playing_time.dart';
 class FreehandMatchDetail extends StatefulWidget {
   // props
   final TwoPlayersObject twoPlayersObject;
-  FreehandMatchDetail({
+  const FreehandMatchDetail({
     Key? key,
     required this.twoPlayersObject,
   }) : super(key: key);
 
   @override
-  _FreehandMatchDetailState createState() => _FreehandMatchDetailState();
+  State<FreehandMatchDetail> createState() => _FreehandMatchDetailState();
 }
 
 class _FreehandMatchDetailState extends State<FreehandMatchDetail> {
@@ -43,39 +43,38 @@ class _FreehandMatchDetailState extends State<FreehandMatchDetail> {
   }
 
   Future<List<FreehandGoalsModel>?> getFreehandGoals() async {
-    FreehandGoalsApi fgapi = new FreehandGoalsApi(
-        token: this.widget.twoPlayersObject.userState.token);
+    FreehandGoalsApi fgapi =
+        FreehandGoalsApi(token: widget.twoPlayersObject.userState.token);
     var freehandGoals =
-        await fgapi.getFreehandGoals(this.widget.twoPlayersObject.matchId);
+        await fgapi.getFreehandGoals(widget.twoPlayersObject.matchId);
     return freehandGoals;
   }
 
   Future<UserResponse> getUser() async {
-    UserApi uapi =
-        new UserApi(token: this.widget.twoPlayersObject.userState.token);
-    var user = await uapi
-        .getUser(this.widget.twoPlayersObject.userState.userId.toString());
+    UserApi uapi = UserApi(token: widget.twoPlayersObject.userState.token);
+    var user =
+        await uapi.getUser(widget.twoPlayersObject.userState.userId.toString());
     return user;
   }
 
   Future<FreehandMatchModel?> getFreehandMatch() async {
-    FreehandMatchApi fmapi = new FreehandMatchApi(
-        token: this.widget.twoPlayersObject.userState.token);
+    FreehandMatchApi fmapi =
+        FreehandMatchApi(token: widget.twoPlayersObject.userState.token);
     var freehandMatch =
-        await fmapi.getFreehandMatch(this.widget.twoPlayersObject.matchId);
+        await fmapi.getFreehandMatch(widget.twoPlayersObject.matchId);
     return freehandMatch;
   }
 
   @override
   Widget build(BuildContext context) {
     String matchDetails =
-        this.widget.twoPlayersObject.userState.hardcodedStrings.matchDetails;
+        widget.twoPlayersObject.userState.hardcodedStrings.matchDetails;
     Helpers helpers = Helpers();
     return Scaffold(
       appBar: AppBar(
           title: ExtendedText(text: matchDetails, userState: userState),
           leading: IconButton(
-            icon: Icon(Icons.chevron_left),
+            icon: const Icon(Icons.chevron_left),
             onPressed: () {
               Navigator.pop(context);
             },
@@ -121,14 +120,14 @@ class _FreehandMatchDetailState extends State<FreehandMatchDetail> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         MatchCard(
-                          userState: this.widget.twoPlayersObject.userState,
+                          userState: widget.twoPlayersObject.userState,
                           userFirstName: userInfo.firstName,
                           userLastName: userInfo.lastName,
                           userPhotoUrl: userInfo.photoUrl,
                           lefOrRight: true,
                         ),
                         MatchCard(
-                          userState: this.widget.twoPlayersObject.userState,
+                          userState: widget.twoPlayersObject.userState,
                           userFirstName: oponentFirstName,
                           userLastName: oponentLastName,
                           userPhotoUrl: oponentPhotoUrl,
@@ -140,35 +139,31 @@ class _FreehandMatchDetailState extends State<FreehandMatchDetail> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         MatchScore(
-                          userState: this.widget.twoPlayersObject.userState,
+                          userState: widget.twoPlayersObject.userState,
                           userScore: userScore,
                         ),
                         MatchScore(
-                          userState: this.widget.twoPlayersObject.userState,
+                          userState: widget.twoPlayersObject.userState,
                           userScore: opponentScore,
                         ),
                       ],
                     ),
                     TotalPlayingTime(
-                        userState: this.widget.twoPlayersObject.userState,
+                        userState: widget.twoPlayersObject.userState,
                         totalPlayingTime:
                             freehandMatch.totalPlayingTime.toString(),
-                        totalPlayingTimeLabel: this
-                            .widget
-                            .twoPlayersObject
-                            .userState
-                            .hardcodedStrings
-                            .totalPlayingTime),
+                        totalPlayingTimeLabel: widget.twoPlayersObject.userState
+                            .hardcodedStrings.totalPlayingTime),
                     FreehandMatchGoals(
-                      userState: this.widget.twoPlayersObject.userState,
+                      userState: widget.twoPlayersObject.userState,
                       freehandGoals: freehandGoals,
                     ),
-                    Spacer(),
+                    const Spacer(),
                     FreehandMatchButtons(userState: userState)
                   ],
                 ));
           } else {
-            return CircularProgressIndicator();
+            return const CircularProgressIndicator();
           }
         },
       ),

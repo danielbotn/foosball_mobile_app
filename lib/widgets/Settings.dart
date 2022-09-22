@@ -14,7 +14,7 @@ class Settings extends StatefulWidget {
   const Settings({Key? key, required this.userState}) : super(key: key);
 
   @override
-  _SettingsState createState() => _SettingsState();
+  State<Settings> createState() => _SettingsState();
 }
 
 class _SettingsState extends State<Settings> {
@@ -29,14 +29,13 @@ class _SettingsState extends State<Settings> {
   void initState() {
     super.initState();
 
-    setSelectedLanguage(this.widget.userState.language);
-    hardcodedStringsFuture =
-        getHardcodedStrings(this.widget.userState.language);
+    setSelectedLanguage(widget.userState.language);
+    hardcodedStringsFuture = getHardcodedStrings(widget.userState.language);
   }
 
   // Get hardcoded strings from datoCMS
   Future<HardcodedStrings?> getHardcodedStrings(String language) async {
-    DatoCMS datoCMS = new DatoCMS(token: this.widget.userState.token);
+    DatoCMS datoCMS = DatoCMS(token: widget.userState.token);
     var hardcodedStrings = await datoCMS.getHardcodedStrings(language);
 
     return hardcodedStrings;
@@ -60,13 +59,13 @@ class _SettingsState extends State<Settings> {
   }
 
   Future<void> getTheme() async {
-    PreferencesService preferencesService = new PreferencesService();
+    PreferencesService preferencesService = PreferencesService();
     bool? darkTheme = await preferencesService.getDarkTheme();
     setState(() {
       if (darkTheme == true) {
-        this.widget.userState.setDarkmode(true);
+        widget.userState.setDarkmode(true);
       } else {
-        this.widget.userState.setDarkmode(false);
+        widget.userState.setDarkmode(false);
       }
     });
   }
@@ -76,15 +75,15 @@ class _SettingsState extends State<Settings> {
     isDarkTheme = Theme.of(context).brightness == Brightness.dark;
 
     changeTheme(bool value) async {
-      PreferencesService preferencesService = new PreferencesService();
+      PreferencesService preferencesService = PreferencesService();
       await preferencesService.setDarkTheme(value);
       setState(() {
         isSwitched = value;
       });
       if (value == true) {
-        this.widget.userState.setDarkmode(true);
+        widget.userState.setDarkmode(true);
       } else {
-        this.widget.userState.setDarkmode(false);
+        widget.userState.setDarkmode(false);
       }
     }
 
@@ -95,7 +94,7 @@ class _SettingsState extends State<Settings> {
 
       hardcodedStringsFuture.then((value) {
         if (value != null) {
-          this.widget.userState.setHardcodedStrings(value);
+          widget.userState.setHardcodedStrings(value);
         }
       });
     }
@@ -119,10 +118,10 @@ class _SettingsState extends State<Settings> {
 
     // sets the language that the user chooses
     setLanguage(String value) async {
-      PreferencesService preferencesService = new PreferencesService();
+      PreferencesService preferencesService = PreferencesService();
       await preferencesService.setLanguage(value);
       setSelectedLanguage(value);
-      this.widget.userState.setLanguage(value);
+      widget.userState.setLanguage(value);
       changeHardcodedStrings(value);
     }
 
@@ -170,13 +169,13 @@ class _SettingsState extends State<Settings> {
     return Scaffold(
       appBar: AppBar(
           leading: IconButton(
-            icon: Icon(Icons.chevron_left),
+            icon: const Icon(Icons.chevron_left),
             onPressed: () {
-              Navigator.pop(context, this.widget.userState);
+              Navigator.pop(context, widget.userState);
             },
           ),
           iconTheme: userState.darkmode
-              ? IconThemeData(color: AppColors.white)
+              ? const IconThemeData(color: AppColors.white)
               : IconThemeData(color: Colors.grey[700]),
           backgroundColor: userState.darkmode
               ? AppColors.darkModeBackground
@@ -185,114 +184,120 @@ class _SettingsState extends State<Settings> {
           future: hardcodedStringsFuture,
           builder: (context, AsyncSnapshot<HardcodedStrings?> snapshot) {
             if (snapshot.hasData) {
-              return Container(
-                  child: Theme(
-                      data: userState.darkmode
-                          ? ThemeData.dark()
-                          : ThemeData.light(),
-                      child: SettingsList(
-                        sections: [
-                          SettingsSection(
-                            
-                            title: Text(userState.hardcodedStrings.common,),
-                            tiles: [
-                              SettingsTile(
-                                title: Text(userState.hardcodedStrings.language),
-                                trailing: Text(selectedLanguage),
-                                leading: const Icon(Icons.language),
-                                onPressed: (BuildContext context) {
-                                  selectLanguagePopup(context);
-                                },
-                              ),
-                              SettingsTile(
-                                title: Text(userState.hardcodedStrings.pricing),
-                                trailing: const Text('Premium'),
-                                leading: Icon(Icons.money),
-                                onPressed: (BuildContext context) {},
-                              ),
-                              SettingsTile.switchTile(
-                                title: Text(userState.darkmode
-                                    ? userState.hardcodedStrings.darkTheme
-                                    : userState.hardcodedStrings.lightTheme,),
-                                leading: Icon(Icons.phone_android),
-                                initialValue: userState.darkmode,
-                                onToggle: (value) {
-                                  changeTheme(value);
-                                },
-                              ),
-                            ],
+              return Theme(
+                  data:
+                      userState.darkmode ? ThemeData.dark() : ThemeData.light(),
+                  child: SettingsList(
+                    sections: [
+                      SettingsSection(
+                        title: Text(
+                          userState.hardcodedStrings.common,
+                        ),
+                        tiles: [
+                          SettingsTile(
+                            title: Text(userState.hardcodedStrings.language),
+                            trailing: Text(selectedLanguage),
+                            leading: const Icon(Icons.language),
+                            onPressed: (BuildContext context) {
+                              selectLanguagePopup(context);
+                            },
                           ),
-                          // person section
-                          SettingsSection(
-                            
-                            title: Text(userState.hardcodedStrings.personalInformation),
-                            tiles: [
-                              SettingsTile(
-                                title: Text(userState.hardcodedStrings.username),
-                                description: Text(userState.userInfoGlobal.email),
-                                leading: const Icon(Icons.email),
-                                onPressed: (BuildContext context) {
-                                  selectLanguagePopup(context);
-                                },
-                              ),
-                              SettingsTile(
-                                title: Text(userState.hardcodedStrings.user),
-                                description: Text(userState.userInfoGlobal.firstName + " " + userState.userInfoGlobal.lastName),
-                                leading: Icon(Icons.person),
-                                onPressed: (BuildContext context) {},
-                              ),
-                              SettingsTile(
-                                title: Text(userState.hardcodedStrings.organisation),
-                                description: Text(userState.userInfoGlobal.currentOrganisationName),
-                                leading: const Icon(Icons.business),
-                                onPressed: (BuildContext context) {},
-                              ),
-                            ],
+                          SettingsTile(
+                            title: Text(userState.hardcodedStrings.pricing),
+                            trailing: const Text('Premium'),
+                            leading: const Icon(Icons.money),
+                            onPressed: (BuildContext context) {},
                           ),
-                          // integrations
-                          SettingsSection(
-                            title: Text(userState.hardcodedStrings.integration),
-                            tiles: [
-                              SettingsTile(
-                                title: Text(userState.hardcodedStrings.slack),
-                                description: Text("https://hooks.slack.com/services/T0J5QJQQP/B0J5QJQQQ/0J5QJQQQQ"),
-                                leading: Icon(CustomIcons.slack),
-                                onPressed: (BuildContext context) {
-                                  selectLanguagePopup(context);
-                                },
-                              ),
-                              SettingsTile(
-                                title: Text(userState.hardcodedStrings.discord),
-                                description: Text("https://hooks.discord.com/services/T0J5QJQQP/B0J5QJQQQ/0J5QJQQQQ"),
-                                leading: Icon(CustomIcons.discord),
-                                onPressed: (BuildContext context) {
-                                  selectLanguagePopup(context);
-                                },
-                              ),
-                            ],
-                          ),
-                          SettingsSection(
-                            title: Text(userState.hardcodedStrings.security),
-                            tiles: [
-                              SettingsTile.switchTile(
-                                title:
-                                    Text(userState.hardcodedStrings.changePassword),
-                                leading: const Icon(Icons.lock),
-                                initialValue: true,
-                                onToggle: (bool value) {},
-                              ),
-                              SettingsTile.switchTile(
-                                title: Text(userState
-                                    .hardcodedStrings.enableNotifications),
-                                enabled: false,
-                                leading: const Icon(Icons.notifications_active),
-                                initialValue: true,
-                                onToggle: (value) {},
-                              ),
-                            ],
+                          SettingsTile.switchTile(
+                            title: Text(
+                              userState.darkmode
+                                  ? userState.hardcodedStrings.darkTheme
+                                  : userState.hardcodedStrings.lightTheme,
+                            ),
+                            leading: const Icon(Icons.phone_android),
+                            initialValue: userState.darkmode,
+                            onToggle: (value) {
+                              changeTheme(value);
+                            },
                           ),
                         ],
-                      )));
+                      ),
+                      // person section
+                      SettingsSection(
+                        title: Text(
+                            userState.hardcodedStrings.personalInformation),
+                        tiles: [
+                          SettingsTile(
+                            title: Text(userState.hardcodedStrings.username),
+                            description: Text(userState.userInfoGlobal.email),
+                            leading: const Icon(Icons.email),
+                            onPressed: (BuildContext context) {
+                              selectLanguagePopup(context);
+                            },
+                          ),
+                          SettingsTile(
+                            title: Text(userState.hardcodedStrings.user),
+                            description: Text(
+                                "${userState.userInfoGlobal.firstName} ${userState.userInfoGlobal.lastName}"),
+                            leading: const Icon(Icons.person),
+                            onPressed: (BuildContext context) {},
+                          ),
+                          SettingsTile(
+                            title:
+                                Text(userState.hardcodedStrings.organisation),
+                            description: Text(userState
+                                .userInfoGlobal.currentOrganisationName),
+                            leading: const Icon(Icons.business),
+                            onPressed: (BuildContext context) {},
+                          ),
+                        ],
+                      ),
+                      // integrations
+                      SettingsSection(
+                        title: Text(userState.hardcodedStrings.integration),
+                        tiles: [
+                          SettingsTile(
+                            title: Text(userState.hardcodedStrings.slack),
+                            description: const Text(
+                                "https://hooks.slack.com/services/T0J5QJQQP/B0J5QJQQQ/0J5QJQQQQ"),
+                            leading: const Icon(CustomIcons.slack),
+                            onPressed: (BuildContext context) {
+                              selectLanguagePopup(context);
+                            },
+                          ),
+                          SettingsTile(
+                            title: Text(userState.hardcodedStrings.discord),
+                            description: const Text(
+                                "https://hooks.discord.com/services/T0J5QJQQP/B0J5QJQQQ/0J5QJQQQQ"),
+                            leading: const Icon(CustomIcons.discord),
+                            onPressed: (BuildContext context) {
+                              selectLanguagePopup(context);
+                            },
+                          ),
+                        ],
+                      ),
+                      SettingsSection(
+                        title: Text(userState.hardcodedStrings.security),
+                        tiles: [
+                          SettingsTile.switchTile(
+                            title:
+                                Text(userState.hardcodedStrings.changePassword),
+                            leading: const Icon(Icons.lock),
+                            initialValue: true,
+                            onToggle: (bool value) {},
+                          ),
+                          SettingsTile.switchTile(
+                            title: Text(
+                                userState.hardcodedStrings.enableNotifications),
+                            enabled: false,
+                            leading: const Icon(Icons.notifications_active),
+                            initialValue: true,
+                            onToggle: (value) {},
+                          ),
+                        ],
+                      ),
+                    ],
+                  ));
             } else {
               return const Center(
                 child: CircularProgressIndicator(),

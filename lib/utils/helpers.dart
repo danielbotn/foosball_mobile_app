@@ -1,4 +1,3 @@
-// import 'package:flutter/cupertino.dart';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -11,7 +10,7 @@ import 'app_color.dart';
 class Helpers {
   IconThemeData getIconTheme(bool darkMode) {
     if (darkMode == true) {
-      return IconThemeData(color: AppColors.white);
+      return const IconThemeData(color: AppColors.white);
     } else {
       return IconThemeData(color: Colors.grey[700]);
     }
@@ -27,7 +26,7 @@ class Helpers {
 
   FreehandDoubleMatchObject getFreehandDoubleMatchObject(
       FreehandDoubleMatchModel match, UserResponse userInfo) {
-    FreehandDoubleMatchObject result = new FreehandDoubleMatchObject(
+    FreehandDoubleMatchObject result = FreehandDoubleMatchObject(
         teamMateFirstName: '',
         teamMateLastName: '',
         teamMatePhotoUrl: '',
@@ -142,11 +141,11 @@ class Helpers {
   }
 
   String generateRandomString() {
-    var random = new Random();
-    var codeUnits = new List.generate(6, (index) {
+    var random = Random();
+    var codeUnits = List.generate(6, (index) {
       return random.nextInt(33) + 89;
     });
 
-    return new String.fromCharCodes(codeUnits);
+    return String.fromCharCodes(codeUnits);
   }
 }

@@ -7,7 +7,7 @@ class PlayerScore extends StatefulWidget {
   final UserState userState;
   final bool isTeamOne;
   final OngoingDoubleFreehandState ongoingState;
-  PlayerScore(
+  const PlayerScore(
       {Key? key,
       required this.userState,
       required this.isTeamOne,

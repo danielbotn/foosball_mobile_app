@@ -20,69 +20,69 @@ class StartGameButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     void startFreehandSingleGame() {
-      FreehandMatchApi matchApi = new FreehandMatchApi(token: userState.token);
+      FreehandMatchApi matchApi = FreehandMatchApi(token: userState.token);
 
-      FreehandMatchBody fmb = new FreehandMatchBody(
-            playerOneId: newGameState.playersTeamOne[0].id,
-            playerTwoId: newGameState.playersTeamTwo[0].id,
-            playerOneScore: 0,
-            playerTwoScore: 0,
-            upTo: 10,
-            gameFinished: false,
-            gamePaused: false);
+      FreehandMatchBody fmb = FreehandMatchBody(
+          playerOneId: newGameState.playersTeamOne[0].id,
+          playerTwoId: newGameState.playersTeamTwo[0].id,
+          playerOneScore: 0,
+          playerTwoScore: 0,
+          upTo: 10,
+          gameFinished: false,
+          gamePaused: false);
 
-        // create new freehand match
-        matchApi.createNewFreehandMatch(fmb).then((value) {
-          OngoingGameObject ongoingGameObject = OngoingGameObject(
-              freehandMatchCreateResponse: value,
-              playerOne: newGameState.playersTeamOne[0],
-              playerTwo: newGameState.playersTeamTwo[0],
-              userState: userState);
-         
-          // navigate to game screen
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => OngoingFreehandGame(
-                        ongoingGameObject: ongoingGameObject,
-                      )));
-        });
+      // create new freehand match
+      matchApi.createNewFreehandMatch(fmb).then((value) {
+        OngoingGameObject ongoingGameObject = OngoingGameObject(
+            freehandMatchCreateResponse: value,
+            playerOne: newGameState.playersTeamOne[0],
+            playerTwo: newGameState.playersTeamTwo[0],
+            userState: userState);
+
+        // navigate to game screen
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => OngoingFreehandGame(
+                      ongoingGameObject: ongoingGameObject,
+                    )));
+      });
     }
 
     void startFreehandDoubleGame() {
       FreehandDoubleMatchApi doubleMatchApi =
           FreehandDoubleMatchApi(token: userState.token);
       FreehandDoubleMatchBody fdmb = FreehandDoubleMatchBody(
-          playerOneTeamA: newGameState.playersTeamOne[0].id,
-          playerTwoTeamA: newGameState.playersTeamOne[1].id,
-          playerOneTeamB: newGameState.playersTeamTwo[0].id,
-          playerTwoTeamB: newGameState.playersTeamTwo[1].id,
-          organisationId: newGameState.playersTeamOne[0].currentOrganisationId as int,
-          teamAScore: 0,
-          teamBScore: 0,
-          nicknameTeamA: null,
-          nicknameTeamB: null,
-          upTo: 10,
-        );
-        doubleMatchApi.createNewDoubleFreehandMatch(fdmb).then((value) {
-          OngoingDoubleGameObject ongoingDoubleGameObject =
-              OngoingDoubleGameObject(
-                  freehandDoubleMatchCreateResponse: value,
-                  playerOneTeamA: newGameState.playersTeamOne[0],
-                  playerTwoTeamA: newGameState.playersTeamOne[1],
-                  playerOneTeamB: newGameState.playersTeamTwo[0],
-                  playerTwoTeamB: newGameState.playersTeamTwo[1],
-                  userState: userState);
+        playerOneTeamA: newGameState.playersTeamOne[0].id,
+        playerTwoTeamA: newGameState.playersTeamOne[1].id,
+        playerOneTeamB: newGameState.playersTeamTwo[0].id,
+        playerTwoTeamB: newGameState.playersTeamTwo[1].id,
+        organisationId:
+            newGameState.playersTeamOne[0].currentOrganisationId as int,
+        teamAScore: 0,
+        teamBScore: 0,
+        nicknameTeamA: null,
+        nicknameTeamB: null,
+        upTo: 10,
+      );
+      doubleMatchApi.createNewDoubleFreehandMatch(fdmb).then((value) {
+        OngoingDoubleGameObject ongoingDoubleGameObject =
+            OngoingDoubleGameObject(
+                freehandDoubleMatchCreateResponse: value,
+                playerOneTeamA: newGameState.playersTeamOne[0],
+                playerTwoTeamA: newGameState.playersTeamOne[1],
+                playerOneTeamB: newGameState.playersTeamTwo[0],
+                playerTwoTeamB: newGameState.playersTeamTwo[1],
+                userState: userState);
 
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => OngoingDoubleFreehandGame(
-                        ongoingDoubleGameObject: ongoingDoubleGameObject,
-                      )));
-        });
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => OngoingDoubleFreehandGame(
+                      ongoingDoubleGameObject: ongoingDoubleGameObject,
+                    )));
+      });
     }
 
     void startGame() {

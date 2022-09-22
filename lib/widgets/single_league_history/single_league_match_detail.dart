@@ -19,7 +19,7 @@ import '../extended_Text.dart';
 class SingleLeagueMatchDetail extends StatefulWidget {
   // Props
   final TwoPlayersObject twoPlayersObject;
-  SingleLeagueMatchDetail({Key? key, required this.twoPlayersObject})
+  const SingleLeagueMatchDetail({Key? key, required this.twoPlayersObject})
       : super(key: key);
 
   @override
@@ -44,18 +44,17 @@ class _SingleLeagueMatchDetailState extends State<SingleLeagueMatchDetail> {
   }
 
   Future<UserResponse> getUser() async {
-    UserApi uapi =
-        new UserApi(token: this.widget.twoPlayersObject.userState.token);
-    var user = await uapi
-        .getUser(this.widget.twoPlayersObject.userState.userId.toString());
+    UserApi uapi = UserApi(token: widget.twoPlayersObject.userState.token);
+    var user =
+        await uapi.getUser(widget.twoPlayersObject.userState.userId.toString());
     return user;
   }
 
   Future<SingleLeagueMatchModel?> getSingleLeagueMatch() async {
-    SingleLeagueMatchApi api = new SingleLeagueMatchApi(
-        token: this.widget.twoPlayersObject.userState.token);
-    var match = await api
-        .getSingleLeagueMatchById(this.widget.twoPlayersObject.matchId);
+    SingleLeagueMatchApi api =
+        SingleLeagueMatchApi(token: widget.twoPlayersObject.userState.token);
+    var match =
+        await api.getSingleLeagueMatchById(widget.twoPlayersObject.matchId);
     setState(() {
       singleLeagueMatch = match;
     });
@@ -63,26 +62,28 @@ class _SingleLeagueMatchDetailState extends State<SingleLeagueMatchDetail> {
   }
 
   Future<List<SingleLeagueGoalModel>?> getSingleLeagueGoals() async {
-    SingleLeagueGoalApi api = new SingleLeagueGoalApi(token: this.widget.twoPlayersObject.userState.token);
+    SingleLeagueGoalApi api =
+        SingleLeagueGoalApi(token: widget.twoPlayersObject.userState.token);
     int leagueId = 0;
-    if (this.widget.twoPlayersObject.leagueId != null) {
-      leagueId = this.widget.twoPlayersObject.leagueId!;
+    if (widget.twoPlayersObject.leagueId != null) {
+      leagueId = widget.twoPlayersObject.leagueId!;
     }
-    List<SingleLeagueGoalModel>? goals = await api.getSingleLeagueGoals(leagueId, this.widget.twoPlayersObject.matchId);
-    
+    List<SingleLeagueGoalModel>? goals = await api.getSingleLeagueGoals(
+        leagueId, widget.twoPlayersObject.matchId);
+
     return goals;
   }
 
   @override
   Widget build(BuildContext context) {
-    Helpers helper = new Helpers();
+    Helpers helper = Helpers();
     String matchDetails =
-        this.widget.twoPlayersObject.userState.hardcodedStrings.matchDetails;
+        widget.twoPlayersObject.userState.hardcodedStrings.matchDetails;
     return Scaffold(
       appBar: AppBar(
           title: ExtendedText(text: matchDetails, userState: userState),
           leading: IconButton(
-            icon: Icon(Icons.chevron_left),
+            icon: const Icon(Icons.chevron_left),
             onPressed: () {
               Navigator.pop(context);
             },
@@ -130,14 +131,14 @@ class _SingleLeagueMatchDetailState extends State<SingleLeagueMatchDetail> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         MatchCard(
-                          userState: this.widget.twoPlayersObject.userState,
+                          userState: widget.twoPlayersObject.userState,
                           userFirstName: userInfo.firstName,
                           userLastName: userInfo.lastName,
                           userPhotoUrl: userInfo.photoUrl,
                           lefOrRight: true,
                         ),
                         MatchCard(
-                          userState: this.widget.twoPlayersObject.userState,
+                          userState: widget.twoPlayersObject.userState,
                           userFirstName: opponentFirstName,
                           userLastName: opponentLastName,
                           userPhotoUrl: opponentPhotoUrl,
@@ -149,34 +150,30 @@ class _SingleLeagueMatchDetailState extends State<SingleLeagueMatchDetail> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         MatchScore(
-                          userState: this.widget.twoPlayersObject.userState,
+                          userState: widget.twoPlayersObject.userState,
                           userScore: userScore,
                         ),
                         MatchScore(
-                          userState: this.widget.twoPlayersObject.userState,
+                          userState: widget.twoPlayersObject.userState,
                           userScore: opponentScore,
                         ),
                       ],
                     ),
                     TotalPlayingTime(
-                      userState: this.widget.twoPlayersObject.userState,
+                      userState: widget.twoPlayersObject.userState,
                       totalPlayingTime: totalPlayingTime,
-                      totalPlayingTimeLabel: this
-                          .widget
-                          .twoPlayersObject
-                          .userState
-                          .hardcodedStrings
-                          .totalPlayingTime,
+                      totalPlayingTimeLabel: widget.twoPlayersObject.userState
+                          .hardcodedStrings.totalPlayingTime,
                     ),
                     SingleLeagueGoals(
-                      userState: this.widget.twoPlayersObject.userState,
+                      userState: widget.twoPlayersObject.userState,
                       singleLeagueGoals: goals,
                     ),
-                    Spacer(),
+                    const Spacer(),
                     SingleLeagueButtons(userState: userState)
                   ]));
             } else {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             }
           }),
     );

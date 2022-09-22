@@ -13,7 +13,7 @@ class AuthApi {
         ? dotenv.env['REST_URL_PATH_PROD']
         : dotenv.env['REST_URL_PATH_DEV'];
     if (baseUrl != null) {
-      var url = Uri.parse(baseUrl + '/api/Auth/login');
+      var url = Uri.parse('$baseUrl/api/Auth/login');
       var body = jsonEncode({'username': data.name, 'password': data.password});
 
       result = await http.post(url, body: body, headers: {
@@ -32,7 +32,7 @@ class AuthApi {
         ? dotenv.env['REST_URL_PATH_PROD']
         : dotenv.env['REST_URL_PATH_DEV'];
     if (baseUrl != null) {
-      var url = Uri.parse(baseUrl + '/api/Auth/register');
+      var url = Uri.parse('$baseUrl/api/Auth/register');
       var body = jsonEncode({
         'email': data.name,
         'password': data.password,
@@ -56,7 +56,7 @@ class AuthApi {
         ? dotenv.env['REST_URL_PATH_PROD']
         : dotenv.env['REST_URL_PATH_DEV'];
     if (baseUrl != null) {
-      var url = Uri.parse(baseUrl + '/api/Auth/verify-email');
+      var url = Uri.parse('$baseUrl/api/Auth/verify-email');
       var body = jsonEncode({'token': token, 'userId': userId});
 
       result = await http.post(url, body: body, headers: {

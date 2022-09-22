@@ -11,7 +11,7 @@ class NewGamePlayers extends StatefulWidget {
   final List<UserResponse>? players;
   final Function() notifyParent;
   final NewGameState newGameState;
-  NewGamePlayers(
+  const NewGamePlayers(
       {Key? key,
       required this.userState,
       required this.players,
@@ -24,7 +24,7 @@ class NewGamePlayers extends StatefulWidget {
 }
 
 class _NewGamePlayersState extends State<NewGamePlayers> {
-  Helpers helpers = new Helpers();
+  Helpers helpers = Helpers();
   List<ListTile> _buildPlayersList(
       List<UserResponse>? users, NewGameState gameState) {
     List<ListTile> list = <ListTile>[];
@@ -36,13 +36,13 @@ class _NewGamePlayersState extends State<NewGamePlayers> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(users[i].firstName + " " + users[i].lastName),
+            Text("${users[i].firstName} ${users[i].lastName}"),
           ],
         ),
         subtitle: Text(users[i].email),
         leading: SizedBox(
             height: 100, width: 50, child: Image.network(users[i].photoUrl)),
-        trailing: Container(
+        trailing: SizedBox(
           width: 60,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
@@ -61,14 +61,14 @@ class _NewGamePlayersState extends State<NewGamePlayers> {
                         if (isCheckedLoggedInUser(value, i, users[i]) ==
                             false) {
                           checkBoxChecked(value, i, users[i]);
-                          this.widget.notifyParent();
+                          widget.notifyParent();
                         }
                       },
                     ),
                   )
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 5.0,
               ),
             ],
@@ -92,8 +92,8 @@ class _NewGamePlayersState extends State<NewGamePlayers> {
 
     if (isChecked) {
       if (widget.newGameState.twoOrFourPlayers) {
-        if (widget.newGameState.playersTeamOne.length < 1 ||
-            widget.newGameState.playersTeamTwo.length < 1) {
+        if (widget.newGameState.playersTeamOne.isEmpty ||
+            widget.newGameState.playersTeamTwo.isEmpty) {
           widget.newGameState.setCheckedPlayer(index, isChecked, user.id);
           setTeamsInStore(isChecked, index, user);
         }
@@ -114,10 +114,10 @@ class _NewGamePlayersState extends State<NewGamePlayers> {
     if (value) {
       // two players
       if (widget.newGameState.twoOrFourPlayers) {
-        if (widget.newGameState.playersTeamOne.length < 1) {
+        if (widget.newGameState.playersTeamOne.isEmpty) {
           widget.newGameState.addPlayerToTeamOne(user);
         } else {
-          if (widget.newGameState.playersTeamTwo.length < 1) {
+          if (widget.newGameState.playersTeamTwo.isEmpty) {
             widget.newGameState.addPlayerToTeamTwo(user);
           }
         }
@@ -155,13 +155,13 @@ class _NewGamePlayersState extends State<NewGamePlayers> {
   void initState() {
     super.initState();
     // tuple test
-    widget.newGameState.initializeCheckedPlayers(this.widget.players!);
+    widget.newGameState.initializeCheckedPlayers(widget.players!);
     checkSelf();
   }
 
   void checkSelf() {
     int index = findIndexOfUser();
-    UserResponse user = this.widget.players![index];
+    UserResponse user = widget.players![index];
     widget.newGameState.setCheckedPlayer(index, true, user.id);
     widget.newGameState.addPlayerToTeamOne(user);
   }
@@ -184,14 +184,14 @@ class _NewGamePlayersState extends State<NewGamePlayers> {
   @override
   Widget build(BuildContext context) {
     return Observer(builder: (_) {
-      return Container(
+      return SizedBox(
         height: 230,
         // add listview with variable two
         child: ListView(
           scrollDirection: Axis.vertical,
           shrinkWrap: true,
           padding: const EdgeInsets.all(8),
-          children: _buildPlayersList(this.widget.players, widget.newGameState),
+          children: _buildPlayersList(widget.players, widget.newGameState),
         ),
       );
     });

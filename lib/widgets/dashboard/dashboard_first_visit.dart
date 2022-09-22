@@ -10,8 +10,6 @@ class DashBoardFirstVisit extends StatefulWidget {
 class _DashBoardFirstVisitState extends State<DashBoardFirstVisit> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: const Text('Gaur er staur'),
-    );
+    return const Text('Gaur er staur');
   }
 }

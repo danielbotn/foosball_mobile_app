@@ -15,7 +15,7 @@ class DoubleLeagueMatchApi {
         ? dotenv.env['REST_URL_PATH_PROD']
         : dotenv.env['REST_URL_PATH_DEV'];
     if (baseUrl != null) {
-      var url = Uri.parse(baseUrl + '/api/DoubleLeagueMatches/' + matchId.toString());
+      var url = Uri.parse('$baseUrl/api/DoubleLeagueMatches/$matchId');
       var response = await http.get(url, headers: {
         "Accept": "application/json",
         "content-type": "application/json",

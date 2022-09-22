@@ -32,15 +32,14 @@ class MatchCard extends StatelessWidget {
                   child: Column(
                     children: [
                       Image.network(userPhotoUrl,
-                          width: widthAndHeight != null ? widthAndHeight : 80,
-                          height: widthAndHeight != null ? widthAndHeight : 80),
+                          width: widthAndHeight ?? 80,
+                          height: widthAndHeight ?? 80),
                     ],
                   ),
                 ),
                 Column(
                   children: [
-                    ExtendedText(
-                        text: userFirstName, userState: this.userState),
+                    ExtendedText(text: userFirstName, userState: userState),
                     ExtendedText(text: userLastName, userState: userState),
                   ],
                 ),
@@ -49,8 +48,8 @@ class MatchCard extends StatelessWidget {
                   child: Column(
                     children: [
                       Image.network(userPhotoUrl,
-                          width: widthAndHeight != null ? widthAndHeight : 80,
-                          height: widthAndHeight != null ? widthAndHeight : 80),
+                          width: widthAndHeight ?? 80,
+                          height: widthAndHeight ?? 80),
                     ],
                   ),
                 ),

@@ -18,13 +18,13 @@ import 'double_league_goals.dart';
 class DoubleLeagueMatchDetail extends StatefulWidget {
   // props
   final TwoPlayersObject twoPlayersObject;
-  DoubleLeagueMatchDetail({
+  const DoubleLeagueMatchDetail({
     Key? key,
     required this.twoPlayersObject,
   }) : super(key: key);
 
   @override
-  _DoubleLeagueMatchDetailState createState() =>
+  State<DoubleLeagueMatchDetail> createState() =>
       _DoubleLeagueMatchDetailState();
 }
 
@@ -44,39 +44,38 @@ class _DoubleLeagueMatchDetailState extends State<DoubleLeagueMatchDetail> {
   }
 
   Future<List<DoubleLeagueGoalModel>?> getFreehandDoubleGoals() async {
-    DoubleLeagueGoalsApi fgapi = new DoubleLeagueGoalsApi(
-        token: this.widget.twoPlayersObject.userState.token);
+    DoubleLeagueGoalsApi fgapi =
+        DoubleLeagueGoalsApi(token: widget.twoPlayersObject.userState.token);
     var freehandGoals =
-        await fgapi.getDoubleLeagueGoals(this.widget.twoPlayersObject.matchId);
+        await fgapi.getDoubleLeagueGoals(widget.twoPlayersObject.matchId);
     return freehandGoals;
   }
 
   Future<UserResponse> getUser() async {
-    UserApi uapi =
-        new UserApi(token: this.widget.twoPlayersObject.userState.token);
-    var user = await uapi
-        .getUser(this.widget.twoPlayersObject.userState.userId.toString());
+    UserApi uapi = UserApi(token: widget.twoPlayersObject.userState.token);
+    var user =
+        await uapi.getUser(widget.twoPlayersObject.userState.userId.toString());
     return user;
   }
 
   Future<DoubleLeagueMatchModel?> getFreehandDoubleMatch() async {
-    DoubleLeagueMatchApi fmapi = new DoubleLeagueMatchApi(
-        token: this.widget.twoPlayersObject.userState.token);
+    DoubleLeagueMatchApi fmapi =
+        DoubleLeagueMatchApi(token: widget.twoPlayersObject.userState.token);
     var freehandMatch =
-        await fmapi.getDoubleLeagueMatch(this.widget.twoPlayersObject.matchId);
+        await fmapi.getDoubleLeagueMatch(widget.twoPlayersObject.matchId);
     return freehandMatch;
   }
 
   @override
   Widget build(BuildContext context) {
     String matchDetails =
-        this.widget.twoPlayersObject.userState.hardcodedStrings.matchDetails;
+        widget.twoPlayersObject.userState.hardcodedStrings.matchDetails;
     Helpers helpers = Helpers();
     return Scaffold(
       appBar: AppBar(
           title: ExtendedText(text: matchDetails, userState: userState),
           leading: IconButton(
-            icon: Icon(Icons.chevron_left),
+            icon: const Icon(Icons.chevron_left),
             onPressed: () {
               Navigator.pop(context);
             },
@@ -89,7 +88,6 @@ class _DoubleLeagueMatchDetailState extends State<DoubleLeagueMatchDetail> {
           if (snapshot.hasData) {
             var dlg = snapshot.data![0]
                 as List<DoubleLeagueGoalModel>?; //freehand goals
-            var userInfo = snapshot.data![1] as UserResponse; //user info
             var match =
                 snapshot.data![2] as DoubleLeagueMatchModel?; //freehand match
 
@@ -104,7 +102,7 @@ class _DoubleLeagueMatchDetailState extends State<DoubleLeagueMatchDetail> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         MatchCard(
-                          userState: this.widget.twoPlayersObject.userState,
+                          userState: widget.twoPlayersObject.userState,
                           userFirstName: teamOne[0].firstName,
                           userLastName: teamOne[0].lastName,
                           userPhotoUrl: teamOne[0].photoUrl,
@@ -112,7 +110,7 @@ class _DoubleLeagueMatchDetailState extends State<DoubleLeagueMatchDetail> {
                           widthAndHeight: 60,
                         ),
                         MatchCard(
-                          userState: this.widget.twoPlayersObject.userState,
+                          userState: widget.twoPlayersObject.userState,
                           userFirstName: teamTwo[0].firstName,
                           userLastName: teamTwo[0].lastName,
                           userPhotoUrl: teamTwo[0].photoUrl,
@@ -125,7 +123,7 @@ class _DoubleLeagueMatchDetailState extends State<DoubleLeagueMatchDetail> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         MatchCard(
-                          userState: this.widget.twoPlayersObject.userState,
+                          userState: widget.twoPlayersObject.userState,
                           userFirstName: teamOne[1].firstName,
                           userLastName: teamOne[1].lastName,
                           userPhotoUrl: teamOne[1].photoUrl,
@@ -135,7 +133,7 @@ class _DoubleLeagueMatchDetailState extends State<DoubleLeagueMatchDetail> {
                         Visibility(
                           visible: match.teamTwo.length > 1,
                           child: MatchCard(
-                            userState: this.widget.twoPlayersObject.userState,
+                            userState: widget.twoPlayersObject.userState,
                             userFirstName: teamTwo[1].firstName,
                             userLastName: teamTwo[1].lastName,
                             userPhotoUrl: teamTwo[1].photoUrl,
@@ -149,37 +147,33 @@ class _DoubleLeagueMatchDetailState extends State<DoubleLeagueMatchDetail> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         MatchScore(
-                          userState: this.widget.twoPlayersObject.userState,
+                          userState: widget.twoPlayersObject.userState,
                           userScore: match.teamOneScore.toString(),
                         ),
                         MatchScore(
-                          userState: this.widget.twoPlayersObject.userState,
+                          userState: widget.twoPlayersObject.userState,
                           userScore: match.teamTwoScore.toString(),
                         ),
                       ],
                     ),
                     TotalPlayingTime(
-                        userState: this.widget.twoPlayersObject.userState,
+                        userState: widget.twoPlayersObject.userState,
                         totalPlayingTime: match.totalPlayingTime != null
                             ? match.totalPlayingTime.toString()
                             : "",
-                        totalPlayingTimeLabel: this
-                            .widget
-                            .twoPlayersObject
-                            .userState
-                            .hardcodedStrings
-                            .totalPlayingTime),
+                        totalPlayingTimeLabel: widget.twoPlayersObject.userState
+                            .hardcodedStrings.totalPlayingTime),
                     DoubleLeagueGoals(
-                      userState: this.widget.twoPlayersObject.userState,
+                      userState: widget.twoPlayersObject.userState,
                       goals: dlg,
                     ),
-                    Spacer(),
+                    const Spacer(),
                     DoubleLeagueButtons(
-                        userState: this.widget.twoPlayersObject.userState)
+                        userState: widget.twoPlayersObject.userState)
                   ],
                 ));
           } else {
-            return CircularProgressIndicator();
+            return const CircularProgressIndicator();
           }
         },
       ),

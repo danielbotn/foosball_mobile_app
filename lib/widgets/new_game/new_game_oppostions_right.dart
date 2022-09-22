@@ -6,7 +6,7 @@ import '../extended_Text.dart';
 class NewGameOppostionsRight extends StatefulWidget {
   final UserState userState;
   final NewGameState newGameState;
-  NewGameOppostionsRight(
+  const NewGameOppostionsRight(
       {Key? key, required this.userState, required this.newGameState})
       : super(key: key);
 
@@ -25,29 +25,29 @@ class _NewGameOppostionsRightState extends State<NewGameOppostionsRight> {
               Row(
                 children: [
                   Visibility(
-                    visible: widget.newGameState.playersTeamTwo.length > 0,
+                    visible: widget.newGameState.playersTeamTwo.isNotEmpty,
                     child: Column(
                       children: [
                         ExtendedText(
-                            text: widget.newGameState.playersTeamTwo.length > 0
+                            text: widget.newGameState.playersTeamTwo.isNotEmpty
                                 ? widget
                                     .newGameState.playersTeamTwo[0].firstName
                                 : '',
-                            userState: this.widget.userState),
+                            userState: widget.userState),
                         ExtendedText(
-                            text: widget.newGameState.playersTeamTwo.length > 0
+                            text: widget.newGameState.playersTeamTwo.isNotEmpty
                                 ? widget.newGameState.playersTeamTwo[0].lastName
                                 : '',
-                            userState: this.widget.userState),
+                            userState: widget.userState),
                       ],
                     ),
                   ),
                   Visibility(
-                    visible: widget.newGameState.playersTeamTwo.length > 0,
+                    visible: widget.newGameState.playersTeamTwo.isNotEmpty,
                     child: Column(
                       children: [
                         Image.network(
-                            widget.newGameState.playersTeamTwo.length > 0
+                            widget.newGameState.playersTeamTwo.isNotEmpty
                                 ? widget.newGameState.playersTeamTwo[0].photoUrl
                                 : '',
                             width: 60,
@@ -60,7 +60,7 @@ class _NewGameOppostionsRightState extends State<NewGameOppostionsRight> {
             ],
           ));
     } else {
-      if (widget.newGameState.playersTeamOne.length > 0) {
+      if (widget.newGameState.playersTeamOne.isNotEmpty) {
         return Padding(
             padding: const EdgeInsets.only(left: 20),
             child: Column(
@@ -77,14 +77,14 @@ class _NewGameOppostionsRightState extends State<NewGameOppostionsRight> {
                                       ? widget.newGameState.playersTeamOne[1]
                                           .firstName
                                       : '',
-                              userState: this.widget.userState),
+                              userState: widget.userState),
                           ExtendedText(
                               text:
                                   widget.newGameState.playersTeamOne.length > 1
                                       ? widget.newGameState.playersTeamOne[1]
                                           .lastName
                                       : '',
-                              userState: this.widget.userState),
+                              userState: widget.userState),
                         ],
                       ),
                     ),
@@ -117,14 +117,14 @@ class _NewGameOppostionsRightState extends State<NewGameOppostionsRight> {
                                       ? widget.newGameState.playersTeamTwo[1]
                                           .firstName
                                       : '',
-                              userState: this.widget.userState),
+                              userState: widget.userState),
                           ExtendedText(
                               text:
                                   widget.newGameState.playersTeamTwo.length > 1
                                       ? widget.newGameState.playersTeamTwo[1]
                                           .lastName
                                       : '',
-                              userState: this.widget.userState),
+                              userState: widget.userState),
                         ],
                       ),
                       Visibility(

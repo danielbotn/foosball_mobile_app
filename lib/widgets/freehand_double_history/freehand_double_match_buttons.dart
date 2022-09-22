@@ -15,28 +15,28 @@ class FreehandDoubleMatchButtons extends StatelessWidget {
             flex: 5,
             child: Padding(
               padding: const EdgeInsets.all(4.0),
-              child: Container(
-                child: ElevatedButton(
-                  onPressed: () => {},
-                  child: Text(userState.hardcodedStrings.newMatch),
-                  style: ElevatedButton.styleFrom(
-                      primary: userState.darkmode ? AppColors.lightThemeShadowColor : AppColors.buttonsLightTheme,
-                      minimumSize: Size(100, 50)),
-                ),
+              child: ElevatedButton(
+                onPressed: () => {},
+                style: ElevatedButton.styleFrom(
+                    primary: userState.darkmode
+                        ? AppColors.lightThemeShadowColor
+                        : AppColors.buttonsLightTheme,
+                    minimumSize: const Size(100, 50)),
+                child: Text(userState.hardcodedStrings.newMatch),
               ),
             )),
         Expanded(
             flex: 5,
             child: Padding(
               padding: const EdgeInsets.all(4.0),
-              child: Container(
-                child: ElevatedButton(
-                  onPressed: () => {},
-                  child: Text(userState.hardcodedStrings.rematch),
-                  style: ElevatedButton.styleFrom(
-                      primary: userState.darkmode ? AppColors.lightThemeShadowColor : AppColors.buttonsLightTheme,
-                      minimumSize: Size(100, 50)),
-                ),
+              child: ElevatedButton(
+                onPressed: () => {},
+                style: ElevatedButton.styleFrom(
+                    primary: userState.darkmode
+                        ? AppColors.lightThemeShadowColor
+                        : AppColors.buttonsLightTheme,
+                    minimumSize: const Size(100, 50)),
+                child: Text(userState.hardcodedStrings.rematch),
               ),
             )),
       ],

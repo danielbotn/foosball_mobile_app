@@ -7,7 +7,7 @@ class NewGameButtons extends StatefulWidget {
   final UserState userState;
   final Function() notifyParent;
   final NewGameState newGameState;
-  NewGameButtons(
+  const NewGameButtons(
       {Key? key,
       required this.userState,
       required this.notifyParent,
@@ -34,7 +34,7 @@ class _NewGameButtonsState extends State<NewGameButtons> {
       });
 
       widget.newGameState.clearState(widget.userState.userId);
-      this.widget.notifyParent();
+      widget.notifyParent();
     }
 
     void twoPlayersClicked() {
@@ -46,7 +46,7 @@ class _NewGameButtonsState extends State<NewGameButtons> {
 
       widget.newGameState.clearState(widget.userState.userId);
 
-      this.widget.notifyParent();
+      widget.notifyParent();
     }
 
     return Row(
@@ -56,18 +56,15 @@ class _NewGameButtonsState extends State<NewGameButtons> {
             child: Padding(
               padding: const EdgeInsets.only(
                   left: 40.0, right: 40.0, top: 10.0, bottom: 10.0),
-              child: Container(
-                child: ElevatedButton(
-                  onPressed: () => {twoPlayersClicked()},
-                  child:
-                      Text(this.widget.userState.hardcodedStrings.twoPlayers),
-                  style: ElevatedButton.styleFrom(
-                      onPrimary: helpers.getButtonTextColor(
-                          this.widget.userState.darkmode, isTwoPlayersLocal),
-                      primary: helpers.getNewGameButtonColor(
-                          this.widget.userState.darkmode, isTwoPlayersLocal),
-                      minimumSize: Size(80, 40)),
-                ),
+              child: ElevatedButton(
+                onPressed: () => {twoPlayersClicked()},
+                style: ElevatedButton.styleFrom(
+                    onPrimary: helpers.getButtonTextColor(
+                        widget.userState.darkmode, isTwoPlayersLocal),
+                    primary: helpers.getNewGameButtonColor(
+                        widget.userState.darkmode, isTwoPlayersLocal),
+                    minimumSize: const Size(80, 40)),
+                child: Text(widget.userState.hardcodedStrings.twoPlayers),
               ),
             )),
         Expanded(
@@ -75,20 +72,17 @@ class _NewGameButtonsState extends State<NewGameButtons> {
             child: Padding(
               padding: const EdgeInsets.only(
                   left: 40.0, right: 40.0, top: 10.0, bottom: 10.0),
-              child: Container(
-                child: ElevatedButton(
-                  onPressed: () => {
-                    fourPlayersClicked(),
-                  },
-                  child:
-                      Text(this.widget.userState.hardcodedStrings.fourPlayers),
-                  style: ElevatedButton.styleFrom(
-                      onPrimary: helpers.getButtonTextColor(
-                          this.widget.userState.darkmode, !isTwoPlayersLocal),
-                      primary: helpers.getNewGameButtonColor(
-                          this.widget.userState.darkmode, !isTwoPlayersLocal),
-                      minimumSize: Size(80, 40)),
-                ),
+              child: ElevatedButton(
+                onPressed: () => {
+                  fourPlayersClicked(),
+                },
+                style: ElevatedButton.styleFrom(
+                    onPrimary: helpers.getButtonTextColor(
+                        widget.userState.darkmode, !isTwoPlayersLocal),
+                    primary: helpers.getNewGameButtonColor(
+                        widget.userState.darkmode, !isTwoPlayersLocal),
+                    minimumSize: const Size(80, 40)),
+                child: Text(widget.userState.hardcodedStrings.fourPlayers),
               ),
             )),
       ],

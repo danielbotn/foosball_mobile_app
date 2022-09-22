@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/api/FreehandDoubleGoalsApi.dart';
 import 'package:foosball_mobile_app/api/FreehandDoubleMatchApi.dart';
 import 'package:foosball_mobile_app/models/freehand-double-goals/freehand_double_goal_model.dart';
-import 'package:foosball_mobile_app/models/freehand-double-matches/freehand_double_match_model.dart';
 import 'package:foosball_mobile_app/models/other/ongoing_double_game_object.dart';
 import 'package:foosball_mobile_app/models/user/user_response.dart';
 import 'package:foosball_mobile_app/state/ongoing_double_freehand_state.dart';
@@ -16,7 +15,8 @@ import '../extended_Text.dart';
 
 class OngoingDoubleFreehandGame extends StatefulWidget {
   final OngoingDoubleGameObject ongoingDoubleGameObject;
-  OngoingDoubleFreehandGame({Key? key, required this.ongoingDoubleGameObject})
+  const OngoingDoubleFreehandGame(
+      {Key? key, required this.ongoingDoubleGameObject})
       : super(key: key);
 
   @override
@@ -72,7 +72,7 @@ class _OngoingDoubleFreehandGameState extends State<OngoingDoubleFreehandGame> {
 
   void closeAlertDialog() {
     // delete freehand game and goals and then navigate back to dashboard
-    FreehandDoubleMatchApi freehandMatchApi = new FreehandDoubleMatchApi(
+    FreehandDoubleMatchApi freehandMatchApi = FreehandDoubleMatchApi(
         token: widget.ongoingDoubleGameObject.userState.token);
     freehandMatchApi
         .deleteDoubleFreehandMatch(widget
@@ -131,13 +131,13 @@ class _OngoingDoubleFreehandGameState extends State<OngoingDoubleFreehandGame> {
 
   Future<List<FreehandDoubleGoalModel>?> getAllDoubleFreehandGames(
       int matchId) async {
-    FreehandDoubleGoalsApi freehandMatchApi = new FreehandDoubleGoalsApi(
+    FreehandDoubleGoalsApi freehandMatchApi = FreehandDoubleGoalsApi(
         token: widget.ongoingDoubleGameObject.userState.token);
     return await freehandMatchApi.getFreehandDoubleGoals(matchId);
   }
 
   Future<bool> deleteGoal(int matchId, int goalId) async {
-    FreehandDoubleGoalsApi freehandMatchApi = new FreehandDoubleGoalsApi(
+    FreehandDoubleGoalsApi freehandMatchApi = FreehandDoubleGoalsApi(
         token: widget.ongoingDoubleGameObject.userState.token);
     return await freehandMatchApi.deleteFreehandDoubleGoal(goalId, matchId);
   }
@@ -181,7 +181,7 @@ class _OngoingDoubleFreehandGameState extends State<OngoingDoubleFreehandGame> {
                   .ongoingDoubleGameObject.userState.hardcodedStrings.newGame,
               userState: widget.ongoingDoubleGameObject.userState),
           leading: IconButton(
-            icon: Icon(Icons.close),
+            icon: const Icon(Icons.close),
             onPressed: () {
               showAlertModal(context);
             },
@@ -192,12 +192,12 @@ class _OngoingDoubleFreehandGameState extends State<OngoingDoubleFreehandGame> {
               widget.ongoingDoubleGameObject.userState.darkmode),
           actions: <Widget>[
             Padding(
-                padding: EdgeInsets.only(right: 20.0),
+                padding: const EdgeInsets.only(right: 20.0),
                 child: GestureDetector(
                   onTap: () {
                     deleteLastScoredGoal();
                   },
-                  child: Icon(
+                  child: const Icon(
                     Icons.undo,
                     size: 26.0,
                   ),
@@ -292,7 +292,7 @@ class _OngoingDoubleFreehandGameState extends State<OngoingDoubleFreehandGame> {
                       ))
                 ],
               ),
-              Spacer(),
+              const Spacer(),
               Buttons(
                 ongoingState: ongoingState,
                 notifyParent: refresh,

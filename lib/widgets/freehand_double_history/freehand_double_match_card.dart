@@ -33,8 +33,7 @@ class FreehandDoubleMatchCard extends StatelessWidget {
                 ),
                 Column(
                   children: [
-                    ExtendedText(
-                        text: firstName, userState: this.userState),
+                    ExtendedText(text: firstName, userState: userState),
                     ExtendedText(text: lastName, userState: userState),
                   ],
                 ),

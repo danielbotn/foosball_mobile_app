@@ -10,10 +10,8 @@ class NewGameVs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Visibility(
-        visible: newGameState.playersTeamOne.length > 0 &&
-            newGameState.playersTeamTwo.length > 0,
-        child: Container(
-          child: ExtendedText(text: 'VS', userState: userState),
-        ));
+        visible: newGameState.playersTeamOne.isNotEmpty &&
+            newGameState.playersTeamTwo.isNotEmpty,
+        child: ExtendedText(text: 'VS', userState: userState));
   }
 }

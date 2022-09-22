@@ -18,7 +18,7 @@ class FreehandGoalsApi {
         : dotenv.env['REST_URL_PATH_DEV'];
 
     if (baseUrl != null) {
-      Uri outgoingUri = new Uri(
+      Uri outgoingUri = Uri(
         scheme: 'https',
         host: kReleaseMode ? dotenv.env['PROD_HOST'] : dotenv.env['DEV_HOST'],
         port: kReleaseMode
@@ -52,6 +52,7 @@ class FreehandGoalsApi {
         throw Exception('Failed to create freehand goal');
       }
     }
+    return null;
   }
 
   Future<List<FreehandGoalsModel>?> getFreehandGoals(int matchId) async {
@@ -61,13 +62,13 @@ class FreehandGoalsApi {
         ? dotenv.env['REST_URL_PATH_PROD']
         : dotenv.env['REST_URL_PATH_DEV'];
     if (baseUrl != null) {
-      Uri outgoingUri = new Uri(
+      Uri outgoingUri = Uri(
         scheme: 'https',
         host: kReleaseMode ? dotenv.env['PROD_HOST'] : dotenv.env['DEV_HOST'],
         port: kReleaseMode
             ? int.parse(dotenv.env['PROD_PORT'].toString())
             : int.parse(dotenv.env['DEV_PORT'].toString()),
-        path: 'api/FreehandGoals/goals/' + matchId.toString(),
+        path: 'api/FreehandGoals/goals/$matchId',
       );
 
       var response = await http.get(outgoingUri, headers: {
@@ -81,7 +82,7 @@ class FreehandGoalsApi {
         freehandGoals = (json.decode(response.body) as List)
             .map((i) => FreehandGoalsModel.fromJson(i))
             .toList();
-    
+
         result = freehandGoals;
       } else {
         result = null;
@@ -96,15 +97,14 @@ class FreehandGoalsApi {
         ? dotenv.env['REST_URL_PATH_PROD']
         : dotenv.env['REST_URL_PATH_DEV'];
     if (baseUrl != null) {
-      
-      Uri outgoingUri = new Uri(
-          scheme: 'https',
-          host: kReleaseMode ? dotenv.env['PROD_HOST'] : dotenv.env['DEV_HOST'],
-          port: kReleaseMode
-              ? int.parse(dotenv.env['PROD_PORT'].toString())
-              : int.parse(dotenv.env['DEV_PORT'].toString()),
-          path: 'api/FreehandGoals' + '/' + matchId.toString() + '/' + goalId.toString(),
-          );
+      Uri outgoingUri = Uri(
+        scheme: 'https',
+        host: kReleaseMode ? dotenv.env['PROD_HOST'] : dotenv.env['DEV_HOST'],
+        port: kReleaseMode
+            ? int.parse(dotenv.env['PROD_PORT'].toString())
+            : int.parse(dotenv.env['DEV_PORT'].toString()),
+        path: 'api/FreehandGoals/$matchId/$goalId',
+      );
       var url = outgoingUri;
       var response = await http.delete(
         url,

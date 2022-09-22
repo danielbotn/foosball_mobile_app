@@ -85,10 +85,10 @@ void main() async {
 
 class MyApp extends StatefulWidget {
   final String initialRoute;
-  MyApp({Key? key, required this.initialRoute}) : super(key: key);
+  const MyApp({Key? key, required this.initialRoute}) : super(key: key);
 
   @override
-  _MyAppState createState() => _MyAppState();
+  State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
