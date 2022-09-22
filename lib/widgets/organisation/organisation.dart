@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../state/user_state.dart';
+import '../../utils/app_color.dart';
 import '../../utils/helpers.dart';
 import '../extended_Text.dart';
 
@@ -25,17 +26,29 @@ class OrgnisationScreen extends StatelessWidget {
             ),
             iconTheme: helpers.getIconTheme(userState.darkmode),
             backgroundColor: helpers.getBackgroundColor(userState.darkmode)),
-        body: Column(
-          children: [
-            Card(
-              child: ListTile(
-                  leading: const Icon(Icons.house_siding_rounded),
-                  title: Text(userState.hardcodedStrings.currentOrganisation),
-                  subtitle:
-                      Text(userState.userInfoGlobal.currentOrganisationName)),
-            ),
-            const Divider()
-          ],
+        body: Container(
+          color: userState.darkmode
+              ? AppColors.darkModeBackground
+              : AppColors.white,
+          child: Column(
+            children: [
+              Card(
+                color: userState.darkmode
+                    ? AppColors.darkModeBackground
+                    : AppColors.white,
+                child: ListTile(
+                    leading: Icon(Icons.house_siding_rounded,
+                        color: userState.darkmode ? AppColors.white : null),
+                    title: ExtendedText(
+                        text: userState.hardcodedStrings.currentOrganisation,
+                        userState: userState),
+                    subtitle: ExtendedText(
+                        text: userState.userInfoGlobal.currentOrganisationName,
+                        userState: userState)),
+              ),
+              const Divider()
+            ],
+          ),
         ));
   }
 }
