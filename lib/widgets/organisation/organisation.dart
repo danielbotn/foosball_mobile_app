@@ -8,6 +8,7 @@ import '../extended_Text.dart';
 import '../headline_big.dart';
 import 'OrganisationCard.dart';
 import 'Organisations.dart';
+import 'organisation_buttons.dart';
 import 'organisation_players.dart';
 
 class OrganisationScreen extends StatefulWidget {
@@ -57,7 +58,9 @@ class _OrganisationScreenState extends State<OrganisationScreen> {
                   userState: userState,
                   fontSize: 20,
                   paddingLeft: 10),
-              // SizedBox(height: 215, child: Organisations(userState: userState)),
+              SizedBox(height: 115, child: Organisations(userState: userState)),
+              const Spacer(),
+              OrganisationButtons(userState: userState)
             ],
           ),
         ));

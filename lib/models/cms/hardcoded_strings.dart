@@ -59,6 +59,8 @@ class HardcodedStrings {
   final String currentOrganisation;
   final String organisations;
   final String players;
+  final String newOrganisation;
+  final String addPlayers;
 
   HardcodedStrings(
       {required this.matches,
@@ -114,7 +116,9 @@ class HardcodedStrings {
       required this.areYouSureAlert,
       required this.currentOrganisation,
       required this.organisations,
-      required this.players});
+      required this.players,
+      required this.newOrganisation,
+      required this.addPlayers});
 
   factory HardcodedStrings.fromJson(Map<String, dynamic> item) =>
       _$HardcodedStringsFromJson(item);

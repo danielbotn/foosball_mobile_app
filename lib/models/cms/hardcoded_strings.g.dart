@@ -62,6 +62,8 @@ HardcodedStrings _$HardcodedStringsFromJson(Map<String, dynamic> json) =>
       currentOrganisation: json['currentOrganisation'] as String,
       organisations: json['organisations'] as String,
       players: json['players'] as String,
+      newOrganisation: json['newOrganisation'] as String,
+      addPlayers: json['addPlayers'] as String,
     );
 
 Map<String, dynamic> _$HardcodedStringsToJson(HardcodedStrings instance) =>
@@ -120,4 +122,6 @@ Map<String, dynamic> _$HardcodedStringsToJson(HardcodedStrings instance) =>
       'currentOrganisation': instance.currentOrganisation,
       'organisations': instance.organisations,
       'players': instance.players,
+      'newOrganisation': instance.newOrganisation,
+      'addPlayers': instance.addPlayers,
     };

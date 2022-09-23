@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:foosball_mobile_app/widgets/extended_Text.dart';
 
 import '../../state/user_state.dart';
+import '../../utils/app_color.dart';
 
 class OrganisationCard extends StatelessWidget {
   final UserState userState;
@@ -9,11 +11,20 @@ class OrganisationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color:
+          userState.darkmode ? AppColors.darkModeBackground : AppColors.white,
       // elevation: 5,
       child: ListTile(
-        leading: const Icon(Icons.home_work_rounded, color: Colors.grey),
-        title: Text(userState.hardcodedStrings.currentOrganisation),
-        subtitle: Text(userState.userInfoGlobal.currentOrganisationName),
+        leading: Icon(Icons.home_work_rounded,
+            color: userState.darkmode ? Colors.white : Colors.grey),
+        title: ExtendedText(
+          text: userState.hardcodedStrings.currentOrganisation,
+          userState: userState,
+        ),
+        subtitle: ExtendedText(
+          text: userState.userInfoGlobal.currentOrganisationName,
+          userState: userState,
+        ),
       ),
     );
   }
