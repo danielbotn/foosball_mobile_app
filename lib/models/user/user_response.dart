@@ -11,10 +11,20 @@ class UserResponse {
   final DateTime createdAt;
   final int? currentOrganisationId;
   final String photoUrl;
+  final bool? isAdmin;
 
-  UserResponse({required this.id, required this.email, required this.firstName, required this.lastName, required this.createdAt, required this.currentOrganisationId, required this.photoUrl});
+  UserResponse(
+      {required this.id,
+      required this.email,
+      required this.firstName,
+      required this.lastName,
+      required this.createdAt,
+      required this.currentOrganisationId,
+      required this.photoUrl,
+      this.isAdmin});
 
-  factory UserResponse.fromJson(Map<String, dynamic> item) => _$UserResponseFromJson(item);
+  factory UserResponse.fromJson(Map<String, dynamic> item) =>
+      _$UserResponseFromJson(item);
 
   Map<String, dynamic> toJson(item) => _$UserResponseToJson(item);
 }

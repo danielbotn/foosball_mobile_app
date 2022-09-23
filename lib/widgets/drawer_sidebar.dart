@@ -128,7 +128,7 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
                 final UserState userStateFromSettings = await Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => OrgnisationScreen(
+                      builder: (context) => OrganisationScreen(
                             userState: userState,
                           )),
                 );

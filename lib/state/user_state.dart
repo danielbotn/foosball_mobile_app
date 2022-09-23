@@ -85,7 +85,9 @@ abstract class _UserState with Store {
       no: "",
       cancel: "",
       areYouSureAlert: "",
-      currentOrganisation: "");
+      currentOrganisation: "",
+      organisations: "",
+      players: "");
 
   @observable
   bool darkmode = false;

@@ -60,6 +60,8 @@ HardcodedStrings _$HardcodedStringsFromJson(Map<String, dynamic> json) =>
       cancel: json['cancel'] as String,
       areYouSureAlert: json['areYouSureAlert'] as String,
       currentOrganisation: json['currentOrganisation'] as String,
+      organisations: json['organisations'] as String,
+      players: json['players'] as String,
     );
 
 Map<String, dynamic> _$HardcodedStringsToJson(HardcodedStrings instance) =>
@@ -116,4 +118,6 @@ Map<String, dynamic> _$HardcodedStringsToJson(HardcodedStrings instance) =>
       'cancel': instance.cancel,
       'areYouSureAlert': instance.areYouSureAlert,
       'currentOrganisation': instance.currentOrganisation,
+      'organisations': instance.organisations,
+      'players': instance.players,
     };
