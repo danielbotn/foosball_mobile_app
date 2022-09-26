@@ -89,7 +89,11 @@ abstract class _UserState with Store {
       organisations: "",
       players: "",
       newOrganisation: "",
-      addPlayers: "");
+      addPlayers: "",
+      nameOfNewOrganisation: "",
+      create: "",
+      newOrganisationErrorMessage: "",
+      newOrganisationSuccessMessage: "");
 
   @observable
   bool darkmode = false;

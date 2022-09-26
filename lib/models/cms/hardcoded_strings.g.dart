@@ -64,6 +64,12 @@ HardcodedStrings _$HardcodedStringsFromJson(Map<String, dynamic> json) =>
       players: json['players'] as String,
       newOrganisation: json['newOrganisation'] as String,
       addPlayers: json['addPlayers'] as String,
+      nameOfNewOrganisation: json['nameOfNewOrganisation'] as String,
+      create: json['create'] as String,
+      newOrganisationErrorMessage:
+          json['newOrganisationErrorMessage'] as String,
+      newOrganisationSuccessMessage:
+          json['newOrganisationSuccessMessage'] as String,
     );
 
 Map<String, dynamic> _$HardcodedStringsToJson(HardcodedStrings instance) =>
@@ -124,4 +130,8 @@ Map<String, dynamic> _$HardcodedStringsToJson(HardcodedStrings instance) =>
       'players': instance.players,
       'newOrganisation': instance.newOrganisation,
       'addPlayers': instance.addPlayers,
+      'nameOfNewOrganisation': instance.nameOfNewOrganisation,
+      'create': instance.create,
+      'newOrganisationSuccessMessage': instance.newOrganisationSuccessMessage,
+      'newOrganisationErrorMessage': instance.newOrganisationErrorMessage,
     };

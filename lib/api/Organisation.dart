@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
@@ -38,6 +40,26 @@ class Organisation {
         "content-type": "application/json",
         'Authorization': 'Bearer $token',
       });
+    }
+    return result;
+  }
+
+  Future<http.Response> createNewOrganisation(String name) async {
+    late http.Response result;
+
+    String? baseUrl = kReleaseMode
+        ? dotenv.env['REST_URL_PATH_PROD']
+        : dotenv.env['REST_URL_PATH_DEV'];
+    if (baseUrl != null) {
+      var url = Uri.parse('$baseUrl/api/Organisations');
+      var body = jsonEncode({'name': name, 'organisationType': 0});
+      result = await http.post(url,
+          headers: {
+            "Accept": "application/json",
+            "content-type": "application/json",
+            'Authorization': 'Bearer $token',
+          },
+          body: body);
     }
     return result;
   }

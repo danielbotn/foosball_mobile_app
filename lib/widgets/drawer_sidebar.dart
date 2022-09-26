@@ -37,20 +37,6 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
   String logout = userState.hardcodedStrings.logout;
   String organisation = userState.hardcodedStrings.organisation;
 
-  // Sets all the state variables on the sidebar
-  setAllStates(UserState userStateParam) {
-    setState(() {
-      newGame = userStateParam.hardcodedStrings.newGame;
-      statistics = userStateParam.hardcodedStrings.statistics;
-      history = userStateParam.hardcodedStrings.history;
-      leagues = userStateParam.hardcodedStrings.leagues;
-      pricing = userStateParam.hardcodedStrings.pricing;
-      settings = userStateParam.hardcodedStrings.settings;
-      about = userStateParam.hardcodedStrings.about;
-      logout = userStateParam.hardcodedStrings.logout;
-    });
-  }
-
   void logoutUser() async {
     PreferencesService preferencesService = PreferencesService();
     preferencesService.deleteDarkTheme();
@@ -64,6 +50,42 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
         context,
         MaterialPageRoute(
             builder: (context) => Login(
+                  userState: userState,
+                )));
+  }
+
+  goToOrganisation(BuildContext context) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => OrganisationScreen(
+                  userState: userState,
+                )));
+  }
+
+  goToNewGame(BuildContext context) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => NewGame(
+                  userState: userState,
+                )));
+  }
+
+  goToHistory(BuildContext context) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => History(
+                  userState: userState,
+                )));
+  }
+
+  goToSettings(BuildContext context) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => Settings(
                   userState: userState,
                 )));
   }
@@ -103,15 +125,9 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
                       color: userState.darkmode
                           ? AppColors.white
                           : AppColors.textBlack)),
-              onTap: () async {
+              onTap: () {
                 Navigator.of(context).pop();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => NewGame(
-                            userState: userState,
-                          )),
-                );
+                goToNewGame(context);
               }),
           ListTile(
               tileColor: userState.darkmode
@@ -124,15 +140,9 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
                       color: userState.darkmode
                           ? AppColors.white
                           : AppColors.textBlack)),
-              onTap: () async {
-                final UserState userStateFromSettings = await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => OrganisationScreen(
-                            userState: userState,
-                          )),
-                );
-                setAllStates(userStateFromSettings);
+              onTap: () {
+                Navigator.pop(context);
+                goToOrganisation(context);
               }),
           ListTile(
               tileColor: userState.darkmode
@@ -159,15 +169,9 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
                       color: userState.darkmode
                           ? AppColors.white
                           : AppColors.textBlack)),
-              onTap: () async {
+              onTap: () {
                 Navigator.of(context).pop();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => History(
-                            userState: userState,
-                          )),
-                );
+                goToHistory(context);
               }),
           ListTile(
               tileColor: userState.darkmode
@@ -195,6 +199,7 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
                           ? AppColors.white
                           : AppColors.textBlack)),
               onTap: () {
+                Navigator.of(context).pop();
                 Navigator.pop(context);
               }),
           ListTile(
@@ -208,15 +213,9 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
                       color: userState.darkmode
                           ? AppColors.white
                           : AppColors.textBlack)),
-              onTap: () async {
-                final UserState userStateFromSettings = await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => Settings(
-                            userState: userState,
-                          )),
-                );
-                setAllStates(userStateFromSettings);
+              onTap: () {
+                Navigator.of(context).pop();
+                goToSettings(context);
               }),
           Container(
             height: 10.0,

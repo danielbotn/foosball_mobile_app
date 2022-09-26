@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 
 import '../../state/user_state.dart';
 import '../../utils/app_color.dart';
+import 'new_organisation.dart';
 
 class OrganisationButtons extends StatefulWidget {
   final UserState userState;
-  const OrganisationButtons({Key? key, required this.userState})
+  final Function() notifyOrganisation;
+  const OrganisationButtons(
+      {Key? key, required this.userState, required this.notifyOrganisation})
       : super(key: key);
 
   @override
@@ -13,6 +16,10 @@ class OrganisationButtons extends StatefulWidget {
 }
 
 class _OrganisationButtonsState extends State<OrganisationButtons> {
+  void notifyOrganisation() {
+    widget.notifyOrganisation();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -22,7 +29,15 @@ class _OrganisationButtonsState extends State<OrganisationButtons> {
             child: Padding(
               padding: const EdgeInsets.all(4.0),
               child: ElevatedButton(
-                onPressed: () => {},
+                onPressed: () => {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => NewOrganisation(
+                                userState: widget.userState,
+                                notifyOrganisationButtons: notifyOrganisation,
+                              )))
+                },
                 style: ElevatedButton.styleFrom(
                     primary: widget.userState.darkmode
                         ? AppColors.lightThemeShadowColor

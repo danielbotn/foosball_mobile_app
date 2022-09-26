@@ -21,6 +21,16 @@ class OrganisationScreen extends StatefulWidget {
 }
 
 class _OrganisationScreenState extends State<OrganisationScreen> {
+  // state
+  String randomString = '';
+
+  void notifyOrganisations() {
+    Helpers helpers = Helpers();
+    setState(() {
+      randomString = helpers.generateRandomString();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     Helpers helpers = Helpers();
@@ -58,9 +68,17 @@ class _OrganisationScreenState extends State<OrganisationScreen> {
                   userState: userState,
                   fontSize: 20,
                   paddingLeft: 10),
-              SizedBox(height: 115, child: Organisations(userState: userState)),
+              SizedBox(
+                  height: 115,
+                  child: Organisations(
+                    userState: userState,
+                    randomString: randomString,
+                  )),
               const Spacer(),
-              OrganisationButtons(userState: userState)
+              OrganisationButtons(
+                userState: userState,
+                notifyOrganisation: notifyOrganisations,
+              )
             ],
           ),
         ));

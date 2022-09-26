@@ -15,7 +15,10 @@ import '../../api/Organisation.dart';
 
 class Organisations extends StatefulWidget {
   final UserState userState;
-  const Organisations({Key? key, required this.userState}) : super(key: key);
+  final String randomString;
+  const Organisations(
+      {Key? key, required this.userState, required this.randomString})
+      : super(key: key);
 
   @override
   State<Organisations> createState() => _OrganisationsState();
@@ -34,6 +37,13 @@ class _OrganisationsState extends State<Organisations> {
     super.initState();
     playersFuture = getPlayersData();
     orgFuture = getOrganisationsByUser();
+  }
+
+  @override
+  void didUpdateWidget(Organisations old) {
+    playersFuture = getPlayersData();
+    orgFuture = getOrganisationsByUser();
+    super.didUpdateWidget(old);
   }
 
   Future<List<UserResponse>?> getPlayersData() async {
