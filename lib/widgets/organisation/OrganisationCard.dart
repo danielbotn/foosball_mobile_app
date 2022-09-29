@@ -3,6 +3,7 @@ import 'package:foosball_mobile_app/widgets/extended_Text.dart';
 
 import '../../state/user_state.dart';
 import '../../utils/app_color.dart';
+import 'organisation_settings.dart';
 
 class OrganisationCard extends StatelessWidget {
   final UserState userState;
@@ -24,6 +25,17 @@ class OrganisationCard extends StatelessWidget {
         subtitle: ExtendedText(
           text: userState.userInfoGlobal.currentOrganisationName,
           userState: userState,
+        ),
+        trailing: IconButton(
+          icon: const Icon(Icons.settings),
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => OrganisationSettings(
+                          userState: userState,
+                        )));
+          },
         ),
       ),
     );
