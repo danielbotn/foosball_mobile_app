@@ -6,6 +6,7 @@ import '../../state/user_state.dart';
 import '../../utils/app_color.dart';
 import '../../utils/helpers.dart';
 import '../extended_Text.dart';
+import 'organisation_code.dart';
 
 class OrganisationSettings extends StatelessWidget {
   final UserState userState;
@@ -15,6 +16,27 @@ class OrganisationSettings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Helpers helpers = Helpers();
+
+    goToOrganisationCode(BuildContext context) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => OrganisationCode(
+                    userState: userState,
+                  )));
+    }
+
+    goToNewOrganisation(BuildContext context) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => NewOrganisation(
+                    userState: userState,
+                    // to do
+                    notifyOrganisationButtons: () {},
+                  )));
+    }
+
     return Scaffold(
         appBar: AppBar(
             title: ExtendedText(
@@ -44,14 +66,7 @@ class OrganisationSettings extends StatelessWidget {
                           title: const Text('Create new Organisation'),
                           leading: const Icon(Icons.add_circle_outline_sharp),
                           onPressed: (BuildContext context) {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => NewOrganisation(
-                                          userState: userState,
-                                          // to do
-                                          notifyOrganisationButtons: () {},
-                                        )));
+                            goToNewOrganisation(context);
                           },
                         ),
                         SettingsTile(
@@ -80,7 +95,9 @@ class OrganisationSettings extends StatelessWidget {
                           description: const Text(
                               'Let other players join your organisation'),
                           leading: const Icon(Icons.qr_code),
-                          onPressed: (BuildContext context) {},
+                          onPressed: (BuildContext context) {
+                            goToOrganisationCode(context);
+                          },
                         ),
                       ],
                     ),

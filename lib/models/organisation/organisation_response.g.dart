@@ -13,6 +13,7 @@ OrganisationResponse _$OrganisationResponseFromJson(
       name: json['name'] as String,
       createdAt: DateTime.parse(json['createdAt'] as String),
       organisationType: json['organisationType'] as int,
+      organisationCode: json['organisationCode'] as String,
     );
 
 Map<String, dynamic> _$OrganisationResponseToJson(
@@ -22,4 +23,5 @@ Map<String, dynamic> _$OrganisationResponseToJson(
       'name': instance.name,
       'createdAt': instance.createdAt.toIso8601String(),
       'organisationType': instance.organisationType,
+      'organisationCode': instance.organisationCode,
     };
