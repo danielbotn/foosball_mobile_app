@@ -70,7 +70,8 @@ class _OrganisationCodeState extends State<OrganisationCode> {
                   children: <Widget>[
                     QrImage(
                       backgroundColor: AppColors.white,
-                      data: organisationData.organisationCode,
+                      data:
+                          'organisationCode: ${organisationData.organisationCode}, organisationId: ${organisationData.id}',
                       version: QrVersions.auto,
                       size: 320,
                       gapless: false,
@@ -97,7 +98,7 @@ class _OrganisationCodeState extends State<OrganisationCode> {
                         child: Center(
                             child: ExtendedText(
                           text:
-                              'Players scan this code insed Organisation / Organisation Settings / Join Organisation',
+                              'Players scan this code inside Organisation / Organisation Settings / Join Organisation',
                           userState: userState,
                           fontSize: 19,
                         )))
