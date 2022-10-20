@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foosball_mobile_app/widgets/organisation/join_organisation.dart';
 import 'package:foosball_mobile_app/widgets/organisation/new_organisation.dart';
 import 'package:settings_ui/settings_ui.dart';
 
@@ -37,6 +38,16 @@ class OrganisationSettings extends StatelessWidget {
                   )));
     }
 
+    goToJoinOrganisation(BuildContext context) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => JoinOrganisation(
+                    userState: userState,
+                    // to do
+                  )));
+    }
+
     return Scaffold(
         appBar: AppBar(
             title: ExtendedText(
@@ -72,7 +83,9 @@ class OrganisationSettings extends StatelessWidget {
                         SettingsTile(
                           title: const Text('Join existing organisation'),
                           leading: const Icon(Icons.account_box),
-                          onPressed: (BuildContext context) {},
+                          onPressed: (BuildContext context) {
+                            goToJoinOrganisation(context);
+                          },
                         ),
                         SettingsTile(
                           title: const Text('Manage players'),
