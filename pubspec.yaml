@@ -49,6 +49,7 @@ dependencies:
   shared_preferences: ^2.0.15
   flutter_native_splash: ^2.2.9
   qr_flutter: ^4.0.0
+  majascan: ^0.5.0
 
 flutter_native_splash:
   color: "#ffffff"

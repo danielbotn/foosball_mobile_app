@@ -48,6 +48,30 @@ PROD_PORT=
 
 ```
 
+## Run on ANDROID emulator with localhost .net core webserver
+
+1. Run an emulator from android studio
+
+In the `.env` file make sure the `REST_URL_PATH_DEV` variable is set to `https://10.0.2.2:7145`
+
+## Run on ANDROID physical device with localhost .net core webserver
+
+Make sure to have `adb` in your environment path
+
+I put this for the user variables and the system variables in PATH
+
+```bash
+C:\Users\USERNAME\AppData\Local\Android\sdk\platform-tools
+```
+
+Next make sure to reverse tcp with the following command
+
+```bash
+adb reverse tcp:7145 tcp:7145
+```
+
+In the `.env` file, make sure the `REST_URL_PATH_DEV` and `REST_URL_PATH_PROD` variables are set to `https://localhost:7145`
+
 ## Technology
 
 [Flutter](https://flutter.dev/)

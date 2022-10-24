@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter/services.dart';
+import 'package:majascan/majascan.dart';
+import '../../api/Organisation.dart';
 import '../../state/user_state.dart';
 import '../../utils/app_color.dart';
 import '../../utils/helpers.dart';
 import '../extended_Text.dart';
+import 'package:http/http.dart' as http;
 
 class JoinOrganisation extends StatefulWidget {
   final UserState userState;
@@ -14,6 +17,61 @@ class JoinOrganisation extends StatefulWidget {
 }
 
 class _JoinOrganisationState extends State<JoinOrganisation> {
+  String result = "Hey there !";
+
+  Future<bool> joinOrganisation() async {
+    bool success = false;
+    String token = widget.userState.token;
+    Organisation org = Organisation(token: token);
+    var orgData = await org.joinOrganisation(result);
+
+    if (orgData.statusCode == 204) {
+      success = true;
+    } else {
+      success = false;
+    }
+    return success;
+  }
+
+  Future _scanQR() async {
+    try {
+      String? qrResult = await MajaScan.startScan(
+          title: "QRcode scanner",
+          titleColor: Colors.amberAccent[700],
+          qRCornerColor: Colors.orange,
+          qRScannerColor: Colors.orange);
+      setState(() {
+        result = qrResult ?? 'null string';
+      });
+    } on PlatformException catch (ex) {
+      if (ex.code == MajaScan.CameraAccessDenied) {
+        setState(() {
+          result = "Camera permission was denied";
+        });
+      } else {
+        setState(() {
+          result = "Unknown Error $ex";
+        });
+      }
+    } on FormatException {
+      setState(() {
+        result = "You pressed the back button before scanning anything";
+      });
+
+      if (result.isNotEmpty &&
+          result.contains('organisationCode') &&
+          result.contains('organisationId')) {
+        bool wasJoiningSuccessful = await joinOrganisation();
+
+        // let user know
+      }
+    } catch (ex) {
+      setState(() {
+        result = "Unknown Error $ex";
+      });
+    }
+  }
+
   // state
   bool qrScanInProgress = false;
   @override
@@ -35,7 +93,7 @@ class _JoinOrganisationState extends State<JoinOrganisation> {
         body: Column(
           children: [
             const Spacer(),
-            Visibility(visible: qrScanInProgress, child: const Text('gaur')),
+            Text(result),
             Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: Container(
@@ -46,6 +104,7 @@ class _JoinOrganisationState extends State<JoinOrganisation> {
                     onPressed: () => {
                       setState(() {
                         qrScanInProgress = !qrScanInProgress;
+                        _scanQR();
                       })
                     },
                     style: ElevatedButton.styleFrom(

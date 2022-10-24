@@ -75,11 +75,11 @@ class _OrganisationCodeState extends State<OrganisationCode> {
                       version: QrVersions.auto,
                       size: 320,
                       gapless: false,
-                      embeddedImage:
-                          const AssetImage('assets/images/dano-scaled.png'),
-                      embeddedImageStyle: QrEmbeddedImageStyle(
-                        size: const Size(80, 80),
-                      ),
+                      // embeddedImage:
+                      //     const AssetImage('assets/images/dano-scaled.png'),
+                      // embeddedImageStyle: QrEmbeddedImageStyle(
+                      //   size: const Size(80, 80),
+                      // ),
                       // size: 200.0,
                     ),
                     Padding(
