@@ -55,7 +55,7 @@ flutter_native_splash:
   color: "#ffffff"
   image: assets/images/dano-scaled.png
   android_12:
-    image: assets/images/screen.png
+    image: assets/images/dano-scaled.png
 
 dev_dependencies:
   flutter_test:
