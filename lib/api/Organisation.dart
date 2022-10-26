@@ -63,4 +63,27 @@ class Organisation {
     }
     return result;
   }
+
+  Future<http.Response> joinOrganisation(
+      String organisationCodeAndOrganisationId) async {
+    late http.Response result;
+
+    String? baseUrl = kReleaseMode
+        ? dotenv.env['REST_URL_PATH_PROD']
+        : dotenv.env['REST_URL_PATH_DEV'];
+    if (baseUrl != null) {
+      var url = Uri.parse('$baseUrl/api/Organisations/join-organisation');
+      var body = jsonEncode({
+        'OrganisationCodeAndOrganisationId': organisationCodeAndOrganisationId
+      });
+      result = await http.post(url,
+          headers: {
+            "Accept": "application/json",
+            "content-type": "application/json",
+            'Authorization': 'Bearer $token',
+          },
+          body: body);
+    }
+    return result;
+  }
 }

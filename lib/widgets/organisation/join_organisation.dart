@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter/services.dart';
+import 'package:foosball_mobile_app/widgets/organisation/organisation.dart';
+import 'package:majascan/majascan.dart';
+import '../../api/Organisation.dart';
 import '../../state/user_state.dart';
 import '../../utils/app_color.dart';
 import '../../utils/helpers.dart';
@@ -14,6 +17,117 @@ class JoinOrganisation extends StatefulWidget {
 }
 
 class _JoinOrganisationState extends State<JoinOrganisation> {
+  String result = "Hey there !";
+
+  // Dialog for success or error message when
+  // user creates a new organisation
+  Future<void> showMyDialog(String message, String headline) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(headline),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(message),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text(widget.userState.hardcodedStrings.close),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<bool> joinOrganisation() async {
+    try {
+      bool success = false;
+      String token = widget.userState.token;
+      Organisation org = Organisation(token: token);
+      var orgData = await org.joinOrganisation(result);
+
+      if (orgData.statusCode == 204) {
+        success = true;
+      } else {
+        success = false;
+      }
+      return success;
+    } on Exception {
+      return false;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  goToOrganisation(BuildContext context) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => OrganisationScreen(
+                  userState: widget.userState,
+                )));
+  }
+
+  void scanQrWithContext(BuildContext context) async {
+    await scanQR(context);
+  }
+
+  Future scanQR(BuildContext context) async {
+    try {
+      String? qrResult = await MajaScan.startScan(
+          title: "QRcode scanner",
+          titleColor: Colors.amberAccent[700],
+          qRCornerColor: Colors.orange,
+          qRScannerColor: Colors.orange);
+      setState(() {
+        result = qrResult ?? 'null string';
+      });
+
+      if (result.isNotEmpty &&
+          result.contains('organisationCode') &&
+          result.contains('organisationId')) {
+        bool wasJoiningSuccessful = await joinOrganisation();
+
+        // let user know
+        if (wasJoiningSuccessful) {
+          await showMyDialog(
+              'You have joined a new organisation. Congratulations', 'Success');
+          if (!mounted) return;
+          goToOrganisation(context);
+        } else {
+          await showMyDialog('Obs, something went wrong', 'Failure');
+        }
+      }
+    } on PlatformException catch (ex) {
+      if (ex.code == MajaScan.CameraAccessDenied) {
+        setState(() {
+          result = "Camera permission was denied";
+        });
+      } else {
+        setState(() {
+          result = "Unknown Error $ex";
+        });
+      }
+    } on FormatException {
+      setState(() {
+        result = "You pressed the back button before scanning anything";
+      });
+    } catch (ex) {
+      setState(() {
+        result = "Unknown Error $ex";
+      });
+    }
+  }
+
   // state
   bool qrScanInProgress = false;
   @override
@@ -35,7 +149,7 @@ class _JoinOrganisationState extends State<JoinOrganisation> {
         body: Column(
           children: [
             const Spacer(),
-            Visibility(visible: qrScanInProgress, child: const Text('gaur')),
+            Text(result),
             Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: Container(
@@ -46,6 +160,7 @@ class _JoinOrganisationState extends State<JoinOrganisation> {
                     onPressed: () => {
                       setState(() {
                         qrScanInProgress = !qrScanInProgress;
+                        scanQrWithContext(context);
                       })
                     },
                     style: ElevatedButton.styleFrom(
@@ -60,7 +175,3 @@ class _JoinOrganisationState extends State<JoinOrganisation> {
         ));
   }
 }
-
-// 
-
- 
