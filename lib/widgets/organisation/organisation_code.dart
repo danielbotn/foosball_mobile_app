@@ -48,7 +48,8 @@ class _OrganisationCodeState extends State<OrganisationCode> {
     return Scaffold(
         appBar: AppBar(
             title: ExtendedText(
-                text: 'Organisation Code', userState: widget.userState),
+                text: widget.userState.hardcodedStrings.organisationCode,
+                userState: widget.userState),
             leading: IconButton(
               icon: const Icon(Icons.chevron_left),
               onPressed: () {
@@ -87,8 +88,8 @@ class _OrganisationCodeState extends State<OrganisationCode> {
                             const EdgeInsets.only(left: 25, right: 25, top: 10),
                         child: Center(
                             child: ExtendedText(
-                          text:
-                              'Let other players join this organisation by scanning the QR code above inside this app.',
+                          text: widget
+                              .userState.hardcodedStrings.joinOrganisationInfo,
                           userState: userState,
                           fontSize: 19,
                         ))),
@@ -97,8 +98,8 @@ class _OrganisationCodeState extends State<OrganisationCode> {
                             const EdgeInsets.only(left: 25, right: 25, top: 10),
                         child: Center(
                             child: ExtendedText(
-                          text:
-                              'Players scan this code inside Organisation / Organisation Settings / Join Organisation',
+                          text: widget
+                              .userState.hardcodedStrings.joinOrganisationInfo2,
                           userState: userState,
                           fontSize: 19,
                         )))

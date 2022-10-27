@@ -70,6 +70,29 @@ HardcodedStrings _$HardcodedStringsFromJson(Map<String, dynamic> json) =>
           json['newOrganisationErrorMessage'] as String,
       newOrganisationSuccessMessage:
           json['newOrganisationSuccessMessage'] as String,
+      organisationSettings: json['organisationSettings'] as String,
+      createNewOrganisation: json['createNewOrganisation'] as String,
+      joinExistingOrganisation: json['joinExistingOrganisation'] as String,
+      managePlayers: json['managePlayers'] as String,
+      changeOrganisation: json['changeOrganisation'] as String,
+      information: json['information'] as String,
+      organisationCode: json['organisationCode'] as String,
+      letOtherPlayersJoinYourOrganisation:
+          json['letOtherPlayersJoinYourOrganisation'] as String,
+      joinOrganisation: json['joinOrganisation'] as String,
+      scanQrCode: json['scanQrCode'] as String,
+      success: json['success'] as String,
+      failure: json['failure'] as String,
+      obsFailure: json['obsFailure'] as String,
+      cameraPermissionWasDenied: json['cameraPermissionWasDenied'] as String,
+      unknownError: json['unknownError'] as String,
+      youPressedTheBackButton: json['youPressedTheBackButton'] as String,
+      joinOrganisationInfo: json['joinOrganisationInfo'] as String,
+      joinOrganisationInfo2: json['joinOrganisationInfo2'] as String,
+      actions: json['actions'] as String,
+      joinExistingOrganisationWithQrCode:
+          json['joinExistingOrganisationWithQrCode'] as String,
+      organisationCardInfo: json['organisationCardInfo'] as String,
     );
 
 Map<String, dynamic> _$HardcodedStringsToJson(HardcodedStrings instance) =>
@@ -134,4 +157,27 @@ Map<String, dynamic> _$HardcodedStringsToJson(HardcodedStrings instance) =>
       'create': instance.create,
       'newOrganisationSuccessMessage': instance.newOrganisationSuccessMessage,
       'newOrganisationErrorMessage': instance.newOrganisationErrorMessage,
+      'organisationSettings': instance.organisationSettings,
+      'createNewOrganisation': instance.createNewOrganisation,
+      'joinExistingOrganisation': instance.joinExistingOrganisation,
+      'managePlayers': instance.managePlayers,
+      'changeOrganisation': instance.changeOrganisation,
+      'information': instance.information,
+      'organisationCode': instance.organisationCode,
+      'letOtherPlayersJoinYourOrganisation':
+          instance.letOtherPlayersJoinYourOrganisation,
+      'joinOrganisation': instance.joinOrganisation,
+      'scanQrCode': instance.scanQrCode,
+      'success': instance.success,
+      'failure': instance.failure,
+      'obsFailure': instance.obsFailure,
+      'cameraPermissionWasDenied': instance.cameraPermissionWasDenied,
+      'unknownError': instance.unknownError,
+      'youPressedTheBackButton': instance.youPressedTheBackButton,
+      'joinOrganisationInfo': instance.joinOrganisationInfo,
+      'joinOrganisationInfo2': instance.joinOrganisationInfo2,
+      'actions': instance.actions,
+      'joinExistingOrganisationWithQrCode':
+          instance.joinExistingOrganisationWithQrCode,
+      'organisationCardInfo': instance.organisationCardInfo,
     };

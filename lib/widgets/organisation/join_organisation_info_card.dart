@@ -25,13 +25,13 @@ class JoinOrganisationInfoCard extends StatelessWidget {
                 height: 240,
                 fit: BoxFit.cover,
               ),
-              const Positioned(
+              Positioned(
                 bottom: 16,
                 right: 16,
                 left: 16,
                 child: Text(
-                  'Join Existing Organisation with QR Code',
-                  style: TextStyle(
+                  userState.hardcodedStrings.joinExistingOrganisationWithQrCode,
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                     fontSize: 24,
@@ -41,17 +41,17 @@ class JoinOrganisationInfoCard extends StatelessWidget {
             ],
           ),
           Padding(
-            padding: EdgeInsets.all(16).copyWith(bottom: 0),
-            child: const Text(
-              'If you want to join an organisation, you need to scan the QR code of that organisation. Their qr code is available in the app under organisation / settings / organisation code',
-              style: TextStyle(fontSize: 16),
+            padding: const EdgeInsets.all(16).copyWith(bottom: 0),
+            child: Text(
+              userState.hardcodedStrings.organisationCardInfo,
+              style: const TextStyle(fontSize: 16),
             ),
           ),
           ButtonBar(
             alignment: MainAxisAlignment.start,
             children: [
               OutlinedButton(
-                child: Text('Scan QR Code'),
+                child: Text(userState.hardcodedStrings.scanQrCode),
                 onPressed: () {},
               ),
             ],

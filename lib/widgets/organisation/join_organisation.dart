@@ -101,30 +101,32 @@ class _JoinOrganisationState extends State<JoinOrganisation> {
         // let user know
         if (wasJoiningSuccessful) {
           await showMyDialog(
-              'You have joined a new organisation. Congratulations', 'Success');
+              'You have joined a new organisation. Congratulations',
+              widget.userState.hardcodedStrings.success);
           if (!mounted) return;
           goToOrganisation(context);
         } else {
-          await showMyDialog('Obs, something went wrong', 'Failure');
+          await showMyDialog(widget.userState.hardcodedStrings.obsFailure,
+              widget.userState.hardcodedStrings.failure);
         }
       }
     } on PlatformException catch (ex) {
       if (ex.code == MajaScan.CameraAccessDenied) {
         setState(() {
-          result = "Camera permission was denied";
+          result = widget.userState.hardcodedStrings.cameraPermissionWasDenied;
         });
       } else {
         setState(() {
-          result = "Unknown Error $ex";
+          result = "${widget.userState.hardcodedStrings.unknownError}$ex";
         });
       }
     } on FormatException {
       setState(() {
-        result = "You pressed the back button before scanning anything";
+        result = widget.userState.hardcodedStrings.youPressedTheBackButton;
       });
     } catch (ex) {
       setState(() {
-        result = "Unknown Error $ex";
+        result = "${widget.userState.hardcodedStrings.unknownError}$ex";
       });
     }
   }
@@ -137,7 +139,8 @@ class _JoinOrganisationState extends State<JoinOrganisation> {
     return Scaffold(
         appBar: AppBar(
             title: ExtendedText(
-                text: 'Join Organisation', userState: widget.userState),
+                text: widget.userState.hardcodedStrings.joinOrganisation,
+                userState: widget.userState),
             leading: IconButton(
               icon: const Icon(Icons.chevron_left),
               onPressed: () {
@@ -169,7 +172,7 @@ class _JoinOrganisationState extends State<JoinOrganisation> {
                             ? AppColors.lightThemeShadowColor
                             : AppColors.buttonsLightTheme,
                         minimumSize: const Size(200, 50)),
-                    child: const Text('Scan QR Code'),
+                    child: Text(widget.userState.hardcodedStrings.scanQrCode),
                   ),
                 ))
           ],

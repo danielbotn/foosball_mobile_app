@@ -65,6 +65,27 @@ class HardcodedStrings {
   final String create;
   final String newOrganisationSuccessMessage;
   final String newOrganisationErrorMessage;
+  final String organisationSettings;
+  final String createNewOrganisation;
+  final String joinExistingOrganisation;
+  final String managePlayers;
+  final String changeOrganisation;
+  final String information;
+  final String organisationCode;
+  final String letOtherPlayersJoinYourOrganisation;
+  final String joinOrganisation;
+  final String scanQrCode;
+  final String success;
+  final String failure;
+  final String obsFailure;
+  final String cameraPermissionWasDenied;
+  final String unknownError;
+  final String youPressedTheBackButton;
+  final String joinOrganisationInfo;
+  final String joinOrganisationInfo2;
+  final String actions;
+  final String joinExistingOrganisationWithQrCode;
+  final String organisationCardInfo;
 
   HardcodedStrings(
       {required this.matches,
@@ -126,7 +147,28 @@ class HardcodedStrings {
       required this.nameOfNewOrganisation,
       required this.create,
       required this.newOrganisationErrorMessage,
-      required this.newOrganisationSuccessMessage});
+      required this.newOrganisationSuccessMessage,
+      required this.organisationSettings,
+      required this.createNewOrganisation,
+      required this.joinExistingOrganisation,
+      required this.managePlayers,
+      required this.changeOrganisation,
+      required this.information,
+      required this.organisationCode,
+      required this.letOtherPlayersJoinYourOrganisation,
+      required this.joinOrganisation,
+      required this.scanQrCode,
+      required this.success,
+      required this.failure,
+      required this.obsFailure,
+      required this.cameraPermissionWasDenied,
+      required this.unknownError,
+      required this.youPressedTheBackButton,
+      required this.joinOrganisationInfo,
+      required this.joinOrganisationInfo2,
+      required this.actions,
+      required this.joinExistingOrganisationWithQrCode,
+      required this.organisationCardInfo});
 
   factory HardcodedStrings.fromJson(Map<String, dynamic> item) =>
       _$HardcodedStringsFromJson(item);

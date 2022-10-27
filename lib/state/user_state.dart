@@ -93,7 +93,28 @@ abstract class _UserState with Store {
       nameOfNewOrganisation: "",
       create: "",
       newOrganisationErrorMessage: "",
-      newOrganisationSuccessMessage: "");
+      newOrganisationSuccessMessage: "",
+      joinExistingOrganisation: "",
+      managePlayers: "",
+      changeOrganisation: "",
+      information: "",
+      organisationCode: "",
+      letOtherPlayersJoinYourOrganisation: "",
+      joinOrganisation: "",
+      scanQrCode: "",
+      success: "",
+      failure: "",
+      obsFailure: "",
+      cameraPermissionWasDenied: "",
+      unknownError: "",
+      youPressedTheBackButton: "",
+      joinOrganisationInfo: "",
+      joinOrganisationInfo2: "",
+      actions: "",
+      joinExistingOrganisationWithQrCode: "",
+      organisationCardInfo: "",
+      createNewOrganisation: "",
+      organisationSettings: "");
 
   @observable
   bool darkmode = false;

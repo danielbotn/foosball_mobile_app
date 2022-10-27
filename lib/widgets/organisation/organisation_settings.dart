@@ -51,7 +51,8 @@ class OrganisationSettings extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
             title: ExtendedText(
-                text: 'Organisation Settings', userState: userState),
+                text: userState.hardcodedStrings.organisationSettings,
+                userState: userState),
             leading: IconButton(
               icon: const Icon(Icons.chevron_left),
               onPressed: () {
@@ -69,31 +70,34 @@ class OrganisationSettings extends StatelessWidget {
                 child: SettingsList(
                   sections: [
                     SettingsSection(
-                      title: const Text(
-                        'Actions',
+                      title: Text(
+                        userState.hardcodedStrings.actions,
                       ),
                       tiles: [
                         SettingsTile(
-                          title: const Text('Create new Organisation'),
+                          title: Text(
+                              userState.hardcodedStrings.createNewOrganisation),
                           leading: const Icon(Icons.add_circle_outline_sharp),
                           onPressed: (BuildContext context) {
                             goToNewOrganisation(context);
                           },
                         ),
                         SettingsTile(
-                          title: const Text('Join existing organisation'),
+                          title: Text(userState
+                              .hardcodedStrings.joinExistingOrganisation),
                           leading: const Icon(Icons.account_box),
                           onPressed: (BuildContext context) {
                             goToJoinOrganisation(context);
                           },
                         ),
                         SettingsTile(
-                          title: const Text('Manage players'),
+                          title: Text(userState.hardcodedStrings.managePlayers),
                           leading: const Icon(Icons.person),
                           onPressed: (BuildContext context) {},
                         ),
                         SettingsTile(
-                          title: const Text('Change Organisation'),
+                          title: Text(
+                              userState.hardcodedStrings.changeOrganisation),
                           leading: const Icon(Icons.change_circle),
                           onPressed: (BuildContext context) {},
                         ),
@@ -101,12 +105,13 @@ class OrganisationSettings extends StatelessWidget {
                     ),
                     // person section
                     SettingsSection(
-                      title: const Text('Information'),
+                      title: Text(userState.hardcodedStrings.information),
                       tiles: [
                         SettingsTile(
-                          title: const Text('Organisation Code'),
-                          description: const Text(
-                              'Let other players join your organisation'),
+                          title:
+                              Text(userState.hardcodedStrings.organisationCode),
+                          description: Text(userState.hardcodedStrings
+                              .letOtherPlayersJoinYourOrganisation),
                           leading: const Icon(Icons.qr_code),
                           onPressed: (BuildContext context) {
                             goToOrganisationCode(context);
