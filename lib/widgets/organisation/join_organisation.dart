@@ -7,6 +7,7 @@ import '../../state/user_state.dart';
 import '../../utils/app_color.dart';
 import '../../utils/helpers.dart';
 import '../extended_Text.dart';
+import 'join_organisation_info_card.dart';
 
 class JoinOrganisation extends StatefulWidget {
   final UserState userState;
@@ -148,8 +149,8 @@ class _JoinOrganisationState extends State<JoinOrganisation> {
                 helpers.getBackgroundColor(widget.userState.darkmode)),
         body: Column(
           children: [
+            JoinOrganisationInfoCard(userState: widget.userState),
             const Spacer(),
-            Text(result),
             Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: Container(
