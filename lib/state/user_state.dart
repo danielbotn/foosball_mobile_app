@@ -114,7 +114,8 @@ abstract class _UserState with Store {
       joinExistingOrganisationWithQrCode: "",
       organisationCardInfo: "",
       createNewOrganisation: "",
-      organisationSettings: "");
+      organisationSettings: "",
+      managePlayer: "");
 
   @observable
   bool darkmode = false;
