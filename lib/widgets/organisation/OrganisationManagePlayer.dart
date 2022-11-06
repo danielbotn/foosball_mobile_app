@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-
-import '../../api/UserApi.dart';
+import 'package:settings_ui/settings_ui.dart';
 import '../../models/user/user_response.dart';
 import '../../state/user_state.dart';
 import '../../utils/app_color.dart';
 import '../../utils/helpers.dart';
 import '../extended_Text.dart';
-import '../loading.dart';
 
 class OrganisationManagePlayer extends StatefulWidget {
   final UserState userState;
@@ -21,6 +19,32 @@ class OrganisationManagePlayer extends StatefulWidget {
 }
 
 class _OrganisationManagePlayerState extends State<OrganisationManagePlayer> {
+  List<AbstractSettingsTile> setTiles() {
+    bool isAdmin = false;
+    isAdmin = widget.userData.isAdmin!;
+
+    List<AbstractSettingsTile> result = [
+      SettingsTile(
+        title: Text(widget.userData.firstName + widget.userData.lastName),
+        leading: Image.network(widget.userData.photoUrl, width: 40, height: 40),
+        trailing: Text(widget.userState.hardcodedStrings.deleteUser),
+        onPressed: (BuildContext context) {
+          // to do
+        },
+      ),
+      SettingsTile.switchTile(
+        title: Text(widget.userState.hardcodedStrings.admin),
+        leading: const Icon(Icons.phone_android),
+        initialValue: isAdmin,
+        onToggle: (value) {
+          // to do
+        },
+      ),
+    ];
+
+    return result;
+  }
+
   @override
   Widget build(BuildContext context) {
     Helpers helpers = Helpers();
@@ -38,6 +62,22 @@ class _OrganisationManagePlayerState extends State<OrganisationManagePlayer> {
             iconTheme: helpers.getIconTheme(widget.userState.darkmode),
             backgroundColor:
                 helpers.getBackgroundColor(widget.userState.darkmode)),
-        body: Container());
+        body: Container(
+            color: widget.userState.darkmode
+                ? AppColors.darkModeBackground
+                : AppColors.white,
+            child: Theme(
+                data: widget.userState.darkmode
+                    ? ThemeData.dark()
+                    : ThemeData.light(),
+                child: SettingsList(
+                  sections: [
+                    SettingsSection(
+                        title: Text(
+                          widget.userState.hardcodedStrings.actions,
+                        ),
+                        tiles: setTiles()),
+                  ],
+                ))));
   }
 }

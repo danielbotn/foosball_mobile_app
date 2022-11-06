@@ -94,6 +94,8 @@ HardcodedStrings _$HardcodedStringsFromJson(Map<String, dynamic> json) =>
           json['joinExistingOrganisationWithQrCode'] as String,
       organisationCardInfo: json['organisationCardInfo'] as String,
       managePlayer: json['managePlayer'] as String,
+      admin: json['admin'] as String,
+      deleteUser: json['deleteUser'] as String,
     );
 
 Map<String, dynamic> _$HardcodedStringsToJson(HardcodedStrings instance) =>
@@ -182,4 +184,6 @@ Map<String, dynamic> _$HardcodedStringsToJson(HardcodedStrings instance) =>
           instance.joinExistingOrganisationWithQrCode,
       'organisationCardInfo': instance.organisationCardInfo,
       'managePlayer': instance.managePlayer,
+      'admin': instance.admin,
+      'deleteUser': instance.deleteUser,
     };
