@@ -7,7 +7,10 @@ import 'organisation_settings.dart';
 
 class OrganisationCard extends StatelessWidget {
   final UserState userState;
-  const OrganisationCard({Key? key, required this.userState}) : super(key: key);
+  final Function() notifyParent;
+  const OrganisationCard(
+      {Key? key, required this.userState, required this.notifyParent})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +37,9 @@ class OrganisationCard extends StatelessWidget {
                 MaterialPageRoute(
                     builder: (context) => OrganisationSettings(
                           userState: userState,
-                        )));
+                        ))).then((value) {
+              notifyParent();
+            });
           },
         ),
       ),

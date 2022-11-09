@@ -7,7 +7,7 @@ import '../../utils/app_color.dart';
 import '../../utils/helpers.dart';
 import '../extended_Text.dart';
 import '../loading.dart';
-import 'OrganisationManagePlayer.dart';
+import 'organisation_manage_player.dart';
 
 class OrganisationManagePlayers extends StatefulWidget {
   final UserState userState;
@@ -57,7 +57,10 @@ class _OrganisationManagePlayersState extends State<OrganisationManagePlayers> {
             builder: (context) => OrganisationManagePlayer(
                   userState: widget.userState,
                   userData: user,
-                )));
+                ))).then((value) {
+      playersFuture = getPlayersData();
+      setState(() {});
+    });
   }
 
   @override

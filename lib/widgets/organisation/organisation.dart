@@ -6,7 +6,7 @@ import '../../utils/app_color.dart';
 import '../../utils/helpers.dart';
 import '../extended_Text.dart';
 import '../headline_big.dart';
-import 'OrganisationCard.dart';
+import 'organisation_card.dart';
 import 'Organisations.dart';
 import 'organisation_buttons.dart';
 import 'organisation_players.dart';
@@ -25,6 +25,13 @@ class _OrganisationScreenState extends State<OrganisationScreen> {
   String randomString = '';
 
   void notifyOrganisations() {
+    Helpers helpers = Helpers();
+    setState(() {
+      randomString = helpers.generateRandomString();
+    });
+  }
+
+  void notifyOrganisationPlayers() {
     Helpers helpers = Helpers();
     setState(() {
       randomString = helpers.generateRandomString();
@@ -54,7 +61,9 @@ class _OrganisationScreenState extends State<OrganisationScreen> {
               : AppColors.white,
           child: Column(
             children: <Widget>[
-              OrganisationCard(userState: userState),
+              OrganisationCard(
+                  userState: userState,
+                  notifyParent: notifyOrganisationPlayers),
               HeadlineBig(
                   headline: userState.hardcodedStrings.players,
                   userState: userState,
@@ -62,7 +71,8 @@ class _OrganisationScreenState extends State<OrganisationScreen> {
                   paddingLeft: 10),
               SizedBox(
                   height: 215,
-                  child: OrganisationPlayers(userState: userState)),
+                  child: OrganisationPlayers(
+                      userState: userState, randomString: randomString)),
               HeadlineBig(
                   headline: userState.hardcodedStrings.organisations,
                   userState: userState,

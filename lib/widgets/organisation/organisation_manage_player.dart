@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:foosball_mobile_app/main.dart';
 import 'package:settings_ui/settings_ui.dart';
+import '../../api/Organisation.dart';
 import '../../models/user/user_response.dart';
 import '../../state/user_state.dart';
 import '../../utils/app_color.dart';
@@ -19,6 +21,17 @@ class OrganisationManagePlayer extends StatefulWidget {
 }
 
 class _OrganisationManagePlayerState extends State<OrganisationManagePlayer> {
+  // state
+  bool isChecked = false;
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      isChecked = widget.userData.isAdmin!;
+    });
+  }
+
   List<AbstractSettingsTile> setTiles() {
     bool isAdmin = false;
     isAdmin = widget.userData.isAdmin!;
@@ -27,17 +40,33 @@ class _OrganisationManagePlayerState extends State<OrganisationManagePlayer> {
       SettingsTile(
         title: Text(widget.userData.firstName + widget.userData.lastName),
         leading: Image.network(widget.userData.photoUrl, width: 40, height: 40),
-        trailing: Text(widget.userState.hardcodedStrings.deleteUser),
-        onPressed: (BuildContext context) {
-          // to do
-        },
+        trailing: GestureDetector(
+          child: Text(widget.userState.hardcodedStrings.deleteUser),
+          onTap: () {
+            // Delete User
+          },
+        ),
       ),
       SettingsTile.switchTile(
         title: Text(widget.userState.hardcodedStrings.admin),
         leading: const Icon(Icons.phone_android),
-        initialValue: isAdmin,
-        onToggle: (value) {
-          // to do
+        initialValue: isChecked,
+        onToggle: (value) async {
+          String token = widget.userState.token;
+          Organisation organisation = Organisation(token: token);
+          int oId = 0;
+          if (widget.userData.currentOrganisationId != null) {
+            oId = widget.userData.currentOrganisationId!;
+          }
+          var updateOperation = await organisation.updateUserIsAdmin(
+              oId, widget.userData.id, value);
+
+          isAdmin = !value;
+          if (updateOperation.statusCode == 204) {
+            setState(() {
+              isChecked = !isChecked;
+            });
+          }
         },
       ),
     ];

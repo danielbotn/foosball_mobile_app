@@ -10,7 +10,9 @@ import '../loading.dart';
 
 class OrganisationPlayers extends StatefulWidget {
   final UserState userState;
-  const OrganisationPlayers({Key? key, required this.userState})
+  final String randomString;
+  const OrganisationPlayers(
+      {Key? key, required this.userState, required this.randomString})
       : super(key: key);
 
   @override
@@ -26,6 +28,12 @@ class _OrganisationPlayersState extends State<OrganisationPlayers> {
   void initState() {
     super.initState();
     playersFuture = getPlayersData();
+  }
+
+  @override
+  void didUpdateWidget(OrganisationPlayers old) {
+    playersFuture = getPlayersData();
+    super.didUpdateWidget(old);
   }
 
   Future<List<UserResponse>?> getPlayersData() async {

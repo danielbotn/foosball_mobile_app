@@ -86,4 +86,24 @@ class Organisation {
     }
     return result;
   }
+
+  Future<http.Response> updateUserIsAdmin(
+      int organisationId, int userIdToChange, bool isAdmin) async {
+    late http.Response result;
+
+    String? baseUrl = kReleaseMode
+        ? dotenv.env['REST_URL_PATH_PROD']
+        : dotenv.env['REST_URL_PATH_DEV'];
+    if (baseUrl != null) {
+      var url = Uri.parse(
+          '$baseUrl/api/Organisations/update-is-admin?organisationId=$organisationId&userIdToChange=$userIdToChange&isAdmin=$isAdmin');
+
+      result = await http.put(url, headers: {
+        "Accept": "application/json",
+        "content-type": "application/json",
+        'Authorization': 'Bearer $token',
+      });
+    }
+    return result;
+  }
 }
