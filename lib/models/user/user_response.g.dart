@@ -15,6 +15,7 @@ UserResponse _$UserResponseFromJson(Map<String, dynamic> json) => UserResponse(
       currentOrganisationId: json['currentOrganisationId'] as int?,
       photoUrl: json['photoUrl'] as String,
       isAdmin: json['isAdmin'] as bool?,
+      isDeleted: json['isDeleted'] as bool,
     );
 
 Map<String, dynamic> _$UserResponseToJson(UserResponse instance) =>
@@ -27,4 +28,5 @@ Map<String, dynamic> _$UserResponseToJson(UserResponse instance) =>
       'currentOrganisationId': instance.currentOrganisationId,
       'photoUrl': instance.photoUrl,
       'isAdmin': instance.isAdmin,
+      'isDeleted': instance.isDeleted,
     };

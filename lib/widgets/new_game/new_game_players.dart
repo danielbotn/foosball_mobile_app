@@ -29,52 +29,54 @@ class _NewGamePlayersState extends State<NewGamePlayers> {
       List<UserResponse>? users, NewGameState gameState) {
     List<ListTile> list = <ListTile>[];
     for (var i = 0; i < users!.length; i++) {
-      list.add(ListTile(
-        // onTap: () => _goToMatchDetailScreen(
-        //     history[i]!.matchId, history[i]!.typeOfMatchName, history[i]!.leagueId),
-        title: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text("${users[i].firstName} ${users[i].lastName}"),
-          ],
-        ),
-        subtitle: Text(users[i].email),
-        leading: SizedBox(
-            height: 100, width: 50, child: Image.network(users[i].photoUrl)),
-        trailing: SizedBox(
-          width: 60,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
+      if (users[i].isDeleted == false) {
+        list.add(ListTile(
+          // onTap: () => _goToMatchDetailScreen(
+          //     history[i]!.matchId, history[i]!.typeOfMatchName, history[i]!.leagueId),
+          title: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Visibility(
-                    visible: true,
-                    child: Checkbox(
-                      checkColor: Colors.white,
-                      activeColor:
-                          helpers.getCheckMarkColor(userState.darkmode),
-                      value: gameState.checkedPlayers[i].item2,
-                      onChanged: (bool? value) {
-                        if (isCheckedLoggedInUser(value, i, users[i]) ==
-                            false) {
-                          checkBoxChecked(value, i, users[i]);
-                          widget.notifyParent();
-                        }
-                      },
-                    ),
-                  )
-                ],
-              ),
-              const SizedBox(
-                height: 5.0,
-              ),
+              Text("${users[i].firstName} ${users[i].lastName}"),
             ],
           ),
-        ),
-      ));
+          subtitle: Text(users[i].email),
+          leading: SizedBox(
+              height: 100, width: 50, child: Image.network(users[i].photoUrl)),
+          trailing: SizedBox(
+            width: 60,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Visibility(
+                      visible: true,
+                      child: Checkbox(
+                        checkColor: Colors.white,
+                        activeColor:
+                            helpers.getCheckMarkColor(userState.darkmode),
+                        value: gameState.checkedPlayers[i].item2,
+                        onChanged: (bool? value) {
+                          if (isCheckedLoggedInUser(value, i, users[i]) ==
+                              false) {
+                            checkBoxChecked(value, i, users[i]);
+                            widget.notifyParent();
+                          }
+                        },
+                      ),
+                    )
+                  ],
+                ),
+                const SizedBox(
+                  height: 5.0,
+                ),
+              ],
+            ),
+          ),
+        ));
+      }
     }
     return list;
   }

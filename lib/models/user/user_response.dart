@@ -12,6 +12,7 @@ class UserResponse {
   final int? currentOrganisationId;
   final String photoUrl;
   final bool? isAdmin;
+  final bool isDeleted;
 
   UserResponse(
       {required this.id,
@@ -21,7 +22,8 @@ class UserResponse {
       required this.createdAt,
       required this.currentOrganisationId,
       required this.photoUrl,
-      this.isAdmin});
+      this.isAdmin,
+      required this.isDeleted});
 
   factory UserResponse.fromJson(Map<String, dynamic> item) =>
       _$UserResponseFromJson(item);

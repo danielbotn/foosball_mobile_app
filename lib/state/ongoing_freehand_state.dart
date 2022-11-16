@@ -11,27 +11,31 @@ class OngoingFreehandState = _OngoingFreehandState with _$OngoingFreehandState;
 abstract class _OngoingFreehandState with Store {
   // true equals 2 players, false equals 4 players
   @observable
-  UserScoreObject playerOne = new UserScoreObject(
-      player: new UserResponse(
+  UserScoreObject playerOne = UserScoreObject(
+      player: UserResponse(
           id: 0,
           email: '',
           firstName: '',
           lastName: '',
           createdAt: DateTime.now(),
           currentOrganisationId: 0,
-          photoUrl: ''),
+          photoUrl: '',
+          isAdmin: false,
+          isDeleted: false),
       score: 0);
 
   @observable
-  UserScoreObject playerTwo = new UserScoreObject(
-      player: new UserResponse(
+  UserScoreObject playerTwo = UserScoreObject(
+      player: UserResponse(
           id: 0,
           email: '',
           firstName: '',
           lastName: '',
           createdAt: DateTime.now(),
           currentOrganisationId: 0,
-          photoUrl: ''),
+          photoUrl: '',
+          isAdmin: false,
+          isDeleted: false),
       score: 0);
 
   @observable
@@ -54,55 +58,59 @@ abstract class _OngoingFreehandState with Store {
 
   @action
   void setPlayer(UserScoreObject player) {
-    this.playerOne = player;
+    playerOne = player;
   }
 
   // update score of playerOne
   @action
   void updatePlayerOneScore(int score) {
-    this.playerOne.score = score;
+    playerOne.score = score;
   }
 
   // update score of playerTwo
   @action
   void updatePlayerTwoScore(int score) {
-    this.playerTwo.score = score;
+    playerTwo.score = score;
   }
 
   @action
   void setPlayerTwo(UserScoreObject player) {
-    this.playerTwo = player;
+    playerTwo = player;
   }
 
   @action
   void clearPlayerOne() {
-    this.playerOne = new UserScoreObject(
-        player: new UserResponse(
+    playerOne = UserScoreObject(
+        player: UserResponse(
             id: 0,
             email: '',
             firstName: '',
             lastName: '',
             createdAt: DateTime.now(),
             currentOrganisationId: 0,
-            photoUrl: ''),
+            photoUrl: '',
+            isDeleted: false,
+            isAdmin: false),
         score: 0);
   }
 
   @action
   void clearPlayerTwo() {
-    this.playerTwo = new UserScoreObject(
-        player: new UserResponse(
+    playerTwo = UserScoreObject(
+        player: UserResponse(
             id: 0,
             email: '',
             firstName: '',
             lastName: '',
             createdAt: DateTime.now(),
             currentOrganisationId: 0,
-            photoUrl: ''),
+            photoUrl: '',
+            isDeleted: false,
+            isAdmin: false),
         score: 0);
   }
 
-  @action 
+  @action
   void setIsClockPaused(bool value) {
     isClockPaused = value;
   }

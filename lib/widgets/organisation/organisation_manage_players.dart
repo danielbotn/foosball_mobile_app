@@ -47,6 +47,9 @@ class _OrganisationManagePlayersState extends State<OrganisationManagePlayers> {
     if (user.isAdmin == true) {
       result = "Admin";
     }
+    if (user.isDeleted == true) {
+      result += " Inactive";
+    }
     return result;
   }
 
