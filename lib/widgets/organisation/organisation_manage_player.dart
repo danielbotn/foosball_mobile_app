@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:foosball_mobile_app/main.dart';
 import 'package:settings_ui/settings_ui.dart';
 import '../../api/Organisation.dart';
 import '../../models/user/user_response.dart';

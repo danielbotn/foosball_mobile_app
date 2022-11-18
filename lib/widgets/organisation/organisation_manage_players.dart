@@ -45,10 +45,10 @@ class _OrganisationManagePlayersState extends State<OrganisationManagePlayers> {
   String getIsAdmin(UserResponse user) {
     String result = "";
     if (user.isAdmin == true) {
-      result = "Admin";
+      result = widget.userState.hardcodedStrings.admin;
     }
     if (user.isDeleted == true) {
-      result += " Inactive";
+      result += " ${widget.userState.hardcodedStrings.inactive}";
     }
     return result;
   }

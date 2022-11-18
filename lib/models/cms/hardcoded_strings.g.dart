@@ -96,6 +96,8 @@ HardcodedStrings _$HardcodedStringsFromJson(Map<String, dynamic> json) =>
       managePlayer: json['managePlayer'] as String,
       admin: json['admin'] as String,
       deleteUser: json['deleteUser'] as String,
+      active: json['active'] as String,
+      inactive: json['inactive'] as String,
     );
 
 Map<String, dynamic> _$HardcodedStringsToJson(HardcodedStrings instance) =>
@@ -186,4 +188,6 @@ Map<String, dynamic> _$HardcodedStringsToJson(HardcodedStrings instance) =>
       'managePlayer': instance.managePlayer,
       'admin': instance.admin,
       'deleteUser': instance.deleteUser,
+      'active': instance.active,
+      'inactive': instance.inactive,
     };

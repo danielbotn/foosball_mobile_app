@@ -117,7 +117,9 @@ abstract class _UserState with Store {
       organisationSettings: "",
       managePlayer: "",
       admin: "",
-      deleteUser: "");
+      deleteUser: "",
+      active: "",
+      inactive: "");
 
   @observable
   bool darkmode = false;
