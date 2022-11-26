@@ -126,4 +126,24 @@ class Organisation {
     }
     return result;
   }
+
+  Future<http.Response> changeOrganisation(
+      int organisationId, int newOrganisationId, int userId) async {
+    late http.Response result;
+
+    String? baseUrl = kReleaseMode
+        ? dotenv.env['REST_URL_PATH_PROD']
+        : dotenv.env['REST_URL_PATH_DEV'];
+    if (baseUrl != null) {
+      var url = Uri.parse(
+          '$baseUrl/api/Organisations/change-current-organisation?userId=$userId&currentOrganisationId=$organisationId&newOrganisationId=$newOrganisationId');
+
+      result = await http.put(url, headers: {
+        "Accept": "application/json",
+        "content-type": "application/json",
+        'Authorization': 'Bearer $token',
+      });
+    }
+    return result;
+  }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foosball_mobile_app/widgets/organisation/change_organisation.dart';
 import 'package:foosball_mobile_app/widgets/organisation/join_organisation.dart';
 import 'package:foosball_mobile_app/widgets/organisation/new_organisation.dart';
 import 'package:foosball_mobile_app/widgets/organisation/organisation_manage_players.dart';
@@ -85,6 +86,16 @@ class _OrganisationSettingsState extends State<OrganisationSettings> {
                   )));
     }
 
+    goToChangeOrganisation(BuildContext context) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ChangeOrganisation(
+                    userState: widget.userState,
+                    // to do
+                  )));
+    }
+
     List<AbstractSettingsTile> setTiles(UserResponse userData) {
       List<AbstractSettingsTile> result = [
         SettingsTile(
@@ -105,7 +116,9 @@ class _OrganisationSettingsState extends State<OrganisationSettings> {
         SettingsTile(
           title: Text(widget.userState.hardcodedStrings.changeOrganisation),
           leading: const Icon(Icons.change_circle),
-          onPressed: (BuildContext context) {},
+          onPressed: (BuildContext context) {
+            goToChangeOrganisation(context);
+          },
         ),
       ];
 
