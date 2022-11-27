@@ -89,8 +89,8 @@ class _ChangeOrganisationState extends State<ChangeOrganisation> {
       // call api and change current organisation
       changedOrg = true;
       await showMyDialog(
-          "Are you sure you want to change organiation. You will be loged out if you choose yes.",
-          "Change organisation",
+          widget.userState.hardcodedStrings.changeOrganisationAlertText,
+          widget.userState.hardcodedStrings.changeOrganisation,
           widget.userState.userInfoGlobal.currentOrganisationId,
           orgData.id);
     }

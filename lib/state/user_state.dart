@@ -119,7 +119,8 @@ abstract class _UserState with Store {
       admin: "",
       deleteUser: "",
       active: "",
-      inactive: "");
+      inactive: "",
+      changeOrganisationAlertText: "");
 
   @observable
   bool darkmode = false;
