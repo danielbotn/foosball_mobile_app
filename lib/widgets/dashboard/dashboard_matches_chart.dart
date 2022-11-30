@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:community_charts_flutter/community_charts_flutter.dart'
+    as charts;
 import 'package:foosball_mobile_app/models/charts/user_stats_response.dart';
 import 'package:foosball_mobile_app/models/charts/matches_chart.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
@@ -27,20 +28,20 @@ class _DashboardMatchesChartState extends State<DashboardMatchesChart> {
       MatchesChart(
         name: widget.userState.hardcodedStrings.matches,
         matches: widget.userStatsResponse!.totalMatches,
-        barColor:
-            charts.ColorUtil.fromDartColor(Color.fromRGBO(255, 136, 0, .9)),
+        barColor: charts.ColorUtil.fromDartColor(
+            const Color.fromRGBO(255, 136, 0, .9)),
       ),
       MatchesChart(
         name: widget.userState.hardcodedStrings.won,
         matches: widget.userStatsResponse!.totalMatchesWon,
-        barColor:
-            charts.ColorUtil.fromDartColor(Color.fromRGBO(127, 211, 29, .9)),
+        barColor: charts.ColorUtil.fromDartColor(
+            const Color.fromRGBO(127, 211, 29, .9)),
       ),
       MatchesChart(
         name: widget.userState.hardcodedStrings.lost,
         matches: widget.userStatsResponse!.totalMatchesLost,
-        barColor:
-            charts.ColorUtil.fromDartColor(Color.fromRGBO(112, 193, 255, .9)),
+        barColor: charts.ColorUtil.fromDartColor(
+            const Color.fromRGBO(112, 193, 255, .9)),
       )
     ];
 
