@@ -28,7 +28,7 @@ packages:
       name: another_transformer_page_view
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.0"
+    version: "2.0.1"
   archive:
     dependency: transitive
     description:
@@ -271,7 +271,7 @@ packages:
       name: flutter_login
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.2.0"
+    version: "4.1.0"
   flutter_mobx:
     dependency: "direct main"
     description:
@@ -286,13 +286,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.9"
-  flutter_signin_button:
-    dependency: transitive
-    description:
-      name: flutter_signin_button
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -309,7 +302,7 @@ packages:
       name: font_awesome_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "9.2.0"
+    version: "10.2.1"
   frontend_server_client:
     dependency: transitive
     description:
@@ -688,6 +681,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.3"
+  sign_in_button:
+    dependency: transitive
+    description:
+      name: sign_in_button
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.1.0"
   sky_engine:
     dependency: transitive
     description: flutter
