@@ -36,7 +36,7 @@ class _OrganisationManagePlayerState extends State<OrganisationManagePlayer> {
   List<AbstractSettingsTile> setTiles() {
     List<AbstractSettingsTile> result = [
       SettingsTile(
-        title: Text(widget.userData.firstName + widget.userData.lastName),
+        title: Text("${widget.userData.firstName} ${widget.userData.lastName}"),
         leading: Image.network(widget.userData.photoUrl, width: 40, height: 40),
         trailing: GestureDetector(
           child: Text(widget.userState.hardcodedStrings.deleteUser),
@@ -47,7 +47,7 @@ class _OrganisationManagePlayerState extends State<OrganisationManagePlayer> {
       ),
       SettingsTile.switchTile(
         title: Text(widget.userState.hardcodedStrings.admin),
-        leading: const Icon(Icons.phone_android),
+        leading: const Icon(Icons.admin_panel_settings),
         initialValue: isChecked,
         onToggle: (value) async {
           String token = widget.userState.token;
@@ -75,8 +75,8 @@ class _OrganisationManagePlayerState extends State<OrganisationManagePlayer> {
 
       // if user is active or not
       SettingsTile.switchTile(
-        title: const Text('Active'),
-        leading: const Icon(Icons.phone_android),
+        title: Text(widget.userState.hardcodedStrings.active),
+        leading: const Icon(Icons.check_rounded),
         initialValue: isDeleted,
         onToggle: (value) async {
           String token = widget.userState.token;
