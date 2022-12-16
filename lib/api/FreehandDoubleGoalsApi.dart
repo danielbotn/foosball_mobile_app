@@ -6,6 +6,8 @@ import 'package:foosball_mobile_app/models/freehand-double-goals/freehand_double
 import 'package:foosball_mobile_app/models/freehand-double-goals/freehand_double_goal_return.dart';
 import 'package:http/http.dart' as http;
 
+import 'TokenHelper.dart';
+
 class FreehandDoubleGoalsApi {
   final String token;
 
@@ -13,6 +15,8 @@ class FreehandDoubleGoalsApi {
 
   Future<List<FreehandDoubleGoalModel>?> getFreehandDoubleGoals(
       int matchId) async {
+    TokenHelper tokenHelper = TokenHelper();
+    String checkedToken = await tokenHelper.checkTokenExpiry(token);
     late List<FreehandDoubleGoalModel>? result;
 
     String? baseUrl = kReleaseMode
@@ -31,7 +35,7 @@ class FreehandDoubleGoalsApi {
       var response = await http.get(outgoingUri, headers: {
         "Accept": "application/json",
         "content-type": "application/json",
-        'Authorization': 'Bearer $token',
+        'Authorization': 'Bearer $checkedToken',
       });
 
       if (response.statusCode == 200) {
@@ -50,6 +54,8 @@ class FreehandDoubleGoalsApi {
 
   Future<FreehandDoubleGoalReturn?> createDoubleFreehandGoal(
       FreehandDoubleGoalBody freehandGoalBody) async {
+    TokenHelper tokenHelper = TokenHelper();
+    String checkedToken = await tokenHelper.checkTokenExpiry(token);
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']
         : dotenv.env['REST_URL_PATH_DEV'];
@@ -77,7 +83,7 @@ class FreehandDoubleGoalsApi {
         headers: {
           "Accept": "application/json",
           "content-type": "application/json",
-          'Authorization': 'Bearer $token',
+          'Authorization': 'Bearer $checkedToken',
         },
         body: jsonEncode(jsonObject),
       );
@@ -92,6 +98,8 @@ class FreehandDoubleGoalsApi {
 
   // Delete a goal
   Future<bool> deleteFreehandDoubleGoal(int goalId, int matchId) async {
+    TokenHelper tokenHelper = TokenHelper();
+    String checkedToken = await tokenHelper.checkTokenExpiry(token);
     bool result = false;
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']
@@ -111,7 +119,7 @@ class FreehandDoubleGoalsApi {
         headers: {
           "Accept": "application/json",
           "content-type": "application/json",
-          'Authorization': 'Bearer $token',
+          'Authorization': 'Bearer $checkedToken',
         },
       );
 

@@ -6,12 +6,16 @@ import 'package:foosball_mobile_app/models/freehand-matches/freehand_match_creat
 import 'package:foosball_mobile_app/models/freehand-matches/freehand_match_model.dart';
 import 'package:http/http.dart' as http;
 
+import 'TokenHelper.dart';
+
 class FreehandMatchApi {
   final String token;
 
   FreehandMatchApi({required this.token});
 
   Future<FreehandMatchModel?> getFreehandMatch(int matchId) async {
+    TokenHelper tokenHelper = TokenHelper();
+    String checkedToken = await tokenHelper.checkTokenExpiry(token);
     late FreehandMatchModel? result;
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']
@@ -21,7 +25,7 @@ class FreehandMatchApi {
       var response = await http.get(url, headers: {
         "Accept": "application/json",
         "content-type": "application/json",
-        'Authorization': 'Bearer $token',
+        'Authorization': 'Bearer $checkedToken',
       });
 
       if (response.statusCode == 200) {
@@ -36,6 +40,8 @@ class FreehandMatchApi {
 
   Future<FreehandMatchCreateResponse?> createNewFreehandMatch(
       FreehandMatchBody freehandMatchBody) async {
+    TokenHelper tokenHelper = TokenHelper();
+    String checkedToken = await tokenHelper.checkTokenExpiry(token);
     late FreehandMatchCreateResponse? result;
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']
@@ -63,7 +69,7 @@ class FreehandMatchApi {
         headers: {
           "Accept": "application/json",
           "content-type": "application/json",
-          'Authorization': 'Bearer $token',
+          'Authorization': 'Bearer $checkedToken',
         },
         body: jsonEncode(jsonObject),
       );
@@ -80,6 +86,8 @@ class FreehandMatchApi {
   }
 
   Future<bool> deleteFreehandMatch(int matchId) async {
+    TokenHelper tokenHelper = TokenHelper();
+    String checkedToken = await tokenHelper.checkTokenExpiry(token);
     bool success = false;
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']
@@ -98,7 +106,7 @@ class FreehandMatchApi {
         headers: {
           "Accept": "application/json",
           "content-type": "application/json",
-          'Authorization': 'Bearer $token',
+          'Authorization': 'Bearer $checkedToken',
         },
       );
 

@@ -6,12 +6,16 @@ import 'package:foosball_mobile_app/models/user/user_last_ten.dart';
 import 'package:foosball_mobile_app/models/user/user_response.dart';
 import 'package:http/http.dart' as http;
 
+import 'TokenHelper.dart';
+
 class UserApi {
   final String token;
 
   UserApi({required this.token});
 
   Future<UserResponse> getUser(String userId) async {
+    TokenHelper tokenHelper = TokenHelper();
+    String checkedToken = await tokenHelper.checkTokenExpiry(token);
     late UserResponse result;
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']
@@ -21,7 +25,7 @@ class UserApi {
       var response = await http.get(url, headers: {
         "Accept": "application/json",
         "content-type": "application/json",
-        'Authorization': 'Bearer $token',
+        'Authorization': 'Bearer $checkedToken',
       });
 
       if (response.statusCode == 200) {
@@ -34,6 +38,8 @@ class UserApi {
   }
 
   Future<UserStatsResponse> getUserStats() async {
+    TokenHelper tokenHelper = TokenHelper();
+    String checkedToken = await tokenHelper.checkTokenExpiry(token);
     late UserStatsResponse result;
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']
@@ -43,7 +49,7 @@ class UserApi {
       var response = await http.get(url, headers: {
         "Accept": "application/json",
         "content-type": "application/json",
-        'Authorization': 'Bearer $token',
+        'Authorization': 'Bearer $checkedToken',
       });
 
       if (response.statusCode == 200) {
@@ -63,6 +69,8 @@ class UserApi {
   }
 
   Future<List<UserLastTen>?> getLastTenMatches() async {
+    TokenHelper tokenHelper = TokenHelper();
+    String checkedToken = await tokenHelper.checkTokenExpiry(token);
     late List<UserLastTen>? result;
 
     String? baseUrl = kReleaseMode
@@ -74,7 +82,7 @@ class UserApi {
       var response = await http.get(url, headers: {
         "Accept": "application/json",
         "content-type": "application/json",
-        'Authorization': 'Bearer $token',
+        'Authorization': 'Bearer $checkedToken',
       });
 
       if (response.statusCode == 200) {
@@ -92,6 +100,8 @@ class UserApi {
   }
 
   Future<List<UserResponse>?> getUsers() async {
+    TokenHelper tokenHelper = TokenHelper();
+    String checkedToken = await tokenHelper.checkTokenExpiry(token);
     late List<UserResponse>? result;
 
     String? baseUrl = kReleaseMode
@@ -103,7 +113,7 @@ class UserApi {
       var response = await http.get(url, headers: {
         "Accept": "application/json",
         "content-type": "application/json",
-        'Authorization': 'Bearer $token',
+        'Authorization': 'Bearer $checkedToken',
       });
 
       if (response.statusCode == 200) {

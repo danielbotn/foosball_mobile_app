@@ -103,6 +103,7 @@ class _ChangeOrganisationState extends State<ChangeOrganisation> {
     preferencesService.deleteDarkTheme();
     preferencesService.deleteLanguage();
     preferencesService.deleteJwtToken();
+    preferencesService.deleteRefreshToken();
 
     widget.userState.setToken('');
     widget.userState.setCurrentOrganisationId(0);

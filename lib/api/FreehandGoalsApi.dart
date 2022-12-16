@@ -6,6 +6,8 @@ import 'package:foosball_mobile_app/models/freehand-goals/freehand_goal_model.da
 import 'package:foosball_mobile_app/models/freehand-goals/freehand_goals_model.dart';
 import 'package:http/http.dart' as http;
 
+import 'TokenHelper.dart';
+
 class FreehandGoalsApi {
   final String token;
 
@@ -13,6 +15,8 @@ class FreehandGoalsApi {
 
   Future<FreehandGoalModel?> createFreehandGoal(
       FreehandGoalBody freehandGoalBody) async {
+    TokenHelper tokenHelper = TokenHelper();
+    String checkedToken = await tokenHelper.checkTokenExpiry(token);
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']
         : dotenv.env['REST_URL_PATH_DEV'];
@@ -41,7 +45,7 @@ class FreehandGoalsApi {
         headers: {
           "Accept": "application/json",
           "content-type": "application/json",
-          'Authorization': 'Bearer $token',
+          'Authorization': 'Bearer $checkedToken',
         },
         body: jsonEncode(jsonObject),
       );
@@ -56,6 +60,8 @@ class FreehandGoalsApi {
   }
 
   Future<List<FreehandGoalsModel>?> getFreehandGoals(int matchId) async {
+    TokenHelper tokenHelper = TokenHelper();
+    String checkedToken = await tokenHelper.checkTokenExpiry(token);
     late List<FreehandGoalsModel>? result;
 
     String? baseUrl = kReleaseMode
@@ -74,7 +80,7 @@ class FreehandGoalsApi {
       var response = await http.get(outgoingUri, headers: {
         "Accept": "application/json",
         "content-type": "application/json",
-        'Authorization': 'Bearer $token',
+        'Authorization': 'Bearer $checkedToken',
       });
 
       if (response.statusCode == 200) {
@@ -92,6 +98,8 @@ class FreehandGoalsApi {
   }
 
   Future<bool> deleteFreehandGoal(int goalId, int matchId) async {
+    TokenHelper tokenHelper = TokenHelper();
+    String checkedToken = await tokenHelper.checkTokenExpiry(token);
     bool result = false;
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']
@@ -111,7 +119,7 @@ class FreehandGoalsApi {
         headers: {
           "Accept": "application/json",
           "content-type": "application/json",
-          'Authorization': 'Bearer $token',
+          'Authorization': 'Bearer $checkedToken',
         },
       );
 

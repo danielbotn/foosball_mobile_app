@@ -6,12 +6,16 @@ import 'package:foosball_mobile_app/models/freehand-double-matches/freehand_doub
 import 'package:foosball_mobile_app/models/freehand-double-matches/freehand_double_match_model.dart';
 import 'package:http/http.dart' as http;
 
+import 'TokenHelper.dart';
+
 class FreehandDoubleMatchApi {
   final String token;
 
   FreehandDoubleMatchApi({required this.token});
 
   Future<FreehandDoubleMatchModel?> getDoubleFreehandMatch(int matchId) async {
+    TokenHelper tokenHelper = TokenHelper();
+    String checkedToken = await tokenHelper.checkTokenExpiry(token);
     late FreehandDoubleMatchModel? result;
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']
@@ -21,7 +25,7 @@ class FreehandDoubleMatchApi {
       var response = await http.get(url, headers: {
         "Accept": "application/json",
         "content-type": "application/json",
-        'Authorization': 'Bearer $token',
+        'Authorization': 'Bearer $checkedToken',
       });
 
       if (response.statusCode == 200) {
@@ -36,6 +40,8 @@ class FreehandDoubleMatchApi {
 
   Future<FreehandDoubleMatchCreateResponse?> createNewDoubleFreehandMatch(
       FreehandDoubleMatchBody freehandMatchBody) async {
+    TokenHelper tokenHelper = TokenHelper();
+    String checkedToken = await tokenHelper.checkTokenExpiry(token);
     late FreehandDoubleMatchCreateResponse? result;
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']
@@ -66,7 +72,7 @@ class FreehandDoubleMatchApi {
         headers: {
           "Accept": "application/json",
           "content-type": "application/json",
-          'Authorization': 'Bearer $token',
+          'Authorization': 'Bearer $checkedToken',
         },
         body: jsonEncode(jsonObject),
       );
@@ -83,6 +89,8 @@ class FreehandDoubleMatchApi {
   }
 
   Future<bool> deleteDoubleFreehandMatch(int matchId) async {
+    TokenHelper tokenHelper = TokenHelper();
+    String checkedToken = await tokenHelper.checkTokenExpiry(token);
     bool result = false;
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']
@@ -101,7 +109,7 @@ class FreehandDoubleMatchApi {
         headers: {
           "Accept": "application/json",
           "content-type": "application/json",
-          'Authorization': 'Bearer $token',
+          'Authorization': 'Bearer $checkedToken',
         },
       );
 

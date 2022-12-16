@@ -42,6 +42,7 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
     preferencesService.deleteDarkTheme();
     preferencesService.deleteLanguage();
     preferencesService.deleteJwtToken();
+    preferencesService.deleteRefreshToken();
 
     userState.setToken('');
     userState.setCurrentOrganisationId(0);

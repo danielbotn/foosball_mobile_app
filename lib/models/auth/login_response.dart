@@ -9,10 +9,18 @@ class LoginResponse {
   final String firstName;
   final String lastName;
   final String token;
+  final String refreshToken;
 
-  LoginResponse({required this.id, required this.email, required this.firstName, required this.lastName, required this.token});
+  LoginResponse(
+      {required this.id,
+      required this.email,
+      required this.firstName,
+      required this.lastName,
+      required this.token,
+      required this.refreshToken});
 
-  factory LoginResponse.fromJson(Map<String, dynamic> item) => _$LoginResponseFromJson(item);
+  factory LoginResponse.fromJson(Map<String, dynamic> item) =>
+      _$LoginResponseFromJson(item);
 
   Map<String, dynamic> toJson(item) => _$LoginResponseToJson(item);
 }

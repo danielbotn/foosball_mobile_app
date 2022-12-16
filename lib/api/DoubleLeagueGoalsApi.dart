@@ -4,12 +4,16 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:foosball_mobile_app/models/double-league-goals/double_league_goal_model.dart';
 import 'package:http/http.dart' as http;
 
+import 'TokenHelper.dart';
+
 class DoubleLeagueGoalsApi {
   final String token;
 
   DoubleLeagueGoalsApi({required this.token});
 
   Future<List<DoubleLeagueGoalModel>?> getDoubleLeagueGoals(int matchId) async {
+    TokenHelper tokenHelper = TokenHelper();
+    String checkedToken = await tokenHelper.checkTokenExpiry(token);
     late List<DoubleLeagueGoalModel>? result;
 
     String? baseUrl = kReleaseMode
@@ -28,7 +32,7 @@ class DoubleLeagueGoalsApi {
       var response = await http.get(outgoingUri, headers: {
         "Accept": "application/json",
         "content-type": "application/json",
-        'Authorization': 'Bearer $token',
+        'Authorization': 'Bearer $checkedToken',
       });
 
       if (response.statusCode == 200) {

@@ -73,8 +73,11 @@ void main() async {
     setLanguageInfo();
 
     bool isTokenExpired = JwtDecoder.isExpired(token);
+    print("isTokenExpired: $isTokenExpired");
     if (isTokenExpired == false) {
       theRoute = 'dashboard';
+    } else {
+      // to do, use refresh token to log user back in
     }
   }
 
@@ -93,6 +96,19 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   UserState param = userState;
+
+  @override
+  void didUpdateWidget(MyApp old) {
+    print('did update widget called in main');
+    super.didUpdateWidget(old);
+  }
+
+  @override
+  void didChangeDependencies() {
+    print('didChangeDependencies called in main');
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

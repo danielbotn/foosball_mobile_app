@@ -25,7 +25,6 @@ class _LoginState extends State<Login> {
   // State
   late UserState dashboardData;
   late RegisterResponse registrationData;
-  Duration get loginTime => Duration(milliseconds: 2250);
 
   Future<String?> loginUser(LoginData data) async {
     AuthApi auth = AuthApi();
@@ -35,6 +34,7 @@ class _LoginState extends State<Login> {
 
     if (value != null) {
       await preferencesService.deleteJwtToken();
+      await preferencesService.deleteRefreshToken();
     }
     var loginData = await auth.login(data);
 
@@ -44,6 +44,10 @@ class _LoginState extends State<Login> {
     } else {
       var loginResponse = LoginResponse.fromJson(jsonDecode(loginData.body));
       await preferencesService.setJwtToken(loginResponse.token);
+      print('yyyyyyyyy');
+      print(loginResponse.refreshToken);
+      print('yyyyyyyyy');
+      await preferencesService.setRefreshToken(loginResponse.refreshToken);
       setJwtInfo(loginResponse);
 
       if (langFromStorage != null) {
@@ -76,6 +80,7 @@ class _LoginState extends State<Login> {
   }
 
   Future<String> _recoverPassword(String name) {
+    Duration loginTime = const Duration(milliseconds: 2250);
     return Future.delayed(loginTime).then((_) {
       return "null";
     });

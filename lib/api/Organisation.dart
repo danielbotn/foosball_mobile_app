@@ -4,11 +4,15 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
+import 'TokenHelper.dart';
+
 class Organisation {
   final String token;
   Organisation({required this.token});
 
   Future<http.Response> getOrganisationById(int organisationId) async {
+    TokenHelper tokenHelper = TokenHelper();
+    String checkedToken = await tokenHelper.checkTokenExpiry(token);
     late http.Response result;
 
     String? baseUrl = kReleaseMode
@@ -20,13 +24,15 @@ class Organisation {
       result = await http.get(url, headers: {
         "Accept": "application/json",
         "content-type": "application/json",
-        'Authorization': 'Bearer $token',
+        'Authorization': 'Bearer $checkedToken',
       });
     }
     return result;
   }
 
   Future<http.Response> getOrganisationsByUser() async {
+    TokenHelper tokenHelper = TokenHelper();
+    String checkedToken = await tokenHelper.checkTokenExpiry(token);
     late http.Response result;
 
     String? baseUrl = kReleaseMode
@@ -38,13 +44,15 @@ class Organisation {
       result = await http.get(url, headers: {
         "Accept": "application/json",
         "content-type": "application/json",
-        'Authorization': 'Bearer $token',
+        'Authorization': 'Bearer $checkedToken',
       });
     }
     return result;
   }
 
   Future<http.Response> createNewOrganisation(String name) async {
+    TokenHelper tokenHelper = TokenHelper();
+    String checkedToken = await tokenHelper.checkTokenExpiry(token);
     late http.Response result;
 
     String? baseUrl = kReleaseMode
@@ -57,7 +65,7 @@ class Organisation {
           headers: {
             "Accept": "application/json",
             "content-type": "application/json",
-            'Authorization': 'Bearer $token',
+            'Authorization': 'Bearer $checkedToken',
           },
           body: body);
     }
@@ -66,6 +74,8 @@ class Organisation {
 
   Future<http.Response> joinOrganisation(
       String organisationCodeAndOrganisationId) async {
+    TokenHelper tokenHelper = TokenHelper();
+    String checkedToken = await tokenHelper.checkTokenExpiry(token);
     late http.Response result;
 
     String? baseUrl = kReleaseMode
@@ -80,7 +90,7 @@ class Organisation {
           headers: {
             "Accept": "application/json",
             "content-type": "application/json",
-            'Authorization': 'Bearer $token',
+            'Authorization': 'Bearer $checkedToken',
           },
           body: body);
     }
@@ -89,6 +99,8 @@ class Organisation {
 
   Future<http.Response> updateUserIsAdmin(
       int organisationId, int userIdToChange, bool isAdmin) async {
+    TokenHelper tokenHelper = TokenHelper();
+    String checkedToken = await tokenHelper.checkTokenExpiry(token);
     late http.Response result;
 
     String? baseUrl = kReleaseMode
@@ -101,7 +113,7 @@ class Organisation {
       result = await http.put(url, headers: {
         "Accept": "application/json",
         "content-type": "application/json",
-        'Authorization': 'Bearer $token',
+        'Authorization': 'Bearer $checkedToken',
       });
     }
     return result;
@@ -109,6 +121,8 @@ class Organisation {
 
   Future<http.Response> leaveOrRejoinOrganisation(
       int organisationId, int userId, bool isDeleted) async {
+    TokenHelper tokenHelper = TokenHelper();
+    String checkedToken = await tokenHelper.checkTokenExpiry(token);
     late http.Response result;
 
     String? baseUrl = kReleaseMode
@@ -121,7 +135,7 @@ class Organisation {
       result = await http.put(url, headers: {
         "Accept": "application/json",
         "content-type": "application/json",
-        'Authorization': 'Bearer $token',
+        'Authorization': 'Bearer $checkedToken',
       });
     }
     return result;
@@ -129,6 +143,8 @@ class Organisation {
 
   Future<http.Response> changeOrganisation(
       int organisationId, int newOrganisationId, int userId) async {
+    TokenHelper tokenHelper = TokenHelper();
+    String checkedToken = await tokenHelper.checkTokenExpiry(token);
     late http.Response result;
 
     String? baseUrl = kReleaseMode
@@ -141,7 +157,7 @@ class Organisation {
       result = await http.put(url, headers: {
         "Accept": "application/json",
         "content-type": "application/json",
-        'Authorization': 'Bearer $token',
+        'Authorization': 'Bearer $checkedToken',
       });
     }
     return result;
