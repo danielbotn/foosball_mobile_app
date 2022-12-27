@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_login/flutter_login.dart';
-import 'package:foosball_mobile_app/models/auth/refresh_modal.dart';
+import 'package:foosball_mobile_app/models/auth/refresh_model.dart';
 import 'package:http/http.dart' as http;
 
 class AuthApi {
@@ -44,7 +44,8 @@ class AuthApi {
   }
 
   // Register user
-  // request body should be in the form of: { "email": "email", "password": "password", "firstName": "firstName", "lastName": "lastName" }
+  // request body should be in the form of:
+  //{ "email": "email", "password": "password", "firstName": "firstName", "r": "lastName" }
   Future<http.Response> register(SignupData data) async {
     late http.Response result;
     String? baseUrl = kReleaseMode

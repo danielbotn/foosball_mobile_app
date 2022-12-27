@@ -44,9 +44,6 @@ class _LoginState extends State<Login> {
     } else {
       var loginResponse = LoginResponse.fromJson(jsonDecode(loginData.body));
       await preferencesService.setJwtToken(loginResponse.token);
-      print('yyyyyyyyy');
-      print(loginResponse.refreshToken);
-      print('yyyyyyyyy');
       await preferencesService.setRefreshToken(loginResponse.refreshToken);
       setJwtInfo(loginResponse);
 
