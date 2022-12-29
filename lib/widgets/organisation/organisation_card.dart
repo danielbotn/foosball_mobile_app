@@ -17,7 +17,7 @@ class OrganisationCard extends StatelessWidget {
     return Card(
       color:
           userState.darkmode ? AppColors.darkModeBackground : AppColors.white,
-      // elevation: 5,
+      elevation: 0,
       child: ListTile(
         leading: Icon(Icons.home_work_rounded,
             color: userState.darkmode ? Colors.white : Colors.grey),
@@ -30,7 +30,8 @@ class OrganisationCard extends StatelessWidget {
           userState: userState,
         ),
         trailing: IconButton(
-          icon: const Icon(Icons.settings),
+          icon: Icon(Icons.settings,
+              color: userState.darkmode ? Colors.white : Colors.grey),
           onPressed: () {
             Navigator.push(
                 context,

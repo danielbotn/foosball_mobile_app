@@ -131,6 +131,10 @@ class DashboardState extends State<Dashboard> {
         currrentOrganisationId, currentOrganisationName);
   }
 
+  void updateAllState() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     bool darkMode = widget.param.darkmode;
@@ -144,7 +148,10 @@ class DashboardState extends State<Dashboard> {
                   : IconThemeData(color: Colors.grey[700]),
               backgroundColor:
                   darkMode ? AppColors.darkModeBackground : AppColors.white),
-          drawer: DrawerSideBar(userState: widget.param),
+          drawer: DrawerSideBar(
+            userState: widget.param,
+            notifyParent: updateAllState,
+          ),
           onDrawerChanged: (isOpen) {
             setState(() {
               userStateState = widget.param;
@@ -197,7 +204,10 @@ class DashboardState extends State<Dashboard> {
                                 headline: userStateState
                                     .hardcodedStrings.quickActions,
                                 userState: userState),
-                            QuicActions(userState: userState),
+                            QuicActions(
+                              userState: userState,
+                              notifyParent: updateAllState,
+                            ),
                             Headline(
                                 headline: userStateState
                                     .hardcodedStrings.lastTenMatches,

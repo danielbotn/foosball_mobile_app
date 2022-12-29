@@ -73,6 +73,10 @@ class _OrganisationPlayersState extends State<OrganisationPlayers> {
               String headline = getHeadline(playersData![index]);
 
               return Card(
+                elevation: 0,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.zero,
+                ),
                 margin: EdgeInsets.zero,
                 color: widget.userState.darkmode
                     ? AppColors.darkModeBackground

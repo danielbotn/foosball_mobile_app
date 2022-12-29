@@ -86,8 +86,6 @@ class _DashBoardLastFiveState extends State<DashBoardLastFive> {
       matchId: data.matchId,
     );
     if (data.typeOfMatch == 0) {
-      print("freehand single match");
-
       Navigator.push(
           context,
           MaterialPageRoute(
@@ -95,7 +93,6 @@ class _DashBoardLastFiveState extends State<DashBoardLastFive> {
                     twoPlayersObject: tpo,
                   )));
     } else if (data.typeOfMatch == 1) {
-      print("freehand double match");
       Navigator.push(
           context,
           MaterialPageRoute(

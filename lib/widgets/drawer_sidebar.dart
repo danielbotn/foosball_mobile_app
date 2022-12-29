@@ -13,7 +13,10 @@ import 'organisation/organisation.dart';
 class DrawerSideBar extends StatefulWidget {
   // Props variables
   final UserState userState;
-  const DrawerSideBar({Key? key, required this.userState}) : super(key: key);
+  final Function() notifyParent;
+  const DrawerSideBar(
+      {Key? key, required this.userState, required this.notifyParent})
+      : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api
@@ -88,7 +91,9 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
         MaterialPageRoute(
             builder: (context) => Settings(
                   userState: userState,
-                )));
+                ))).then(((value) {
+      widget.notifyParent();
+    }));
   }
 
   @override

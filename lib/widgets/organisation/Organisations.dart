@@ -101,31 +101,42 @@ class _OrganisationsState extends State<Organisations> {
                   String headline = getHeadline(orgData![index]);
 
                   return Card(
+                    elevation: 0,
                     margin: EdgeInsets.zero,
                     color: widget.userState.darkmode
                         ? AppColors.darkModeBackground
                         : AppColors.white,
                     child: ListTile(
-                      leading: Icon(
-                        Icons.account_balance_rounded,
-                        color: userState.darkmode
-                            ? AppColors.white
-                            : AppColors.textGrey,
-                      ),
-                      title: ExtendedText(
-                        text: headline,
-                        userState: userState,
-                      ),
-                      trailing: Checkbox(
-                        checkColor: Colors.white,
-                        activeColor:
-                            helpers.getCheckMarkColor(userState.darkmode),
-                        value: checkIfCurrentOrganisation(orgData![index]),
-                        onChanged: (bool? value) {
-                          // to do
-                        },
-                      ),
-                    ),
+                        leading: Icon(
+                          Icons.account_balance_rounded,
+                          color: userState.darkmode
+                              ? AppColors.white
+                              : AppColors.textGrey,
+                        ),
+                        title: ExtendedText(
+                          text: headline,
+                          userState: userState,
+                        ),
+                        trailing: Checkbox(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(2.0),
+                          ),
+                          side: MaterialStateBorderSide.resolveWith((states) {
+                            if (widget.userState.darkmode) {
+                              return const BorderSide(
+                                  width: 1.0, color: AppColors.white);
+                            }
+                            return const BorderSide(
+                                width: 1.0, color: AppColors.textGrey);
+                          }),
+                          checkColor: Colors.white,
+                          activeColor: helpers
+                              .getCheckMarkColor(widget.userState.darkmode),
+                          value: checkIfCurrentOrganisation(orgData![index]),
+                          onChanged: (bool? value) {
+                            // to do
+                          },
+                        )),
                   );
                 },
               ));
