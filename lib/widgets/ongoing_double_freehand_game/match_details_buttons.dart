@@ -45,7 +45,7 @@ class MatchDetailButtons extends StatelessWidget {
       matchApi.createNewDoubleFreehandMatch(fmb).then((value) {
         OngoingDoubleGameObject gameObject = OngoingDoubleGameObject(
           userState: userState,
-          freehandDoubleMatchCreateResponse: data.freehandMatchCreateResponse,
+          freehandDoubleMatchCreateResponse: value,
           playerOneTeamA: data.teamOne.players[0],
           playerTwoTeamA: data.teamOne.players[1],
           playerOneTeamB: data.teamTwo.players[0],

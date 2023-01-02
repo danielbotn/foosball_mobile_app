@@ -14,8 +14,12 @@ import 'package:foosball_mobile_app/widgets/ongoing_freehand_game/ongoing_freeha
 class StartGameButton extends StatelessWidget {
   final UserState userState;
   final NewGameState newGameState;
+  final String buttonText;
   const StartGameButton(
-      {Key? key, required this.userState, required this.newGameState})
+      {Key? key,
+      required this.userState,
+      required this.newGameState,
+      required this.buttonText})
       : super(key: key);
 
   @override
@@ -110,7 +114,7 @@ class StartGameButton extends StatelessWidget {
                         ? AppColors.lightThemeShadowColor
                         : AppColors.buttonsLightTheme,
                     minimumSize: const Size(100, 50)),
-                child: Text(userState.hardcodedStrings.startGame),
+                child: Text(buttonText),
               ),
             )),
       ],

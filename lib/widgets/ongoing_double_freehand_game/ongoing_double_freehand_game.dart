@@ -35,7 +35,8 @@ class _OngoingDoubleFreehandGameState extends State<OngoingDoubleFreehandGame> {
     UserResponse playerOneTeamA = widget.ongoingDoubleGameObject.playerOneTeamA;
     UserResponse playerTwoTeamA = widget.ongoingDoubleGameObject.playerTwoTeamA;
     UserResponse playerOneTeamB = widget.ongoingDoubleGameObject.playerOneTeamB;
-    UserResponse playerTwoTeamB = widget.ongoingDoubleGameObject.playerTwoTeamB;
+    UserResponse playerTwoTeamB =
+        widget.ongoingDoubleGameObject.playerTwoTeamB as UserResponse;
     ongoingState.setTeamOne(playerOneTeamA, playerTwoTeamA, 0);
     ongoingState.setTeamTwo(playerOneTeamB, playerTwoTeamB, 0);
   }

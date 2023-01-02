@@ -115,6 +115,7 @@ class _NewGameState extends State<NewGame> {
                         StartGameButton(
                           userState: userState,
                           newGameState: newGameState,
+                          buttonText: userState.hardcodedStrings.startGame,
                         )
                       ])));
             } else {

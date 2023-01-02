@@ -8,15 +8,14 @@ class OngoingDoubleGameObject {
   UserResponse playerOneTeamA;
   UserResponse playerTwoTeamA;
   UserResponse playerOneTeamB;
-  UserResponse playerTwoTeamB;
+  UserResponse? playerTwoTeamB;
 
-  OngoingDoubleGameObject(
-      {
-        required this.userState,
-        required this.freehandDoubleMatchCreateResponse,
-        required this.playerOneTeamA,
-        required this.playerTwoTeamA,
-        required this.playerOneTeamB,
-        required this.playerTwoTeamB,
-      });
+  OngoingDoubleGameObject({
+    required this.userState,
+    required this.freehandDoubleMatchCreateResponse,
+    required this.playerOneTeamA,
+    required this.playerTwoTeamA,
+    required this.playerOneTeamB,
+    required this.playerTwoTeamB,
+  });
 }

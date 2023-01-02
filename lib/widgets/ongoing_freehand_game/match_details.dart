@@ -140,7 +140,7 @@ class _MatchDetailsState extends State<MatchDetails> {
                     userState: widget.freehandMatchDetailObject.userState,
                     freehandGoals: goals,
                   ),
-                  Spacer(),
+                  const Spacer(),
                   MatchDetailButtons(
                       userState: widget.freehandMatchDetailObject.userState,
                       freehandMatchDetailObject:
@@ -149,7 +149,7 @@ class _MatchDetailsState extends State<MatchDetails> {
               ),
             );
           } else {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }

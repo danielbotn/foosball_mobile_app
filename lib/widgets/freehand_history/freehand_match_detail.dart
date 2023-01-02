@@ -159,7 +159,8 @@ class _FreehandMatchDetailState extends State<FreehandMatchDetail> {
                       freehandGoals: freehandGoals,
                     ),
                     const Spacer(),
-                    FreehandMatchButtons(userState: userState)
+                    FreehandMatchButtons(
+                        userState: userState, freehandMatchData: freehandMatch)
                   ],
                 ));
           } else {

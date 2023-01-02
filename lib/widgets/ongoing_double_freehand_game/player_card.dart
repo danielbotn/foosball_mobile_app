@@ -74,7 +74,7 @@ class _PlayerCardState extends State<PlayerCard> {
       scoredByUserId: widget.player.id,
       scorerTeamScore: getScorerScore(),
       opponentTeamScore: getOpponentScore(),
-      winnerGoal: getScorerScore() >= upTo - 1,
+      winnerGoal: getScorerScore() == upTo,
     );
     return await freehandDoubleGoalsApi.createDoubleFreehandGoal(body);
   }
