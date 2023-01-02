@@ -8,6 +8,7 @@ import 'package:foosball_mobile_app/models/freehand-matches/freehand_match_model
 import 'package:foosball_mobile_app/models/other/TwoPlayersObject.dart';
 import 'package:foosball_mobile_app/models/user/user_response.dart';
 import 'package:foosball_mobile_app/utils/helpers.dart';
+import 'package:foosball_mobile_app/widgets/dashboard/Dashboard.dart';
 import '../extended_Text.dart';
 import 'freehand_match_buttons.dart';
 import '../match_card.dart';
@@ -65,6 +66,63 @@ class _FreehandMatchDetailState extends State<FreehandMatchDetail> {
     return freehandMatch;
   }
 
+  // delete freehand game and goals and then navigate back to dashboard
+  void deleteMatch() {
+    FreehandMatchApi freehandMatchApi =
+        FreehandMatchApi(token: widget.twoPlayersObject.userState.token);
+    freehandMatchApi
+        .deleteFreehandMatch(widget.twoPlayersObject.matchId)
+        .then((value) {
+      if (value == true) {
+        // go to dashboard screen
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Dashboard(
+                      param: widget.twoPlayersObject.userState,
+                    )));
+      }
+    });
+  }
+
+  // Alert Dialog if user wants to delete freehand match
+  Future<void> alertDialog(String title, String message, String approve,
+      BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(message),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                  widget.twoPlayersObject.userState.hardcodedStrings.cancel),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child:
+                  Text(widget.twoPlayersObject.userState.hardcodedStrings.yes),
+              onPressed: () {
+                Navigator.of(context).pop();
+                deleteMatch();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     String matchDetails =
@@ -79,6 +137,19 @@ class _FreehandMatchDetailState extends State<FreehandMatchDetail> {
               Navigator.pop(context);
             },
           ),
+          actions: <Widget>[
+            IconButton(
+              icon: const Icon(Icons.delete),
+              onPressed: () async {
+                // Perform delete action
+                await alertDialog(
+                    "Delete this match",
+                    "Are you sure you want to delete this match",
+                    "Yes",
+                    context);
+              },
+            ),
+          ],
           iconTheme: helpers.getIconTheme(userState.darkmode),
           backgroundColor: helpers.getBackgroundColor(userState.darkmode)),
       body: FutureBuilder(
