@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/models/user/user_response.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
+import 'package:foosball_mobile_app/widgets/new_game/new_game.dart';
 
 import '../../api/FreehandMatchApi.dart';
 import '../../models/freehand-matches/freehand_match_body.dart';
@@ -18,7 +19,7 @@ class FreehandMatchButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void startFreehandSingleGame() {
+    void rematch() {
       FreehandMatchApi matchApi = FreehandMatchApi(token: userState.token);
 
       FreehandMatchBody fmb = FreehandMatchBody(
@@ -72,6 +73,15 @@ class FreehandMatchButtons extends StatelessWidget {
       });
     }
 
+    void newMatch() {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => NewGame(
+                    userState: userState,
+                  )));
+    }
+
     return Row(
       children: <Widget>[
         Expanded(
@@ -79,7 +89,7 @@ class FreehandMatchButtons extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(4.0),
               child: ElevatedButton(
-                onPressed: () => {},
+                onPressed: () => {newMatch()},
                 style: ElevatedButton.styleFrom(
                     primary: userState.darkmode
                         ? AppColors.lightThemeShadowColor
@@ -93,7 +103,7 @@ class FreehandMatchButtons extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(4.0),
               child: ElevatedButton(
-                onPressed: () => {startFreehandSingleGame()},
+                onPressed: () => {rematch()},
                 style: ElevatedButton.styleFrom(
                     primary: userState.darkmode
                         ? AppColors.lightThemeShadowColor
