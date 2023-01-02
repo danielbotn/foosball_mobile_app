@@ -86,18 +86,19 @@ class _FreehandMatchDetailState extends State<FreehandMatchDetail> {
   }
 
   // Alert Dialog if user wants to delete freehand match
-  Future<void> alertDialog(String title, String message, String approve,
-      BuildContext context) async {
+  Future<void> alertDialog(BuildContext context) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(title),
+          title: Text(widget
+              .twoPlayersObject.userState.hardcodedStrings.deleteThisMatch),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text(message),
+                Text(widget.twoPlayersObject.userState.hardcodedStrings
+                    .deleteMatchAreYouSure),
               ],
             ),
           ),
@@ -142,11 +143,7 @@ class _FreehandMatchDetailState extends State<FreehandMatchDetail> {
               icon: const Icon(Icons.delete),
               onPressed: () async {
                 // Perform delete action
-                await alertDialog(
-                    "Delete this match",
-                    "Are you sure you want to delete this match",
-                    "Yes",
-                    context);
+                await alertDialog(context);
               },
             ),
           ],

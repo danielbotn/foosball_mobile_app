@@ -92,6 +92,8 @@ class HardcodedStrings {
   final String active;
   final String inactive;
   final String changeOrganisationAlertText;
+  final String deleteThisMatch;
+  final String deleteMatchAreYouSure;
 
   HardcodedStrings(
       {required this.matches,
@@ -180,7 +182,9 @@ class HardcodedStrings {
       required this.deleteUser,
       required this.active,
       required this.inactive,
-      required this.changeOrganisationAlertText});
+      required this.changeOrganisationAlertText,
+      required this.deleteThisMatch,
+      required this.deleteMatchAreYouSure});
 
   factory HardcodedStrings.fromJson(Map<String, dynamic> item) =>
       _$HardcodedStringsFromJson(item);
