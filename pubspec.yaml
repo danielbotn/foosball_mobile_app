@@ -50,6 +50,7 @@ dependencies:
   qr_flutter: ^4.0.0
   majascan: ^0.5.0
   community_charts_flutter: ^1.0.0
+  flutter_keyboard_visibility: ^5.4.0
 
 flutter_native_splash:
   color: "#ffffff"

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:foosball_mobile_app/models/charts/user_stats_response.dart';
+import 'package:foosball_mobile_app/models/user/create_group_user_model.dart';
 import 'package:foosball_mobile_app/models/user/user_last_ten.dart';
 import 'package:foosball_mobile_app/models/user/user_response.dart';
 import 'package:http/http.dart' as http;
@@ -126,6 +127,29 @@ class UserApi {
       } else {
         result = null;
       }
+    }
+    return result;
+  }
+
+  Future<http.Response> createGroupUser(CreateGroupUserModel data) async {
+    TokenHelper tokenHelper = TokenHelper();
+    String checkedToken = await tokenHelper.checkTokenExpiry(token);
+    late http.Response result;
+    String? baseUrl = kReleaseMode
+        ? dotenv.env['REST_URL_PATH_PROD']
+        : dotenv.env['REST_URL_PATH_DEV'];
+    if (baseUrl != null) {
+      var url = Uri.parse('$baseUrl/api/Users/group-user');
+      var body = jsonEncode({
+        'firstName': data.firstName,
+        'lastName': data.lastName,
+      });
+
+      result = await http.post(url, body: body, headers: {
+        "Accept": "application/json",
+        "content-type": "application/json",
+        'Authorization': 'Bearer $checkedToken',
+      });
     }
     return result;
   }
