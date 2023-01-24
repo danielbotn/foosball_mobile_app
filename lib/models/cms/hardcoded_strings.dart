@@ -94,6 +94,12 @@ class HardcodedStrings {
   final String changeOrganisationAlertText;
   final String deleteThisMatch;
   final String deleteMatchAreYouSure;
+  final String createGroupPlayer;
+  final String groupPlayerInfoText;
+  final String groupPlayerCreateFailure;
+  final String groupPlayerCreateSuccess;
+  final String firstName;
+  final String lastName;
 
   HardcodedStrings(
       {required this.matches,
@@ -184,7 +190,13 @@ class HardcodedStrings {
       required this.inactive,
       required this.changeOrganisationAlertText,
       required this.deleteThisMatch,
-      required this.deleteMatchAreYouSure});
+      required this.deleteMatchAreYouSure,
+      required this.createGroupPlayer,
+      required this.groupPlayerInfoText,
+      required this.groupPlayerCreateFailure,
+      required this.groupPlayerCreateSuccess,
+      required this.firstName,
+      required this.lastName});
 
   factory HardcodedStrings.fromJson(Map<String, dynamic> item) =>
       _$HardcodedStringsFromJson(item);

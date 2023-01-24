@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/api/UserApi.dart';
 import 'package:foosball_mobile_app/models/user/create_group_user_model.dart';
@@ -12,6 +11,8 @@ import 'package:foosball_mobile_app/widgets/group_players/info_card.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'dart:async';
 
+import 'package:foosball_mobile_app/widgets/inputs/InputWidget.dart';
+
 class CreateGroupPlayer extends StatefulWidget {
   final UserState userState;
   const CreateGroupPlayer({Key? key, required this.userState})
@@ -22,12 +23,11 @@ class CreateGroupPlayer extends StatefulWidget {
 }
 
 class _CreateGroupPlayerState extends State<CreateGroupPlayer> {
-  final _firstNameController = TextEditingController();
-  final _lastNameController = TextEditingController();
   bool isKeyPadOpen = false;
-  final focusNode1 = FocusNode();
-  final focusNode2 = FocusNode();
   late StreamSubscription<bool> keyboardSubscription;
+  String firstNameText = "";
+  String lastNameText = "";
+  bool clearInputs = false;
 
   @override
   void initState() {
@@ -44,30 +44,13 @@ class _CreateGroupPlayerState extends State<CreateGroupPlayer> {
         FocusScope.of(context).unfocus();
       }
     });
-    focusNode1.addListener(() {
-      setState(() {
-        isKeyPadOpen = focusNode1.hasFocus;
-      });
-      if (!focusNode1.hasFocus) {
-        FocusScope.of(context).unfocus();
-      }
-    });
-    focusNode2.addListener(() {
-      setState(() {
-        isKeyPadOpen = focusNode2.hasFocus;
-      });
-      if (!focusNode2.hasFocus) {
-        FocusScope.of(context).unfocus();
-      }
-    });
   }
 
   Future<UserResponse?> createNewGroupUser() async {
     late UserResponse? result;
     UserApi userApi = UserApi(token: widget.userState.token);
-    CreateGroupUserModel groupUser = CreateGroupUserModel(
-        firstName: _firstNameController.text,
-        lastName: _lastNameController.text);
+    CreateGroupUserModel groupUser =
+        CreateGroupUserModel(firstName: firstNameText, lastName: lastNameText);
     var response = await userApi.createGroupUser(groupUser);
 
     if (response.statusCode == 200) {
@@ -80,13 +63,15 @@ class _CreateGroupPlayerState extends State<CreateGroupPlayer> {
   }
 
   // Alert Dialog if user wants to create new group user
-  Future<void> _showMyDialog(String message) async {
+  Future<void> showMyDialog(String message, bool success) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(widget.userState.hardcodedStrings.newOrganisation),
+          title: Text(success
+              ? widget.userState.hardcodedStrings.success
+              : widget.userState.hardcodedStrings.failure),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
@@ -108,8 +93,11 @@ class _CreateGroupPlayerState extends State<CreateGroupPlayer> {
   }
 
   void clearAllInputs() {
-    _firstNameController.clear();
-    _lastNameController.clear();
+    setState(() {
+      firstNameText = "";
+      lastNameText = "";
+      clearInputs = true;
+    });
   }
 
   @override
@@ -118,7 +106,8 @@ class _CreateGroupPlayerState extends State<CreateGroupPlayer> {
     return Scaffold(
         appBar: AppBar(
             title: ExtendedText(
-                text: 'Create Group User', userState: widget.userState),
+                text: widget.userState.hardcodedStrings.createGroupPlayer,
+                userState: widget.userState),
             leading: IconButton(
               icon: const Icon(Icons.chevron_left),
               onPressed: () {
@@ -139,119 +128,70 @@ class _CreateGroupPlayerState extends State<CreateGroupPlayer> {
                 child: InfoCard(userState: widget.userState),
               ),
               Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: TextField(
-                  style: TextStyle(
-                      color: widget.userState.darkmode
-                          ? AppColors.white
-                          : AppColors.textGrey),
-                  onSubmitted: (term) {
-                    focusNode1.unfocus();
-                  },
-                  focusNode: focusNode1,
-                  controller: _firstNameController,
-                  decoration: InputDecoration(
-                    hintStyle: TextStyle(
-                        color: widget.userState.darkmode
-                            ? AppColors.white
-                            : AppColors.textGrey),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: widget.userState.darkmode
-                              ? AppColors.white
-                              : AppColors.textGrey,
-                          width: 1.0),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: widget.userState.darkmode
-                              ? AppColors.white
-                              : AppColors.textGrey,
-                          width: 1.0),
-                    ),
-                    suffixIcon: IconButton(
-                        onPressed: () {
-                          _firstNameController.clear();
-                        },
-                        icon: Icon(Icons.clear,
-                            color: widget.userState.darkmode
-                                ? AppColors.white
-                                : AppColors.textGrey)),
-                    hintText: 'First Name',
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: TextField(
-                  style: TextStyle(
-                      color: widget.userState.darkmode
-                          ? AppColors.white
-                          : AppColors.textGrey),
-                  focusNode: focusNode2,
-                  controller: _lastNameController,
-                  decoration: InputDecoration(
-                      hintStyle: TextStyle(
-                          color: widget.userState.darkmode
-                              ? AppColors.white
-                              : AppColors.textGrey),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: widget.userState.darkmode
-                                ? AppColors.white
-                                : AppColors.textGrey,
-                            width: 1.0),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: widget.userState.darkmode
-                                ? AppColors.white
-                                : AppColors.textGrey,
-                            width: 1.0),
-                      ),
-                      suffixIcon: IconButton(
-                          onPressed: () {
-                            _lastNameController.clear();
-                          },
-                          icon: Icon(
-                            Icons.clear,
-                            color: widget.userState.darkmode
-                                ? AppColors.white
-                                : AppColors.textGrey,
-                          )),
-                      hintText: 'Last Name'),
-                ),
-              ),
-              const Spacer(),
+                  padding: const EdgeInsets.all(4.0),
+                  child: InputWidget(
+                      userState: widget.userState,
+                      onChangeInput: (value) {
+                        setState(() {
+                          firstNameText = value;
+                          clearInputs = false;
+                        });
+                      },
+                      clearInputText: clearInputs)),
               Padding(
                   padding: const EdgeInsets.all(4.0),
-                  child: Container(
-                    height: 60,
-                    width: double.infinity,
-                    color: Colors.blue[800],
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        UserApi userApi =
-                            UserApi(token: widget.userState.token);
-                        CreateGroupUserModel groupUser = CreateGroupUserModel(
-                            firstName: _firstNameController.text,
-                            lastName: _lastNameController.text);
-                        var response = await userApi.createGroupUser(groupUser);
-                        if (response.statusCode == 200) {
-                          await _showMyDialog('success');
-                        } else {
-                          await _showMyDialog('failure');
-                        }
-                        clearAllInputs();
+                  child: InputWidget(
+                      userState: widget.userState,
+                      onChangeInput: (value) {
+                        setState(() {
+                          lastNameText = value;
+                          clearInputs = false;
+                        });
                       },
-                      style: ElevatedButton.styleFrom(
-                          primary: widget.userState.darkmode
-                              ? AppColors.lightThemeShadowColor
-                              : AppColors.buttonsLightTheme,
-                          minimumSize: const Size(200, 50)),
-                      child: Text(widget.userState.hardcodedStrings.create),
-                    ),
-                  ))
+                      clearInputText: clearInputs)),
+              const Spacer(),
+              Visibility(
+                  visible: firstNameText != "" &&
+                      lastNameText != "" &&
+                      isKeyPadOpen == false,
+                  child: Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Container(
+                        height: 60,
+                        width: double.infinity,
+                        color: Colors.blue[800],
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            UserApi userApi =
+                                UserApi(token: widget.userState.token);
+                            CreateGroupUserModel groupUser =
+                                CreateGroupUserModel(
+                                    firstName: firstNameText,
+                                    lastName: lastNameText);
+
+                            var response =
+                                await userApi.createGroupUser(groupUser);
+                            if (response.statusCode == 200) {
+                              await showMyDialog(
+                                  widget.userState.hardcodedStrings
+                                      .groupPlayerCreateSuccess,
+                                  true);
+                            } else {
+                              await showMyDialog(
+                                  widget.userState.hardcodedStrings
+                                      .groupPlayerCreateFailure,
+                                  false);
+                            }
+                            clearAllInputs();
+                          },
+                          style: ElevatedButton.styleFrom(
+                              primary: widget.userState.darkmode
+                                  ? AppColors.lightThemeShadowColor
+                                  : AppColors.buttonsLightTheme,
+                              minimumSize: const Size(200, 50)),
+                          child: Text(widget.userState.hardcodedStrings.create),
+                        ),
+                      )))
             ],
           ),
         ));

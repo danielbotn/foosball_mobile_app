@@ -102,6 +102,12 @@ HardcodedStrings _$HardcodedStringsFromJson(Map<String, dynamic> json) =>
           json['changeOrganisationAlertText'] as String,
       deleteThisMatch: json['deleteThisMatch'] as String,
       deleteMatchAreYouSure: json['deleteMatchAreYouSure'] as String,
+      createGroupPlayer: json['createGroupPlayer'] as String,
+      groupPlayerInfoText: json['groupPlayerInfoText'] as String,
+      groupPlayerCreateFailure: json['groupPlayerCreateFailure'] as String,
+      groupPlayerCreateSuccess: json['groupPlayerCreateSuccess'] as String,
+      firstName: json['firstName'] as String,
+      lastName: json['lastName'] as String,
     );
 
 Map<String, dynamic> _$HardcodedStringsToJson(HardcodedStrings instance) =>
@@ -197,4 +203,10 @@ Map<String, dynamic> _$HardcodedStringsToJson(HardcodedStrings instance) =>
       'changeOrganisationAlertText': instance.changeOrganisationAlertText,
       'deleteThisMatch': instance.deleteThisMatch,
       'deleteMatchAreYouSure': instance.deleteMatchAreYouSure,
+      'createGroupPlayer': instance.createGroupPlayer,
+      'groupPlayerInfoText': instance.groupPlayerInfoText,
+      'groupPlayerCreateFailure': instance.groupPlayerCreateFailure,
+      'groupPlayerCreateSuccess': instance.groupPlayerCreateSuccess,
+      'firstName': instance.firstName,
+      'lastName': instance.lastName,
     };

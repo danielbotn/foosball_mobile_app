@@ -122,7 +122,13 @@ abstract class _UserState with Store {
       inactive: "",
       changeOrganisationAlertText: "",
       deleteThisMatch: "",
-      deleteMatchAreYouSure: "");
+      deleteMatchAreYouSure: "",
+      createGroupPlayer: "",
+      groupPlayerInfoText: "",
+      groupPlayerCreateFailure: "",
+      groupPlayerCreateSuccess: "",
+      firstName: "",
+      lastName: "");
 
   @observable
   bool darkmode = false;

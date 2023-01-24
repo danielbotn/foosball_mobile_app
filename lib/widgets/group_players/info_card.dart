@@ -28,13 +28,13 @@ class InfoCard extends StatelessWidget {
                 height: 240,
                 fit: BoxFit.cover,
               ),
-              const Positioned(
+              Positioned(
                 bottom: 16,
                 right: 16,
                 left: 16,
                 child: Text(
-                  'Create Group user',
-                  style: TextStyle(
+                  userState.hardcodedStrings.createGroupPlayer,
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                     fontSize: 24,
@@ -46,8 +46,7 @@ class InfoCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(16).copyWith(bottom: 0),
             child: ExtendedText(
-              text:
-                  'Group players can be used by all players in organisation. Group players can not log in to the system',
+              text: userState.hardcodedStrings.groupPlayerInfoText,
               userState: userState,
             ),
           ),
