@@ -6,6 +6,7 @@ import 'package:foosball_mobile_app/utils/preferences_service.dart';
 import 'package:foosball_mobile_app/widgets/Login.dart';
 import 'package:foosball_mobile_app/widgets/Settings.dart';
 import 'package:foosball_mobile_app/widgets/history.dart';
+import 'package:foosball_mobile_app/widgets/league/League.dart';
 
 import 'new_game/new_game.dart';
 import 'organisation/organisation.dart';
@@ -90,6 +91,17 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
         context,
         MaterialPageRoute(
             builder: (context) => Settings(
+                  userState: userState,
+                ))).then(((value) {
+      widget.notifyParent();
+    }));
+  }
+
+  goToLeague(BuildContext context) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => League(
                   userState: userState,
                 ))).then(((value) {
       widget.notifyParent();
@@ -191,7 +203,7 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
                           ? AppColors.white
                           : AppColors.textBlack)),
               onTap: () {
-                Navigator.pop(context);
+                goToLeague(context);
               }),
           ListTile(
               tileColor: userState.darkmode
