@@ -6,11 +6,13 @@ class InputWidget extends StatefulWidget {
   final UserState userState;
   final Function(String value) onChangeInput;
   final bool clearInputText;
+  final String hintText;
   const InputWidget(
       {Key? key,
       required this.userState,
       required this.onChangeInput,
-      required this.clearInputText})
+      required this.clearInputText,
+      required this.hintText})
       : super(key: key);
 
   @override
@@ -70,7 +72,7 @@ class _InputWidgetState extends State<InputWidget> {
                     ? AppColors.white
                     : AppColors.textGrey,
               )),
-          hintText: widget.userState.hardcodedStrings.lastName),
+          hintText: widget.hintText),
     );
   }
 }

@@ -72,12 +72,14 @@ void main() async {
     setJwtInfo(token);
     setLanguageInfo();
 
-    bool isTokenExpired = JwtDecoder.isExpired(token);
-    if (isTokenExpired == false) {
-      theRoute = 'dashboard';
-    } else {
-      // to do, use refresh token to log user back in
-    }
+    theRoute = 'dashboard';
+    // is this code now redundant?
+    // bool isTokenExpired = JwtDecoder.isExpired(token);
+    // if (isTokenExpired == false) {
+    //   theRoute = 'dashboard';
+    // } else {
+    //   // to do, use refresh token to log user back in
+    // }
   }
 
   runApp(

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/api/UserApi.dart';
+import 'package:foosball_mobile_app/main.dart';
 import 'package:foosball_mobile_app/models/user/create_group_user_model.dart';
 import 'package:foosball_mobile_app/models/user/user_response.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
@@ -137,11 +138,13 @@ class _CreateGroupPlayerState extends State<CreateGroupPlayer> {
                           clearInputs = false;
                         });
                       },
+                      hintText: userState.hardcodedStrings.firstName,
                       clearInputText: clearInputs)),
               Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: InputWidget(
                       userState: widget.userState,
+                      hintText: userState.hardcodedStrings.lastName,
                       onChangeInput: (value) {
                         setState(() {
                           lastNameText = value;
