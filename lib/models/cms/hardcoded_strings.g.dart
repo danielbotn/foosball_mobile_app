@@ -108,6 +108,10 @@ HardcodedStrings _$HardcodedStringsFromJson(Map<String, dynamic> json) =>
       groupPlayerCreateSuccess: json['groupPlayerCreateSuccess'] as String,
       firstName: json['firstName'] as String,
       lastName: json['lastName'] as String,
+      league: json['league'] as String,
+      createNewLeague: json['createNewLeague'] as String,
+      createLeague: json['createLeague'] as String,
+      leagueName: json['leagueName'] as String,
     );
 
 Map<String, dynamic> _$HardcodedStringsToJson(HardcodedStrings instance) =>
@@ -209,4 +213,8 @@ Map<String, dynamic> _$HardcodedStringsToJson(HardcodedStrings instance) =>
       'groupPlayerCreateSuccess': instance.groupPlayerCreateSuccess,
       'firstName': instance.firstName,
       'lastName': instance.lastName,
+      'league': instance.league,
+      'createNewLeague': instance.createNewLeague,
+      'createLeague': instance.createLeague,
+      'leagueName': instance.leagueName,
     };

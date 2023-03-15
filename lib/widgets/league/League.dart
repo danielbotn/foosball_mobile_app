@@ -16,6 +16,23 @@ class League extends StatefulWidget {
 }
 
 class _LeagueState extends State<League> {
+  // state
+  String randomNumber = "";
+  bool showButton = true;
+
+  void updateLeagueList() {
+    Helpers helpers = Helpers();
+    setState(() {
+      randomNumber = helpers.generateRandomString();
+    });
+  }
+
+  void hideButton() {
+    setState(() {
+      showButton = !showButton;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     bool darkMode = widget.userState.darkmode;
@@ -32,7 +49,7 @@ class _LeagueState extends State<League> {
           backgroundColor:
               helpers.getBackgroundColor(widget.userState.darkmode),
           title: ExtendedText(
-            text: 'League',
+            text: userState.hardcodedStrings.league,
             userState: userState,
             colorOverride:
                 userState.darkmode ? AppColors.white : AppColors.textBlack,
@@ -51,12 +68,21 @@ class _LeagueState extends State<League> {
                             flex: 1,
                             child: SizedBox(
                               height: 400,
-                              child: LeagueDashboard(userState: userState),
+                              child: LeagueDashboard(
+                                userState: userState,
+                                randomNumber: randomNumber,
+                              ),
                             )),
                       ],
                     ),
                     const Spacer(),
-                    LeagueButton(userState: userState)
+                    Visibility(
+                        visible: showButton,
+                        child: LeagueButton(
+                          userState: userState,
+                          newLeaugeCreated: updateLeagueList,
+                          hideButton: hideButton,
+                        ))
                   ],
                 ))));
   }

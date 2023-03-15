@@ -9,7 +9,10 @@ import '../../../models/leagues/get-league-response.dart';
 
 class LeagueDashboard extends StatefulWidget {
   final UserState userState;
-  const LeagueDashboard({Key? key, required this.userState}) : super(key: key);
+  final String randomNumber;
+  const LeagueDashboard(
+      {Key? key, required this.userState, required this.randomNumber})
+      : super(key: key);
 
   @override
   State<LeagueDashboard> createState() => _LeagueDashboardState();
@@ -25,15 +28,27 @@ class _LeagueDashboardState extends State<LeagueDashboard> {
     leaguesFuture = getLeagues();
   }
 
+  @override
+  void didUpdateWidget(LeagueDashboard old) {
+    super.didUpdateWidget(old);
+    leaguesFuture = getLeagues();
+  }
+
   Future<List<GetLeagueResponse>?> getLeagues() async {
     LeagueApi lapi = LeagueApi(token: widget.userState.token);
     var leagues = await lapi
         .getLeaguesByOrganisationId(widget.userState.currentOrganisationId);
 
-    if (leagues != null) {
+    if (mounted) {
       setState(() {
-        leaguelist.addAll(leagues);
+        leaguelist = [];
       });
+
+      if (leagues != null) {
+        setState(() {
+          leaguelist.addAll(leagues);
+        });
+      }
     }
 
     return leagues;
@@ -62,10 +77,11 @@ class _LeagueDashboardState extends State<LeagueDashboard> {
                           Expanded(
                               flex: 1,
                               child: SizedBox(
-                                height: 200,
+                                height: 310,
                                 child: LeagueList(
                                   userState: userState,
                                   data: leaguelist,
+                                  randomNumber: widget.randomNumber,
                                 ),
                               )),
                         ],

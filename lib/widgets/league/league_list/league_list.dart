@@ -6,9 +6,14 @@ import 'package:foosball_mobile_app/widgets/extended_Text.dart';
 
 class LeagueList extends StatelessWidget {
   final UserState userState;
+  final String randomNumber;
   final List<GetLeagueResponse?>? data;
 
-  const LeagueList({Key? key, required this.userState, this.data})
+  const LeagueList(
+      {Key? key,
+      required this.userState,
+      this.data,
+      required this.randomNumber})
       : super(key: key);
 
   @override

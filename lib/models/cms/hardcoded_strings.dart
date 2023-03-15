@@ -100,6 +100,10 @@ class HardcodedStrings {
   final String groupPlayerCreateSuccess;
   final String firstName;
   final String lastName;
+  final String league;
+  final String createNewLeague;
+  final String createLeague;
+  final String leagueName;
 
   HardcodedStrings(
       {required this.matches,
@@ -196,7 +200,11 @@ class HardcodedStrings {
       required this.groupPlayerCreateFailure,
       required this.groupPlayerCreateSuccess,
       required this.firstName,
-      required this.lastName});
+      required this.lastName,
+      required this.league,
+      required this.createNewLeague,
+      required this.createLeague,
+      required this.leagueName});
 
   factory HardcodedStrings.fromJson(Map<String, dynamic> item) =>
       _$HardcodedStringsFromJson(item);

@@ -128,7 +128,11 @@ abstract class _UserState with Store {
       groupPlayerCreateFailure: "",
       groupPlayerCreateSuccess: "",
       firstName: "",
-      lastName: "");
+      lastName: "",
+      league: "",
+      createNewLeague: "",
+      createLeague: "",
+      leagueName: "");
 
   @observable
   bool darkmode = false;
