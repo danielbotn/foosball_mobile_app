@@ -47,7 +47,7 @@ class DashboardState extends State<Dashboard> {
           totalGoalsScored: 0,
           totalGoalsReceived: 0));
 
-  late UserState userStateState;
+  // late UserState userStateState;
 
   @override
   void initState() {
@@ -62,29 +62,28 @@ class DashboardState extends State<Dashboard> {
         // hardcoded strings put into global state
         widget.param.setHardcodedStrings(value);
       }
-    });
+      user.getUser(userId).then((value) {
+        setState(() {
+          firstName = value.firstName;
+          lastName = value.lastName;
+          email = value.email;
+        });
+        int currentOID = 0;
+        if (value.currentOrganisationId != null) {
+          currentOID = value.currentOrganisationId!;
+        }
+        userStatsFuture = getUserStatsData(int.parse(userId), currentOID);
 
-    user.getUser(userId).then((value) {
-      setState(() {
-        firstName = value.firstName;
-        lastName = value.lastName;
-        email = value.email;
+        // Set user information to global state??
+        widget.param.setUserInfoGlobalObject(int.parse(userId), value.firstName,
+            value.lastName, value.email, currentOID, organisationName);
       });
-      int currentOID = 0;
-      if (value.currentOrganisationId != null) {
-        currentOID = value.currentOrganisationId!;
-      }
-      userStatsFuture = getUserStatsData(int.parse(userId), currentOID);
 
-      // Set user information to global state??
-      widget.param.setUserInfoGlobalObject(int.parse(userId), value.firstName,
-          value.lastName, value.email, currentOID, organisationName);
-    });
+      getTheme();
 
-    getTheme();
-
-    setState(() {
-      userStateState = widget.param;
+      // setState(() {
+      //   userStateState = widget.param;
+      // });
     });
   }
 
@@ -153,9 +152,9 @@ class DashboardState extends State<Dashboard> {
             notifyParent: updateAllState,
           ),
           onDrawerChanged: (isOpen) {
-            setState(() {
-              userStateState = widget.param;
-            });
+            // setState(() {
+            //   userStateState = widget.param;
+            // });
           },
           body: FutureBuilder(
             future: userStatsFuture,
@@ -186,7 +185,7 @@ class DashboardState extends State<Dashboard> {
                                     child: SizedBox(
                                       height: 200,
                                       child: DashboardMatchesChart(
-                                        userState: userStateState,
+                                        userState: widget.param,
                                         userStatsResponse: snapshot.data,
                                       ),
                                     )),
@@ -195,22 +194,22 @@ class DashboardState extends State<Dashboard> {
                                     child: SizedBox(
                                       height: 200,
                                       child: DashboardGoalsChart(
-                                          userState: userStateState,
+                                          userState: widget.param,
                                           userStatsResponse: snapshot.data),
                                     )),
                               ],
                             ),
                             Headline(
-                                headline: userStateState
-                                    .hardcodedStrings.quickActions,
+                                headline:
+                                    widget.param.hardcodedStrings.quickActions,
                                 userState: userState),
                             QuicActions(
                               userState: userState,
                               notifyParent: updateAllState,
                             ),
                             Headline(
-                                headline: userStateState
-                                    .hardcodedStrings.lastTenMatches,
+                                headline: widget
+                                    .param.hardcodedStrings.lastTenMatches,
                                 userState: userState),
                             Expanded(
                                 flex: 1,

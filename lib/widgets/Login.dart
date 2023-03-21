@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'dart:convert';
 import 'package:foosball_mobile_app/widgets/dashboard/Dashboard.dart';
-import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:jwt_decode/jwt_decode.dart';
 
 import '../models/auth/register_response.dart';
 import '../utils/preferences_service.dart';
@@ -60,7 +60,7 @@ class _LoginState extends State<Login> {
 
   // void funciton
   void setJwtInfo(LoginResponse loginResponse) async {
-    Map<String, dynamic> decodedToken = JwtDecoder.decode(loginResponse.token);
+    Map<String, dynamic> decodedToken = Jwt.parseJwt(loginResponse.token);
     JwtModel jwtObject = JwtModel(
         name: decodedToken["unique_name"],
         currentOrganisationId: decodedToken["CurrentOrganisationId"],
