@@ -37,7 +37,6 @@ dependencies:
   flutter_login: ^4.1.0
   json_serializable: ^6.2.0
   http: ^0.13.4
-  jwt_decoder: ^2.0.1
   flutter_dotenv: ^5.0.2
   mobx: ^2.0.7+2
   flutter_mobx: ^2.0.6+1
@@ -51,6 +50,7 @@ dependencies:
   majascan: ^0.5.0
   community_charts_flutter: ^1.0.0
   flutter_keyboard_visibility: ^5.4.0
+  jwt_decode: ^0.3.1
 
 flutter_native_splash:
   color: "#ffffff"

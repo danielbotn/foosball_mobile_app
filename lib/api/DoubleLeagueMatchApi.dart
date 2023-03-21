@@ -13,7 +13,7 @@ class DoubleLeagueMatchApi {
 
   Future<DoubleLeagueMatchModel?> getDoubleLeagueMatch(int matchId) async {
     TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiry(token);
+    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
     late DoubleLeagueMatchModel? result;
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']

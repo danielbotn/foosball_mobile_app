@@ -16,7 +16,7 @@ class FreehandGoalsApi {
   Future<FreehandGoalModel?> createFreehandGoal(
       FreehandGoalBody freehandGoalBody) async {
     TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiry(token);
+    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']
         : dotenv.env['REST_URL_PATH_DEV'];
@@ -61,7 +61,7 @@ class FreehandGoalsApi {
 
   Future<List<FreehandGoalsModel>?> getFreehandGoals(int matchId) async {
     TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiry(token);
+    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
     late List<FreehandGoalsModel>? result;
 
     String? baseUrl = kReleaseMode
@@ -99,7 +99,7 @@ class FreehandGoalsApi {
 
   Future<bool> deleteFreehandGoal(int goalId, int matchId) async {
     TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiry(token);
+    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
     bool result = false;
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']

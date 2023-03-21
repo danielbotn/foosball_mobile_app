@@ -16,8 +16,18 @@ class UserApi {
 
   Future<UserResponse> getUser(String userId) async {
     TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiry(token);
-    late UserResponse result;
+    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
+    late UserResponse result = UserResponse(
+      id: 0,
+      email: '',
+      firstName: '',
+      lastName: '',
+      createdAt: DateTime.now(),
+      currentOrganisationId: null,
+      photoUrl: '',
+      isAdmin: null,
+      isDeleted: false,
+    );
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']
         : dotenv.env['REST_URL_PATH_DEV'];
@@ -40,8 +50,14 @@ class UserApi {
 
   Future<UserStatsResponse> getUserStats() async {
     TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiry(token);
-    late UserStatsResponse result;
+    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
+    late UserStatsResponse result = UserStatsResponse(
+        userId: 0,
+        totalMatches: 0,
+        totalMatchesWon: 0,
+        totalMatchesLost: 0,
+        totalGoalsScored: 0,
+        totalGoalsReceived: 0);
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']
         : dotenv.env['REST_URL_PATH_DEV'];
@@ -71,7 +87,7 @@ class UserApi {
 
   Future<List<UserLastTen>?> getLastTenMatches() async {
     TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiry(token);
+    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
     late List<UserLastTen>? result;
 
     String? baseUrl = kReleaseMode
@@ -102,7 +118,7 @@ class UserApi {
 
   Future<List<UserResponse>?> getUsers() async {
     TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiry(token);
+    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
     late List<UserResponse>? result;
 
     String? baseUrl = kReleaseMode
@@ -133,7 +149,7 @@ class UserApi {
 
   Future<http.Response> createGroupUser(CreateGroupUserModel data) async {
     TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiry(token);
+    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
     late http.Response result;
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']

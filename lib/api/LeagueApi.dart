@@ -16,7 +16,7 @@ class LeagueApi {
   Future<CreateLeagueResponse?> createLeague(
       CreateLeagueBody createLeagueBody) async {
     TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiry(token);
+    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']
         : dotenv.env['REST_URL_PATH_DEV'];
@@ -61,7 +61,7 @@ class LeagueApi {
   Future<List<GetLeagueResponse>?> getLeaguesByOrganisationId(
       int organisationId) async {
     TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiry(token);
+    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
     late List<GetLeagueResponse>? result;
 
     String? baseUrl = kReleaseMode

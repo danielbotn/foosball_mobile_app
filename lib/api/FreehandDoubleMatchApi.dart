@@ -15,7 +15,7 @@ class FreehandDoubleMatchApi {
 
   Future<FreehandDoubleMatchModel?> getDoubleFreehandMatch(int matchId) async {
     TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiry(token);
+    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
     late FreehandDoubleMatchModel? result;
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']
@@ -41,7 +41,7 @@ class FreehandDoubleMatchApi {
   Future<FreehandDoubleMatchCreateResponse?> createNewDoubleFreehandMatch(
       FreehandDoubleMatchBody freehandMatchBody) async {
     TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiry(token);
+    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
     late FreehandDoubleMatchCreateResponse? result;
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']
@@ -90,7 +90,7 @@ class FreehandDoubleMatchApi {
 
   Future<bool> deleteDoubleFreehandMatch(int matchId) async {
     TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiry(token);
+    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
     bool result = false;
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']

@@ -3,6 +3,7 @@ import 'package:foosball_mobile_app/models/leagues/get-league-response.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
 import 'package:foosball_mobile_app/widgets/extended_Text.dart';
+import 'package:foosball_mobile_app/widgets/league/add_league_players/add_league_players.dart';
 
 class LeagueList extends StatelessWidget {
   final UserState userState;
@@ -15,6 +16,22 @@ class LeagueList extends StatelessWidget {
       this.data,
       required this.randomNumber})
       : super(key: key);
+
+  void handleLeagueTap(BuildContext context, GetLeagueResponse leagueData) {
+    // Implement the logic for what should happen when a league is tapped
+    if (leagueData.hasLeagueStarted == false && leagueData.typeOfLeague == 0) {
+      // go to add players screen
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => AddLeaguePlayers(
+                    userState: userState,
+                    leagueData: leagueData,
+                  )));
+    } else {
+      // go to league standings screen
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +50,7 @@ class LeagueList extends StatelessWidget {
         }
 
         return ListTile(
+          onTap: () => handleLeagueTap(context, league),
           leading: CircleAvatar(
             backgroundColor: userState.darkmode
                 ? AppColors.lightThemeShadowColor

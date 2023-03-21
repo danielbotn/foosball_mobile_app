@@ -13,7 +13,7 @@ class DoubleLeagueGoalsApi {
 
   Future<List<DoubleLeagueGoalModel>?> getDoubleLeagueGoals(int matchId) async {
     TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiry(token);
+    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
     late List<DoubleLeagueGoalModel>? result;
 
     String? baseUrl = kReleaseMode

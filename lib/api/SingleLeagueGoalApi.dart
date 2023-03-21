@@ -14,7 +14,7 @@ class SingleLeagueGoalApi {
   Future<List<SingleLeagueGoalModel>?> getSingleLeagueGoals(
       int leagueId, int matchId) async {
     TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiry(token);
+    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
     late List<SingleLeagueGoalModel>? result;
 
     String? baseUrl = kReleaseMode

@@ -13,7 +13,7 @@ class SingleLeagueMatchApi {
 
   Future<SingleLeagueMatchModel?> getSingleLeagueMatchById(int id) async {
     TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiry(token);
+    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
     late SingleLeagueMatchModel? result;
 
     String? baseUrl = kReleaseMode

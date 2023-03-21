@@ -12,7 +12,7 @@ class Organisation {
 
   Future<http.Response> getOrganisationById(int organisationId) async {
     TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiry(token);
+    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
     late http.Response result;
 
     String? baseUrl = kReleaseMode
@@ -32,7 +32,7 @@ class Organisation {
 
   Future<http.Response> getOrganisationsByUser() async {
     TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiry(token);
+    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
     late http.Response result;
 
     String? baseUrl = kReleaseMode
@@ -52,7 +52,7 @@ class Organisation {
 
   Future<http.Response> createNewOrganisation(String name) async {
     TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiry(token);
+    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
     late http.Response result;
 
     String? baseUrl = kReleaseMode
@@ -75,7 +75,7 @@ class Organisation {
   Future<http.Response> joinOrganisation(
       String organisationCodeAndOrganisationId) async {
     TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiry(token);
+    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
     late http.Response result;
 
     String? baseUrl = kReleaseMode
@@ -100,7 +100,7 @@ class Organisation {
   Future<http.Response> updateUserIsAdmin(
       int organisationId, int userIdToChange, bool isAdmin) async {
     TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiry(token);
+    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
     late http.Response result;
 
     String? baseUrl = kReleaseMode
@@ -122,7 +122,7 @@ class Organisation {
   Future<http.Response> leaveOrRejoinOrganisation(
       int organisationId, int userId, bool isDeleted) async {
     TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiry(token);
+    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
     late http.Response result;
 
     String? baseUrl = kReleaseMode
@@ -144,7 +144,7 @@ class Organisation {
   Future<http.Response> changeOrganisation(
       int organisationId, int newOrganisationId, int userId) async {
     TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiry(token);
+    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
     late http.Response result;
 
     String? baseUrl = kReleaseMode

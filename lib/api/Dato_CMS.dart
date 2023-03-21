@@ -11,7 +11,7 @@ class DatoCMS {
 
   Future<HardcodedStrings?> getHardcodedStrings(String language) async {
     TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiry(token);
+    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
     late HardcodedStrings? result;
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']
