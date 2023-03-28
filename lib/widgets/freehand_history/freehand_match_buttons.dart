@@ -20,7 +20,7 @@ class FreehandMatchButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void rematch() {
-      FreehandMatchApi matchApi = FreehandMatchApi(token: userState.token);
+      FreehandMatchApi matchApi = FreehandMatchApi();
 
       FreehandMatchBody fmb = FreehandMatchBody(
           playerOneId: freehandMatchData.playerOneId,

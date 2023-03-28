@@ -1,9 +1,15 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:foosball_mobile_app/api/AuthApi.dart';
+import 'package:foosball_mobile_app/models/auth/login_response.dart';
+import 'package:foosball_mobile_app/models/auth/refresh_model.dart';
 import 'package:foosball_mobile_app/models/freehand-double-matches/freehand_double_match_model.dart';
 import 'package:foosball_mobile_app/models/other/freehandDoubleMatchObject.dart';
 import 'package:foosball_mobile_app/models/user/user_response.dart';
+import 'package:foosball_mobile_app/utils/preferences_service.dart';
+import 'package:http/http.dart';
 
 import 'app_color.dart';
 
@@ -176,5 +182,29 @@ class Helpers {
         );
       },
     );
+  }
+
+  Future refreshToken() async {
+    PreferencesService preferencesService = PreferencesService();
+    String? jwtToken = await preferencesService.getJwtToken();
+    String? refreshToken = await preferencesService.getRefreshToken();
+
+    if (jwtToken != null && refreshToken != null) {
+      AuthApi auth = AuthApi();
+      RefreshModel refreshModel =
+          RefreshModel(token: jwtToken, refreshToken: refreshToken);
+      Response refreshData = await auth.refresh(refreshModel);
+
+      if (refreshData.statusCode == 200) {
+        var refreshResponse =
+            LoginResponse.fromJson(jsonDecode(refreshData.body));
+
+        await preferencesService.setJwtToken(refreshResponse.token);
+        await preferencesService.setRefreshToken(refreshResponse.refreshToken);
+      } else if (refreshData.statusCode == 400 &&
+          refreshData.body == "Invalid client request from refresh endpoint") {
+        String danni = "danni";
+      }
+    }
   }
 }

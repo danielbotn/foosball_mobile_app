@@ -31,8 +31,7 @@ class _OrganisationManagePlayersState extends State<OrganisationManagePlayers> {
   }
 
   Future<List<UserResponse>?> getPlayersData() async {
-    String token = widget.userState.token;
-    UserApi user = UserApi(token: token);
+    UserApi user = UserApi();
     var data = await user.getUsers();
     playersData = data;
     return data;

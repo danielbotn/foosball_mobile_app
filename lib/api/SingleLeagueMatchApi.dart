@@ -2,18 +2,15 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:foosball_mobile_app/models/single-league-matches/single_league_match_model.dart';
+import 'package:foosball_mobile_app/utils/preferences_service.dart';
 import 'package:http/http.dart' as http;
 
-import 'TokenHelper.dart';
-
 class SingleLeagueMatchApi {
-  final String token;
-
-  SingleLeagueMatchApi({required this.token});
+  SingleLeagueMatchApi();
 
   Future<SingleLeagueMatchModel?> getSingleLeagueMatchById(int id) async {
-    TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
+    PreferencesService preferencesService = PreferencesService();
+    String? token = await preferencesService.getJwtToken();
     late SingleLeagueMatchModel? result;
 
     String? baseUrl = kReleaseMode
@@ -32,7 +29,7 @@ class SingleLeagueMatchApi {
       var response = await http.get(outgoingUri, headers: {
         "Accept": "application/json",
         "content-type": "application/json",
-        'Authorization': 'Bearer $checkedToken',
+        'Authorization': 'Bearer $token',
       });
 
       if (response.statusCode == 200) {

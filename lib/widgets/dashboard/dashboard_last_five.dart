@@ -30,8 +30,7 @@ class _DashBoardLastFiveState extends State<DashBoardLastFive> {
   }
 
   Future<List<UserLastTen>?> getUserStatsData() async {
-    String token = widget.userState.token;
-    UserApi user = UserApi(token: token);
+    UserApi user = UserApi();
     var lastTenMatchesData = await user.getLastTenMatches();
     lastTenMatches = lastTenMatchesData;
     return lastTenMatchesData;

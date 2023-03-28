@@ -29,9 +29,9 @@ class MatchDetailButtons extends StatelessWidget {
     }
 
     void rematch() {
-      FreehandMatchApi matchApi = new FreehandMatchApi(token: userState.token);
+      FreehandMatchApi matchApi = FreehandMatchApi();
 
-      FreehandMatchBody fmb = new FreehandMatchBody(
+      FreehandMatchBody fmb = FreehandMatchBody(
           playerOneId: freehandMatchDetailObject.playerOne.id,
           playerTwoId: freehandMatchDetailObject.playerTwo.id,
           playerOneScore: 0,
@@ -41,7 +41,7 @@ class MatchDetailButtons extends StatelessWidget {
           gamePaused: false);
 
       matchApi.createNewFreehandMatch(fmb).then((value) {
-        OngoingGameObject gameObject = new OngoingGameObject(
+        OngoingGameObject gameObject = OngoingGameObject(
           userState: freehandMatchDetailObject.userState,
           freehandMatchCreateResponse: value,
           playerOne: freehandMatchDetailObject.playerOne,

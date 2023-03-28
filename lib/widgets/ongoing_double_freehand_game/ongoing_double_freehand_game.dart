@@ -73,8 +73,7 @@ class _OngoingDoubleFreehandGameState extends State<OngoingDoubleFreehandGame> {
 
   void closeAlertDialog() {
     // delete freehand game and goals and then navigate back to dashboard
-    FreehandDoubleMatchApi freehandMatchApi = FreehandDoubleMatchApi(
-        token: widget.ongoingDoubleGameObject.userState.token);
+    FreehandDoubleMatchApi freehandMatchApi = FreehandDoubleMatchApi();
     freehandMatchApi
         .deleteDoubleFreehandMatch(widget
             .ongoingDoubleGameObject.freehandDoubleMatchCreateResponse!.id)
@@ -132,14 +131,12 @@ class _OngoingDoubleFreehandGameState extends State<OngoingDoubleFreehandGame> {
 
   Future<List<FreehandDoubleGoalModel>?> getAllDoubleFreehandGames(
       int matchId) async {
-    FreehandDoubleGoalsApi freehandMatchApi = FreehandDoubleGoalsApi(
-        token: widget.ongoingDoubleGameObject.userState.token);
+    FreehandDoubleGoalsApi freehandMatchApi = FreehandDoubleGoalsApi();
     return await freehandMatchApi.getFreehandDoubleGoals(matchId);
   }
 
   Future<bool> deleteGoal(int matchId, int goalId) async {
-    FreehandDoubleGoalsApi freehandMatchApi = FreehandDoubleGoalsApi(
-        token: widget.ongoingDoubleGameObject.userState.token);
+    FreehandDoubleGoalsApi freehandMatchApi = FreehandDoubleGoalsApi();
     return await freehandMatchApi.deleteFreehandDoubleGoal(goalId, matchId);
   }
 

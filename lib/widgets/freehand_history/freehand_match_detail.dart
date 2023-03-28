@@ -44,23 +44,21 @@ class _FreehandMatchDetailState extends State<FreehandMatchDetail> {
   }
 
   Future<List<FreehandGoalsModel>?> getFreehandGoals() async {
-    FreehandGoalsApi fgapi =
-        FreehandGoalsApi(token: widget.twoPlayersObject.userState.token);
+    FreehandGoalsApi fgapi = FreehandGoalsApi();
     var freehandGoals =
         await fgapi.getFreehandGoals(widget.twoPlayersObject.matchId);
     return freehandGoals;
   }
 
   Future<UserResponse> getUser() async {
-    UserApi uapi = UserApi(token: widget.twoPlayersObject.userState.token);
+    UserApi uapi = UserApi();
     var user =
         await uapi.getUser(widget.twoPlayersObject.userState.userId.toString());
     return user;
   }
 
   Future<FreehandMatchModel?> getFreehandMatch() async {
-    FreehandMatchApi fmapi =
-        FreehandMatchApi(token: widget.twoPlayersObject.userState.token);
+    FreehandMatchApi fmapi = FreehandMatchApi();
     var freehandMatch =
         await fmapi.getFreehandMatch(widget.twoPlayersObject.matchId);
     return freehandMatch;
@@ -68,8 +66,7 @@ class _FreehandMatchDetailState extends State<FreehandMatchDetail> {
 
   // delete freehand game and goals and then navigate back to dashboard
   void deleteMatch() {
-    FreehandMatchApi freehandMatchApi =
-        FreehandMatchApi(token: widget.twoPlayersObject.userState.token);
+    FreehandMatchApi freehandMatchApi = FreehandMatchApi();
     freehandMatchApi
         .deleteFreehandMatch(widget.twoPlayersObject.matchId)
         .then((value) {

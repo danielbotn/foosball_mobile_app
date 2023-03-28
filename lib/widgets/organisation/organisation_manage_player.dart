@@ -50,8 +50,7 @@ class _OrganisationManagePlayerState extends State<OrganisationManagePlayer> {
         leading: const Icon(Icons.admin_panel_settings),
         initialValue: isChecked,
         onToggle: (value) async {
-          String token = widget.userState.token;
-          Organisation organisation = Organisation(token: token);
+          Organisation organisation = Organisation();
           int oId = 0;
           if (widget.userData.currentOrganisationId != null) {
             oId = widget.userData.currentOrganisationId!;
@@ -79,8 +78,7 @@ class _OrganisationManagePlayerState extends State<OrganisationManagePlayer> {
         leading: const Icon(Icons.check_rounded),
         initialValue: isDeleted,
         onToggle: (value) async {
-          String token = widget.userState.token;
-          Organisation organisation = Organisation(token: token);
+          Organisation organisation = Organisation();
           int oId = 0;
           if (widget.userData.currentOrganisationId != null) {
             oId = widget.userData.currentOrganisationId!;

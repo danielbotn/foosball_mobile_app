@@ -1,18 +1,15 @@
 import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:foosball_mobile_app/utils/preferences_service.dart';
 import 'package:http/http.dart' as http;
 
-import 'TokenHelper.dart';
-
 class Organisation {
-  final String token;
-  Organisation({required this.token});
+  Organisation();
 
   Future<http.Response> getOrganisationById(int organisationId) async {
-    TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
+    PreferencesService preferencesService = PreferencesService();
+    String? token = await preferencesService.getJwtToken();
     late http.Response result;
 
     String? baseUrl = kReleaseMode
@@ -24,15 +21,15 @@ class Organisation {
       result = await http.get(url, headers: {
         "Accept": "application/json",
         "content-type": "application/json",
-        'Authorization': 'Bearer $checkedToken',
+        'Authorization': 'Bearer $token',
       });
     }
     return result;
   }
 
   Future<http.Response> getOrganisationsByUser() async {
-    TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
+    PreferencesService preferencesService = PreferencesService();
+    String? token = await preferencesService.getJwtToken();
     late http.Response result;
 
     String? baseUrl = kReleaseMode
@@ -44,15 +41,15 @@ class Organisation {
       result = await http.get(url, headers: {
         "Accept": "application/json",
         "content-type": "application/json",
-        'Authorization': 'Bearer $checkedToken',
+        'Authorization': 'Bearer $token',
       });
     }
     return result;
   }
 
   Future<http.Response> createNewOrganisation(String name) async {
-    TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
+    PreferencesService preferencesService = PreferencesService();
+    String? token = await preferencesService.getJwtToken();
     late http.Response result;
 
     String? baseUrl = kReleaseMode
@@ -65,7 +62,7 @@ class Organisation {
           headers: {
             "Accept": "application/json",
             "content-type": "application/json",
-            'Authorization': 'Bearer $checkedToken',
+            'Authorization': 'Bearer $token',
           },
           body: body);
     }
@@ -74,8 +71,8 @@ class Organisation {
 
   Future<http.Response> joinOrganisation(
       String organisationCodeAndOrganisationId) async {
-    TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
+    PreferencesService preferencesService = PreferencesService();
+    String? token = await preferencesService.getJwtToken();
     late http.Response result;
 
     String? baseUrl = kReleaseMode
@@ -90,7 +87,7 @@ class Organisation {
           headers: {
             "Accept": "application/json",
             "content-type": "application/json",
-            'Authorization': 'Bearer $checkedToken',
+            'Authorization': 'Bearer $token',
           },
           body: body);
     }
@@ -99,8 +96,8 @@ class Organisation {
 
   Future<http.Response> updateUserIsAdmin(
       int organisationId, int userIdToChange, bool isAdmin) async {
-    TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
+    PreferencesService preferencesService = PreferencesService();
+    String? token = await preferencesService.getJwtToken();
     late http.Response result;
 
     String? baseUrl = kReleaseMode
@@ -113,7 +110,7 @@ class Organisation {
       result = await http.put(url, headers: {
         "Accept": "application/json",
         "content-type": "application/json",
-        'Authorization': 'Bearer $checkedToken',
+        'Authorization': 'Bearer $token',
       });
     }
     return result;
@@ -121,8 +118,8 @@ class Organisation {
 
   Future<http.Response> leaveOrRejoinOrganisation(
       int organisationId, int userId, bool isDeleted) async {
-    TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
+    PreferencesService preferencesService = PreferencesService();
+    String? token = await preferencesService.getJwtToken();
     late http.Response result;
 
     String? baseUrl = kReleaseMode
@@ -135,7 +132,7 @@ class Organisation {
       result = await http.put(url, headers: {
         "Accept": "application/json",
         "content-type": "application/json",
-        'Authorization': 'Bearer $checkedToken',
+        'Authorization': 'Bearer $token',
       });
     }
     return result;
@@ -143,8 +140,8 @@ class Organisation {
 
   Future<http.Response> changeOrganisation(
       int organisationId, int newOrganisationId, int userId) async {
-    TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
+    PreferencesService preferencesService = PreferencesService();
+    String? token = await preferencesService.getJwtToken();
     late http.Response result;
 
     String? baseUrl = kReleaseMode
@@ -157,7 +154,7 @@ class Organisation {
       result = await http.put(url, headers: {
         "Accept": "application/json",
         "content-type": "application/json",
-        'Authorization': 'Bearer $checkedToken',
+        'Authorization': 'Bearer $token',
       });
     }
     return result;

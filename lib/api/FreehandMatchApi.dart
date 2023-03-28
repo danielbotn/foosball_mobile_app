@@ -4,18 +4,15 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:foosball_mobile_app/models/freehand-matches/freehand_match_body.dart';
 import 'package:foosball_mobile_app/models/freehand-matches/freehand_match_create_response.dart';
 import 'package:foosball_mobile_app/models/freehand-matches/freehand_match_model.dart';
+import 'package:foosball_mobile_app/utils/preferences_service.dart';
 import 'package:http/http.dart' as http;
 
-import 'TokenHelper.dart';
-
 class FreehandMatchApi {
-  final String token;
-
-  FreehandMatchApi({required this.token});
+  FreehandMatchApi();
 
   Future<FreehandMatchModel?> getFreehandMatch(int matchId) async {
-    TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
+    PreferencesService preferencesService = PreferencesService();
+    String? token = await preferencesService.getJwtToken();
     late FreehandMatchModel? result;
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']
@@ -25,7 +22,7 @@ class FreehandMatchApi {
       var response = await http.get(url, headers: {
         "Accept": "application/json",
         "content-type": "application/json",
-        'Authorization': 'Bearer $checkedToken',
+        'Authorization': 'Bearer $token',
       });
 
       if (response.statusCode == 200) {
@@ -40,8 +37,8 @@ class FreehandMatchApi {
 
   Future<FreehandMatchCreateResponse?> createNewFreehandMatch(
       FreehandMatchBody freehandMatchBody) async {
-    TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
+    PreferencesService preferencesService = PreferencesService();
+    String? token = await preferencesService.getJwtToken();
     late FreehandMatchCreateResponse? result;
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']
@@ -69,7 +66,7 @@ class FreehandMatchApi {
         headers: {
           "Accept": "application/json",
           "content-type": "application/json",
-          'Authorization': 'Bearer $checkedToken',
+          'Authorization': 'Bearer $token',
         },
         body: jsonEncode(jsonObject),
       );
@@ -86,8 +83,8 @@ class FreehandMatchApi {
   }
 
   Future<bool> deleteFreehandMatch(int matchId) async {
-    TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
+    PreferencesService preferencesService = PreferencesService();
+    String? token = await preferencesService.getJwtToken();
     bool success = false;
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']
@@ -106,7 +103,7 @@ class FreehandMatchApi {
         headers: {
           "Accept": "application/json",
           "content-type": "application/json",
-          'Authorization': 'Bearer $checkedToken',
+          'Authorization': 'Bearer $token',
         },
       );
 

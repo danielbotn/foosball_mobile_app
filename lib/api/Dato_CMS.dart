@@ -1,17 +1,16 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:foosball_mobile_app/api/TokenHelper.dart';
 import 'package:foosball_mobile_app/models/cms/hardcoded_strings.dart';
+import 'package:foosball_mobile_app/utils/preferences_service.dart';
 import 'package:http/http.dart' as http;
 
 class DatoCMS {
-  final String token;
-  DatoCMS({required this.token});
+  DatoCMS();
 
   Future<HardcodedStrings?> getHardcodedStrings(String language) async {
-    TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
+    PreferencesService preferencesService = PreferencesService();
+    String? token = await preferencesService.getJwtToken();
     late HardcodedStrings? result;
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']
@@ -22,7 +21,7 @@ class DatoCMS {
       var response = await http.post(url, headers: {
         "Accept": "application/json",
         "content-type": "application/json",
-        'Authorization': 'Bearer $checkedToken',
+        'Authorization': 'Bearer $token',
       });
       if (response.statusCode == 200) {
         var dta = HardcodedStrings.fromJson(jsonDecode(response.body));

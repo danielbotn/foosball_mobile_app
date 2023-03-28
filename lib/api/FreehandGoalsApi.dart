@@ -4,19 +4,16 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:foosball_mobile_app/models/freehand-goals/freehand_goal_body.dart';
 import 'package:foosball_mobile_app/models/freehand-goals/freehand_goal_model.dart';
 import 'package:foosball_mobile_app/models/freehand-goals/freehand_goals_model.dart';
+import 'package:foosball_mobile_app/utils/preferences_service.dart';
 import 'package:http/http.dart' as http;
 
-import 'TokenHelper.dart';
-
 class FreehandGoalsApi {
-  final String token;
-
-  FreehandGoalsApi({required this.token});
+  FreehandGoalsApi();
 
   Future<FreehandGoalModel?> createFreehandGoal(
       FreehandGoalBody freehandGoalBody) async {
-    TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
+    PreferencesService preferencesService = PreferencesService();
+    String? token = await preferencesService.getJwtToken();
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']
         : dotenv.env['REST_URL_PATH_DEV'];
@@ -45,7 +42,7 @@ class FreehandGoalsApi {
         headers: {
           "Accept": "application/json",
           "content-type": "application/json",
-          'Authorization': 'Bearer $checkedToken',
+          'Authorization': 'Bearer $token',
         },
         body: jsonEncode(jsonObject),
       );
@@ -60,8 +57,8 @@ class FreehandGoalsApi {
   }
 
   Future<List<FreehandGoalsModel>?> getFreehandGoals(int matchId) async {
-    TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
+    PreferencesService preferencesService = PreferencesService();
+    String? token = await preferencesService.getJwtToken();
     late List<FreehandGoalsModel>? result;
 
     String? baseUrl = kReleaseMode
@@ -80,7 +77,7 @@ class FreehandGoalsApi {
       var response = await http.get(outgoingUri, headers: {
         "Accept": "application/json",
         "content-type": "application/json",
-        'Authorization': 'Bearer $checkedToken',
+        'Authorization': 'Bearer $token',
       });
 
       if (response.statusCode == 200) {
@@ -98,8 +95,8 @@ class FreehandGoalsApi {
   }
 
   Future<bool> deleteFreehandGoal(int goalId, int matchId) async {
-    TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
+    PreferencesService preferencesService = PreferencesService();
+    String? token = await preferencesService.getJwtToken();
     bool result = false;
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']
@@ -119,7 +116,7 @@ class FreehandGoalsApi {
         headers: {
           "Accept": "application/json",
           "content-type": "application/json",
-          'Authorization': 'Bearer $checkedToken',
+          'Authorization': 'Bearer $token',
         },
       );
 

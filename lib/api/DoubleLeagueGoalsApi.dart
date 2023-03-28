@@ -2,18 +2,13 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:foosball_mobile_app/models/double-league-goals/double_league_goal_model.dart';
+import 'package:foosball_mobile_app/utils/preferences_service.dart';
 import 'package:http/http.dart' as http;
 
-import 'TokenHelper.dart';
-
 class DoubleLeagueGoalsApi {
-  final String token;
-
-  DoubleLeagueGoalsApi({required this.token});
-
   Future<List<DoubleLeagueGoalModel>?> getDoubleLeagueGoals(int matchId) async {
-    TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
+    PreferencesService preferencesService = PreferencesService();
+    String? token = await preferencesService.getJwtToken();
     late List<DoubleLeagueGoalModel>? result;
 
     String? baseUrl = kReleaseMode
@@ -32,7 +27,7 @@ class DoubleLeagueGoalsApi {
       var response = await http.get(outgoingUri, headers: {
         "Accept": "application/json",
         "content-type": "application/json",
-        'Authorization': 'Bearer $checkedToken',
+        'Authorization': 'Bearer $token',
       });
 
       if (response.statusCode == 200) {

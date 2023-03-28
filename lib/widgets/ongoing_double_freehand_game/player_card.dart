@@ -63,8 +63,7 @@ class _PlayerCardState extends State<PlayerCard> {
   }
 
   Future<FreehandDoubleGoalReturn?> updateScoreToDatabase() async {
-    FreehandDoubleGoalsApi freehandDoubleGoalsApi =
-        FreehandDoubleGoalsApi(token: widget.userState.token);
+    FreehandDoubleGoalsApi freehandDoubleGoalsApi = FreehandDoubleGoalsApi();
     int upTo =
         widget.ongoingDoubleGameObject.freehandDoubleMatchCreateResponse!.upTo;
 

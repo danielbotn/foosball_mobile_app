@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/api/UserApi.dart';
 import 'package:foosball_mobile_app/models/user/user_response.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
-import 'package:foosball_mobile_app/utils/app_color.dart';
 
 import '../../loading.dart';
 
@@ -24,7 +23,7 @@ class _ChoosePlayersState extends State<ChoosePlayers> {
   }
 
   Future<List<UserResponse>?> getPlayers() async {
-    UserApi userApi = UserApi(token: widget.userState.token);
+    UserApi userApi = UserApi();
     var users = await userApi.getUsers();
     return users;
   }

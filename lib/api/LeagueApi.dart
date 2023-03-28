@@ -1,22 +1,19 @@
 import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:foosball_mobile_app/api/TokenHelper.dart';
 import 'package:foosball_mobile_app/models/leagues/create-league-body.dart';
 import 'package:foosball_mobile_app/models/leagues/create-league-response.dart';
 import 'package:foosball_mobile_app/models/leagues/get-league-response.dart';
+import 'package:foosball_mobile_app/utils/preferences_service.dart';
 import 'package:http/http.dart' as http;
 
 class LeagueApi {
-  final String token;
-
-  LeagueApi({required this.token});
+  LeagueApi();
 
   Future<CreateLeagueResponse?> createLeague(
       CreateLeagueBody createLeagueBody) async {
-    TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
+    PreferencesService preferencesService = PreferencesService();
+    String? token = await preferencesService.getJwtToken();
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']
         : dotenv.env['REST_URL_PATH_DEV'];
@@ -44,7 +41,7 @@ class LeagueApi {
         headers: {
           "Accept": "application/json",
           "content-type": "application/json",
-          'Authorization': 'Bearer $checkedToken',
+          'Authorization': 'Bearer $token',
         },
         body: jsonEncode(jsonObject),
       );
@@ -60,8 +57,8 @@ class LeagueApi {
 
   Future<List<GetLeagueResponse>?> getLeaguesByOrganisationId(
       int organisationId) async {
-    TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
+    PreferencesService preferencesService = PreferencesService();
+    String? token = await preferencesService.getJwtToken();
     late List<GetLeagueResponse>? result;
 
     String? baseUrl = kReleaseMode
@@ -80,7 +77,7 @@ class LeagueApi {
       var response = await http.get(outgoingUri, headers: {
         "Accept": "application/json",
         "content-type": "application/json",
-        'Authorization': 'Bearer $checkedToken',
+        'Authorization': 'Bearer $token',
       });
 
       if (response.statusCode == 200) {

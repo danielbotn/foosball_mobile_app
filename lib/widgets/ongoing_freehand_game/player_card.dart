@@ -32,12 +32,11 @@ class PlayerCard extends StatefulWidget {
 
 class _PlayerCardState extends State<PlayerCard> {
   Future<FreehandGoalModel?> updateScoreToDatabase(bool isPlayerOne) async {
-    FreehandGoalsApi freehandGoalsApi =
-        new FreehandGoalsApi(token: '${widget.userState.token}');
+    FreehandGoalsApi freehandGoalsApi = FreehandGoalsApi();
 
     int upTo = widget.ongoingGameObject.freehandMatchCreateResponse!.upTo;
 
-    FreehandGoalBody body = new FreehandGoalBody(
+    FreehandGoalBody body = FreehandGoalBody(
         matchId: widget.ongoingGameObject.freehandMatchCreateResponse!.id,
         scoredByUserId: isPlayerOne
             ? widget.ongoingGameObject.playerOne.id
@@ -80,7 +79,7 @@ class _PlayerCardState extends State<PlayerCard> {
 
   void gameIsFinished() {
     // go to the finished screen
-    FreehandMatchDetailObject fmdo = new FreehandMatchDetailObject(
+    FreehandMatchDetailObject fmdo = FreehandMatchDetailObject(
         freehandMatchCreateResponse:
             widget.ongoingGameObject.freehandMatchCreateResponse,
         playerOne: widget.ongoingGameObject.playerOne,

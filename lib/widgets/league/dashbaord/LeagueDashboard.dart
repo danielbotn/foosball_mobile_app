@@ -35,7 +35,7 @@ class _LeagueDashboardState extends State<LeagueDashboard> {
   }
 
   Future<List<GetLeagueResponse>?> getLeagues() async {
-    LeagueApi lapi = LeagueApi(token: widget.userState.token);
+    LeagueApi lapi = LeagueApi();
     var leagues = await lapi
         .getLeaguesByOrganisationId(widget.userState.currentOrganisationId);
 

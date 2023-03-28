@@ -8,6 +8,7 @@ import 'package:foosball_mobile_app/utils/app_color.dart';
 import 'package:foosball_mobile_app/utils/helpers.dart';
 import 'package:foosball_mobile_app/widgets/extended_Text.dart';
 import 'package:foosball_mobile_app/widgets/league/add_league_players/players_list.dart';
+import 'package:foosball_mobile_app/widgets/league/add_league_players/selected_players.dart';
 
 class AddLeaguePlayers extends StatefulWidget {
   final UserState userState;
@@ -23,6 +24,7 @@ class AddLeaguePlayers extends StatefulWidget {
 class _AddLeaguePlayersState extends State<AddLeaguePlayers> {
   // state
   late Future<List<UserResponse>?> usersFuture;
+  late List<UserResponse> selectedPlayersList = [];
   final newGameState = NewGameState();
 
   @override
@@ -32,12 +34,14 @@ class _AddLeaguePlayersState extends State<AddLeaguePlayers> {
   }
 
   Future<List<UserResponse>?> getAllUsers() async {
-    UserApi datoCMS = UserApi(token: widget.userState.token);
+    UserApi datoCMS = UserApi();
     var users = await datoCMS.getUsers();
     return users;
   }
 
-  void setRandomString() {}
+  void playerChecked(UserResponse player) {
+    selectedPlayersList.add(player);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,8 +84,13 @@ class _AddLeaguePlayersState extends State<AddLeaguePlayers> {
                               PlayersList(
                                 userState: widget.userState,
                                 players: snapshot.data as List<UserResponse>,
-                                notifyParent: setRandomString,
+                                playerChecked: playerChecked,
                               ),
+                              Visibility(
+                                  visible: selectedPlayersList.isNotEmpty,
+                                  child: SelectedPlayers(
+                                      userState: widget.userState,
+                                      players: selectedPlayersList)),
                               const Spacer(),
                             ])));
                   } else {

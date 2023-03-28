@@ -44,15 +44,14 @@ class _SingleLeagueMatchDetailState extends State<SingleLeagueMatchDetail> {
   }
 
   Future<UserResponse> getUser() async {
-    UserApi uapi = UserApi(token: widget.twoPlayersObject.userState.token);
+    UserApi uapi = UserApi();
     var user =
         await uapi.getUser(widget.twoPlayersObject.userState.userId.toString());
     return user;
   }
 
   Future<SingleLeagueMatchModel?> getSingleLeagueMatch() async {
-    SingleLeagueMatchApi api =
-        SingleLeagueMatchApi(token: widget.twoPlayersObject.userState.token);
+    SingleLeagueMatchApi api = SingleLeagueMatchApi();
     var match =
         await api.getSingleLeagueMatchById(widget.twoPlayersObject.matchId);
     setState(() {
@@ -62,8 +61,7 @@ class _SingleLeagueMatchDetailState extends State<SingleLeagueMatchDetail> {
   }
 
   Future<List<SingleLeagueGoalModel>?> getSingleLeagueGoals() async {
-    SingleLeagueGoalApi api =
-        SingleLeagueGoalApi(token: widget.twoPlayersObject.userState.token);
+    SingleLeagueGoalApi api = SingleLeagueGoalApi();
     int leagueId = 0;
     if (widget.twoPlayersObject.leagueId != null) {
       leagueId = widget.twoPlayersObject.leagueId!;

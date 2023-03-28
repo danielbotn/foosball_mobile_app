@@ -52,8 +52,7 @@ class _JoinOrganisationState extends State<JoinOrganisation> {
   Future<bool> joinOrganisation() async {
     try {
       bool success = false;
-      String token = widget.userState.token;
-      Organisation org = Organisation(token: token);
+      Organisation org = Organisation();
       var orgData = await org.joinOrganisation(result);
 
       if (orgData.statusCode == 204) {

@@ -47,16 +47,14 @@ class _OrganisationsState extends State<Organisations> {
   }
 
   Future<List<UserResponse>?> getPlayersData() async {
-    String token = widget.userState.token;
-    UserApi user = UserApi(token: token);
+    UserApi user = UserApi();
     var data = await user.getUsers();
     playersData = data;
     return data;
   }
 
   Future<List<OrganisationResponse>> getOrganisationsByUser() async {
-    String token = widget.userState.token;
-    Organisation api = Organisation(token: token);
+    Organisation api = Organisation();
 
     var data = await api.getOrganisationsByUser();
 

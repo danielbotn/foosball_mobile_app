@@ -1,32 +1,33 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/api/Dato_CMS.dart';
 import 'package:foosball_mobile_app/api/Organisation.dart';
+import 'package:foosball_mobile_app/api/TokenHelper.dart';
 import 'package:foosball_mobile_app/api/UserApi.dart';
-import 'package:foosball_mobile_app/main.dart';
 import 'package:foosball_mobile_app/models/charts/user_stats_response.dart';
 import 'package:foosball_mobile_app/models/organisation/organisation_response.dart';
+import 'package:foosball_mobile_app/models/user/user_response.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
-import 'dashboard_goals_chart.dart';
-import 'dashboard_last_five.dart';
-import 'dashboard_matches_chart.dart';
-import 'dashboard_quick_actions.dart';
+import 'package:foosball_mobile_app/widgets/dashboard/dashboard_goals_chart.dart';
+import 'package:foosball_mobile_app/widgets/dashboard/dashboard_last_five.dart';
+import 'package:foosball_mobile_app/widgets/dashboard/dashboard_matches_chart.dart';
+import 'package:foosball_mobile_app/widgets/dashboard/dashboard_quick_actions.dart';
+import 'package:foosball_mobile_app/widgets/drawer_sidebar.dart';
 import 'package:foosball_mobile_app/widgets/headline.dart';
-import '../../utils/preferences_service.dart';
-import '../drawer_sidebar.dart';
-import '../loading.dart';
+import 'package:foosball_mobile_app/widgets/loading.dart';
 
-class Dashboard extends StatefulWidget {
-  final UserState param;
-  const Dashboard({Key? key, required this.param}) : super(key: key);
+class NewDashboard extends StatefulWidget {
+  final UserState userState;
+  const NewDashboard({Key? key, required this.userState}) : super(key: key);
 
   @override
-  DashboardState createState() => DashboardState();
+  State<NewDashboard> createState() => _NewDashboardState();
 }
 
-class DashboardState extends State<Dashboard> {
-  // State
+class _NewDashboardState extends State<NewDashboard> {
+  // state
   String firstName = "";
   String lastName = "";
   String email = "";
@@ -47,85 +48,82 @@ class DashboardState extends State<Dashboard> {
           totalGoalsScored: 0,
           totalGoalsReceived: 0));
 
-  // late UserState userStateState;
-
-  @override
-  void initState() {
-    super.initState();
-    String userId = widget.param.userId.toString();
-    UserApi user = UserApi();
+  Future getHardcodedStrings() async {
     DatoCMS datoCMS = DatoCMS();
+    var hardcodedStrings =
+        await datoCMS.getHardcodedStrings(widget.userState.language);
 
-    datoCMS.getHardcodedStrings(widget.param.language).then((value) {
-      if (value != null) {
-        // hardcoded strings put into global state
-        widget.param.setHardcodedStrings(value);
-      }
-      user.getUser(userId).then((value) {
-        setState(() {
-          firstName = value.firstName;
-          lastName = value.lastName;
-          email = value.email;
-        });
-        int currentOID = 0;
-        if (value.currentOrganisationId != null) {
-          currentOID = value.currentOrganisationId!;
-        }
-        userStatsFuture = getUserStatsData(int.parse(userId), currentOID);
-
-        // Set user information to global state??
-        widget.param.setUserInfoGlobalObject(int.parse(userId), value.firstName,
-            value.lastName, value.email, currentOID, organisationName);
-      });
-
-      getTheme();
-
-      // setState(() {
-      //   userStateState = widget.param;
-      // });
-    });
+    if (hardcodedStrings != null) {
+      widget.userState.setHardcodedStrings(hardcodedStrings);
+    }
+    print("getHardcodedStrings() INSIDE finished");
   }
 
-  Future<void> getTheme() async {
-    PreferencesService preferencesService = PreferencesService();
-    bool? darkTheme = await preferencesService.getDarkTheme();
+  Future<UserResponse> getUser() async {
+    UserApi user = UserApi();
+    String userId = widget.userState.userId.toString();
+    var userData = await user.getUser(userId);
+
     setState(() {
-      if (darkTheme == true) {
-        widget.param.setDarkmode(true);
-      } else {
-        widget.param.setDarkmode(false);
-      }
+      firstName = userData.firstName;
+      lastName = userData.lastName;
+      email = userData.email;
     });
+    print("getUser() INSIDE FINISH");
+    return userData;
   }
 
-  // To do put functions here
+  Future<OrganisationResponse?> getOrganisationById(int userId) async {
+    Organisation orgApi = Organisation();
+    int organisationId = widget.userState.currentOrganisationId;
+    var data = await orgApi.getOrganisationById(organisationId);
+    if (data.statusCode == 200) {
+      var organisationResponse =
+          OrganisationResponse.fromJson(jsonDecode(data.body));
+      setState(() {
+        organisationName = organisationResponse.name;
+      });
+      setGlobal(userId, organisationResponse.id, organisationResponse.name);
+      print("getOrganisationById() INSIDE FINISH");
+
+      return organisationResponse;
+    }
+    return null;
+  }
+
   Future<UserStatsResponse> getUserStatsData(
       int userId, int currrentOrganisationId) async {
     UserApi user = UserApi();
-    Organisation organisation = Organisation();
     var userStatsData = await user.getUserStats();
     userStatsResponse = userStatsData;
-    int organisationId = widget.param.currentOrganisationId;
-    organisation.getOrganisationById(organisationId).then((value) {
-      if (value.statusCode == 200) {
-        var organisationResponse =
-            OrganisationResponse.fromJson(jsonDecode(value.body));
-        setState(() {
-          organisationName = organisationResponse.name;
-        });
-        setGlobal(userId, currrentOrganisationId, organisationResponse.name);
-      } else {
-        // To do error handling
-      }
-    });
-
+    print("getUserStatsData() INSIDE FINISH");
     return userStatsData;
   }
 
   setGlobal(
       int userId, int currrentOrganisationId, String currentOrganisationName) {
-    widget.param.setUserInfoGlobalObject(userId, firstName, lastName, email,
+    widget.userState.setUserInfoGlobalObject(userId, firstName, lastName, email,
         currrentOrganisationId, currentOrganisationName);
+  }
+
+  Future<void> initialize() async {
+    print("initialize function called");
+    await getHardcodedStrings();
+    print("getHardcodedStrings finished");
+    var user = await getUser();
+    print("getUser finished");
+    var orgData = await getOrganisationById(user.id);
+    print("getOrganisationById finisehed");
+    if (orgData != null) {
+      userStatsFuture = getUserStatsData(user.id, orgData.id);
+      print("userStatsFuture finisehd");
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    initialize();
   }
 
   void updateAllState() {
@@ -134,8 +132,7 @@ class DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    bool darkMode = widget.param.darkmode;
-
+    bool darkMode = widget.userState.darkmode;
     return MaterialApp(
         title: 'Dashboard',
         home: Scaffold(
@@ -146,7 +143,7 @@ class DashboardState extends State<Dashboard> {
               backgroundColor:
                   darkMode ? AppColors.darkModeBackground : AppColors.white),
           drawer: DrawerSideBar(
-            userState: widget.param,
+            userState: widget.userState,
             notifyParent: updateAllState,
           ),
           onDrawerChanged: (isOpen) {
@@ -183,7 +180,7 @@ class DashboardState extends State<Dashboard> {
                                     child: SizedBox(
                                       height: 200,
                                       child: DashboardMatchesChart(
-                                        userState: widget.param,
+                                        userState: widget.userState,
                                         userStatsResponse: snapshot.data,
                                       ),
                                     )),
@@ -192,27 +189,27 @@ class DashboardState extends State<Dashboard> {
                                     child: SizedBox(
                                       height: 200,
                                       child: DashboardGoalsChart(
-                                          userState: widget.param,
+                                          userState: widget.userState,
                                           userStatsResponse: snapshot.data),
                                     )),
                               ],
                             ),
                             Headline(
-                                headline:
-                                    widget.param.hardcodedStrings.quickActions,
-                                userState: userState),
+                                headline: widget
+                                    .userState.hardcodedStrings.quickActions,
+                                userState: widget.userState),
                             QuicActions(
-                              userState: userState,
+                              userState: widget.userState,
                               notifyParent: updateAllState,
                             ),
                             Headline(
                                 headline: widget
-                                    .param.hardcodedStrings.lastTenMatches,
-                                userState: userState),
+                                    .userState.hardcodedStrings.lastTenMatches,
+                                userState: widget.userState),
                             Expanded(
                                 flex: 1,
                                 child: DashBoardLastFive(
-                                  userState: widget.param,
+                                  userState: widget.userState,
                                 ))
                           ],
                         )));

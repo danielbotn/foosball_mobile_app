@@ -94,8 +94,7 @@ class _NewOrganisationState extends State<NewOrganisation> {
                       onPressed: () async {
                         String inputText = _textController.text;
                         if (inputText.isNotEmpty) {
-                          Organisation api =
-                              Organisation(token: userState.token);
+                          Organisation api = Organisation();
                           var result =
                               await api.createNewOrganisation(inputText);
 

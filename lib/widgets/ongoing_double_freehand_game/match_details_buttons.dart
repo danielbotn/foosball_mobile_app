@@ -27,8 +27,7 @@ class MatchDetailButtons extends StatelessWidget {
     }
 
     void rematch() {
-      FreehandDoubleMatchApi matchApi =
-          FreehandDoubleMatchApi(token: userState.token);
+      FreehandDoubleMatchApi matchApi = FreehandDoubleMatchApi();
 
       FreehandDoubleMatchBody fmb = FreehandDoubleMatchBody(
           playerOneTeamA: data.teamOne.players[0].id,

@@ -5,18 +5,15 @@ import 'package:foosball_mobile_app/models/charts/user_stats_response.dart';
 import 'package:foosball_mobile_app/models/user/create_group_user_model.dart';
 import 'package:foosball_mobile_app/models/user/user_last_ten.dart';
 import 'package:foosball_mobile_app/models/user/user_response.dart';
+import 'package:foosball_mobile_app/utils/preferences_service.dart';
 import 'package:http/http.dart' as http;
 
-import 'TokenHelper.dart';
-
 class UserApi {
-  final String token;
-
-  UserApi({required this.token});
+  UserApi();
 
   Future<UserResponse> getUser(String userId) async {
-    TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
+    PreferencesService preferencesService = PreferencesService();
+    String? token = await preferencesService.getJwtToken();
     late UserResponse result = UserResponse(
       id: 0,
       email: '',
@@ -36,7 +33,7 @@ class UserApi {
       var response = await http.get(url, headers: {
         "Accept": "application/json",
         "content-type": "application/json",
-        'Authorization': 'Bearer $checkedToken',
+        'Authorization': 'Bearer $token',
       });
 
       if (response.statusCode == 200) {
@@ -49,8 +46,8 @@ class UserApi {
   }
 
   Future<UserStatsResponse> getUserStats() async {
-    TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
+    PreferencesService preferencesService = PreferencesService();
+    String? token = await preferencesService.getJwtToken();
     late UserStatsResponse result = UserStatsResponse(
         userId: 0,
         totalMatches: 0,
@@ -66,7 +63,7 @@ class UserApi {
       var response = await http.get(url, headers: {
         "Accept": "application/json",
         "content-type": "application/json",
-        'Authorization': 'Bearer $checkedToken',
+        'Authorization': 'Bearer $token',
       });
 
       if (response.statusCode == 200) {
@@ -86,8 +83,8 @@ class UserApi {
   }
 
   Future<List<UserLastTen>?> getLastTenMatches() async {
-    TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
+    PreferencesService preferencesService = PreferencesService();
+    String? token = await preferencesService.getJwtToken();
     late List<UserLastTen>? result;
 
     String? baseUrl = kReleaseMode
@@ -99,7 +96,7 @@ class UserApi {
       var response = await http.get(url, headers: {
         "Accept": "application/json",
         "content-type": "application/json",
-        'Authorization': 'Bearer $checkedToken',
+        'Authorization': 'Bearer $token',
       });
 
       if (response.statusCode == 200) {
@@ -117,8 +114,8 @@ class UserApi {
   }
 
   Future<List<UserResponse>?> getUsers() async {
-    TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
+    PreferencesService preferencesService = PreferencesService();
+    String? token = await preferencesService.getJwtToken();
     late List<UserResponse>? result;
 
     String? baseUrl = kReleaseMode
@@ -130,7 +127,7 @@ class UserApi {
       var response = await http.get(url, headers: {
         "Accept": "application/json",
         "content-type": "application/json",
-        'Authorization': 'Bearer $checkedToken',
+        'Authorization': 'Bearer $token',
       });
 
       if (response.statusCode == 200) {
@@ -148,8 +145,8 @@ class UserApi {
   }
 
   Future<http.Response> createGroupUser(CreateGroupUserModel data) async {
-    TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
+    PreferencesService preferencesService = PreferencesService();
+    String? token = await preferencesService.getJwtToken();
     late http.Response result;
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']
@@ -164,7 +161,7 @@ class UserApi {
       result = await http.post(url, body: body, headers: {
         "Accept": "application/json",
         "content-type": "application/json",
-        'Authorization': 'Bearer $checkedToken',
+        'Authorization': 'Bearer $token',
       });
     }
     return result;

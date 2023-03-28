@@ -37,7 +37,7 @@ class _CreateLeagueDialogState extends State<CreateLeagueDialog> {
   }
 
   Future<CreateLeagueResponse?> createNewLeague() async {
-    LeagueApi api = LeagueApi(token: widget.userState.token);
+    LeagueApi api = LeagueApi();
 
     // Create payload
     CreateLeagueBody payload = CreateLeagueBody(

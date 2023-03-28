@@ -4,6 +4,7 @@ import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/widgets/dashboard/Dashboard.dart';
 import 'package:foosball_mobile_app/widgets/Settings.dart';
 import 'package:foosball_mobile_app/widgets/Single_game.dart';
+import 'package:foosball_mobile_app/widgets/dashboard/New_Dashboard.dart';
 import 'package:foosball_mobile_app/widgets/freehand_history/freehand_match_detail.dart';
 import 'package:foosball_mobile_app/widgets/login.dart';
 
@@ -21,7 +22,8 @@ class RouteGenerator {
         }
       case 'dashboard':
         if (args is UserState) {
-          return MaterialPageRoute(builder: (_) => Dashboard(param: args));
+          return MaterialPageRoute(
+              builder: (_) => NewDashboard(userState: args));
         } else {
           return _errorRoute();
         }

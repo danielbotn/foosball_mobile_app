@@ -51,6 +51,8 @@ dependencies:
   community_charts_flutter: ^1.0.0
   flutter_keyboard_visibility: ^5.4.0
   jwt_decode: ^0.3.1
+  ntp: ^2.0.0
+  http_interceptor: ^1.0.2
 
 flutter_native_splash:
   color: "#ffffff"

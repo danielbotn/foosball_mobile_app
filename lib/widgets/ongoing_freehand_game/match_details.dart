@@ -37,15 +37,13 @@ class _MatchDetailsState extends State<MatchDetails> {
   }
 
   Future<List<FreehandGoalsModel>?> getFreehandGoals(int matchId) async {
-    FreehandGoalsApi freehandGoalsApi = new FreehandGoalsApi(
-        token: widget.freehandMatchDetailObject.userState.token);
+    FreehandGoalsApi freehandGoalsApi = FreehandGoalsApi();
     var freehandGoals = await freehandGoalsApi.getFreehandGoals(matchId);
     return freehandGoals;
   }
 
   Future<FreehandMatchModel?> getFreehandMatch(int matchId) async {
-    FreehandMatchApi freehandMatchApi = new FreehandMatchApi(
-        token: widget.freehandMatchDetailObject.userState.token);
+    FreehandMatchApi freehandMatchApi = FreehandMatchApi();
     var freehandMatch = await freehandMatchApi.getFreehandMatch(matchId);
     return freehandMatch;
   }

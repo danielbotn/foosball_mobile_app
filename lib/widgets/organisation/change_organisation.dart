@@ -46,16 +46,14 @@ class _ChangeOrganisationState extends State<ChangeOrganisation> {
   }
 
   Future<List<UserResponse>?> getPlayersData() async {
-    String token = widget.userState.token;
-    UserApi user = UserApi(token: token);
+    UserApi user = UserApi();
     var data = await user.getUsers();
     playersData = data;
     return data;
   }
 
   Future<List<OrganisationResponse>> getOrganisationsByUser() async {
-    String token = widget.userState.token;
-    Organisation api = Organisation(token: token);
+    Organisation api = Organisation();
 
     var data = await api.getOrganisationsByUser();
 
@@ -142,7 +140,7 @@ class _ChangeOrganisationState extends State<ChangeOrganisation> {
             TextButton(
               child: Text(widget.userState.hardcodedStrings.yes),
               onPressed: () async {
-                Organisation api = Organisation(token: widget.userState.token);
+                Organisation api = Organisation();
                 var changeStatement = await api.changeOrganisation(
                     organisationId, newOrganisationId, widget.userState.userId);
 

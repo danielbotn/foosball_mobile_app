@@ -3,17 +3,15 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:foosball_mobile_app/models/history/historyModel.dart';
 import 'package:foosball_mobile_app/models/history/userStats.dart';
+import 'package:foosball_mobile_app/utils/preferences_service.dart';
 import 'package:http/http.dart' as http;
 
-import 'TokenHelper.dart';
-
 class HistoryApi {
-  final String token;
-  HistoryApi({required this.token});
+  HistoryApi();
 
   Future<UserStats?> getStats() async {
-    TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
+    PreferencesService preferencesService = PreferencesService();
+    String? token = await preferencesService.getJwtToken();
     late UserStats? result;
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']
@@ -32,7 +30,7 @@ class HistoryApi {
       var response = await http.get(url, headers: {
         "Accept": "application/json",
         "content-type": "application/json",
-        'Authorization': 'Bearer $checkedToken',
+        'Authorization': 'Bearer $token',
       });
       if (response.statusCode == 200) {
         var dta = UserStats.fromJson(jsonDecode(response.body));
@@ -45,8 +43,8 @@ class HistoryApi {
   }
 
   Future<List<HistoryModel?>> getHistory(int pageNumber, int pageSize) async {
-    TokenHelper tokenHelper = TokenHelper();
-    String checkedToken = await tokenHelper.checkTokenExpiryTwo();
+    PreferencesService preferencesService = PreferencesService();
+    String? token = await preferencesService.getJwtToken();
     late List<HistoryModel?> result;
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']
@@ -66,7 +64,7 @@ class HistoryApi {
       var response = await http.get(url, headers: {
         "Accept": "application/json",
         "content-type": "application/json",
-        'Authorization': 'Bearer $checkedToken',
+        'Authorization': 'Bearer $token',
       });
       if (response.statusCode == 200) {
         List<HistoryModel> dta = (jsonDecode(response.body) as List)

@@ -49,7 +49,7 @@ class _CreateGroupPlayerState extends State<CreateGroupPlayer> {
 
   Future<UserResponse?> createNewGroupUser() async {
     late UserResponse? result;
-    UserApi userApi = UserApi(token: widget.userState.token);
+    UserApi userApi = UserApi();
     CreateGroupUserModel groupUser =
         CreateGroupUserModel(firstName: firstNameText, lastName: lastNameText);
     var response = await userApi.createGroupUser(groupUser);
@@ -165,8 +165,7 @@ class _CreateGroupPlayerState extends State<CreateGroupPlayer> {
                         color: Colors.blue[800],
                         child: ElevatedButton(
                           onPressed: () async {
-                            UserApi userApi =
-                                UserApi(token: widget.userState.token);
+                            UserApi userApi = UserApi();
                             CreateGroupUserModel groupUser =
                                 CreateGroupUserModel(
                                     firstName: firstNameText,

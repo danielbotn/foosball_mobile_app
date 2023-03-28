@@ -7,6 +7,7 @@ import 'package:foosball_mobile_app/utils/app_theme.dart';
 import 'package:foosball_mobile_app/utils/preferences_service.dart';
 import 'package:foosball_mobile_app/widgets/Login.dart';
 import 'package:foosball_mobile_app/widgets/Settings.dart';
+import 'package:foosball_mobile_app/widgets/dashboard/New_Dashboard.dart';
 import 'package:foosball_mobile_app/widgets/dashboard/dashboard.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -105,7 +106,7 @@ class _MyAppState extends State<MyApp> {
       darkTheme: AppTheme().darkTheme,
       initialRoute: widget.initialRoute,
       routes: {
-        'dashboard': (context) => Dashboard(param: param),
+        'dashboard': (context) => NewDashboard(userState: param),
         'login': (context) => Login(userState: userState),
         'settings': (context) => Settings(userState: userState),
       },

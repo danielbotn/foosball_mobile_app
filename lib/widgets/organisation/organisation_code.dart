@@ -30,8 +30,7 @@ class _OrganisationCodeState extends State<OrganisationCode> {
   }
 
   Future<OrganisationResponse> getOrganisation() async {
-    String token = widget.userState.token;
-    Organisation org = Organisation(token: token);
+    Organisation org = Organisation();
     var orgData = await org
         .getOrganisationById(userState.userInfoGlobal.currentOrganisationId);
 

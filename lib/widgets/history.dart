@@ -53,13 +53,13 @@ class _HistoryState extends State<History> {
   }
 
   Future<UserStats?> getStats() async {
-    HistoryApi hapi = HistoryApi(token: widget.userState.token);
+    HistoryApi hapi = HistoryApi();
     var stats = await hapi.getStats();
     return stats;
   }
 
   Future<List<HistoryModel?>> getHistory() async {
-    HistoryApi hapi = HistoryApi(token: widget.userState.token);
+    HistoryApi hapi = HistoryApi();
     var history = await hapi.getHistory(pageNumber, pageSize);
 
     if (history.isNotEmpty) {

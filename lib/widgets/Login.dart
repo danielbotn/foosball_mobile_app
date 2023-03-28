@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'dart:convert';
 import 'package:foosball_mobile_app/widgets/dashboard/Dashboard.dart';
+import 'package:foosball_mobile_app/widgets/dashboard/New_Dashboard.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 
 import '../models/auth/register_response.dart';
@@ -144,8 +145,8 @@ class _LoginState extends State<Login> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => Dashboard(
-                      param: widget.userState,
+                builder: (context) => NewDashboard(
+                      userState: widget.userState,
                     )));
       },
     );

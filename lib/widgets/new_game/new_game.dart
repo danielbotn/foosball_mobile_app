@@ -35,7 +35,7 @@ class _NewGameState extends State<NewGame> {
   }
 
   Future<List<UserResponse>?> getAllUsers() async {
-    UserApi datoCMS = UserApi(token: widget.userState.token);
+    UserApi datoCMS = UserApi();
     var users = await datoCMS.getUsers();
     return users;
   }

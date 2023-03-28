@@ -35,7 +35,7 @@ class _SettingsState extends State<Settings> {
 
   // Get hardcoded strings from datoCMS
   Future<HardcodedStrings?> getHardcodedStrings(String language) async {
-    DatoCMS datoCMS = DatoCMS(token: widget.userState.token);
+    DatoCMS datoCMS = DatoCMS();
     var hardcodedStrings = await datoCMS.getHardcodedStrings(language);
 
     return hardcodedStrings;

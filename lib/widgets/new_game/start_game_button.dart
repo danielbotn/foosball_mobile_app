@@ -25,7 +25,7 @@ class StartGameButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void startFreehandSingleGame() {
-      FreehandMatchApi matchApi = FreehandMatchApi(token: userState.token);
+      FreehandMatchApi matchApi = FreehandMatchApi();
 
       FreehandMatchBody fmb = FreehandMatchBody(
           playerOneId: newGameState.playersTeamOne[0].id,
@@ -55,8 +55,7 @@ class StartGameButton extends StatelessWidget {
     }
 
     void startFreehandDoubleGame() {
-      FreehandDoubleMatchApi doubleMatchApi =
-          FreehandDoubleMatchApi(token: userState.token);
+      FreehandDoubleMatchApi doubleMatchApi = FreehandDoubleMatchApi();
       FreehandDoubleMatchBody fdmb = FreehandDoubleMatchBody(
         playerOneTeamA: newGameState.playersTeamOne[0].id,
         playerTwoTeamA: newGameState.playersTeamOne[1].id,
