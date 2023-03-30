@@ -1,13 +1,47 @@
 import 'dart:convert';
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:foosball_mobile_app/api/dio_api/dio_api.dart';
+import 'package:foosball_mobile_app/models/organisation/organisation_response.dart';
 import 'package:foosball_mobile_app/utils/preferences_service.dart';
 import 'package:http/http.dart' as http;
 
 class Organisation {
   Organisation();
 
-  Future<http.Response> getOrganisationById(int organisationId) async {
+  Future<OrganisationResponse?> getOrganisationById(int organisationId) async {
+    // PreferencesService preferencesService = PreferencesService();
+    // String? token = await preferencesService.getJwtToken();
+
+    late OrganisationResponse organisationResponse;
+
+    String? baseUrl = kReleaseMode
+        ? dotenv.env['REST_URL_PATH_PROD']
+        : dotenv.env['REST_URL_PATH_DEV'];
+    if (baseUrl != null) {
+      var url = '$baseUrl/api/Organisations/$organisationId';
+
+      var response = await Api().dio.get(
+            url,
+            options: Options(
+              headers: {
+                "Accept": "application/json",
+                "content-type": "application/json",
+                // 'Authorization': 'Bearer $token',
+              },
+            ),
+          );
+      if (response.statusCode == 200) {
+        organisationResponse = OrganisationResponse.fromJson(response.data);
+        return organisationResponse;
+      }
+    }
+
+    return null;
+  }
+
+  Future<http.Response> getOrganisationByIdTwo(int organisationId) async {
     PreferencesService preferencesService = PreferencesService();
     String? token = await preferencesService.getJwtToken();
     late http.Response result;

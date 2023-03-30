@@ -184,7 +184,7 @@ class Helpers {
     );
   }
 
-  Future refreshToken() async {
+  Future<bool> refreshToken() async {
     PreferencesService preferencesService = PreferencesService();
     String? jwtToken = await preferencesService.getJwtToken();
     String? refreshToken = await preferencesService.getRefreshToken();
@@ -201,10 +201,13 @@ class Helpers {
 
         await preferencesService.setJwtToken(refreshResponse.token);
         await preferencesService.setRefreshToken(refreshResponse.refreshToken);
+
+        return true;
       } else if (refreshData.statusCode == 400 &&
           refreshData.body == "Invalid client request from refresh endpoint") {
         String danni = "danni";
       }
     }
+    return false;
   }
 }

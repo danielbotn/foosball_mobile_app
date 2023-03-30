@@ -77,16 +77,14 @@ class _NewDashboardState extends State<NewDashboard> {
     Organisation orgApi = Organisation();
     int organisationId = widget.userState.currentOrganisationId;
     var data = await orgApi.getOrganisationById(organisationId);
-    if (data.statusCode == 200) {
-      var organisationResponse =
-          OrganisationResponse.fromJson(jsonDecode(data.body));
+    if (data != null) {
       setState(() {
-        organisationName = organisationResponse.name;
+        organisationName = data.name;
       });
-      setGlobal(userId, organisationResponse.id, organisationResponse.name);
+      setGlobal(userId, data.id, data.name);
       print("getOrganisationById() INSIDE FINISH");
 
-      return organisationResponse;
+      return data;
     }
     return null;
   }
@@ -173,26 +171,30 @@ class _NewDashboardState extends State<NewDashboard> {
                                 trailing: Text(organisationName),
                               ),
                             ),
-                            Row(
-                              children: <Widget>[
-                                Expanded(
-                                    flex: 1,
-                                    child: SizedBox(
-                                      height: 200,
-                                      child: DashboardMatchesChart(
-                                        userState: widget.userState,
-                                        userStatsResponse: snapshot.data,
-                                      ),
-                                    )),
-                                Expanded(
-                                    flex: 1,
-                                    child: SizedBox(
-                                      height: 200,
-                                      child: DashboardGoalsChart(
+                            Visibility(
+                              visible: snapshot.data != null &&
+                                  widget.userState.hardcodedStrings.about != "",
+                              child: Row(
+                                children: <Widget>[
+                                  Expanded(
+                                      flex: 1,
+                                      child: SizedBox(
+                                        height: 200,
+                                        child: DashboardMatchesChart(
                                           userState: widget.userState,
-                                          userStatsResponse: snapshot.data),
-                                    )),
-                              ],
+                                          userStatsResponse: snapshot.data,
+                                        ),
+                                      )),
+                                  Expanded(
+                                      flex: 1,
+                                      child: SizedBox(
+                                        height: 200,
+                                        child: DashboardGoalsChart(
+                                            userState: widget.userState,
+                                            userStatsResponse: snapshot.data),
+                                      )),
+                                ],
+                              ),
                             ),
                             Headline(
                                 headline: widget

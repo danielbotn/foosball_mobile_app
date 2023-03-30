@@ -32,7 +32,7 @@ class _OrganisationCodeState extends State<OrganisationCode> {
   Future<OrganisationResponse> getOrganisation() async {
     Organisation org = Organisation();
     var orgData = await org
-        .getOrganisationById(userState.userInfoGlobal.currentOrganisationId);
+        .getOrganisationByIdTwo(userState.userInfoGlobal.currentOrganisationId);
 
     var organisationDecoded =
         OrganisationResponse.fromJson(jsonDecode(orgData.body));

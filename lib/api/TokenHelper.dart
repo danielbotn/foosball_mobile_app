@@ -61,6 +61,26 @@ class TokenHelper {
     }
   }
 
+  Future<Duration?> getAccessTokenRemainingTime(String token) async {
+    final Map<String, dynamic> payload = parseJwt(token);
+    final exp = payload['exp'] as int?;
+    if (exp == null) {
+      return null;
+    }
+    bool? isExpired = await isTokenExpired(token);
+    DateTime currentNTPTime = await NTP.now();
+    DateTime expToDateTime = DateTime.fromMillisecondsSinceEpoch(exp * 1000);
+
+    if (isExpired == true || currentNTPTime.isAfter(expToDateTime)) {
+      // Token has expired
+      return Duration.zero;
+    } else {
+      // Calculate remaining time as a Duration
+      Duration remainingTime = expToDateTime.difference(currentNTPTime);
+      return remainingTime;
+    }
+  }
+
   // returns current token, if token is expired
   // it returns a new token
   Future<String> getToken() async {

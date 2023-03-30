@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:foosball_mobile_app/api/dio_api/dio_api.dart';
 import 'package:foosball_mobile_app/models/charts/user_stats_response.dart';
 import 'package:foosball_mobile_app/models/user/create_group_user_model.dart';
 import 'package:foosball_mobile_app/models/user/user_last_ten.dart';
@@ -12,8 +14,8 @@ class UserApi {
   UserApi();
 
   Future<UserResponse> getUser(String userId) async {
-    PreferencesService preferencesService = PreferencesService();
-    String? token = await preferencesService.getJwtToken();
+    // PreferencesService preferencesService = PreferencesService();
+    // String? token = await preferencesService.getJwtToken();
     late UserResponse result = UserResponse(
       id: 0,
       email: '',
@@ -29,16 +31,20 @@ class UserApi {
         ? dotenv.env['REST_URL_PATH_PROD']
         : dotenv.env['REST_URL_PATH_DEV'];
     if (baseUrl != null) {
-      var url = Uri.parse('$baseUrl/api/Users/$userId');
-      var response = await http.get(url, headers: {
-        "Accept": "application/json",
-        "content-type": "application/json",
-        'Authorization': 'Bearer $token',
-      });
-
-      if (response.statusCode == 200) {
-        result = UserResponse.fromJson(jsonDecode(response.body));
-      } else {
+      var url = '$baseUrl/api/Users/$userId';
+      try {
+        final response = await Api().dio.get(url,
+            options: Options(headers: {
+              "Accept": "application/json",
+              "content-type": "application/json",
+              // 'Authorization': 'Bearer $token',
+            }));
+        if (response.statusCode == 200) {
+          result = UserResponse.fromJson(response.data);
+        } else {
+          // To do Error handling
+        }
+      } catch (e) {
         // To do Error handling
       }
     }
@@ -46,8 +52,8 @@ class UserApi {
   }
 
   Future<UserStatsResponse> getUserStats() async {
-    PreferencesService preferencesService = PreferencesService();
-    String? token = await preferencesService.getJwtToken();
+    // PreferencesService preferencesService = PreferencesService();
+    // String? token = await preferencesService.getJwtToken();
     late UserStatsResponse result = UserStatsResponse(
         userId: 0,
         totalMatches: 0,
@@ -59,15 +65,19 @@ class UserApi {
         ? dotenv.env['REST_URL_PATH_PROD']
         : dotenv.env['REST_URL_PATH_DEV'];
     if (baseUrl != null) {
-      var url = Uri.parse('$baseUrl/api/Users/stats');
-      var response = await http.get(url, headers: {
-        "Accept": "application/json",
-        "content-type": "application/json",
-        'Authorization': 'Bearer $token',
-      });
-
+      var url = '$baseUrl/api/Users/stats';
+      final response = await Api().dio.get(
+            url,
+            options: Options(
+              headers: {
+                "Accept": "application/json",
+                "content-type": "application/json",
+                // 'Authorization': 'Bearer $token',
+              },
+            ),
+          );
       if (response.statusCode == 200) {
-        var dta = UserStatsResponse.fromJson(jsonDecode(response.body));
+        UserStatsResponse dta = UserStatsResponse.fromJson(response.data);
         result = UserStatsResponse(
             totalGoalsReceived: dta.totalGoalsReceived,
             totalGoalsScored: dta.totalGoalsScored,
@@ -83,56 +93,64 @@ class UserApi {
   }
 
   Future<List<UserLastTen>?> getLastTenMatches() async {
-    PreferencesService preferencesService = PreferencesService();
-    String? token = await preferencesService.getJwtToken();
-    late List<UserLastTen>? result;
+    // PreferencesService preferencesService = PreferencesService();
+    // String? token = await preferencesService.getJwtToken();
+    List<UserLastTen>? result;
 
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']
         : dotenv.env['REST_URL_PATH_DEV'];
     if (baseUrl != null) {
-      var url = Uri.parse('$baseUrl/api/Users/stats/last-ten-matches');
+      var url = '$baseUrl/api/Users/stats/last-ten-matches';
 
-      var response = await http.get(url, headers: {
-        "Accept": "application/json",
-        "content-type": "application/json",
-        'Authorization': 'Bearer $token',
-      });
+      try {
+        var response = await Api().dio.get(url,
+            options: Options(headers: {
+              "Accept": "application/json",
+              "content-type": "application/json",
+              // 'Authorization': 'Bearer $token',
+            }));
 
-      if (response.statusCode == 200) {
-        List<UserLastTen> userLastTen;
-        userLastTen = (json.decode(response.body) as List)
-            .map((i) => UserLastTen.fromJson(i))
-            .toList();
+        if (response.statusCode == 200) {
+          List<UserLastTen> userLastTen;
+          userLastTen = (response.data as List)
+              .map((i) => UserLastTen.fromJson(i))
+              .toList();
 
-        result = userLastTen;
-      } else {
-        result = null;
+          result = userLastTen;
+        }
+      } catch (e) {
+        // To do Error handling
       }
     }
     return result;
   }
 
   Future<List<UserResponse>?> getUsers() async {
-    PreferencesService preferencesService = PreferencesService();
-    String? token = await preferencesService.getJwtToken();
+    // PreferencesService preferencesService = PreferencesService();
+    // String? token = await preferencesService.getJwtToken();
     late List<UserResponse>? result;
 
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']
         : dotenv.env['REST_URL_PATH_DEV'];
     if (baseUrl != null) {
-      var url = Uri.parse('$baseUrl/api/Users');
+      var url = '$baseUrl/api/Users';
 
-      var response = await http.get(url, headers: {
-        "Accept": "application/json",
-        "content-type": "application/json",
-        'Authorization': 'Bearer $token',
-      });
+      final response = await Api().dio.get(
+            url,
+            options: Options(
+              headers: {
+                "Accept": "application/json",
+                "content-type": "application/json",
+                // 'Authorization': 'Bearer $token',
+              },
+            ),
+          );
 
       if (response.statusCode == 200) {
         List<UserResponse> userLastTen;
-        userLastTen = (json.decode(response.body) as List)
+        userLastTen = (response.data as List)
             .map((i) => UserResponse.fromJson(i))
             .toList();
 
