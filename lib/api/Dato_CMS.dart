@@ -32,9 +32,11 @@ class DatoCMS {
           var dta = HardcodedStrings.fromJson(response.data);
           result = dta;
         } else {
+          print("else");
           result = null;
         }
       } catch (e) {
+        print("catch");
         result = null;
       }
     }

@@ -77,23 +77,23 @@ class RefreshTokenInterceptor extends QueuedInterceptor {
 
   /// Api to get new token from refresh token
   ///
-  Future<bool?> refreshToken() async {
-    ///call your refesh token api here
-    Helpers helper = Helpers();
-    var refreshSuccessfull = helper.refreshToken();
-    return refreshSuccessfull;
-  }
+  // Future<bool?> refreshToken() async {
+  //   ///call your refesh token api here
+  //   Helpers helper = Helpers();
+  //   var refreshSuccessfull = helper.refreshToken();
+  //   return refreshSuccessfull;
+  // }
 
   /// For retrying request with new token
   ///
-  Future<Response<dynamic>> _retry(RequestOptions requestOptions) async {
-    final options = Options(
-      method: requestOptions.method,
-      headers: requestOptions.headers,
-    );
-    return dio.request<dynamic>(requestOptions.path,
-        data: requestOptions.data,
-        queryParameters: requestOptions.queryParameters,
-        options: options);
-  }
+  // Future<Response<dynamic>> _retry(RequestOptions requestOptions) async {
+  //   final options = Options(
+  //     method: requestOptions.method,
+  //     headers: requestOptions.headers,
+  //   );
+  //   return dio.request<dynamic>(requestOptions.path,
+  //       data: requestOptions.data,
+  //       queryParameters: requestOptions.queryParameters,
+  //       options: options);
+  // }
 }
