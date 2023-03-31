@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -7,15 +6,11 @@ import 'package:foosball_mobile_app/models/charts/user_stats_response.dart';
 import 'package:foosball_mobile_app/models/user/create_group_user_model.dart';
 import 'package:foosball_mobile_app/models/user/user_last_ten.dart';
 import 'package:foosball_mobile_app/models/user/user_response.dart';
-import 'package:foosball_mobile_app/utils/preferences_service.dart';
-import 'package:http/http.dart' as http;
 
 class UserApi {
   UserApi();
 
   Future<UserResponse> getUser(String userId) async {
-    // PreferencesService preferencesService = PreferencesService();
-    // String? token = await preferencesService.getJwtToken();
     late UserResponse result = UserResponse(
       id: 0,
       email: '',
@@ -37,7 +32,6 @@ class UserApi {
             options: Options(headers: {
               "Accept": "application/json",
               "content-type": "application/json",
-              // 'Authorization': 'Bearer $token',
             }));
         if (response.statusCode == 200) {
           result = UserResponse.fromJson(response.data);
@@ -52,8 +46,6 @@ class UserApi {
   }
 
   Future<UserStatsResponse> getUserStats() async {
-    // PreferencesService preferencesService = PreferencesService();
-    // String? token = await preferencesService.getJwtToken();
     late UserStatsResponse result = UserStatsResponse(
         userId: 0,
         totalMatches: 0,
@@ -72,7 +64,6 @@ class UserApi {
               headers: {
                 "Accept": "application/json",
                 "content-type": "application/json",
-                // 'Authorization': 'Bearer $token',
               },
             ),
           );
@@ -93,8 +84,6 @@ class UserApi {
   }
 
   Future<List<UserLastTen>?> getLastTenMatches() async {
-    // PreferencesService preferencesService = PreferencesService();
-    // String? token = await preferencesService.getJwtToken();
     List<UserLastTen>? result;
 
     String? baseUrl = kReleaseMode
@@ -108,7 +97,6 @@ class UserApi {
             options: Options(headers: {
               "Accept": "application/json",
               "content-type": "application/json",
-              // 'Authorization': 'Bearer $token',
             }));
 
         if (response.statusCode == 200) {
@@ -120,15 +108,13 @@ class UserApi {
           result = userLastTen;
         }
       } catch (e) {
-        // To do Error handling
+        rethrow;
       }
     }
     return result;
   }
 
   Future<List<UserResponse>?> getUsers() async {
-    // PreferencesService preferencesService = PreferencesService();
-    // String? token = await preferencesService.getJwtToken();
     late List<UserResponse>? result;
 
     String? baseUrl = kReleaseMode
@@ -143,7 +129,6 @@ class UserApi {
               headers: {
                 "Accept": "application/json",
                 "content-type": "application/json",
-                // 'Authorization': 'Bearer $token',
               },
             ),
           );
@@ -162,25 +147,40 @@ class UserApi {
     return result;
   }
 
-  Future<http.Response> createGroupUser(CreateGroupUserModel data) async {
-    PreferencesService preferencesService = PreferencesService();
-    String? token = await preferencesService.getJwtToken();
-    late http.Response result;
+  Future<UserResponse?> createGroupUser(CreateGroupUserModel data) async {
+    UserResponse? result;
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']
         : dotenv.env['REST_URL_PATH_DEV'];
     if (baseUrl != null) {
-      var url = Uri.parse('$baseUrl/api/Users/group-user');
-      var body = jsonEncode({
-        'firstName': data.firstName,
-        'lastName': data.lastName,
-      });
+      var url = '$baseUrl/api/Users/group-user';
 
-      result = await http.post(url, body: body, headers: {
-        "Accept": "application/json",
-        "content-type": "application/json",
-        'Authorization': 'Bearer $token',
-      });
+      try {
+        var response = await Api().dio.post(
+              url,
+              data: {
+                'firstName': data.firstName,
+                'lastName': data.lastName,
+              },
+              options: Options(headers: {
+                "Accept": "application/json",
+                "content-type": "application/json",
+              }),
+            );
+
+        if (response.statusCode == 200) {
+          result = UserResponse.fromJson(response.data);
+        }
+      } on DioError catch (e) {
+        if (e.response != null) {
+          print(e.response!.data);
+          print(e.response!.headers);
+          print(e.response!.requestOptions);
+        } else {
+          print(e.requestOptions);
+          print(e.message);
+        }
+      }
     }
     return result;
   }

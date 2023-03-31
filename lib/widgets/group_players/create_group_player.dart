@@ -54,8 +54,8 @@ class _CreateGroupPlayerState extends State<CreateGroupPlayer> {
         CreateGroupUserModel(firstName: firstNameText, lastName: lastNameText);
     var response = await userApi.createGroupUser(groupUser);
 
-    if (response.statusCode == 200) {
-      result = UserResponse.fromJson(jsonDecode(response.body));
+    if (response != null) {
+      result = response;
     } else {
       result = null;
     }
@@ -173,7 +173,7 @@ class _CreateGroupPlayerState extends State<CreateGroupPlayer> {
 
                             var response =
                                 await userApi.createGroupUser(groupUser);
-                            if (response.statusCode == 200) {
+                            if (response != null) {
                               await showMyDialog(
                                   widget.userState.hardcodedStrings
                                       .groupPlayerCreateSuccess,
