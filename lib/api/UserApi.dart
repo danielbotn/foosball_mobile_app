@@ -173,12 +173,9 @@ class UserApi {
         }
       } on DioError catch (e) {
         if (e.response != null) {
-          print(e.response!.data);
-          print(e.response!.headers);
-          print(e.response!.requestOptions);
+          rethrow;
         } else {
-          print(e.requestOptions);
-          print(e.message);
+          rethrow;
         }
       }
     }

@@ -13,9 +13,9 @@ class Api {
   Api._internal(this.baseUrl)
       : dio = Dio(BaseOptions(
           baseUrl: baseUrl!,
-          receiveTimeout: const Duration(seconds: 15),
-          connectTimeout: const Duration(seconds: 15),
-          sendTimeout: const Duration(seconds: 15),
+          // receiveTimeout: const Duration(seconds: 15),
+          // connectTimeout: const Duration(seconds: 15),
+          // sendTimeout: const Duration(seconds: 15),
         )),
         tokenDio = Dio(BaseOptions(baseUrl: baseUrl)) {
     dio.interceptors.add(RefreshTokenInterceptor(dio: dio));
