@@ -11,9 +11,6 @@ class Organisation {
   Organisation();
 
   Future<OrganisationResponse?> getOrganisationById(int organisationId) async {
-    // PreferencesService preferencesService = PreferencesService();
-    // String? token = await preferencesService.getJwtToken();
-
     late OrganisationResponse organisationResponse;
 
     String? baseUrl = kReleaseMode
@@ -28,7 +25,6 @@ class Organisation {
               headers: {
                 "Accept": "application/json",
                 "content-type": "application/json",
-                // 'Authorization': 'Bearer $token',
               },
             ),
           );
@@ -41,42 +37,39 @@ class Organisation {
     return null;
   }
 
-  Future<http.Response> getOrganisationByIdTwo(int organisationId) async {
-    PreferencesService preferencesService = PreferencesService();
-    String? token = await preferencesService.getJwtToken();
-    late http.Response result;
+  Future<List<OrganisationResponse>?> getOrganisationsByUser() async {
+    List<OrganisationResponse>? result;
 
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']
         : dotenv.env['REST_URL_PATH_DEV'];
     if (baseUrl != null) {
-      var url = Uri.parse('$baseUrl/api/Organisations/$organisationId');
+      var url = '$baseUrl/api/Organisations/user';
 
-      result = await http.get(url, headers: {
-        "Accept": "application/json",
-        "content-type": "application/json",
-        'Authorization': 'Bearer $token',
-      });
-    }
-    return result;
-  }
+      try {
+        final response = await Api().dio.get(
+              url,
+              options: Options(
+                headers: {
+                  "Accept": "application/json",
+                  "content-type": "application/json",
+                },
+              ),
+            );
 
-  Future<http.Response> getOrganisationsByUser() async {
-    PreferencesService preferencesService = PreferencesService();
-    String? token = await preferencesService.getJwtToken();
-    late http.Response result;
+        if (response.statusCode == 200) {
+          List<OrganisationResponse>? organisations;
+          organisations = (response.data as List)
+              .map((i) => OrganisationResponse.fromJson(i))
+              .toList();
 
-    String? baseUrl = kReleaseMode
-        ? dotenv.env['REST_URL_PATH_PROD']
-        : dotenv.env['REST_URL_PATH_DEV'];
-    if (baseUrl != null) {
-      var url = Uri.parse('$baseUrl/api/Organisations/user');
-
-      result = await http.get(url, headers: {
-        "Accept": "application/json",
-        "content-type": "application/json",
-        'Authorization': 'Bearer $token',
-      });
+          result = organisations;
+        } else {
+          result = null;
+        }
+      } catch (e) {
+        rethrow;
+      }
     }
     return result;
   }
