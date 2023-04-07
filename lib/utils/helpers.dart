@@ -194,17 +194,15 @@ class Helpers {
       AuthApi auth = AuthApi();
       RefreshModel refreshModel =
           RefreshModel(token: jwtToken, refreshToken: refreshToken);
-      Response refreshData = await auth.refresh(refreshModel);
+      var refreshData = await auth.refresh(refreshModel);
 
       if (refreshData.statusCode == 200) {
-        var refreshResponse =
-            LoginResponse.fromJson(jsonDecode(refreshData.body));
-
+        var refreshResponse = LoginResponse.fromJson(refreshData.data);
         await preferencesService.setJwtToken(refreshResponse.token);
         await preferencesService.setRefreshToken(refreshResponse.refreshToken);
-
         return refreshResponse.token;
-      } else if (refreshData.statusCode == 400) {
+      } else if (refreshData.statusCode == 400 ||
+          refreshData.statusCode == 500) {
         await preferencesService.deleteRefreshToken();
         await preferencesService.deleteJwtToken();
         navigatorKey.currentState?.pushNamed('login');

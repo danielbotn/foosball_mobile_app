@@ -47,21 +47,34 @@ class AuthApi {
     throw Exception('Unable to perform login operation.');
   }
 
-  Future<http.Response> refresh(RefreshModel data) async {
-    late http.Response result;
+  Future<Response<dynamic>> refresh(RefreshModel data) async {
+    late Response<dynamic> result;
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']
         : dotenv.env['REST_URL_PATH_DEV'];
     if (baseUrl != null) {
-      var url = Uri.parse('$baseUrl/api/Auth/refresh');
-      var body =
-          jsonEncode({'token': data.token, 'refreshToken': data.refreshToken});
+      var url = '$baseUrl/api/Auth/refresh';
 
-      result = await http.post(url, body: body, headers: {
-        "Accept": "application/json",
-        "content-type": "application/json"
-      });
+      try {
+        result = await Dio().post(
+          url,
+          data: {'token': data.token, 'refreshToken': data.refreshToken},
+          options: Options(
+            headers: {
+              "Accept": "application/json",
+              "content-type": "application/json"
+            },
+            followRedirects: false,
+            validateStatus: (status) {
+              return status! >= 200 && status <= 401;
+            },
+          ),
+        );
+      } catch (e) {
+        rethrow;
+      }
     }
+
     return result;
   }
 
