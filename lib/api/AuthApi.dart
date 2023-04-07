@@ -6,6 +6,7 @@ import 'package:flutter_login/flutter_login.dart';
 import 'package:foosball_mobile_app/models/auth/error_response.dart';
 import 'package:foosball_mobile_app/models/auth/login_response.dart';
 import 'package:foosball_mobile_app/models/auth/refresh_model.dart';
+import 'package:foosball_mobile_app/models/auth/register_response.dart';
 import 'package:http/http.dart' as http;
 
 class AuthApi {
@@ -81,26 +82,46 @@ class AuthApi {
   // Register user
   // request body should be in the form of:
   //{ "email": "email", "password": "password", "firstName": "firstName", "r": "lastName" }
-  Future<http.Response> register(SignupData data) async {
-    late http.Response result;
+  Future<dynamic> register(SignupData data) async {
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']
         : dotenv.env['REST_URL_PATH_DEV'];
-    if (baseUrl != null) {
-      var url = Uri.parse('$baseUrl/api/Auth/register');
-      var body = jsonEncode({
-        'email': data.name,
-        'password': data.password,
-        'firstName': data.additionalSignupData!['firstName'],
-        'lastName': data.additionalSignupData!['lastName']
-      });
 
-      result = await http.post(url, body: body, headers: {
-        "Accept": "application/json",
-        "content-type": "application/json"
-      });
+    if (baseUrl != null) {
+      var url = '$baseUrl/api/Auth/register';
+
+      try {
+        final response = await Dio().post(
+          url,
+          data: {
+            'email': data.name,
+            'password': data.password,
+            'firstName': data.additionalSignupData!['firstName'],
+            'lastName': data.additionalSignupData!['lastName']
+          },
+          options: Options(
+            headers: {
+              "Accept": "application/json",
+              "content-type": "application/json"
+            },
+            followRedirects: false,
+            validateStatus: (status) {
+              return status! >= 200 && status <= 500;
+            },
+          ),
+        );
+
+        if (response.statusCode == 201) {
+          return RegisterResponse.fromJson(response.data);
+        } else {
+          return response.data.toString();
+        }
+      } catch (e) {
+        rethrow;
+      }
     }
-    return result;
+
+    throw Exception('Unable to perform registration operation.');
   }
 
   // Verify email at route verify-email with token

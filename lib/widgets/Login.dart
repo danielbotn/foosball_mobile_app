@@ -92,13 +92,10 @@ class _LoginState extends State<Login> {
 
     var registerData = await auth.register(data);
 
-    if (registerData.statusCode == 201) {
-      var registerResponse =
-          RegisterResponse.fromJson(jsonDecode(registerData.body));
-      registrationData = registerResponse;
+    if (registerData is RegisterResponse) {
+      registrationData = registerData;
       return null;
     } else {
-      // return error message
       String errorMessage = "Could not register user";
       return errorMessage;
     }
