@@ -98,7 +98,7 @@ class _NewOrganisationState extends State<NewOrganisation> {
                           var result =
                               await api.createNewOrganisation(inputText);
 
-                          if (result.statusCode == 201) {
+                          if (result?.statusCode == 201) {
                             // success
                             _textController.clear();
                             await _showMyDialog(userState.hardcodedStrings

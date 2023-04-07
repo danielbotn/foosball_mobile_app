@@ -6,8 +6,6 @@ import 'package:foosball_mobile_app/api/dio_api/dio_api.dart';
 import 'package:foosball_mobile_app/models/freehand-matches/freehand_match_body.dart';
 import 'package:foosball_mobile_app/models/freehand-matches/freehand_match_create_response.dart';
 import 'package:foosball_mobile_app/models/freehand-matches/freehand_match_model.dart';
-import 'package:foosball_mobile_app/utils/preferences_service.dart';
-import 'package:http/http.dart' as http;
 
 class FreehandMatchApi {
   FreehandMatchApi();

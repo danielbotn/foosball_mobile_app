@@ -1,6 +1,4 @@
-import 'dart:convert';
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/api/AuthApi.dart';
 import 'package:foosball_mobile_app/models/auth/login_response.dart';
@@ -9,8 +7,6 @@ import 'package:foosball_mobile_app/models/freehand-double-matches/freehand_doub
 import 'package:foosball_mobile_app/models/other/freehandDoubleMatchObject.dart';
 import 'package:foosball_mobile_app/models/user/user_response.dart';
 import 'package:foosball_mobile_app/utils/preferences_service.dart';
-import 'package:http/http.dart';
-
 import 'app_color.dart';
 import 'package:foosball_mobile_app/main.dart';
 

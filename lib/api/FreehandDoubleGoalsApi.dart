@@ -6,8 +6,6 @@ import 'package:foosball_mobile_app/api/dio_api/dio_api.dart';
 import 'package:foosball_mobile_app/models/freehand-double-goals/freehand_double_goal_body.dart';
 import 'package:foosball_mobile_app/models/freehand-double-goals/freehand_double_goal_model.dart';
 import 'package:foosball_mobile_app/models/freehand-double-goals/freehand_double_goal_return.dart';
-import 'package:foosball_mobile_app/utils/preferences_service.dart';
-import 'package:http/http.dart' as http;
 
 class FreehandDoubleGoalsApi {
   FreehandDoubleGoalsApi();
