@@ -39,14 +39,11 @@ class _LoginState extends State<Login> {
     }
     var loginData = await auth.login(data);
 
-    if (loginData.statusCode != 200) {
-      var error = ErrorResponse.fromJson(jsonDecode(loginData.body));
-      return error.message;
-    } else {
-      var loginResponse = LoginResponse.fromJson(jsonDecode(loginData.body));
-      await preferencesService.setJwtToken(loginResponse.token);
-      await preferencesService.setRefreshToken(loginResponse.refreshToken);
-      setJwtInfo(loginResponse);
+    if (loginData is LoginResponse) {
+      // Do something with the LoginResponse
+      await preferencesService.setJwtToken(loginData.token);
+      await preferencesService.setRefreshToken(loginData.refreshToken);
+      setJwtInfo(loginData);
 
       if (langFromStorage != null) {
         widget.userState.setLanguage(langFromStorage);
@@ -56,6 +53,12 @@ class _LoginState extends State<Login> {
       }
       dashboardData = widget.userState;
       return null;
+    } else if (loginData is ErrorResponse) {
+      // Do something with the ErrorResponse
+      return loginData.message;
+    } else {
+      // Handle unexpected response type
+      return "unexpected error";
     }
   }
 

@@ -62,6 +62,8 @@ void setLanguageInfo() async {
   }
 }
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   HttpOverrides.global = MyHttpOverrides();
@@ -102,6 +104,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: navigatorKey,
       theme: AppTheme().lightTheme,
       darkTheme: AppTheme().darkTheme,
       initialRoute: widget.initialRoute,

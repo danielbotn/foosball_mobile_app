@@ -12,6 +12,7 @@ import 'package:foosball_mobile_app/utils/preferences_service.dart';
 import 'package:http/http.dart';
 
 import 'app_color.dart';
+import 'package:foosball_mobile_app/main.dart';
 
 class Helpers {
   IconThemeData getIconTheme(bool darkMode) {
@@ -203,9 +204,10 @@ class Helpers {
         await preferencesService.setRefreshToken(refreshResponse.refreshToken);
 
         return refreshResponse.token;
-      } else if (refreshData.statusCode == 400 &&
-          refreshData.body == "Invalid client request from refresh endpoint") {
-        String danni = "danni";
+      } else if (refreshData.statusCode == 400) {
+        await preferencesService.deleteRefreshToken();
+        await preferencesService.deleteJwtToken();
+        navigatorKey.currentState?.pushNamed('login');
       }
     }
     return jwtToken;

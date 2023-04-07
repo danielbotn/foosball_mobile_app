@@ -32,6 +32,7 @@ class _NewDashboardState extends State<NewDashboard> {
     if (hardcodedStrings != null) {
       widget.userState.setHardcodedStrings(hardcodedStrings);
     }
+
     return hardcodedStrings;
   }
 
@@ -48,71 +49,69 @@ class _NewDashboardState extends State<NewDashboard> {
   @override
   Widget build(BuildContext context) {
     bool darkMode = widget.userState.darkmode;
-    return MaterialApp(
-        title: 'Dashboard',
-        home: Scaffold(
-          appBar: AppBar(
-              iconTheme: darkMode
-                  ? const IconThemeData(color: AppColors.white)
-                  : IconThemeData(color: Colors.grey[700]),
-              backgroundColor:
-                  darkMode ? AppColors.darkModeBackground : AppColors.white),
-          drawer: DrawerSideBar(
-            userState: widget.userState,
-            notifyParent: updateAllState,
-          ),
-          onDrawerChanged: (isOpen) {
-            // setState(() {
-            //   userStateState = widget.param;
-            // });
-          },
-          body: FutureBuilder(
-            future: hardcodedStringsFuture,
-            builder: (context, AsyncSnapshot<HardcodedStrings?> snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                // Show a loading indicator while waiting for the future to complete
-                return const Loading();
-              } else if (snapshot.hasError) {
-                // Show an error message if the future completes with an error
-                return Text('Error: ${snapshot.error}');
-              } else if (snapshot.hasData) {
-                // Show the widget tree if the future completes successfully
-                return Theme(
-                    data: darkMode ? ThemeData.dark() : ThemeData.light(),
-                    child: Container(
-                        color: darkMode
-                            ? AppColors.darkModeBackground
-                            : AppColors.white,
-                        child: SingleChildScrollView(
-                            child: Column(
-                          children: <Widget>[
-                            DashBoardUserInfo(userState: widget.userState),
-                            DashboardCharts(userState: widget.userState),
-                            Headline(
-                                headline: widget
-                                    .userState.hardcodedStrings.quickActions,
-                                userState: userState),
-                            QuicActions(
-                              userState: userState,
-                              notifyParent: updateAllState,
-                            ),
-                            Headline(
-                                headline: widget
-                                    .userState.hardcodedStrings.lastTenMatches,
-                                userState: userState),
-                            SizedBox(
-                                height: 200,
-                                child: DashBoardLastFive(
-                                  userState: widget.userState,
-                                ))
-                          ],
-                        ))));
-              } else {
-                // Show a fallback widget if the future is null
-                return const SizedBox();
-              }
-            },
-          ),
-        ));
+    return Scaffold(
+      appBar: AppBar(
+          iconTheme: darkMode
+              ? const IconThemeData(color: AppColors.white)
+              : IconThemeData(color: Colors.grey[700]),
+          backgroundColor:
+              darkMode ? AppColors.darkModeBackground : AppColors.white),
+      drawer: DrawerSideBar(
+        userState: widget.userState,
+        notifyParent: updateAllState,
+      ),
+      onDrawerChanged: (isOpen) {
+        // setState(() {
+        //   userStateState = widget.param;
+        // });
+      },
+      body: FutureBuilder(
+        future: hardcodedStringsFuture,
+        builder: (context, AsyncSnapshot<HardcodedStrings?> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            // Show a loading indicator while waiting for the future to complete
+            return const Loading();
+          } else if (snapshot.hasError) {
+            // Show an error message if the future completes with an error
+            return Text('Error: ${snapshot.error}');
+          } else if (snapshot.hasData) {
+            // Show the widget tree if the future completes successfully
+            return Theme(
+                data: darkMode ? ThemeData.dark() : ThemeData.light(),
+                child: Container(
+                    color: darkMode
+                        ? AppColors.darkModeBackground
+                        : AppColors.white,
+                    child: SingleChildScrollView(
+                        child: Column(
+                      children: <Widget>[
+                        DashBoardUserInfo(userState: widget.userState),
+                        DashboardCharts(userState: widget.userState),
+                        Headline(
+                            headline:
+                                widget.userState.hardcodedStrings.quickActions,
+                            userState: userState),
+                        QuicActions(
+                          userState: userState,
+                          notifyParent: updateAllState,
+                        ),
+                        Headline(
+                            headline: widget
+                                .userState.hardcodedStrings.lastTenMatches,
+                            userState: userState),
+                        SizedBox(
+                            height: 200,
+                            child: DashBoardLastFive(
+                              userState: widget.userState,
+                            ))
+                      ],
+                    ))));
+          } else {
+            // Show a fallback widget if the future is null
+            return const SizedBox();
+          }
+        },
+      ),
+    );
   }
 }
