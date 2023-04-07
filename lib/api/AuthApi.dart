@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -7,7 +6,6 @@ import 'package:foosball_mobile_app/models/auth/error_response.dart';
 import 'package:foosball_mobile_app/models/auth/login_response.dart';
 import 'package:foosball_mobile_app/models/auth/refresh_model.dart';
 import 'package:foosball_mobile_app/models/auth/register_response.dart';
-import 'package:http/http.dart' as http;
 
 class AuthApi {
   AuthApi();
@@ -126,20 +124,34 @@ class AuthApi {
 
   // Verify email at route verify-email with token
   // this is a post request with token as a parameter
-  Future<http.Response> verifyEmail(String token, int userId) async {
-    late http.Response result;
+  Future<Response> verifyEmail(String token, int userId) async {
+    final dio = Dio();
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']
         : dotenv.env['REST_URL_PATH_DEV'];
     if (baseUrl != null) {
-      var url = Uri.parse('$baseUrl/api/Auth/verify-email');
-      var body = jsonEncode({'token': token, 'userId': userId});
+      var url = '$baseUrl/api/Auth/verify-email';
 
-      result = await http.post(url, body: body, headers: {
-        "Accept": "application/json",
-        "content-type": "application/json"
-      });
+      try {
+        final response = await dio.post(
+          url,
+          data: {'token': token, 'userId': userId},
+          options: Options(
+            headers: {
+              "Accept": "application/json",
+              "content-type": "application/json"
+            },
+            followRedirects: false,
+            validateStatus: (status) {
+              return status! >= 200 && status <= 500;
+            },
+          ),
+        );
+        return response;
+      } catch (e) {
+        rethrow;
+      }
     }
-    return result;
+    throw Exception('Unable to verify email.');
   }
 }
