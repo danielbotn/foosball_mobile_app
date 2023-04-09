@@ -202,6 +202,7 @@ class Helpers {
         await preferencesService.deleteRefreshToken();
         await preferencesService.deleteJwtToken();
         navigatorKey.currentState?.pushNamed('login');
+        jwtToken = "ABORTAPICALL";
       }
     }
     return jwtToken;

@@ -10,6 +10,9 @@ class Api {
   final Dio tokenDio;
   final String? baseUrl;
 
+  // Create a CancelToken instance
+  final CancelToken cancelToken = CancelToken();
+
   Api._internal(this.baseUrl)
       : dio = Dio(BaseOptions(
           baseUrl: baseUrl!,
@@ -31,6 +34,7 @@ class Api {
 }
 
 class RefreshTokenInterceptor extends QueuedInterceptor {
+  CancelToken cancelToken = CancelToken();
   final Dio dio;
 
   RefreshTokenInterceptor({
@@ -53,7 +57,12 @@ class RefreshTokenInterceptor extends QueuedInterceptor {
     if (remainingTime != null && remainingTime <= const Duration(minutes: 1)) {
       Helpers helper = Helpers();
       var newToken = await helper.refreshToken();
-      options.headers['authorization'] = 'Bearer $newToken';
+      if (newToken != 'ABORTAPICALL') {
+        options.headers['authorization'] = 'Bearer $newToken';
+        cancelToken = CancelToken();
+      } else {
+        options.headers['authorization'] = 'Bearer $newToken';
+      }
     } else {
       options.headers['authorization'] = 'Bearer $token';
     }

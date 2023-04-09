@@ -30,7 +30,11 @@ class DatoCMS {
         } else {
           result = null;
         }
-      } catch (e) {
+      } on DioError catch (e) {
+        if (CancelToken.isCancel(e)) {
+          // Request was cancelled
+          rethrow;
+        }
         rethrow;
       }
     }
