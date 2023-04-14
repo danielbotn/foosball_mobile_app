@@ -9,7 +9,8 @@ import 'package:tuple/tuple.dart';
 class PlayersList extends StatefulWidget {
   final UserState userState;
   final List<UserResponse> players;
-  final Function(UserResponse userResponse) playerChecked;
+  final Function(UserResponse userResponse, bool checkedOrNot) playerChecked;
+
   const PlayersList({
     Key? key,
     required this.userState,
@@ -68,7 +69,6 @@ class _PlayersListState extends State<PlayersList> {
                           if (isCheckedLoggedInUser(value, i, users[i]) ==
                               false) {
                             checkBoxChecked(value, i, users[i]);
-                            widget.playerChecked(users[i]);
                           }
                         },
                       ),
@@ -102,7 +102,7 @@ class _PlayersListState extends State<PlayersList> {
     setState(() {
       selectedPlayers[index] = player;
     });
-    widget.playerChecked(user);
+    widget.playerChecked(user, value!);
   }
 
   void setTeamsInStore(bool value, int index, UserResponse user) {}
