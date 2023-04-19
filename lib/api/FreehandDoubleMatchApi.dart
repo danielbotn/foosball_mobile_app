@@ -18,7 +18,7 @@ class FreehandDoubleMatchApi {
     if (baseUrl != null) {
       var url = '$baseUrl/api/FreehandDoubleMatches/$matchId';
 
-      final response = await Api().dio.post(
+      final response = await Api().dio.get(
             url,
             options: Options(
               headers: {

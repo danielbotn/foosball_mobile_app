@@ -3,6 +3,7 @@ import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
 import 'package:foosball_mobile_app/utils/helpers.dart';
 import 'package:foosball_mobile_app/widgets/extended_Text.dart';
+import 'package:foosball_mobile_app/widgets/league/single_league_fixtures/single_league_fixtures.dart';
 import 'package:foosball_mobile_app/widgets/league/single_league_standings/single_league_standings.dart';
 
 class SingleLeagueOverview extends StatefulWidget {
@@ -68,7 +69,10 @@ class _SingleLeagueOverviewState extends State<SingleLeagueOverview>
               userState: widget.userState,
               leagueId: widget.leagueId,
             ),
-            const FixturesTab(),
+            SingleLeagueFixtures(
+              userState: widget.userState,
+              leagueId: widget.leagueId,
+            ),
           ],
         ),
       ),

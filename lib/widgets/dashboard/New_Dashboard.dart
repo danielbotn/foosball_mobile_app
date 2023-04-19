@@ -79,6 +79,7 @@ class _NewDashboardState extends State<NewDashboard> {
             return Theme(
                 data: darkMode ? ThemeData.dark() : ThemeData.light(),
                 child: Container(
+                    height: double.infinity,
                     color: darkMode
                         ? AppColors.darkModeBackground
                         : AppColors.white,
@@ -103,7 +104,7 @@ class _NewDashboardState extends State<NewDashboard> {
                             height: 200,
                             child: DashBoardLastFive(
                               userState: widget.userState,
-                            ))
+                            )),
                       ],
                     ))));
           } else {
