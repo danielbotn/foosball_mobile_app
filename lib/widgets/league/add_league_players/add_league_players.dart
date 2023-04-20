@@ -128,7 +128,7 @@ class _AddLeaguePlayersState extends State<AddLeaguePlayers> {
                                   child: CreateSingleLeagueButton(
                                     userState: widget.userState,
                                     selectedPlayersList: selectedPlayersList,
-                                    leagueId: widget.leagueData.id,
+                                    leagueData: widget.leagueData,
                                   ))
                             ])));
                   } else {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/api/SingleLeaguePlayersApi.dart';
+import 'package:foosball_mobile_app/models/leagues/get-league-response.dart';
 import 'package:foosball_mobile_app/models/single-league-players/single_league_players_model.dart';
 import 'package:foosball_mobile_app/models/user/user_response.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
@@ -10,12 +11,12 @@ import 'package:foosball_mobile_app/widgets/progress_indicators/progress_indicat
 class CreateSingleLeagueButton extends StatefulWidget {
   final UserState userState;
   final List<UserResponse> selectedPlayersList;
-  final int leagueId;
+  final GetLeagueResponse leagueData;
   const CreateSingleLeagueButton(
       {super.key,
       required this.userState,
       required this.selectedPlayersList,
-      required this.leagueId});
+      required this.leagueData});
 
   @override
   State<CreateSingleLeagueButton> createState() =>
@@ -35,7 +36,7 @@ class _CreateSingleLeagueButtonState extends State<CreateSingleLeagueButton> {
         MaterialPageRoute(
             builder: (context) => SingleLeagueOverview(
                   userState: widget.userState,
-                  leagueId: widget.leagueId,
+                  leagueData: widget.leagueData,
                 )));
   }
 
@@ -45,7 +46,8 @@ class _CreateSingleLeagueButtonState extends State<CreateSingleLeagueButton> {
       SingleLeaguePlayersApi api = SingleLeaguePlayersApi();
       SingleLeaguePlayersModel singleLeaguePlayersModel =
           SingleLeaguePlayersModel(
-              users: widget.selectedPlayersList, leagueId: widget.leagueId);
+              users: widget.selectedPlayersList,
+              leagueId: widget.leagueData.id);
       bool result = await api.addSingleLeaguePlayers(singleLeaguePlayersModel);
 
       if (result) {

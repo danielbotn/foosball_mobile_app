@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foosball_mobile_app/models/leagues/get-league-response.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
 import 'package:foosball_mobile_app/utils/helpers.dart';
@@ -8,9 +9,9 @@ import 'package:foosball_mobile_app/widgets/league/single_league_standings/singl
 
 class SingleLeagueOverview extends StatefulWidget {
   final UserState userState;
-  final int leagueId;
+  final GetLeagueResponse leagueData;
   const SingleLeagueOverview(
-      {super.key, required this.userState, required this.leagueId});
+      {super.key, required this.userState, required this.leagueData});
 
   @override
   State<SingleLeagueOverview> createState() => _SingleLeagueOverviewState();
@@ -47,7 +48,7 @@ class _SingleLeagueOverviewState extends State<SingleLeagueOverview>
         iconTheme: helpers.getIconTheme(widget.userState.darkmode),
         backgroundColor: helpers.getBackgroundColor(widget.userState.darkmode),
         title: ExtendedText(
-          text: widget.userState.hardcodedStrings.league,
+          text: widget.leagueData.name,
           userState: widget.userState,
           colorOverride:
               widget.userState.darkmode ? AppColors.white : AppColors.textBlack,
@@ -75,11 +76,11 @@ class _SingleLeagueOverviewState extends State<SingleLeagueOverview>
           children: [
             SingleLeagueStandings(
               userState: widget.userState,
-              leagueId: widget.leagueId,
+              leagueId: widget.leagueData.id,
             ),
             SingleLeagueFixtures(
               userState: widget.userState,
-              leagueId: widget.leagueId,
+              leagueId: widget.leagueData.id,
             ),
           ],
         ),

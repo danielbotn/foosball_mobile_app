@@ -37,7 +37,7 @@ class LeagueList extends StatelessWidget {
           MaterialPageRoute(
               builder: (context) => SingleLeagueOverview(
                     userState: userState,
-                    leagueId: leagueData.id,
+                    leagueData: leagueData,
                   )));
     }
   }
