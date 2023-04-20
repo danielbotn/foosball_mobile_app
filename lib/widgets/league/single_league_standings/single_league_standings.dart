@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/api/LeagueApi.dart';
 import 'package:foosball_mobile_app/models/leagues/single-league-standings-model.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
+import 'package:foosball_mobile_app/utils/app_color.dart';
+import 'package:foosball_mobile_app/utils/helpers.dart';
 import 'package:foosball_mobile_app/widgets/league/single_league_standings/table_cell_standings.dart';
 
 class SingleLeagueStandings extends StatefulWidget {
@@ -25,6 +27,8 @@ class _SingleLeagueStandingsState extends State<SingleLeagueStandings> {
 
   @override
   Widget build(BuildContext context) {
+    bool darkMode = widget.userState.darkmode;
+    Helpers helpers = Helpers();
     return FutureBuilder<List<SingleLeagueStandingsModel>?>(
       future: standingsFuture,
       builder: (context, snapshot) {
@@ -39,62 +43,79 @@ class _SingleLeagueStandingsState extends State<SingleLeagueStandings> {
         } else if (snapshot.hasData) {
           final standings = snapshot.data!;
 
-          return Table(
-            columnWidths: const {
-              0: FlexColumnWidth(1),
-              1: FlexColumnWidth(5),
-              2: FlexColumnWidth(1),
-              3: FlexColumnWidth(1),
-              4: FlexColumnWidth(1),
-              5: FlexColumnWidth(1),
-              6: FlexColumnWidth(1),
-              7: FlexColumnWidth(2),
-            },
-            children: [
-              TableRow(
-                decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  border: Border.all(),
-                ),
+          return Container(
+              height: double.infinity,
+              color: helpers.getBackgroundColor(widget.userState.darkmode),
+              child: Table(
+                columnWidths: const {
+                  0: FlexColumnWidth(1),
+                  1: FlexColumnWidth(5),
+                  2: FlexColumnWidth(1),
+                  3: FlexColumnWidth(1),
+                  4: FlexColumnWidth(1),
+                  5: FlexColumnWidth(1),
+                  6: FlexColumnWidth(1),
+                  7: FlexColumnWidth(2),
+                },
                 children: [
-                  TableCellStandings(userState: widget.userState, text: 'PI'),
-                  TableCellStandings(userState: widget.userState, text: 'Name'),
-                  TableCellStandings(userState: widget.userState, text: 'W'),
-                  TableCellStandings(userState: widget.userState, text: 'L'),
-                  TableCellStandings(userState: widget.userState, text: '+/-'),
-                  TableCellStandings(userState: widget.userState, text: 'Pts'),
-                ],
-              ),
-              for (int i = 0; i < standings.length; i++)
-                TableRow(
-                  decoration: BoxDecoration(
-                    color: i % 2 == 0 ? Colors.white : Colors.grey[200],
+                  TableRow(
+                    decoration: BoxDecoration(
+                      color: darkMode
+                          ? AppColors.darkModeBackground
+                          : Colors.grey[400],
+                      border: Border.all(),
+                    ),
+                    children: [
+                      TableCellStandings(
+                          userState: widget.userState, text: 'PI'),
+                      TableCellStandings(
+                          userState: widget.userState, text: 'Name'),
+                      TableCellStandings(
+                          userState: widget.userState, text: 'W'),
+                      TableCellStandings(
+                          userState: widget.userState, text: 'L'),
+                      TableCellStandings(
+                          userState: widget.userState, text: '+/-'),
+                      TableCellStandings(
+                          userState: widget.userState, text: 'Pts'),
+                    ],
                   ),
-                  children: [
-                    TableCellStandings(
-                        userState: widget.userState,
-                        text: standings[i].positionInLeague.toString()),
-                    TableCellStandings(
-                        userState: widget.userState,
-                        text:
-                            "${standings[i].firstName} ${standings[i].lastName}"),
-                    TableCellStandings(
-                        userState: widget.userState,
-                        text: '${standings[i].totalMatchesWon}'),
-                    TableCellStandings(
-                        userState: widget.userState,
-                        text: '${standings[i].totalMatchesLost}'),
-                    TableCellStandings(
-                        userState: widget.userState,
-                        text:
-                            '${standings[i].totalGoalsScored - standings[i].totalGoalsRecieved}'),
-                    TableCellStandings(
-                        userState: widget.userState,
-                        text: '${standings[i].points}'),
-                  ],
-                ),
-            ],
-          );
+                  for (int i = 0; i < standings.length; i++)
+                    TableRow(
+                      decoration: BoxDecoration(
+                        color: i % 2 == 0
+                            ? darkMode
+                                ? AppColors.leagueDarkModeColorOne
+                                : Colors.grey[300]
+                            : darkMode
+                                ? AppColors.leagueDarkModeColorTwo
+                                : Colors.white,
+                      ),
+                      children: [
+                        TableCellStandings(
+                            userState: widget.userState,
+                            text: standings[i].positionInLeague.toString()),
+                        TableCellStandings(
+                            userState: widget.userState,
+                            text:
+                                "${standings[i].firstName} ${standings[i].lastName}"),
+                        TableCellStandings(
+                            userState: widget.userState,
+                            text: '${standings[i].totalMatchesWon}'),
+                        TableCellStandings(
+                            userState: widget.userState,
+                            text: '${standings[i].totalMatchesLost}'),
+                        TableCellStandings(
+                            userState: widget.userState,
+                            text:
+                                '${standings[i].totalGoalsScored - standings[i].totalGoalsRecieved}'),
+                        TableCellStandings(
+                            userState: widget.userState,
+                            text: '${standings[i].points}'),
+                      ],
+                    ),
+                ],
+              ));
         } else {
           return Container();
         }

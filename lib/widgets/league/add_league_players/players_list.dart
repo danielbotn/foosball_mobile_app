@@ -110,15 +110,15 @@ class _PlayersListState extends State<PlayersList> {
   int findIndexOfUser() {
     int index = 0;
     List<UserResponse> tmpPlayers;
-    if (widget.players != null) {
-      tmpPlayers = widget.players!;
-      for (var i = 0; i < tmpPlayers.length; i++) {
-        if (tmpPlayers[i].id == widget.userState.userId) {
-          index = i;
-          break;
-        }
+
+    tmpPlayers = widget.players;
+    for (var i = 0; i < tmpPlayers.length; i++) {
+      if (tmpPlayers[i].id == widget.userState.userId) {
+        index = i;
+        break;
       }
     }
+
     return index;
   }
 

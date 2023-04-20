@@ -74,7 +74,9 @@ class LeagueList extends StatelessWidget {
             text: league.name,
             userState: userState,
           ),
-          subtitle: league.hasLeagueStarted ? null : const Text('Not Started'),
+          subtitle: league.hasLeagueStarted
+              ? null
+              : Text(userState.hardcodedStrings.notStarted),
         );
       },
     ));

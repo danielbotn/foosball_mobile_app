@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/api/SingleLeagueMatchApi.dart';
 import 'package:foosball_mobile_app/models/single-league-matches/single_league_match_model.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
+import 'package:foosball_mobile_app/utils/helpers.dart';
 import 'package:foosball_mobile_app/widgets/loading.dart';
 
 class SingleLeagueFixtures extends StatefulWidget {
@@ -24,8 +25,24 @@ class _SingleLeagueFixturesState extends State<SingleLeagueFixtures> {
         .getAllSingleLeagueMatchesByLeagueId(widget.leagueId);
   }
 
+  String getSubtitle(SingleLeagueMatchModel? match) {
+    String result = "";
+
+    if (match != null) {
+      if (match.matchEnded == true) {
+        result = "${match.playerOneScore}-${match.playerTwoScore}";
+      } else if (match.matchStarted == false) {
+        result = widget.userState.hardcodedStrings.notStarted;
+      } else if (match.matchPaused == true) {
+        result = "Match Paused";
+      }
+    }
+    return result;
+  }
+
   @override
   Widget build(BuildContext context) {
+    Helpers helpers = Helpers();
     return FutureBuilder<List<SingleLeagueMatchModel>?>(
       future: _future,
       builder: (BuildContext context,
@@ -35,32 +52,35 @@ class _SingleLeagueFixturesState extends State<SingleLeagueFixtures> {
         }
         if (snapshot.hasData) {
           List<SingleLeagueMatchModel>? data = snapshot.data;
-          return ListView.builder(
-            itemCount: data?.length,
-            itemBuilder: (BuildContext context, int index) {
-              SingleLeagueMatchModel? match = data?[index];
-              return ListTile(
-                leading: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    CircleAvatar(
-                      backgroundImage:
-                          NetworkImage(match?.playerOnePhotoUrl ?? ''),
+          return Container(
+              color: helpers.getBackgroundColor(widget.userState.darkmode),
+              height: double.infinity,
+              child: ListView.builder(
+                itemCount: data?.length,
+                itemBuilder: (BuildContext context, int index) {
+                  SingleLeagueMatchModel? match = data?[index];
+                  return ListTile(
+                    leading: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        CircleAvatar(
+                          backgroundImage:
+                              NetworkImage(match?.playerOnePhotoUrl ?? ''),
+                        ),
+                        const SizedBox(width: 16),
+                        CircleAvatar(
+                          backgroundImage:
+                              NetworkImage(match?.playerTwoPhotoUrl ?? ''),
+                        ),
+                      ],
                     ),
-                    SizedBox(width: 16),
-                    CircleAvatar(
-                      backgroundImage:
-                          NetworkImage(match?.playerTwoPhotoUrl ?? ''),
+                    title: Text(
+                      '${match?.playerOneFirstName ?? 'No first name'} ${match?.playerOneLastName ?? 'No last name'} vs ${match?.playerTwoFirstName ?? 'No first name'} ${match?.playerTwoLastName ?? 'No last name'}',
                     ),
-                  ],
-                ),
-                title: Text(
-                  '${match?.playerOneFirstName ?? 'No first name'} ${match?.playerOneLastName ?? 'No last name'} vs ${match?.playerTwoFirstName ?? 'No first name'} ${match?.playerTwoLastName ?? 'No last name'}',
-                ),
-                subtitle: Text('A strong animal'),
-              );
-            },
-          );
+                    subtitle: Text(getSubtitle(match)),
+                  );
+                },
+              ));
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {
@@ -70,44 +90,3 @@ class _SingleLeagueFixturesState extends State<SingleLeagueFixtures> {
     );
   }
 }
-
-
-// ListTile(
-//                 contentPadding: const EdgeInsets.symmetric(vertical: 8),
-//                 title: Row(
-//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                   children: [
-//                     Expanded(
-//                       child: Row(
-//                         children: [
-//                           Image.network(
-//                             match?.playerOnePhotoUrl ?? '',
-//                             width: 40,
-//                             height: 40,
-//                           ),
-//                           Text(
-//                             '${match?.playerOneFirstName ?? 'No first name'} ${match?.playerOneLastName ?? 'No last name'}',
-//                             style: TextStyle(fontSize: 16),
-//                           ),
-//                         ],
-//                       ),
-//                     ),
-//                     Expanded(
-//                       child: Row(
-//                         mainAxisAlignment: MainAxisAlignment.end,
-//                         children: [
-//                           Text(
-//                             '${match?.playerTwoFirstName ?? 'No first name'} ${match?.playerTwoLastName ?? 'No last name'}',
-//                             style: TextStyle(fontSize: 16),
-//                           ),
-//                           Image.network(
-//                             match?.playerTwoPhotoUrl ?? '',
-//                             width: 40,
-//                             height: 40,
-//                           ),
-//                         ],
-//                       ),
-//                     ),
-//                   ],
-//                 ),
-//               );

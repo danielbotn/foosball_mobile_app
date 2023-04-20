@@ -132,7 +132,10 @@ abstract class _UserState with Store {
       league: "",
       createNewLeague: "",
       createLeague: "",
-      leagueName: "");
+      leagueName: "",
+      standings: "",
+      fixtures: "",
+      notStarted: "");
 
   @observable
   bool darkmode = false;

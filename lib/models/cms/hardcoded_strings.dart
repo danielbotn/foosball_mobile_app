@@ -15,7 +15,6 @@ class HardcodedStrings {
   final String settings;
   final String about;
   final String logout;
-  // fixt below
   final String language;
   final String darkTheme;
   final String lightTheme;
@@ -104,6 +103,9 @@ class HardcodedStrings {
   final String createNewLeague;
   final String createLeague;
   final String leagueName;
+  final String standings;
+  final String fixtures;
+  final String notStarted;
 
   HardcodedStrings(
       {required this.matches,
@@ -204,7 +206,10 @@ class HardcodedStrings {
       required this.league,
       required this.createNewLeague,
       required this.createLeague,
-      required this.leagueName});
+      required this.leagueName,
+      required this.standings,
+      required this.fixtures,
+      required this.notStarted});
 
   factory HardcodedStrings.fromJson(Map<String, dynamic> item) =>
       _$HardcodedStringsFromJson(item);

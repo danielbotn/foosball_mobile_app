@@ -54,9 +54,17 @@ class _SingleLeagueOverviewState extends State<SingleLeagueOverview>
         ),
         bottom: TabBar(
           controller: _tabController,
-          tabs: const [
-            Tab(text: 'Standings'),
-            Tab(text: 'Fixtures'),
+          tabs: [
+            Tab(
+                child: ExtendedText(
+              text: widget.userState.hardcodedStrings.standings,
+              userState: widget.userState,
+            )),
+            Tab(
+                child: ExtendedText(
+              text: widget.userState.hardcodedStrings.fixtures,
+              userState: widget.userState,
+            )),
           ],
         ),
       ),
@@ -76,17 +84,6 @@ class _SingleLeagueOverviewState extends State<SingleLeagueOverview>
           ],
         ),
       ),
-    );
-  }
-}
-
-class FixturesTab extends StatelessWidget {
-  const FixturesTab({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Fixtures'),
     );
   }
 }
