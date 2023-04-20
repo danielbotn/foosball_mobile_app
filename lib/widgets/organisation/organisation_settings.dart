@@ -231,7 +231,9 @@ class _OrganisationSettingsState extends State<OrganisationSettings> {
                         ],
                       )));
             } else {
-              return const Loading();
+              return Loading(
+                userState: widget.userState,
+              );
             }
           },
         ));

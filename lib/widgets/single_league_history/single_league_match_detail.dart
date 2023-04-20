@@ -8,6 +8,7 @@ import 'package:foosball_mobile_app/models/single-league-goals/single_league_goa
 import 'package:foosball_mobile_app/models/single-league-matches/single_league_match_model.dart';
 import 'package:foosball_mobile_app/models/user/user_response.dart';
 import 'package:foosball_mobile_app/utils/helpers.dart';
+import 'package:foosball_mobile_app/widgets/loading.dart';
 import 'package:foosball_mobile_app/widgets/single_league_history/single_league_buttons.dart';
 import 'package:foosball_mobile_app/widgets/single_league_history/single_league_goals.dart';
 import 'package:foosball_mobile_app/widgets/total_playing_time.dart';
@@ -171,7 +172,7 @@ class _SingleLeagueMatchDetailState extends State<SingleLeagueMatchDetail> {
                     SingleLeagueButtons(userState: userState)
                   ]));
             } else {
-              return const Center(child: CircularProgressIndicator());
+              return Center(child: Loading(userState: userState));
             }
           }),
     );

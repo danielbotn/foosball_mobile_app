@@ -29,7 +29,10 @@ class _DashboardChartsState extends State<DashboardCharts> {
           widget.userState.userId, widget.userState.currentOrganisationId),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: Loading());
+          return Center(
+              child: Loading(
+            userState: widget.userState,
+          ));
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else if (snapshot.hasData) {

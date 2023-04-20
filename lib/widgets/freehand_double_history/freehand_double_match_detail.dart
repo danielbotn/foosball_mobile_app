@@ -10,6 +10,7 @@ import 'package:foosball_mobile_app/models/other/freehandDoubleMatchObject.dart'
 import 'package:foosball_mobile_app/models/user/user_response.dart';
 import 'package:foosball_mobile_app/utils/helpers.dart';
 import 'package:foosball_mobile_app/widgets/dashboard/Dashboard.dart';
+import 'package:foosball_mobile_app/widgets/loading.dart';
 import '../extended_Text.dart';
 import '../match_score.dart';
 import '../total_playing_time.dart';
@@ -243,7 +244,7 @@ class _FreehandDoubleMatchDetailState extends State<FreehandDoubleMatchDetail> {
                   ],
                 ));
           } else {
-            return const CircularProgressIndicator();
+            return Loading(userState: userState);
           }
         },
       ),

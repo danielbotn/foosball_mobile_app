@@ -215,7 +215,9 @@ class DashboardState extends State<Dashboard> {
                           ],
                         )));
               } else {
-                return const Loading();
+                return Loading(
+                  userState: widget.param,
+                );
               }
             },
           ),

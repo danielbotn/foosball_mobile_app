@@ -11,6 +11,7 @@ import 'package:foosball_mobile_app/widgets/headline.dart';
 import 'package:foosball_mobile_app/widgets/league/add_league_players/players_list.dart';
 import 'package:foosball_mobile_app/widgets/league/add_league_players/selected_players.dart';
 import 'package:foosball_mobile_app/widgets/league/button/create_sl_button.dart';
+import 'package:foosball_mobile_app/widgets/loading.dart';
 
 class AddLeaguePlayers extends StatefulWidget {
   final UserState userState;
@@ -131,9 +132,7 @@ class _AddLeaguePlayersState extends State<AddLeaguePlayers> {
                                   ))
                             ])));
                   } else {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
+                    return Center(child: Loading(userState: widget.userState));
                   }
                 })));
   }

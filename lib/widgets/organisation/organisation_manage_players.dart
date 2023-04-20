@@ -120,7 +120,9 @@ class _OrganisationManagePlayersState extends State<OrganisationManagePlayers> {
                 },
               ));
             } else {
-              return const Loading();
+              return Loading(
+                userState: widget.userState,
+              );
             }
           },
         ));

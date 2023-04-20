@@ -8,6 +8,7 @@ import 'package:foosball_mobile_app/models/double-league-matches/double_league_m
 import 'package:foosball_mobile_app/models/other/TwoPlayersObject.dart';
 import 'package:foosball_mobile_app/models/user/user_response.dart';
 import 'package:foosball_mobile_app/utils/helpers.dart';
+import 'package:foosball_mobile_app/widgets/loading.dart';
 import '../extended_Text.dart';
 import '../match_card.dart';
 import '../match_score.dart';
@@ -171,7 +172,7 @@ class _DoubleLeagueMatchDetailState extends State<DoubleLeagueMatchDetail> {
                   ],
                 ));
           } else {
-            return const CircularProgressIndicator();
+            return Loading(userState: userState);
           }
         },
       ),

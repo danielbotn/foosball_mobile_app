@@ -48,7 +48,9 @@ class _SingleLeagueFixturesState extends State<SingleLeagueFixtures> {
       builder: (BuildContext context,
           AsyncSnapshot<List<SingleLeagueMatchModel>?> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Loading();
+          return Loading(
+            userState: widget.userState,
+          );
         }
         if (snapshot.hasData) {
           List<SingleLeagueMatchModel>? data = snapshot.data;

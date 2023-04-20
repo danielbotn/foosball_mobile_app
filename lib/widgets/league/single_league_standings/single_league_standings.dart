@@ -5,6 +5,7 @@ import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
 import 'package:foosball_mobile_app/utils/helpers.dart';
 import 'package:foosball_mobile_app/widgets/league/single_league_standings/table_cell_standings.dart';
+import 'package:foosball_mobile_app/widgets/loading.dart';
 
 class SingleLeagueStandings extends StatefulWidget {
   final UserState userState;
@@ -33,8 +34,10 @@ class _SingleLeagueStandingsState extends State<SingleLeagueStandings> {
       future: standingsFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
-            child: CircularProgressIndicator(),
+          return Center(
+            child: Loading(
+              userState: widget.userState,
+            ),
           );
         } else if (snapshot.hasError) {
           return const Center(

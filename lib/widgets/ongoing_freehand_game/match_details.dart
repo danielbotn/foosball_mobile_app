@@ -6,6 +6,7 @@ import 'package:foosball_mobile_app/models/freehand-matches/freehand_match_model
 import 'package:foosball_mobile_app/models/other/freehandMatchDetailObject.dart';
 import 'package:foosball_mobile_app/utils/helpers.dart';
 import 'package:foosball_mobile_app/widgets/freehand_history/freehand_match_goals.dart';
+import 'package:foosball_mobile_app/widgets/loading.dart';
 import '../dashboard/Dashboard.dart';
 import '../extended_Text.dart';
 import '../match_score.dart';
@@ -15,7 +16,8 @@ import 'match_detail_card.dart';
 
 class MatchDetails extends StatefulWidget {
   final FreehandMatchDetailObject freehandMatchDetailObject;
-  MatchDetails({Key? key, required this.freehandMatchDetailObject})
+
+  const MatchDetails({Key? key, required this.freehandMatchDetailObject})
       : super(key: key);
 
   @override
@@ -147,9 +149,9 @@ class _MatchDetailsState extends State<MatchDetails> {
               ),
             );
           } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return Center(
+                child: Loading(
+                    userState: widget.freehandMatchDetailObject.userState));
           }
         },
       ),

@@ -132,7 +132,9 @@ class _OrganisationsState extends State<Organisations> {
                 },
               ));
             } else {
-              return const Loading();
+              return Loading(
+                userState: widget.userState,
+              );
             }
           },
         ));

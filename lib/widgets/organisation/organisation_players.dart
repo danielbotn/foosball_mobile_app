@@ -99,7 +99,9 @@ class _OrganisationPlayersState extends State<OrganisationPlayers> {
             },
           ));
         } else {
-          return const Loading();
+          return Loading(
+            userState: widget.userState,
+          );
         }
       },
     ));

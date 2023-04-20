@@ -70,7 +70,9 @@ class _NewDashboardState extends State<NewDashboard> {
         builder: (context, AsyncSnapshot<HardcodedStrings?> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             // Show a loading indicator while waiting for the future to complete
-            return const Loading();
+            return Loading(
+              userState: widget.userState,
+            );
           } else if (snapshot.hasError) {
             // Show an error message if the future completes with an error
             return Text('Error: ${snapshot.error}');

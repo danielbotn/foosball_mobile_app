@@ -107,7 +107,9 @@ class _DashBoardLastFiveState extends State<DashBoardLastFive> {
       future: userStatsFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Loading();
+          return Loading(
+            userState: widget.userState,
+          );
         } else if (snapshot.hasError) {
           // Handle errors here
           return Center(
@@ -150,7 +152,9 @@ class _DashBoardLastFiveState extends State<DashBoardLastFive> {
             ),
           );
         } else {
-          return const Loading();
+          return Loading(
+            userState: widget.userState,
+          );
         }
       },
     );

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:foosball_mobile_app/main.dart';
 
 import '../../api/Organisation.dart';
 import '../../api/UserApi.dart';
@@ -222,7 +223,9 @@ class _ChangeOrganisationState extends State<ChangeOrganisation> {
                     },
                   ));
                 } else {
-                  return const Loading();
+                  return Loading(
+                    userState: userState,
+                  );
                 }
               },
             )));

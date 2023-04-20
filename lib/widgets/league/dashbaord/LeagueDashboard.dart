@@ -4,6 +4,7 @@ import 'package:foosball_mobile_app/main.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
 import 'package:foosball_mobile_app/widgets/league/league_list/league_list.dart';
+import 'package:foosball_mobile_app/widgets/loading.dart';
 
 import '../../../models/leagues/get-league-response.dart';
 
@@ -91,12 +92,12 @@ class _LeagueDashboardState extends State<LeagueDashboard> {
                     ),
                   );
                 } else {
-                  return const CircularProgressIndicator();
+                  return Loading(userState: widget.userState);
                 }
               },
             );
           } else {
-            return const CircularProgressIndicator();
+            return Loading(userState: widget.userState);
           }
         },
       ),

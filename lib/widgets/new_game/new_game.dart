@@ -5,6 +5,7 @@ import 'package:foosball_mobile_app/models/user/user_response.dart';
 import 'package:foosball_mobile_app/state/new_game_state.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/helpers.dart';
+import 'package:foosball_mobile_app/widgets/loading.dart';
 import 'package:foosball_mobile_app/widgets/new_game/new_game_oppositions_left.dart';
 import 'package:foosball_mobile_app/widgets/new_game/new_game_vs.dart';
 import 'package:foosball_mobile_app/widgets/new_game/start_game_button.dart';
@@ -118,9 +119,7 @@ class _NewGameState extends State<NewGame> {
                         )
                       ])));
             } else {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
+              return Center(child: Loading(userState: userState));
             }
           }),
     );

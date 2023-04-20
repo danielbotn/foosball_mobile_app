@@ -44,7 +44,10 @@ class _DashBoardUserInfoState extends State<DashBoardUserInfo> {
       future: _futureData,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: Loading());
+          return Center(
+              child: Loading(
+            userState: widget.userState,
+          ));
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else {

@@ -36,7 +36,9 @@ class _ChoosePlayersState extends State<ChoosePlayers> {
           if (snapshot.hasData) {
             return Container();
           } else {
-            return const Loading();
+            return Loading(
+              userState: widget.userState,
+            );
           }
         });
   }
