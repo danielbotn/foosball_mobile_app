@@ -29,10 +29,6 @@ class _SelectedPlayersState extends State<SelectedPlayers> {
           subtitle: Text(users[i].email),
           leading: SizedBox(
               height: 100, width: 50, child: Image.network(users[i].photoUrl)),
-          trailing: const SizedBox(
-            width: 60,
-            child: Text("gaur"),
-          ),
         ));
       }
     }

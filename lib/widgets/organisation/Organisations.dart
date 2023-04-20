@@ -53,18 +53,11 @@ class _OrganisationsState extends State<Organisations> {
     return data;
   }
 
-  Future<List<OrganisationResponse>> getOrganisationsByUser() async {
+  Future<List<OrganisationResponse>?> getOrganisationsByUser() async {
     Organisation api = Organisation();
-
     var data = await api.getOrganisationsByUser();
-
-    List<OrganisationResponse> organisations;
-    organisations = (json.decode(data.body) as List)
-        .map((i) => OrganisationResponse.fromJson(i))
-        .toList();
-
-    orgData = organisations;
-    return organisations;
+    orgData = data;
+    return data;
   }
 
   String getHeadline(OrganisationResponse org) {

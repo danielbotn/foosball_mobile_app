@@ -107,13 +107,11 @@ class DashboardState extends State<Dashboard> {
     userStatsResponse = userStatsData;
     int organisationId = widget.param.currentOrganisationId;
     organisation.getOrganisationById(organisationId).then((value) {
-      if (value.statusCode == 200) {
-        var organisationResponse =
-            OrganisationResponse.fromJson(jsonDecode(value.body));
+      if (value != null) {
         setState(() {
-          organisationName = organisationResponse.name;
+          organisationName = value.name;
         });
-        setGlobal(userId, currrentOrganisationId, organisationResponse.name);
+        setGlobal(userId, currrentOrganisationId, value.name);
       } else {
         // To do error handling
       }

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/main.dart';
 import 'package:foosball_mobile_app/models/organisation/organisation_response.dart';
@@ -20,8 +18,8 @@ class OrganisationCode extends StatefulWidget {
 
 class _OrganisationCodeState extends State<OrganisationCode> {
   // state
-  late Future<OrganisationResponse> organisationFuture;
-  late OrganisationResponse organisationData;
+  late Future<OrganisationResponse?> organisationFuture;
+  late OrganisationResponse? organisationData;
 
   @override
   void initState() {
@@ -29,16 +27,13 @@ class _OrganisationCodeState extends State<OrganisationCode> {
     organisationFuture = getOrganisation();
   }
 
-  Future<OrganisationResponse> getOrganisation() async {
+  Future<OrganisationResponse?> getOrganisation() async {
     Organisation org = Organisation();
     var orgData = await org
         .getOrganisationById(userState.userInfoGlobal.currentOrganisationId);
 
-    var organisationDecoded =
-        OrganisationResponse.fromJson(jsonDecode(orgData.body));
-
-    organisationData = organisationDecoded;
-    return organisationDecoded;
+    organisationData = orgData;
+    return orgData;
   }
 
   @override
@@ -60,7 +55,7 @@ class _OrganisationCodeState extends State<OrganisationCode> {
                 helpers.getBackgroundColor(widget.userState.darkmode)),
         body: FutureBuilder(
           future: organisationFuture,
-          builder: (context, AsyncSnapshot<OrganisationResponse> snapshot) {
+          builder: (context, AsyncSnapshot<OrganisationResponse?> snapshot) {
             if (snapshot.hasData) {
               return Container(
                 color: widget.userState.darkmode
@@ -71,7 +66,7 @@ class _OrganisationCodeState extends State<OrganisationCode> {
                     QrImage(
                       backgroundColor: AppColors.white,
                       data:
-                          'organisationCode: ${organisationData.organisationCode}, organisationId: ${organisationData.id}',
+                          'organisationCode: ${organisationData!.organisationCode}, organisationId: ${organisationData!.id}',
                       version: QrVersions.auto,
                       size: 320,
                       gapless: false,

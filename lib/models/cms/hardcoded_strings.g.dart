@@ -112,6 +112,9 @@ HardcodedStrings _$HardcodedStringsFromJson(Map<String, dynamic> json) =>
       createNewLeague: json['createNewLeague'] as String,
       createLeague: json['createLeague'] as String,
       leagueName: json['leagueName'] as String,
+      standings: json['standings'] as String,
+      fixtures: json['fixtures'] as String,
+      notStarted: json['notStarted'] as String,
     );
 
 Map<String, dynamic> _$HardcodedStringsToJson(HardcodedStrings instance) =>
@@ -217,4 +220,7 @@ Map<String, dynamic> _$HardcodedStringsToJson(HardcodedStrings instance) =>
       'createNewLeague': instance.createNewLeague,
       'createLeague': instance.createLeague,
       'leagueName': instance.leagueName,
+      'standings': instance.standings,
+      'fixtures': instance.fixtures,
+      'notStarted': instance.notStarted,
     };

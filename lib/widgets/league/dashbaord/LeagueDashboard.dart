@@ -56,48 +56,50 @@ class _LeagueDashboardState extends State<LeagueDashboard> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: Future.wait([leaguesFuture]),
-      builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
-        if (snapshot.hasData) {
-          return FutureBuilder(
-            future: leaguesFuture,
-            builder:
-                (context, AsyncSnapshot<List<GetLeagueResponse>?> snapshot) {
-              if (snapshot.hasData) {
-                return Container(
-                  color: widget.userState.darkmode
-                      ? AppColors.darkModeBackground
-                      : AppColors.white,
-                  child: Column(
-                    children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Expanded(
-                              flex: 1,
-                              child: SizedBox(
-                                height: 310,
+    return Expanded(
+      child: FutureBuilder(
+        future: Future.wait([leaguesFuture]),
+        builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
+          if (snapshot.hasData) {
+            return FutureBuilder(
+              future: leaguesFuture,
+              builder:
+                  (context, AsyncSnapshot<List<GetLeagueResponse>?> snapshot) {
+                if (snapshot.hasData) {
+                  return Container(
+                    color: widget.userState.darkmode
+                        ? AppColors.darkModeBackground
+                        : AppColors.white,
+                    child: Column(
+                      children: <Widget>[
+                        Expanded(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Expanded(
+                                flex: 1,
                                 child: LeagueList(
                                   userState: userState,
                                   data: leaguelist,
                                   randomNumber: widget.randomNumber,
                                 ),
-                              )),
-                        ],
-                      ),
-                    ],
-                  ),
-                );
-              } else {
-                return const CircularProgressIndicator();
-              }
-            },
-          );
-        } else {
-          return const CircularProgressIndicator();
-        }
-      },
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                } else {
+                  return const CircularProgressIndicator();
+                }
+              },
+            );
+          } else {
+            return const CircularProgressIndicator();
+          }
+        },
+      ),
     );
   }
 }

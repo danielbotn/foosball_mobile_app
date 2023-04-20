@@ -1,9 +1,5 @@
 import 'dart:convert';
 import 'package:ntp/ntp.dart';
-import '../models/auth/login_response.dart';
-import '../models/auth/refresh_model.dart';
-import '../utils/preferences_service.dart';
-import 'AuthApi.dart';
 
 class TokenHelper {
   //TESTING
@@ -61,45 +57,27 @@ class TokenHelper {
     }
   }
 
+  Future<Duration?> getAccessTokenRemainingTime(String token) async {
+    final Map<String, dynamic> payload = parseJwt(token);
+    final exp = payload['exp'] as int?;
+    if (exp == null) {
+      return null;
+    }
+    bool? isExpired = await isTokenExpired(token);
+    DateTime currentNTPTime = await NTP.now();
+    DateTime expToDateTime = DateTime.fromMillisecondsSinceEpoch(exp * 1000);
+
+    if (isExpired == true || currentNTPTime.isAfter(expToDateTime)) {
+      // Token has expired
+      return Duration.zero;
+    } else {
+      // Calculate remaining time as a Duration
+      Duration remainingTime = expToDateTime.difference(currentNTPTime);
+      return remainingTime;
+    }
+  }
+
   // returns current token, if token is expired
   // it returns a new token
-  Future<String> getToken() async {
-    String tokenResult = '';
-    PreferencesService preferencesService = PreferencesService();
-    String? jwtToken = await preferencesService.getJwtToken();
-    String? refreshToken = await preferencesService.getRefreshToken();
 
-    if (jwtToken != null && refreshToken != null) {
-      bool? isExpired = await isTokenExpired(jwtToken);
-
-      if (isExpired == true) {
-        print("XXXXXXXXXXXXXXXXXXXXXXXXXX");
-        print("TRUE TRUE TRUE");
-        print("XXXXXXXXXXXXXXXXXXXXXXXXXX");
-        AuthApi auth = AuthApi();
-        RefreshModel refreshModel =
-            RefreshModel(token: jwtToken, refreshToken: refreshToken);
-        var refreshData = await auth.refresh(refreshModel);
-
-        if (refreshData.statusCode == 200) {
-          var refreshResponse =
-              LoginResponse.fromJson(jsonDecode(refreshData.body));
-
-          await preferencesService.setJwtToken(refreshResponse.token);
-          await preferencesService
-              .setRefreshToken(refreshResponse.refreshToken);
-          tokenResult = refreshResponse.token;
-        } else {
-          // log the user out!!
-        }
-      } else {
-        print("XXXXXXXXXXXXXXXXXXXXXXXXXX");
-        print("FALSE FALSE FALSE");
-        print("XXXXXXXXXXXXXXXXXXXXXXXXXX");
-        tokenResult = jwtToken;
-      }
-    }
-
-    return tokenResult;
-  }
 }

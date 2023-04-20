@@ -19,23 +19,25 @@ class DashboardGoalsChart extends StatefulWidget {
 
 class _DashboardGoalsChartState extends State<DashboardGoalsChart> {
   //state
-  List<GoalsChart> data = [];
+  late List<GoalsChart> data = [];
 
   _setChartData() {
-    data = [
-      GoalsChart(
-        name: widget.userState.hardcodedStrings.scored,
-        goals: widget.userStatsResponse!.totalGoalsScored,
-        barColor: charts.ColorUtil.fromDartColor(
-            const Color.fromRGBO(127, 211, 29, .9)),
-      ),
-      GoalsChart(
-        name: widget.userState.hardcodedStrings.recieved,
-        goals: widget.userStatsResponse!.totalGoalsReceived,
-        barColor: charts.ColorUtil.fromDartColor(
-            const Color.fromRGBO(112, 193, 255, .9)),
-      )
-    ];
+    setState(() {
+      data = [
+        GoalsChart(
+          name: widget.userState.hardcodedStrings.scored,
+          goals: widget.userStatsResponse!.totalGoalsScored,
+          barColor: charts.ColorUtil.fromDartColor(
+              const Color.fromRGBO(127, 211, 29, .9)),
+        ),
+        GoalsChart(
+          name: widget.userState.hardcodedStrings.recieved,
+          goals: widget.userStatsResponse!.totalGoalsReceived,
+          barColor: charts.ColorUtil.fromDartColor(
+              const Color.fromRGBO(112, 193, 255, .9)),
+        )
+      ];
+    });
   }
 
   @override
@@ -57,48 +59,50 @@ class _DashboardGoalsChartState extends State<DashboardGoalsChart> {
           colorFn: (GoalsChart series, _) => series.barColor)
     ];
 
-    return Container(
-      padding: const EdgeInsets.all(0),
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(2.0),
-          child: Column(
-            children: <Widget>[
-              Text(
-                widget.userState.hardcodedStrings.goals,
-                style: Theme.of(context).textTheme.bodyText1,
-              ),
-              Expanded(
-                child: charts.BarChart(series,
-                    animate: true,
-                    domainAxis: charts.OrdinalAxisSpec(
-                      renderSpec: charts.SmallTickRendererSpec(
-                        labelStyle: charts.TextStyleSpec(
-                          fontSize: 12,
-                          color: charts.ColorUtil.fromDartColor(
-                            widget.userState.darkmode
-                                ? AppColors.white
-                                : AppColors.textBlack,
+    return Visibility(
+        visible: data.isNotEmpty && widget.userStatsResponse!.userId != 0,
+        child: Container(
+          padding: const EdgeInsets.all(0),
+          child: Card(
+            child: Padding(
+              padding: const EdgeInsets.all(2.0),
+              child: Column(
+                children: <Widget>[
+                  Text(
+                    widget.userState.hardcodedStrings.goals,
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                  Expanded(
+                    child: charts.BarChart(series,
+                        animate: true,
+                        domainAxis: charts.OrdinalAxisSpec(
+                          renderSpec: charts.SmallTickRendererSpec(
+                            labelStyle: charts.TextStyleSpec(
+                              fontSize: 12,
+                              color: charts.ColorUtil.fromDartColor(
+                                widget.userState.darkmode
+                                    ? AppColors.white
+                                    : AppColors.textBlack,
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-                    primaryMeasureAxis: charts.NumericAxisSpec(
-                      renderSpec: charts.GridlineRendererSpec(
-                        labelStyle: charts.TextStyleSpec(
-                          fontSize: 12,
-                          color: charts.ColorUtil.fromDartColor(
-                              widget.userState.darkmode
-                                  ? AppColors.white
-                                  : AppColors.textBlack),
-                        ),
-                      ),
-                    )),
-              )
-            ],
+                        primaryMeasureAxis: charts.NumericAxisSpec(
+                          renderSpec: charts.GridlineRendererSpec(
+                            labelStyle: charts.TextStyleSpec(
+                              fontSize: 12,
+                              color: charts.ColorUtil.fromDartColor(
+                                  widget.userState.darkmode
+                                      ? AppColors.white
+                                      : AppColors.textBlack),
+                            ),
+                          ),
+                        )),
+                  )
+                ],
+              ),
+            ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }

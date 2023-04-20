@@ -21,4 +21,6 @@ class AppColors {
   static const darkModeBackground = Color(0xff424242);
   static const buttonsLightTheme = Color(0xff2F80ED);
   static const lightThemeBackground = Color(0xffFAFAFA);
+  static const leagueDarkModeColorOne = Color.fromARGB(255, 112, 111, 111);
+  static const leagueDarkModeColorTwo = Color.fromARGB(255, 94, 93, 93);
 }

@@ -4,6 +4,7 @@ import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
 import 'package:foosball_mobile_app/widgets/extended_Text.dart';
 import 'package:foosball_mobile_app/widgets/league/add_league_players/add_league_players.dart';
+import 'package:foosball_mobile_app/widgets/league/single_league_overview/single_league_overview.dart';
 
 class LeagueList extends StatelessWidget {
   final UserState userState;
@@ -28,8 +29,16 @@ class LeagueList extends StatelessWidget {
                     userState: userState,
                     leagueData: leagueData,
                   )));
-    } else {
-      // go to league standings screen
+    } else if (leagueData.hasLeagueStarted == true &&
+        leagueData.typeOfLeague == 0) {
+      //
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => SingleLeagueOverview(
+                    userState: userState,
+                    leagueId: leagueData.id,
+                  )));
     }
   }
 
@@ -65,7 +74,9 @@ class LeagueList extends StatelessWidget {
             text: league.name,
             userState: userState,
           ),
-          subtitle: league.hasLeagueStarted ? null : const Text('Not Started'),
+          subtitle: league.hasLeagueStarted
+              ? null
+              : Text(userState.hardcodedStrings.notStarted),
         );
       },
     ));

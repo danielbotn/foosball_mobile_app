@@ -1,6 +1,4 @@
-import 'dart:convert';
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/api/AuthApi.dart';
 import 'package:foosball_mobile_app/models/auth/login_response.dart';
@@ -9,9 +7,8 @@ import 'package:foosball_mobile_app/models/freehand-double-matches/freehand_doub
 import 'package:foosball_mobile_app/models/other/freehandDoubleMatchObject.dart';
 import 'package:foosball_mobile_app/models/user/user_response.dart';
 import 'package:foosball_mobile_app/utils/preferences_service.dart';
-import 'package:http/http.dart';
-
 import 'app_color.dart';
+import 'package:foosball_mobile_app/main.dart';
 
 class Helpers {
   IconThemeData getIconTheme(bool darkMode) {
@@ -184,7 +181,7 @@ class Helpers {
     );
   }
 
-  Future refreshToken() async {
+  Future<String?> refreshToken() async {
     PreferencesService preferencesService = PreferencesService();
     String? jwtToken = await preferencesService.getJwtToken();
     String? refreshToken = await preferencesService.getRefreshToken();
@@ -193,18 +190,21 @@ class Helpers {
       AuthApi auth = AuthApi();
       RefreshModel refreshModel =
           RefreshModel(token: jwtToken, refreshToken: refreshToken);
-      Response refreshData = await auth.refresh(refreshModel);
+      var refreshData = await auth.refresh(refreshModel);
 
       if (refreshData.statusCode == 200) {
-        var refreshResponse =
-            LoginResponse.fromJson(jsonDecode(refreshData.body));
-
+        var refreshResponse = LoginResponse.fromJson(refreshData.data);
         await preferencesService.setJwtToken(refreshResponse.token);
         await preferencesService.setRefreshToken(refreshResponse.refreshToken);
-      } else if (refreshData.statusCode == 400 &&
-          refreshData.body == "Invalid client request from refresh endpoint") {
-        String danni = "danni";
+        return refreshResponse.token;
+      } else if (refreshData.statusCode == 400 ||
+          refreshData.statusCode == 500) {
+        await preferencesService.deleteRefreshToken();
+        await preferencesService.deleteJwtToken();
+        navigatorKey.currentState?.pushNamed('login');
+        jwtToken = "ABORTAPICALL";
       }
     }
+    return jwtToken;
   }
 }

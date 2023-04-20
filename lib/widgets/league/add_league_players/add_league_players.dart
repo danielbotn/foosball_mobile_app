@@ -7,8 +7,10 @@ import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
 import 'package:foosball_mobile_app/utils/helpers.dart';
 import 'package:foosball_mobile_app/widgets/extended_Text.dart';
+import 'package:foosball_mobile_app/widgets/headline.dart';
 import 'package:foosball_mobile_app/widgets/league/add_league_players/players_list.dart';
 import 'package:foosball_mobile_app/widgets/league/add_league_players/selected_players.dart';
+import 'package:foosball_mobile_app/widgets/league/button/create_sl_button.dart';
 
 class AddLeaguePlayers extends StatefulWidget {
   final UserState userState;
@@ -24,6 +26,7 @@ class AddLeaguePlayers extends StatefulWidget {
 class _AddLeaguePlayersState extends State<AddLeaguePlayers> {
   // state
   late Future<List<UserResponse>?> usersFuture;
+  List<UserResponse>? users;
   late List<UserResponse> selectedPlayersList = [];
   final newGameState = NewGameState();
 
@@ -34,13 +37,35 @@ class _AddLeaguePlayersState extends State<AddLeaguePlayers> {
   }
 
   Future<List<UserResponse>?> getAllUsers() async {
-    UserApi datoCMS = UserApi();
-    var users = await datoCMS.getUsers();
-    return users;
+    UserApi userApi = UserApi();
+    var allUsers = await userApi.getUsers();
+    setState(() {
+      users = allUsers;
+    });
+    initializePerson();
+    return allUsers;
   }
 
-  void playerChecked(UserResponse player) {
-    selectedPlayersList.add(player);
+  void playerChecked(UserResponse player, bool checkedOrNot) {
+    if (checkedOrNot == true) {
+      setState(() {
+        selectedPlayersList.add(player);
+      });
+    } else {
+      setState(() {
+        selectedPlayersList.remove(player);
+      });
+    }
+  }
+
+  void initializePerson() {
+    if (users != null) {
+      for (var element in users!) {
+        if (element.id == widget.userState.userId) {
+          selectedPlayersList.add(element);
+        }
+      }
+    }
   }
 
   @override
@@ -88,10 +113,22 @@ class _AddLeaguePlayersState extends State<AddLeaguePlayers> {
                               ),
                               Visibility(
                                   visible: selectedPlayersList.isNotEmpty,
+                                  child: Headline(
+                                      headline: 'Selected players',
+                                      userState: widget.userState)),
+                              Visibility(
+                                  visible: selectedPlayersList.isNotEmpty,
                                   child: SelectedPlayers(
                                       userState: widget.userState,
                                       players: selectedPlayersList)),
                               const Spacer(),
+                              Visibility(
+                                  visible: selectedPlayersList.isNotEmpty,
+                                  child: CreateSingleLeagueButton(
+                                    userState: widget.userState,
+                                    selectedPlayersList: selectedPlayersList,
+                                    leagueId: widget.leagueData.id,
+                                  ))
                             ])));
                   } else {
                     return const Center(

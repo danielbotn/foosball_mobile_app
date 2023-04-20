@@ -8,7 +8,6 @@ import 'package:foosball_mobile_app/utils/preferences_service.dart';
 import 'package:foosball_mobile_app/widgets/Login.dart';
 import 'package:foosball_mobile_app/widgets/Settings.dart';
 import 'package:foosball_mobile_app/widgets/dashboard/New_Dashboard.dart';
-import 'package:foosball_mobile_app/widgets/dashboard/dashboard.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -62,6 +61,8 @@ void setLanguageInfo() async {
   }
 }
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   HttpOverrides.global = MyHttpOverrides();
@@ -102,6 +103,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: navigatorKey,
       theme: AppTheme().lightTheme,
       darkTheme: AppTheme().darkTheme,
       initialRoute: widget.initialRoute,

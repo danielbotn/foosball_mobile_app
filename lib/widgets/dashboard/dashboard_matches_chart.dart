@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:community_charts_flutter/community_charts_flutter.dart'
     as charts;
+import 'package:foosball_mobile_app/main.dart';
 import 'package:foosball_mobile_app/models/charts/user_stats_response.dart';
 import 'package:foosball_mobile_app/models/charts/matches_chart.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
@@ -19,7 +20,7 @@ class DashboardMatchesChart extends StatefulWidget {
 
 class _DashboardMatchesChartState extends State<DashboardMatchesChart> {
   // state variables
-  List<MatchesChart> data = [];
+  late List<MatchesChart> data = [];
   Color dude = Colors.pink[50] as Color;
 
   // sets the data for the chart
@@ -70,49 +71,51 @@ class _DashboardMatchesChartState extends State<DashboardMatchesChart> {
       ),
     ];
 
-    return Container(
-      padding: const EdgeInsets.all(0),
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(2.0),
-          child: Column(
-            children: <Widget>[
-              Text(
-                widget.userState.hardcodedStrings.matches,
-                style: Theme.of(context).textTheme.bodyText1,
-              ),
-              // change label style of BarChart to fit the theme
-              Expanded(
-                child: charts.BarChart(series,
-                    animate: true,
-                    domainAxis: charts.OrdinalAxisSpec(
-                      renderSpec: charts.SmallTickRendererSpec(
-                        labelStyle: charts.TextStyleSpec(
-                          fontSize: 12,
-                          color: charts.ColorUtil.fromDartColor(
-                            widget.userState.darkmode
-                                ? AppColors.white
-                                : AppColors.textBlack,
+    return Visibility(
+        visible: data.isNotEmpty && widget.userStatsResponse!.userId != 0,
+        child: Container(
+          padding: const EdgeInsets.all(0),
+          child: Card(
+            child: Padding(
+              padding: const EdgeInsets.all(2.0),
+              child: Column(
+                children: <Widget>[
+                  Text(
+                    widget.userState.hardcodedStrings.matches,
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                  // change label style of BarChart to fit the theme
+                  Expanded(
+                    child: charts.BarChart(series,
+                        animate: true,
+                        domainAxis: charts.OrdinalAxisSpec(
+                          renderSpec: charts.SmallTickRendererSpec(
+                            labelStyle: charts.TextStyleSpec(
+                              fontSize: 12,
+                              color: charts.ColorUtil.fromDartColor(
+                                widget.userState.darkmode
+                                    ? AppColors.white
+                                    : AppColors.textBlack,
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-                    primaryMeasureAxis: charts.NumericAxisSpec(
-                      renderSpec: charts.GridlineRendererSpec(
-                        labelStyle: charts.TextStyleSpec(
-                          fontSize: 12,
-                          color: charts.ColorUtil.fromDartColor(
-                              widget.userState.darkmode
-                                  ? AppColors.white
-                                  : AppColors.textBlack),
-                        ),
-                      ),
-                    )),
+                        primaryMeasureAxis: charts.NumericAxisSpec(
+                          renderSpec: charts.GridlineRendererSpec(
+                            labelStyle: charts.TextStyleSpec(
+                              fontSize: 12,
+                              color: charts.ColorUtil.fromDartColor(
+                                  widget.userState.darkmode
+                                      ? AppColors.white
+                                      : AppColors.textBlack),
+                            ),
+                          ),
+                        )),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }

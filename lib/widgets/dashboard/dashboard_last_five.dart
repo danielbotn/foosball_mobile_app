@@ -103,26 +103,32 @@ class _DashBoardLastFiveState extends State<DashBoardLastFive> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: FutureBuilder(
+    return FutureBuilder<List<UserLastTen>?>(
       future: userStatsFuture,
-      builder: (context, AsyncSnapshot<List<UserLastTen>?> snapshot) {
-        if (snapshot.hasData) {
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Loading();
+        } else if (snapshot.hasError) {
+          // Handle errors here
+          return Center(
+            child: Text('An error occurred: ${snapshot.error}'),
+          );
+        } else if (snapshot.hasData) {
           return SafeArea(
-              child: ListView.builder(
-            itemCount: lastTenMatches!.length,
-            itemBuilder: (context, index) {
-              String headline = getHeadline(lastTenMatches![index]);
-              String score = getScore(lastTenMatches![index]);
-              Color? colorOfMatch = getColorOfMatch(lastTenMatches![index]);
-              String formattedDate = DateFormat('dd-MM-yyyy | kk:mm')
-                  .format(lastTenMatches![index].dateOfGame);
-              String wonOrLostSymbol =
-                  colorOfMatch == Colors.green[400] ? 'W' : 'L';
+            child: ListView.builder(
+              itemCount: lastTenMatches!.length,
+              itemBuilder: (context, index) {
+                String headline = getHeadline(lastTenMatches![index]);
+                String score = getScore(lastTenMatches![index]);
+                Color? colorOfMatch = getColorOfMatch(lastTenMatches![index]);
+                String formattedDate = DateFormat('dd-MM-yyyy | kk:mm')
+                    .format(lastTenMatches![index].dateOfGame);
+                String wonOrLostSymbol =
+                    colorOfMatch == Colors.green[400] ? 'W' : 'L';
 
-              return Card(
-                margin: EdgeInsets.zero,
-                child: ListTile(
+                return Card(
+                  margin: EdgeInsets.zero,
+                  child: ListTile(
                     onTap: () {
                       navigateToHistoryDetails(lastTenMatches![index]);
                     },
@@ -137,14 +143,16 @@ class _DashBoardLastFiveState extends State<DashBoardLastFive> {
                     ),
                     title: Text(headline),
                     subtitle: Text(formattedDate),
-                    trailing: Text(score)),
-              );
-            },
-          ));
+                    trailing: Text(score),
+                  ),
+                );
+              },
+            ),
+          );
         } else {
           return const Loading();
         }
       },
-    ));
+    );
   }
 }

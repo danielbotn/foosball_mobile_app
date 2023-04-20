@@ -1,22 +1,26 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:foosball_mobile_app/api/dio_api/dio_api.dart';
-import 'package:foosball_mobile_app/models/double-league-matches/double_league_match_model.dart';
+import 'package:foosball_mobile_app/models/single-league-players/single_league_players_model.dart';
 
-class DoubleLeagueMatchApi {
-  DoubleLeagueMatchApi();
+class SingleLeaguePlayersApi {
+  SingleLeaguePlayersApi();
 
-  Future<DoubleLeagueMatchModel?> getDoubleLeagueMatch(int matchId) async {
-    late DoubleLeagueMatchModel? result;
+  Future<bool> addSingleLeaguePlayers(
+      SingleLeaguePlayersModel singleLeaguePlayersModel) async {
+    bool result = false;
+
     String? baseUrl = kReleaseMode
         ? dotenv.env['REST_URL_PATH_PROD']
         : dotenv.env['REST_URL_PATH_DEV'];
     if (baseUrl != null) {
-      var url = '$baseUrl/api/DoubleLeagueMatches/$matchId';
+      var url = '$baseUrl/api/SingleLeaguePlayers';
 
       try {
-        final response = await Api().dio.get(
+        final response = await Api().dio.post(
               url,
               options: Options(
                 headers: {
@@ -24,17 +28,19 @@ class DoubleLeagueMatchApi {
                   "content-type": "application/json",
                 },
               ),
+              data: jsonEncode(singleLeaguePlayersModel),
             );
 
         if (response.statusCode == 200) {
-          result = DoubleLeagueMatchModel.fromJson(response.data);
+          result = true;
         } else {
-          result = null;
+          result = false;
         }
       } catch (e) {
         rethrow;
       }
     }
+
     return result;
   }
 }
