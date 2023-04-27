@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/api/SingleLeagueMatchApi.dart';
+import 'package:foosball_mobile_app/main.dart';
 import 'package:foosball_mobile_app/models/single-league-matches/single_league_match_model.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/helpers.dart';
+import 'package:foosball_mobile_app/widgets/league/ongoing_game/ongoing_game.dart';
 import 'package:foosball_mobile_app/widgets/loading.dart';
 
 class SingleLeagueFixtures extends StatefulWidget {
@@ -40,6 +42,17 @@ class _SingleLeagueFixturesState extends State<SingleLeagueFixtures> {
     return result;
   }
 
+  void goToGame(SingleLeagueMatchModel? matchData) {
+    if (matchData?.playerOne == widget.userState.userId ||
+        matchData?.playerTwo == widget.userState.userId) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  OngoingGame(userState: userState, matchModel: matchData)));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Helpers helpers = Helpers();
@@ -62,6 +75,7 @@ class _SingleLeagueFixturesState extends State<SingleLeagueFixtures> {
                 itemBuilder: (BuildContext context, int index) {
                   SingleLeagueMatchModel? match = data?[index];
                   return ListTile(
+                    onTap: () => {goToGame(match)},
                     leading: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
