@@ -26,14 +26,10 @@ class _PlayerCardState extends State<PlayerCard> {
           padding: const EdgeInsets.only(left: 20, top: 10, bottom: 10),
           child: Row(
             children: [
-              Visibility(
-                visible: widget.isPlayerOne == true,
-                child: Column(
-                  children: [
-                    Image.network(widget.player.photoUrl,
-                        width: 60, height: 60),
-                  ],
-                ),
+              Column(
+                children: [
+                  Image.network(widget.player.photoUrl, width: 60, height: 60),
+                ],
               ),
               Column(
                 children: [
@@ -44,15 +40,6 @@ class _PlayerCardState extends State<PlayerCard> {
                       text: widget.player.lastName,
                       userState: widget.userState),
                 ],
-              ),
-              Visibility(
-                visible: widget.isPlayerOne == false,
-                child: Column(
-                  children: [
-                    Image.network(widget.player.photoUrl,
-                        width: 60, height: 60),
-                  ],
-                ),
               ),
             ],
           ),

@@ -51,6 +51,12 @@ class _OngoingGameState extends State<OngoingGame> {
     return userResponse;
   }
 
+  void startGame(bool value) {
+    setState(() {
+      gameStarted = value;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     Helpers helpers = Helpers();
@@ -107,7 +113,13 @@ class _OngoingGameState extends State<OngoingGame> {
             ),
             const Spacer(),
             OngoingGameButton(
-                gameStarted: gameStarted, userState: widget.userState),
+              gameStarted: gameStarted,
+              userState: widget.userState,
+              matchId: widget.matchModel!.id,
+              startGameFunction: (value) {
+                startGame(value);
+              },
+            ),
           ]),
         ));
   }
