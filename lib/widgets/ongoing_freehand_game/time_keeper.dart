@@ -12,7 +12,7 @@ class TimeKeeper extends StatefulWidget {
   final OngoingFreehandState counter;
   final String randomString;
   final String randomStringStopClock;
-  TimeKeeper(
+  const TimeKeeper(
       {Key? key,
       required this.ongoingGameObject,
       required this.counter,
@@ -36,7 +36,7 @@ class _TimeKeeperState extends State<TimeKeeper> {
 
   @override
   void didUpdateWidget(TimeKeeper oldWidget) {
-    if (this.widget.counter.isClockPaused) {
+    if (widget.counter.isClockPaused) {
       stopTimer(resets: false);
     } else {
       if (oldWidget.randomString != widget.randomString) {

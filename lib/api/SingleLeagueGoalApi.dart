@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:foosball_mobile_app/api/dio_api/dio_api.dart';
+import 'package:foosball_mobile_app/models/single-league-goals/single-league-goal-body/single_league_goal_body.dart';
 import 'package:foosball_mobile_app/models/single-league-goals/single_league_goal_model.dart';
 
 class SingleLeagueGoalApi {
@@ -32,6 +33,36 @@ class SingleLeagueGoalApi {
             .toList();
 
         result = userLastTen;
+      } else {
+        result = null;
+      }
+    }
+    return result;
+  }
+
+  Future<SingleLeagueGoalModel?> createSingleLeagueGoal(
+      SingleLeagueGoalBody singleLeagueGoalBody) async {
+    SingleLeagueGoalModel? result;
+
+    String? baseUrl = kReleaseMode
+        ? dotenv.env['REST_URL_PATH_PROD']
+        : dotenv.env['REST_URL_PATH_DEV'];
+    if (baseUrl != null) {
+      var url = '$baseUrl/api/SingleLeagueGoals/';
+
+      final response = await Dio().post(
+        url,
+        data: singleLeagueGoalBody,
+        options: Options(
+          headers: {
+            "Accept": "application/json",
+            "content-type": "application/json",
+          },
+        ),
+      );
+
+      if (response.statusCode == 201) {
+        result = SingleLeagueGoalModel.fromJson(response.data);
       } else {
         result = null;
       }

@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:foosball_mobile_app/main.dart';
 import 'package:foosball_mobile_app/models/single-league-matches/single_league_match_model.dart';
 import 'package:foosball_mobile_app/models/user/user_response.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
@@ -7,6 +10,7 @@ import 'package:foosball_mobile_app/utils/helpers.dart';
 import 'package:foosball_mobile_app/widgets/league/ongoing_game/ongoing_game_button/ongoing_game_button.dart';
 import 'package:foosball_mobile_app/widgets/league/ongoing_game/player_card/playerCard.dart';
 import 'package:foosball_mobile_app/widgets/league/ongoing_game/player_score/player_score.dart';
+import 'package:foosball_mobile_app/widgets/league/ongoing_game/time_keeper/time_keeper.dart';
 
 class OngoingGame extends StatefulWidget {
   final UserState userState;
@@ -22,6 +26,8 @@ class _OngoingGameState extends State<OngoingGame> {
   bool gameStarted = false;
   int playerOneScore = 0;
   int playerTwoScore = 0;
+  late Duration duration = const Duration();
+  Timer? timer;
 
   UserResponse getPlayerOne() {
     UserResponse userResponse = UserResponse(
@@ -55,6 +61,22 @@ class _OngoingGameState extends State<OngoingGame> {
     setState(() {
       gameStarted = value;
     });
+    startTime();
+  }
+
+  void addTime() {
+    const addSeconds = 1;
+    final seconds = duration.inSeconds + addSeconds;
+    setState(() {
+      duration = Duration(seconds: seconds);
+    });
+  }
+
+  void startTime() {
+    // start timer
+    setState(() {
+      timer = Timer.periodic(const Duration(seconds: 1), (_) => addTime());
+    });
   }
 
   @override
@@ -77,6 +99,12 @@ class _OngoingGameState extends State<OngoingGame> {
         body: Container(
           color: helpers.getBackgroundColor(widget.userState.darkmode),
           child: Column(children: [
+            Visibility(
+                visible: gameStarted,
+                child: TimeKeeper(
+                  userState: userState,
+                  duration: duration,
+                )),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
