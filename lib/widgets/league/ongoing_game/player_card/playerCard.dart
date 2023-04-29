@@ -20,29 +20,25 @@ class PlayerCard extends StatefulWidget {
 class _PlayerCardState extends State<PlayerCard> {
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-        onTap: () {},
-        child: Padding(
-          padding: const EdgeInsets.only(left: 20, top: 10, bottom: 10),
-          child: Row(
+    return Padding(
+      padding: const EdgeInsets.only(left: 20, top: 10, bottom: 10),
+      child: Row(
+        children: [
+          Column(
             children: [
-              Column(
-                children: [
-                  Image.network(widget.player.photoUrl, width: 60, height: 60),
-                ],
-              ),
-              Column(
-                children: [
-                  ExtendedText(
-                      text: widget.player.firstName,
-                      userState: widget.userState),
-                  ExtendedText(
-                      text: widget.player.lastName,
-                      userState: widget.userState),
-                ],
-              ),
+              Image.network(widget.player.photoUrl, width: 60, height: 60),
             ],
           ),
-        ));
+          Column(
+            children: [
+              ExtendedText(
+                  text: widget.player.firstName, userState: widget.userState),
+              ExtendedText(
+                  text: widget.player.lastName, userState: widget.userState),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 }

@@ -14,7 +14,7 @@ class DoubleLeagueGoalsApi {
     if (baseUrl != null) {
       var url = '$baseUrl/api/DoubleLeagueGoals/match/$matchId';
       try {
-        final response = await Api().dio.post(
+        final response = await Api().dio.get(
               url,
               options: Options(
                 headers: {

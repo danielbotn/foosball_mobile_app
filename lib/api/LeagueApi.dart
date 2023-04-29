@@ -53,6 +53,39 @@ class LeagueApi {
     return null;
   }
 
+  Future<GetLeagueResponse?> getLeagueById(int leagueId) async {
+    late GetLeagueResponse? result;
+
+    String? baseUrl = kReleaseMode
+        ? dotenv.env['REST_URL_PATH_PROD']
+        : dotenv.env['REST_URL_PATH_DEV'];
+    if (baseUrl != null) {
+      var url = '$baseUrl/api/Leagues/$leagueId';
+
+      try {
+        final response = await Api().dio.get(
+              url,
+              options: Options(
+                headers: {
+                  "Accept": "application/json",
+                  "content-type": "application/json",
+                },
+              ),
+            );
+
+        if (response.statusCode == 200) {
+          result = GetLeagueResponse.fromJson(response.data);
+        } else {
+          result = null;
+        }
+      } catch (e) {
+        // rethrow the caught exception
+        rethrow;
+      }
+    }
+    return result;
+  }
+
   Future<List<GetLeagueResponse>?> getLeaguesByOrganisationId(
       int organisationId) async {
     late List<GetLeagueResponse>? result;
