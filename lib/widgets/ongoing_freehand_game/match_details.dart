@@ -59,7 +59,7 @@ class _MatchDetailsState extends State<MatchDetails> {
                   .matchReport,
               userState: widget.freehandMatchDetailObject.userState),
           leading: IconButton(
-            icon: Icon(Icons.close),
+            icon: const Icon(Icons.close),
             onPressed: () {
               // push to dashboard screen
               Navigator.push(

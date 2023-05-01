@@ -1,3 +1,4 @@
+import 'package:foosball_mobile_app/widgets/single_league_history/single_league_match_detail.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/api/UserApi.dart';
@@ -96,6 +97,15 @@ class _DashBoardLastFiveState extends State<DashBoardLastFive> {
           context,
           MaterialPageRoute(
               builder: (context) => FreehandDoubleMatchDetail(
+                    twoPlayersObject: tpo,
+                  )));
+    } else if (data.typeOfMatch == 2) {
+      // Go to SingleLeagueMatchDetail
+      tpo.leagueId = data.leagueId;
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => SingleLeagueMatchDetail(
                     twoPlayersObject: tpo,
                   )));
     }

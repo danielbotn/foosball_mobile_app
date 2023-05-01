@@ -18,6 +18,7 @@ class UserLastTen {
   final int userScore;
   final int opponentUserOrTeamScore;
   final DateTime dateOfGame;
+  final int? leagueId;
 
   UserLastTen(
       {required this.typeOfMatch,
@@ -33,7 +34,8 @@ class UserLastTen {
       required this.opponentTwoLastName,
       required this.userScore,
       required this.opponentUserOrTeamScore,
-      required this.dateOfGame});
+      required this.dateOfGame,
+      required this.leagueId});
 
   factory UserLastTen.fromJson(Map<String, dynamic> item) =>
       _$UserLastTenFromJson(item);

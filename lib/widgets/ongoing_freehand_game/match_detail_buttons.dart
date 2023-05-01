@@ -5,7 +5,7 @@ import 'package:foosball_mobile_app/models/other/freehandMatchDetailObject.dart'
 import 'package:foosball_mobile_app/models/other/ongoing_game_object.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
-import '../dashboard/Dashboard.dart';
+import 'package:foosball_mobile_app/widgets/dashboard/New_Dashboard.dart';
 import 'ongoing_freehand_game.dart';
 
 class MatchDetailButtons extends StatelessWidget {
@@ -23,8 +23,8 @@ class MatchDetailButtons extends StatelessWidget {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => Dashboard(
-                    param: userState,
+              builder: (context) => NewDashboard(
+                    userState: userState,
                   )));
     }
 

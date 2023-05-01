@@ -68,29 +68,14 @@ class _LeagueDashboardState extends State<LeagueDashboard> {
                   (context, AsyncSnapshot<List<GetLeagueResponse>?> snapshot) {
                 if (snapshot.hasData) {
                   return Container(
-                    color: widget.userState.darkmode
-                        ? AppColors.darkModeBackground
-                        : AppColors.white,
-                    child: Column(
-                      children: <Widget>[
-                        Expanded(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Expanded(
-                                flex: 1,
-                                child: LeagueList(
-                                  userState: userState,
-                                  data: leaguelist,
-                                  randomNumber: widget.randomNumber,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
+                      color: widget.userState.darkmode
+                          ? AppColors.darkModeBackground
+                          : AppColors.white,
+                      child: LeagueList(
+                        userState: userState,
+                        data: leaguelist,
+                        randomNumber: widget.randomNumber,
+                      ));
                 } else {
                   return Loading(userState: widget.userState);
                 }

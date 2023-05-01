@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/api/LeagueApi.dart';
 import 'package:foosball_mobile_app/api/SingleLeagueGoalApi.dart';
@@ -12,6 +11,7 @@ import 'package:foosball_mobile_app/models/user/user_response.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
 import 'package:foosball_mobile_app/utils/helpers.dart';
+import 'package:foosball_mobile_app/widgets/league/ongoing_game/match_details/match_details.dart';
 import 'package:foosball_mobile_app/widgets/league/ongoing_game/ongoing_game_button/ongoing_game_button.dart';
 import 'package:foosball_mobile_app/widgets/league/ongoing_game/player_card/playerCard.dart';
 import 'package:foosball_mobile_app/widgets/league/ongoing_game/player_score/player_score.dart';
@@ -114,6 +114,13 @@ class _OngoingGameState extends State<OngoingGame> {
   void checkIfGameIsOver(SingleLeagueGoalCreateResponse data) {
     if (data.winnerGoal == true) {
       // Go to match result screen
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => MatchDetails(
+                    userState: userState,
+                    matchModel: widget.matchModel,
+                  )));
     }
   }
 
