@@ -6,6 +6,7 @@ import 'package:foosball_mobile_app/main.dart';
 import 'package:foosball_mobile_app/models/leagues/get-league-response.dart';
 import 'package:foosball_mobile_app/models/single-league-goals/single-league-goal-body/single_league_goal_body.dart';
 import 'package:foosball_mobile_app/models/single-league-goals/single-league-goal-create-response/single_league_goal_create_response.dart';
+import 'package:foosball_mobile_app/models/single-league-goals/single_league_goal_model.dart';
 import 'package:foosball_mobile_app/models/single-league-matches/single_league_match_model.dart';
 import 'package:foosball_mobile_app/models/user/user_response.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
@@ -168,23 +169,80 @@ class _OngoingGameState extends State<OngoingGame> {
     }
   }
 
+  Future<List<SingleLeagueGoalModel>?> getGoals() async {
+    SingleLeagueGoalApi api = SingleLeagueGoalApi();
+    var goals = await api.getSingleLeagueGoals(
+        widget.matchModel!.leagueId, widget.matchModel!.id);
+    return goals;
+  }
+
+  Future<bool> deleteLastGoal(int lastGoalId) async {
+    SingleLeagueGoalApi api = SingleLeagueGoalApi();
+    return await api.deleteSingleLeagueGoal(lastGoalId);
+  }
+
+  void deleteLastScoredGoal() async {
+    if (gameStarted == true) {
+      var allGoals = await getGoals();
+      if (allGoals != null) {
+        SingleLeagueGoalModel lastGoal = allGoals[allGoals.length - 1];
+        bool goalDeleted = await deleteLastGoal(lastGoal.id);
+        if (goalDeleted) {
+          // successfully deleted goal
+          if (lastGoal.scoredByUserId == getPlayerOne().id &&
+              playerOneScore > 0) {
+            setState(() {
+              playerOneScore -= 1;
+            });
+          } else {
+            if (playerTwoScore > 0) {
+              setState(() {
+                playerTwoScore -= 1;
+              });
+            }
+          }
+        } else {
+          // could not delete goal
+        }
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Helpers helpers = Helpers();
     return Scaffold(
         appBar: AppBar(
-            leading: IconButton(
-              icon: const Icon(Icons.chevron_left),
-              onPressed: () {
-                Navigator.pop(context, widget.userState);
-              },
-            ),
-            iconTheme: widget.userState.darkmode
-                ? const IconThemeData(color: AppColors.white)
-                : IconThemeData(color: Colors.grey[700]),
-            backgroundColor: widget.userState.darkmode
-                ? AppColors.darkModeBackground
-                : AppColors.white),
+          leading: IconButton(
+            icon: const Icon(Icons.chevron_left),
+            onPressed: () {
+              Navigator.pop(context, widget.userState);
+            },
+          ),
+          iconTheme: widget.userState.darkmode
+              ? const IconThemeData(color: AppColors.white)
+              : IconThemeData(color: Colors.grey[700]),
+          backgroundColor: widget.userState.darkmode
+              ? AppColors.darkModeBackground
+              : AppColors.white,
+          actions: <Widget>[
+            Visibility(
+              visible: gameStarted == true &&
+                  (playerOneScore > 0 || playerTwoScore > 0),
+              child: Padding(
+                  padding: const EdgeInsets.only(right: 20.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      deleteLastScoredGoal();
+                    },
+                    child: const Icon(
+                      Icons.undo,
+                      size: 26.0,
+                    ),
+                  )),
+            )
+          ],
+        ),
         body: FutureBuilder<GetLeagueResponse?>(
           future: _leagueFuture,
           builder: (BuildContext context,
