@@ -12,6 +12,7 @@ import 'package:foosball_mobile_app/widgets/league/ongoing_game/match_details/ma
 import 'package:foosball_mobile_app/widgets/league/ongoing_game/match_details/match_score/match_score.dart';
 import 'package:foosball_mobile_app/widgets/league/ongoing_game/match_details/total_playing_time/total_playing_time.dart';
 import 'package:foosball_mobile_app/widgets/loading.dart';
+import 'package:foosball_mobile_app/widgets/dashboard/New_Dashboard.dart';
 
 class MatchDetails extends StatefulWidget {
   final UserState userState;
@@ -58,7 +59,12 @@ class _MatchDetailsState extends State<MatchDetails> {
           leading: IconButton(
             icon: const Icon(Icons.close),
             onPressed: () {
-              // push to dashboard screen
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => NewDashboard(
+                            userState: widget.userState,
+                          )));
             },
           ),
           iconTheme: helpers.getIconTheme(widget.userState.darkmode),

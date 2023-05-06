@@ -3,6 +3,7 @@ import 'package:foosball_mobile_app/api/SingleLeagueMatchApi.dart';
 import 'package:foosball_mobile_app/models/single-league-matches/single-league-match-update/single_league_match_update_model.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/widgets/loading.dart';
+import 'package:ntp/ntp.dart';
 
 class OngoingGameButton extends StatefulWidget {
   final UserState userState;
@@ -31,7 +32,7 @@ class _OngoingGameButtonState extends State<OngoingGameButton> {
     });
     SingleLeagueMatchApi api = SingleLeagueMatchApi();
     SingleLeagueMatchUpdateModel newMatch = SingleLeagueMatchUpdateModel(
-        startTime: DateTime.now(),
+        startTime: await NTP.now(),
         endTime: null,
         playerOneScore: 0,
         playerTwoScore: 0,

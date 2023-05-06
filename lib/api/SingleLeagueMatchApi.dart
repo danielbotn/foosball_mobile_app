@@ -97,7 +97,7 @@ class SingleLeagueMatchApi {
         operations.add({
           "op": "replace",
           "path": "/StartTime",
-          "value": matchUpdate.startTime!.toIso8601String(),
+          "value": matchUpdate.startTime!.toString(),
         });
       }
 
@@ -105,7 +105,7 @@ class SingleLeagueMatchApi {
         operations.add({
           "op": "replace",
           "path": "/EndTime",
-          "value": matchUpdate.endTime!.toIso8601String(),
+          "value": matchUpdate.endTime!.toString(),
         });
       }
 
