@@ -9,6 +9,7 @@ import 'package:foosball_mobile_app/models/other/TwoPlayersObject.dart';
 import 'package:foosball_mobile_app/models/user/user_response.dart';
 import 'package:foosball_mobile_app/utils/helpers.dart';
 import 'package:foosball_mobile_app/widgets/dashboard/Dashboard.dart';
+import 'package:foosball_mobile_app/widgets/loading.dart';
 import '../extended_Text.dart';
 import 'freehand_match_buttons.dart';
 import '../match_card.dart';
@@ -229,7 +230,7 @@ class _FreehandMatchDetailState extends State<FreehandMatchDetail> {
                   ],
                 ));
           } else {
-            return const CircularProgressIndicator();
+            return Loading(userState: userState);
           }
         },
       ),

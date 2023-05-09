@@ -5,6 +5,7 @@ import 'package:foosball_mobile_app/main.dart';
 import 'package:foosball_mobile_app/models/cms/hardcoded_strings.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
+import 'package:foosball_mobile_app/widgets/loading.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 import '../utils/preferences_service.dart';
@@ -299,8 +300,10 @@ class _SettingsState extends State<Settings> {
                     ],
                   ));
             } else {
-              return const Center(
-                child: CircularProgressIndicator(),
+              return Center(
+                child: Loading(
+                  userState: widget.userState,
+                ),
               );
             }
           }),

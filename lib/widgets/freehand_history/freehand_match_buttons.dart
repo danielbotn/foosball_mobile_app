@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/models/user/user_response.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
+import 'package:foosball_mobile_app/widgets/extended_Text.dart';
 import 'package:foosball_mobile_app/widgets/new_game/new_game.dart';
 
 import '../../api/FreehandMatchApi.dart';
@@ -95,7 +96,11 @@ class FreehandMatchButtons extends StatelessWidget {
                         ? AppColors.lightThemeShadowColor
                         : AppColors.buttonsLightTheme,
                     minimumSize: const Size(100, 50)),
-                child: Text(userState.hardcodedStrings.newMatch),
+                child: ExtendedText(
+                  text: userState.hardcodedStrings.newMatch,
+                  userState: userState,
+                  colorOverride: AppColors.white,
+                ),
               ),
             )),
         Expanded(
@@ -109,7 +114,11 @@ class FreehandMatchButtons extends StatelessWidget {
                         ? AppColors.lightThemeShadowColor
                         : AppColors.buttonsLightTheme,
                     minimumSize: const Size(100, 50)),
-                child: Text(userState.hardcodedStrings.rematch),
+                child: ExtendedText(
+                  text: userState.hardcodedStrings.rematch,
+                  userState: userState,
+                  colorOverride: AppColors.white,
+                ),
               ),
             )),
       ],

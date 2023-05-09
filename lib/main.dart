@@ -34,7 +34,7 @@ Future<String?> _getLanguageFromStorage() async {
   return value;
 }
 
-void setJwtInfo(String token) async {
+Future<void> setJwtInfo(String token) async {
   Map<String, dynamic> decodedToken = Jwt.parseJwt(token);
   JwtModel jwtObject = JwtModel(
       name: decodedToken["unique_name"],
@@ -51,13 +51,24 @@ void setJwtInfo(String token) async {
   userState.setToken(token);
 }
 
-void setLanguageInfo() async {
+Future<void> setLanguageInfo() async {
   String? langFromStorage = await _getLanguageFromStorage();
 
   if (langFromStorage != null) {
     userState.setLanguage(langFromStorage);
   } else {
     userState.setLanguage("en");
+  }
+}
+
+Future<void> setTheme() async {
+  PreferencesService preferencesService = PreferencesService();
+  bool? darkTheme = await preferencesService.getDarkTheme();
+
+  if (darkTheme == true) {
+    userState.setDarkmode(true);
+  } else {
+    userState.setDarkmode(false);
   }
 }
 
@@ -71,9 +82,9 @@ void main() async {
   String theRoute = 'login';
   String? token = tokenData;
   if (token != null) {
-    setJwtInfo(token);
-    setLanguageInfo();
-
+    await setJwtInfo(token);
+    await setLanguageInfo();
+    await setTheme();
     theRoute = 'dashboard';
     // is this code now redundant?
     // bool isTokenExpired = JwtDecoder.isExpired(token);

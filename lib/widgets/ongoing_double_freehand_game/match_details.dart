@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/api/FreehandDoubleGoalsApi.dart';
 import 'package:foosball_mobile_app/api/FreehandDoubleMatchApi.dart';
+import 'package:foosball_mobile_app/main.dart';
 import 'package:foosball_mobile_app/models/freehand-double-goals/freehand_double_goal_model.dart';
 import 'package:foosball_mobile_app/models/freehand-double-matches/freehand_double_match_model.dart';
 import 'package:foosball_mobile_app/models/other/freehandDoubleMatchDetailObject.dart';
 import 'package:foosball_mobile_app/utils/helpers.dart';
 import 'package:foosball_mobile_app/widgets/extended_Text.dart';
 import 'package:foosball_mobile_app/widgets/freehand_double_history/freehand_double_goals.dart';
+import 'package:foosball_mobile_app/widgets/loading.dart';
 import 'package:foosball_mobile_app/widgets/match_score.dart';
 import 'package:foosball_mobile_app/widgets/ongoing_double_freehand_game/match_detail_card.dart';
 import 'package:foosball_mobile_app/widgets/ongoing_double_freehand_game/match_details_buttons.dart';
@@ -131,8 +133,8 @@ class _MatchDetailsState extends State<MatchDetails> {
               ),
             );
           } else {
-            return const Center(
-              child: CircularProgressIndicator(),
+            return Center(
+              child: Loading(userState: userState),
             );
           }
         },

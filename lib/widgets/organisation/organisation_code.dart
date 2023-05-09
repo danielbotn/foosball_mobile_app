@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/main.dart';
 import 'package:foosball_mobile_app/models/organisation/organisation_response.dart';
+import 'package:foosball_mobile_app/widgets/loading.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import '../../api/Organisation.dart';
 import '../../state/user_state.dart';
@@ -101,7 +102,7 @@ class _OrganisationCodeState extends State<OrganisationCode> {
                 ),
               );
             } else {
-              return const CircularProgressIndicator();
+              return Loading(userState: userState);
             }
           },
         ));
