@@ -38,6 +38,7 @@ class _LeagueState extends State<League> {
     bool darkMode = widget.userState.darkmode;
     Helpers helpers = Helpers();
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           leading: IconButton(
             icon: const Icon(Icons.chevron_left),

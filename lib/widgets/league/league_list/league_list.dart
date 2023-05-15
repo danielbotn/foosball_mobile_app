@@ -39,6 +39,9 @@ class LeagueList extends StatelessWidget {
                     userState: userState,
                     leagueData: leagueData,
                   )));
+    } else if (leagueData.hasLeagueStarted == false &&
+        leagueData.typeOfLeague == 1) {
+      // danni
     }
   }
 
