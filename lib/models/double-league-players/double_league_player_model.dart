@@ -11,7 +11,7 @@ class DoubleLeaguePlayerModel {
   final String lastName;
   final String email;
   final int teamId;
-  final String teamName;
+  final String? teamName;
 
   DoubleLeaguePlayerModel(
       {required this.id,

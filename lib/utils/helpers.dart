@@ -207,4 +207,14 @@ class Helpers {
     }
     return jwtToken;
   }
+
+  void showSnackbar(BuildContext context, String message, bool isError) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: isError ? Colors.red : Colors.teal,
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
+  }
 }

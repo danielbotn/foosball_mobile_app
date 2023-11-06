@@ -16,7 +16,7 @@ DoubleLeaguePlayerModel _$DoubleLeaguePlayerModelFromJson(
       lastName: json['lastName'] as String,
       email: json['email'] as String,
       teamId: json['teamId'] as int,
-      teamName: json['teamName'] as String,
+      teamName: json['teamName'] as String?,
     );
 
 Map<String, dynamic> _$DoubleLeaguePlayerModelToJson(

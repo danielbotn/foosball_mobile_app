@@ -1,17 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:foosball_mobile_app/models/user/user_response.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
+import 'package:foosball_mobile_app/widgets/league/add_double_league_teams/create_double_league_team.dart';
 
 class AddTeamButton extends StatefulWidget {
   final UserState userState;
-  const AddTeamButton({super.key, required this.userState});
+  final List<UserResponse> teamPlayers;
+  final int leagueId;
+  const AddTeamButton(
+      {super.key,
+      required this.userState,
+      required this.teamPlayers,
+      required this.leagueId});
 
   @override
   State<AddTeamButton> createState() => _AddTeamButtonState();
 }
 
 class _AddTeamButtonState extends State<AddTeamButton> {
-  void addTeam() async {}
+  void addTeam() async {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => CreateDoubleLeagueTeam(
+                userState: widget.userState,
+                teamPlayers: widget.teamPlayers,
+                leagueId: widget.leagueId)));
+  }
 
   @override
   Widget build(BuildContext context) {
