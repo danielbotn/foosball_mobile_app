@@ -125,6 +125,52 @@ class LeagueApi {
     return result;
   }
 
+  Future<bool> updateLeague(
+    int leagueId,
+    CreateLeagueBody leagueUpdate,
+  ) async {
+    bool result = false;
+
+    String? baseUrl = kReleaseMode
+        ? dotenv.env['REST_URL_PATH_PROD']
+        : dotenv.env['REST_URL_PATH_DEV'];
+    if (baseUrl != null) {
+      var url = '$baseUrl/api/Leagues/$leagueId';
+
+      final List<Map<String, dynamic>> operations = [];
+
+      if (leagueUpdate.hasLeagueStarted != null) {
+        operations.add({
+          "op": "replace",
+          "path": "/HasLeagueStarted",
+          "value": leagueUpdate.hasLeagueStarted,
+        });
+      }
+
+      try {
+        final response = await Api().dio.patch(
+              url,
+              data: operations,
+              options: Options(
+                headers: {
+                  "Accept": "application/json",
+                  "content-type": "application/json",
+                },
+              ),
+            );
+
+        if (response.statusCode == 204) {
+          result = true;
+        } else {
+          result = false;
+        }
+      } catch (e) {
+        rethrow;
+      }
+    }
+    return result;
+  }
+
   Future<List<SingleLeagueStandingsModel>?> getSingleLeagueStandings(
       int leagueId) async {
     late List<SingleLeagueStandingsModel>? result;

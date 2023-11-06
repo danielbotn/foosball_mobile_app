@@ -13,6 +13,7 @@ CreateLeagueBody _$CreateLeagueBodyFromJson(Map<String, dynamic> json) =>
       upTo: json['upTo'] as int,
       organisationId: json['organisationId'] as int,
       howManyRounds: json['howManyRounds'] as int,
+      hasLeagueStarted: json['hasLeagueStarted'] as bool?,
     );
 
 Map<String, dynamic> _$CreateLeagueBodyToJson(CreateLeagueBody instance) =>
@@ -22,4 +23,5 @@ Map<String, dynamic> _$CreateLeagueBodyToJson(CreateLeagueBody instance) =>
       'upTo': instance.upTo,
       'organisationId': instance.organisationId,
       'howManyRounds': instance.howManyRounds,
+      'hasLeagueStarted': instance.hasLeagueStarted,
     };

@@ -9,13 +9,15 @@ class CreateLeagueBody {
   final int upTo;
   final int organisationId;
   final int howManyRounds;
+  final bool? hasLeagueStarted;
 
   CreateLeagueBody(
       {required this.name,
       required this.typeOfLeague,
       required this.upTo,
       required this.organisationId,
-      required this.howManyRounds});
+      required this.howManyRounds,
+      this.hasLeagueStarted});
 
   factory CreateLeagueBody.fromJson(Map<String, dynamic> item) =>
       _$CreateLeagueBodyFromJson(item);
