@@ -5,6 +5,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:foosball_mobile_app/api/dio_api/dio_api.dart';
 import 'package:foosball_mobile_app/models/leagues/create-league-body.dart';
 import 'package:foosball_mobile_app/models/leagues/create-league-response.dart';
+import 'package:foosball_mobile_app/models/leagues/double-league-standings-model.dart';
 import 'package:foosball_mobile_app/models/leagues/get-league-response.dart';
 import 'package:foosball_mobile_app/models/leagues/single-league-standings-model.dart';
 
@@ -197,6 +198,46 @@ class LeagueApi {
           List<SingleLeagueStandingsModel>? standings;
           standings = (response.data as List)
               .map((i) => SingleLeagueStandingsModel.fromJson(i))
+              .toList();
+
+          result = standings;
+        } else {
+          result = null;
+        }
+      } catch (e) {
+        // rethrow the caught exception
+        rethrow;
+      }
+    }
+    return result;
+  }
+
+  Future<List<DoubleLeagueStandingsModel>?> geDoubleLeagueStandings(
+      int leagueId) async {
+    late List<DoubleLeagueStandingsModel>? result;
+
+    String? baseUrl = kReleaseMode
+        ? dotenv.env['REST_URL_PATH_PROD']
+        : dotenv.env['REST_URL_PATH_DEV'];
+    if (baseUrl != null) {
+      var url =
+          '$baseUrl/api/Leagues/double-league/standings?leagueId=$leagueId';
+
+      try {
+        final response = await Api().dio.get(
+              url,
+              options: Options(
+                headers: {
+                  "Accept": "application/json",
+                  "content-type": "application/json",
+                },
+              ),
+            );
+
+        if (response.statusCode == 200) {
+          List<DoubleLeagueStandingsModel>? standings;
+          standings = (response.data as List)
+              .map((i) => DoubleLeagueStandingsModel.fromJson(i))
               .toList();
 
           result = standings;

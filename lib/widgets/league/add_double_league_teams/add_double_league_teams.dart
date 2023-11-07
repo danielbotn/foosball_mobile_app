@@ -10,6 +10,7 @@ import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
 import 'package:foosball_mobile_app/utils/helpers.dart';
 import 'package:foosball_mobile_app/widgets/UI/Buttons/Button.dart';
+import 'package:foosball_mobile_app/widgets/dashboard/New_Dashboard.dart';
 import 'package:foosball_mobile_app/widgets/extended_Text.dart';
 import 'package:foosball_mobile_app/widgets/headline.dart';
 import 'package:foosball_mobile_app/widgets/league/add_double_league_teams/add_team_button.dart';
@@ -55,17 +56,26 @@ class _AddDoubleLeagueTeamsState extends State<AddDoubleLeagueTeams> {
           organisationId: widget.leagueData.organisationId,
           howManyRounds: widget.leagueData.howManyRounds,
           hasLeagueStarted: true);
-      var updateSuccessfull =
-          await api.updateLeague(widget.leagueData.id, body);
+      var updateSuccessful = await api.updateLeague(widget.leagueData.id, body);
 
-      if (updateSuccessfull) {
+      if (updateSuccessful) {
+        // Push the /dashboard screen and remove all previous routes from the stack
+        navigator.pushAndRemoveUntil(
+            MaterialPageRoute(
+              builder: (context) => NewDashboard(userState: widget.userState),
+            ),
+            (route) => false);
+
+        // Push the DoubleLeagueOverview screen
         navigator.push(MaterialPageRoute(
           builder: (context) => DoubleLeagueOverview(
             userState: widget.userState,
             leagueData: widget.leagueData,
           ),
         ));
-      } else {}
+      } else {
+        // Handle unsuccessful update
+      }
     } on Exception catch (_) {
       Helpers helpers = Helpers();
       helpers.showSnackbar(
