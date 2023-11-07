@@ -15,6 +15,7 @@ import 'package:foosball_mobile_app/widgets/headline.dart';
 import 'package:foosball_mobile_app/widgets/league/add_double_league_teams/add_team_button.dart';
 import 'package:foosball_mobile_app/widgets/league/add_double_league_teams/team_overview.dart';
 import 'package:foosball_mobile_app/widgets/league/add_double_league_teams/teams_selecter.dart';
+import 'package:foosball_mobile_app/widgets/league/double_league_overview/double_league_overview.dart';
 import 'package:foosball_mobile_app/widgets/loading.dart';
 
 class AddDoubleLeagueTeams extends StatefulWidget {
@@ -58,6 +59,12 @@ class _AddDoubleLeagueTeamsState extends State<AddDoubleLeagueTeams> {
           await api.updateLeague(widget.leagueData.id, body);
 
       if (updateSuccessfull) {
+        navigator.push(MaterialPageRoute(
+          builder: (context) => DoubleLeagueOverview(
+            userState: widget.userState,
+            leagueData: widget.leagueData,
+          ),
+        ));
       } else {}
     } on Exception catch (_) {
       Helpers helpers = Helpers();

@@ -5,6 +5,7 @@ import 'package:foosball_mobile_app/utils/app_color.dart';
 import 'package:foosball_mobile_app/widgets/extended_Text.dart';
 import 'package:foosball_mobile_app/widgets/league/add_double_league_teams/add_double_league_teams.dart';
 import 'package:foosball_mobile_app/widgets/league/add_league_players/add_league_players.dart';
+import 'package:foosball_mobile_app/widgets/league/double_league_overview/double_league_overview.dart';
 import 'package:foosball_mobile_app/widgets/league/single_league_overview/single_league_overview.dart';
 
 class LeagueList extends StatelessWidget {
@@ -47,6 +48,16 @@ class LeagueList extends StatelessWidget {
           context,
           MaterialPageRoute(
               builder: (context) => AddDoubleLeagueTeams(
+                    userState: userState,
+                    leagueData: leagueData,
+                  )));
+    } else if (leagueData.hasLeagueStarted == true &&
+        leagueData.typeOfLeague == 1) {
+      // go to double league overview page
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => DoubleLeagueOverview(
                     userState: userState,
                     leagueData: leagueData,
                   )));
