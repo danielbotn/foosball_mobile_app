@@ -37,7 +37,8 @@ class DoubleLeagueMatchModel {
     required this.teamTwo,
   });
 
-  factory DoubleLeagueMatchModel.fromJson(Map<String, dynamic> json) => _$DoubleLeagueMatchModelFromJson(json);
+  factory DoubleLeagueMatchModel.fromJson(Map<String, dynamic> json) =>
+      _$DoubleLeagueMatchModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$DoubleLeagueMatchModelToJson(this);
 }

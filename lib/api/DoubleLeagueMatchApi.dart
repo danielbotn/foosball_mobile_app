@@ -37,4 +37,42 @@ class DoubleLeagueMatchApi {
     }
     return result;
   }
+
+  Future<List<DoubleLeagueMatchModel>?> getAllDoubleLeagueMatchesByLeagueId(
+      int leagueId) async {
+    late List<DoubleLeagueMatchModel>? result;
+
+    String? baseUrl = kReleaseMode
+        ? dotenv.env['REST_URL_PATH_PROD']
+        : dotenv.env['REST_URL_PATH_DEV'];
+    if (baseUrl != null) {
+      var url = '$baseUrl/api/DoubleLeagueMatches?leagueId=$leagueId';
+
+      try {
+        final response = await Api().dio.get(
+              url,
+              options: Options(
+                headers: {
+                  "Accept": "application/json",
+                  "content-type": "application/json",
+                },
+              ),
+            );
+
+        if (response.statusCode == 200) {
+          List<DoubleLeagueMatchModel> data;
+          data = (response.data as List)
+              .map((i) => DoubleLeagueMatchModel.fromJson(i))
+              .toList();
+          result = data;
+        } else {
+          result = null;
+        }
+      } catch (e) {
+        rethrow;
+      }
+    }
+
+    return result;
+  }
 }

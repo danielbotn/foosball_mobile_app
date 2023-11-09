@@ -18,6 +18,7 @@ import 'package:foosball_mobile_app/widgets/league/add_double_league_teams/team_
 import 'package:foosball_mobile_app/widgets/league/add_double_league_teams/teams_selecter.dart';
 import 'package:foosball_mobile_app/widgets/league/double_league_overview/double_league_overview.dart';
 import 'package:foosball_mobile_app/widgets/loading.dart';
+import 'package:foosball_mobile_app/widgets/progress_indicators/progress_indicator.dart';
 
 class AddDoubleLeagueTeams extends StatefulWidget {
   final UserState userState;
@@ -35,6 +36,7 @@ class _AddDoubleLeagueTeamsState extends State<AddDoubleLeagueTeams> {
   List<UserResponse> selectedPlayers = [];
   List<DoubleLeaguePlayerModel> leaguePlayers = [];
   int totalTeams = 0;
+  bool showProgressBar = false;
 
   // function
   void teamReady(List<UserResponse> teamPlayers) async {
@@ -45,8 +47,32 @@ class _AddDoubleLeagueTeamsState extends State<AddDoubleLeagueTeams> {
     var tmp = await getLeaguePlayers();
   }
 
-  void startLeague() async {
+  void goToLeagueOverview() {
     final navigator = Navigator.of(context);
+    navigator.pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder: (context) => NewDashboard(userState: widget.userState),
+        ),
+        (route) => false);
+
+    // Push the DoubleLeagueOverview screen
+    navigator.push(MaterialPageRoute(
+      builder: (context) => DoubleLeagueOverview(
+        userState: widget.userState,
+        leagueData: widget.leagueData,
+      ),
+    ));
+  }
+
+  void isTimerDone(bool isDone) {
+    setState(() {
+      showProgressBar = !isDone;
+    });
+    // Here I want to go to new screen
+    goToLeagueOverview();
+  }
+
+  void startLeague() async {
     try {
       LeagueApi api = LeagueApi();
       CreateLeagueBody body = CreateLeagueBody(
@@ -60,19 +86,9 @@ class _AddDoubleLeagueTeamsState extends State<AddDoubleLeagueTeams> {
 
       if (updateSuccessful) {
         // Push the /dashboard screen and remove all previous routes from the stack
-        navigator.pushAndRemoveUntil(
-            MaterialPageRoute(
-              builder: (context) => NewDashboard(userState: widget.userState),
-            ),
-            (route) => false);
-
-        // Push the DoubleLeagueOverview screen
-        navigator.push(MaterialPageRoute(
-          builder: (context) => DoubleLeagueOverview(
-            userState: widget.userState,
-            leagueData: widget.leagueData,
-          ),
-        ));
+        setState(() {
+          showProgressBar = true;
+        });
       } else {
         // Handle unsuccessful update
       }
@@ -171,7 +187,12 @@ class _AddDoubleLeagueTeamsState extends State<AddDoubleLeagueTeams> {
                       ),
                     ),
                     Visibility(
-                      visible: totalTeams >= 2,
+                        visible: showProgressBar == true,
+                        child: LeagueProgressIndicator(
+                            userState: widget.userState,
+                            isTimerDone: isTimerDone)),
+                    Visibility(
+                      visible: totalTeams >= 2 && showProgressBar == false,
                       child: Button(
                           userState: userState,
                           onClick: startLeague,

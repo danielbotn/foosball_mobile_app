@@ -4,6 +4,7 @@ import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
 import 'package:foosball_mobile_app/utils/helpers.dart';
 import 'package:foosball_mobile_app/widgets/extended_Text.dart';
+import 'package:foosball_mobile_app/widgets/league/double_league_fixtures/double_league_fixtures.dart';
 import 'package:foosball_mobile_app/widgets/league/double_league_standings/double_league_standings.dart';
 
 class DoubleLeagueOverview extends StatefulWidget {
@@ -75,7 +76,8 @@ class _DoubleLeagueOverviewState extends State<DoubleLeagueOverview>
           children: [
             DoubleLeagueStandings(
                 userState: widget.userState, leagueId: widget.leagueData.id),
-            const Text('fixtures')
+            DoubleLeagueFixtures(
+                userState: widget.userState, leagueId: widget.leagueData.id)
           ],
         ),
       ),

@@ -9,16 +9,18 @@ class TeamModel {
   final String lastName;
   final String email;
   final String photoUrl;
+  final String teamName;
 
   TeamModel(
       {required this.id,
       required this.firstName,
       required this.lastName,
       required this.email,
-      required this.photoUrl
-      });
-  
-  factory TeamModel.fromJson(Map<String, dynamic> json) => _$TeamModelFromJson(json);
+      required this.photoUrl,
+      required this.teamName});
+
+  factory TeamModel.fromJson(Map<String, dynamic> json) =>
+      _$TeamModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$TeamModelToJson(this);
 }
