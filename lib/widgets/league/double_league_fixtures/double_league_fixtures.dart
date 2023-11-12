@@ -5,6 +5,7 @@ import 'package:foosball_mobile_app/models/double-league-matches/double_league_m
 import 'package:foosball_mobile_app/models/single-league-matches/single_league_match_model.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/helpers.dart';
+import 'package:foosball_mobile_app/widgets/league/ongoing_double_game/ongoing_double_game.dart';
 import 'package:foosball_mobile_app/widgets/league/ongoing_game/ongoing_game.dart';
 import 'package:foosball_mobile_app/widgets/loading.dart';
 
@@ -43,14 +44,16 @@ class _DoubleLeagueFixturesState extends State<DoubleLeagueFixtures> {
     return result;
   }
 
-  void goToGame(SingleLeagueMatchModel? matchData) {
-    if (matchData?.playerOne == widget.userState.userId ||
-        matchData?.playerTwo == widget.userState.userId) {
+  void goToGame(DoubleLeagueMatchModel? matchData) {
+    if (matchData!.teamOne[0].userId == widget.userState.userId ||
+        matchData.teamOne[1].userId == widget.userState.userId ||
+        matchData.teamTwo[0].userId == widget.userState.userId ||
+        matchData.teamTwo[1].userId == widget.userState.userId) {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) =>
-                  OngoingGame(userState: userState, matchModel: matchData)));
+              builder: (context) => OngoingDoubleGame(
+                  userState: userState, matchModel: matchData)));
     }
   }
 
@@ -76,7 +79,7 @@ class _DoubleLeagueFixturesState extends State<DoubleLeagueFixtures> {
                 itemBuilder: (BuildContext context, int index) {
                   DoubleLeagueMatchModel? match = data?[index];
                   return ListTile(
-                    // onTap: () => {goToGame(match)},
+                    onTap: () => {goToGame(match)},
                     leading: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [

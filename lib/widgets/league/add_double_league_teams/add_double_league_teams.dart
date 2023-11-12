@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foosball_mobile_app/api/DoubleLeagueMatchApi.dart';
 import 'package:foosball_mobile_app/api/DoubleLeaguePlayersApi.dart';
 import 'package:foosball_mobile_app/api/LeagueApi.dart';
 import 'package:foosball_mobile_app/main.dart';
@@ -74,7 +75,8 @@ class _AddDoubleLeagueTeamsState extends State<AddDoubleLeagueTeams> {
 
   void startLeague() async {
     try {
-      LeagueApi api = LeagueApi();
+      DoubleLeagueMatchApi api = DoubleLeagueMatchApi();
+      LeagueApi lApi = LeagueApi();
       CreateLeagueBody body = CreateLeagueBody(
           name: widget.leagueData.name,
           typeOfLeague: widget.leagueData.typeOfLeague,
@@ -82,9 +84,13 @@ class _AddDoubleLeagueTeamsState extends State<AddDoubleLeagueTeams> {
           organisationId: widget.leagueData.organisationId,
           howManyRounds: widget.leagueData.howManyRounds,
           hasLeagueStarted: true);
-      var updateSuccessful = await api.updateLeague(widget.leagueData.id, body);
+      var updateSuccessful =
+          await lApi.updateLeague(widget.leagueData.id, body);
 
-      if (updateSuccessful) {
+      var createMatches =
+          await api.createDoubleLeagueMatches(widget.leagueData.id);
+
+      if (updateSuccessful && createMatches!.isNotEmpty) {
         // Push the /dashboard screen and remove all previous routes from the stack
         setState(() {
           showProgressBar = true;

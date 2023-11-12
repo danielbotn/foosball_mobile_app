@@ -3,6 +3,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:foosball_mobile_app/api/dio_api/dio_api.dart';
+import 'package:foosball_mobile_app/models/double-league-matches/create_double_league_matches_response.dart';
+import 'package:foosball_mobile_app/models/double-league-matches/double_league_match_model.dart';
 import 'package:foosball_mobile_app/models/leagues/create-league-body.dart';
 import 'package:foosball_mobile_app/models/leagues/create-league-response.dart';
 import 'package:foosball_mobile_app/models/leagues/double-league-standings-model.dart';
