@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foosball_mobile_app/api/SingleLeagueMatchApi.dart';
 import 'package:foosball_mobile_app/api/SingleLeaguePlayersApi.dart';
 import 'package:foosball_mobile_app/models/leagues/get-league-response.dart';
 import 'package:foosball_mobile_app/models/single-league-players/single_league_players_model.dart';
@@ -44,13 +45,17 @@ class _CreateSingleLeagueButtonState extends State<CreateSingleLeagueButton> {
   Widget build(BuildContext context) {
     void addSingleLeaguePlayers() async {
       SingleLeaguePlayersApi api = SingleLeaguePlayersApi();
+      SingleLeagueMatchApi slmapi = SingleLeagueMatchApi();
       SingleLeaguePlayersModel singleLeaguePlayersModel =
           SingleLeaguePlayersModel(
               users: widget.selectedPlayersList,
               leagueId: widget.leagueData.id);
       bool result = await api.addSingleLeaguePlayers(singleLeaguePlayersModel);
 
-      if (result) {
+      var matches =
+          await slmapi.createSingleLeagueMatches(widget.leagueData.id);
+
+      if (result && matches!.isNotEmpty) {
         setState(() {
           showProgressBar = true;
         });

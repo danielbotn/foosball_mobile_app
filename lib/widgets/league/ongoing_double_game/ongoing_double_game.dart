@@ -2,13 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/api/LeagueApi.dart';
-import 'package:foosball_mobile_app/models/double-league-goals/double_league_goal_model.dart';
 import 'package:foosball_mobile_app/models/double-league-matches/double_league_match_model.dart';
 import 'package:foosball_mobile_app/models/leagues/get-league-response.dart';
 import 'package:foosball_mobile_app/models/user/user_response.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
 import 'package:foosball_mobile_app/utils/helpers.dart';
+import 'package:foosball_mobile_app/widgets/extended_Text.dart';
 import 'package:foosball_mobile_app/widgets/league/ongoing_game/ongoing_game_button/ongoing_game_button.dart';
 import 'package:foosball_mobile_app/widgets/league/ongoing_game/player_card/playerCard.dart';
 import 'package:foosball_mobile_app/widgets/league/ongoing_game/player_score/player_score.dart';
@@ -245,66 +245,138 @@ class _OngoingDoubleGameState extends State<OngoingDoubleGame> {
             if (snapshot.hasData) {
               return Container(
                 color: helpers.getBackgroundColor(widget.userState.darkmode),
-                child: Column(children: [
-                  Visibility(
+                child: Column(
+                  children: [
+                    Visibility(
                       visible: gameStarted,
                       child: TimeKeeper(
                         userState: widget.userState,
                         duration: duration,
-                      )),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          createGoalForTeamOne();
-                        },
-                        child: Expanded(
+                      ),
+                    ),
+                    // Team One
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
                           flex: 1,
-                          child: PlayerCard(
+                          child: GestureDetector(
+                            onTap: () {
+                              createGoalForTeamOne();
+                            },
+                            child: PlayerCard(
                               userState: widget.userState,
                               player: getPlayerOneTeamOne(),
-                              isPlayerOne: true),
+                              isPlayerOne: true,
+                            ),
+                          ),
                         ),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: PlayerScore(
-                            userState: widget.userState, score: teamOneScore),
-                      )
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      GestureDetector(
-                          onTap: () {
-                            createGoalForTeamTwo();
-                          },
-                          child: Expanded(
-                            flex: 1,
+                        Expanded(
+                          flex: 1,
+                          child: GestureDetector(
+                            onTap: () {
+                              createGoalForTeamOne();
+                            },
                             child: PlayerCard(
-                                userState: widget.userState,
-                                player: getPlayerOneTeamTwo(),
-                                isPlayerOne: false),
-                          )),
-                      Expanded(
-                        flex: 1,
-                        child: PlayerScore(
-                            userState: widget.userState, score: teamTwoScore),
-                      )
-                    ],
-                  ),
-                  const Spacer(),
-                  OngoingGameButton(
-                    gameStarted: gameStarted,
-                    userState: widget.userState,
-                    matchId: widget.matchModel!.id,
-                    startGameFunction: (value) {
-                      startGame(value);
-                    },
-                  ),
-                ]),
+                              userState: widget.userState,
+                              player: getPlayerTwoTeamOne(),
+                              isPlayerOne: false,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Column(
+                          children: [
+                            ExtendedText(
+                              text: widget.matchModel.teamOne[0].teamName,
+                              userState: widget.userState,
+                              fontSize: 20,
+                              isBold: true,
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            PlayerScore(
+                              userState: widget.userState,
+                              score: teamOneScore,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+
+                    // Team Two
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: GestureDetector(
+                            onTap: () {
+                              createGoalForTeamTwo();
+                            },
+                            child: PlayerCard(
+                              userState: widget.userState,
+                              player: getPlayerOneTeamTwo(),
+                              isPlayerOne: true,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: GestureDetector(
+                            onTap: () {
+                              createGoalForTeamTwo();
+                            },
+                            child: PlayerCard(
+                              userState: widget.userState,
+                              player: getPlayerTwoTeamTwo(),
+                              isPlayerOne: false,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Column(
+                          children: [
+                            ExtendedText(
+                              text: widget.matchModel.teamTwo[0].teamName,
+                              userState: widget.userState,
+                              fontSize: 20,
+                              isBold: true,
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            PlayerScore(
+                              userState: widget.userState,
+                              score: teamTwoScore,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+
+                    const Spacer(),
+                    OngoingGameButton(
+                      gameStarted: gameStarted,
+                      userState: widget.userState,
+                      matchId: widget.matchModel!.id,
+                      startGameFunction: (value) {
+                        startGame(value);
+                      },
+                    ),
+                  ],
+                ),
               );
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');

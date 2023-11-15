@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:foosball_mobile_app/api/dio_api/dio_api.dart';
+import 'package:foosball_mobile_app/models/single-league-matches/create-single-league-matches-response.dart';
 import 'package:foosball_mobile_app/models/single-league-matches/single-league-match-update/single_league_match_update_model.dart';
 import 'package:foosball_mobile_app/models/single-league-matches/single_league_match_model.dart';
 
@@ -167,6 +170,50 @@ class SingleLeagueMatchApi {
           result = false;
         }
       } catch (e) {
+        rethrow;
+      }
+    }
+    return result;
+  }
+
+  Future<List<CreateSingleLeagueMatchesResponse>?> createSingleLeagueMatches(
+      int leagueId) async {
+    late List<CreateSingleLeagueMatchesResponse>? result;
+    String? baseUrl = kReleaseMode
+        ? dotenv.env['REST_URL_PATH_PROD']
+        : dotenv.env['REST_URL_PATH_DEV'];
+
+    if (baseUrl != null) {
+      String url = '$baseUrl/api/DoubleLeagueMatches/create-matches';
+
+      var jsonObject = {
+        "leagueId": leagueId,
+      };
+
+      try {
+        final response = await Api().dio.post(
+              url,
+              options: Options(
+                headers: {
+                  "Accept": "application/json",
+                  "content-type": "application/json",
+                },
+              ),
+              data: jsonEncode(jsonObject),
+            );
+
+        if (response.statusCode == 200) {
+          List<CreateSingleLeagueMatchesResponse>? leagues;
+          leagues = (response.data as List)
+              .map((i) => CreateSingleLeagueMatchesResponse.fromJson(i))
+              .toList();
+
+          result = leagues;
+        } else {
+          throw Exception('Failed to create league');
+        }
+      } catch (e) {
+        // rethrow the caught exception
         rethrow;
       }
     }
