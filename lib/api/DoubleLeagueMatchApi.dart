@@ -6,6 +6,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:foosball_mobile_app/api/dio_api/dio_api.dart';
 import 'package:foosball_mobile_app/models/double-league-matches/double_league_match_model.dart';
 import 'package:foosball_mobile_app/models/double-league-matches/create_double_league_matches_response.dart';
+import 'package:foosball_mobile_app/models/double-league-matches/double_league_match_update_model.dart';
 
 class DoubleLeagueMatchApi {
   DoubleLeagueMatchApi();
@@ -117,6 +118,100 @@ class DoubleLeagueMatchApi {
         }
       } catch (e) {
         // rethrow the caught exception
+        rethrow;
+      }
+    }
+    return result;
+  }
+
+  Future<bool> updateDoubleLeagueMatch(
+    int matchId,
+    DoubleLeagueMatchUpdateModel matchUpdate,
+  ) async {
+    bool result = false;
+
+    String? baseUrl = kReleaseMode
+        ? dotenv.env['REST_URL_PATH_PROD']
+        : dotenv.env['REST_URL_PATH_DEV'];
+    if (baseUrl != null) {
+      var url = '$baseUrl/api/DoubleLeagueMatches?matchId=$matchId';
+
+      final List<Map<String, dynamic>> operations = [];
+
+      if (matchUpdate.startTime != null) {
+        operations.add({
+          "op": "replace",
+          "path": "/StartTime",
+          "value": matchUpdate.startTime!.toString(),
+        });
+      }
+
+      if (matchUpdate.endTime != null) {
+        operations.add({
+          "op": "replace",
+          "path": "/EndTime",
+          "value": matchUpdate.endTime!.toString(),
+        });
+      }
+
+      if (matchUpdate.teamOneScore != null) {
+        operations.add({
+          "op": "replace",
+          "path": "/TeamOneScore",
+          "value": matchUpdate.teamOneScore,
+        });
+      }
+
+      if (matchUpdate.teamTwoScore != null) {
+        operations.add({
+          "op": "replace",
+          "path": "/TeamTwoScore",
+          "value": matchUpdate.teamTwoScore,
+        });
+      }
+
+      if (matchUpdate.matchStarted != null) {
+        operations.add({
+          "op": "replace",
+          "path": "/MatchStarted",
+          "value": matchUpdate.matchStarted,
+        });
+      }
+
+      if (matchUpdate.matchEnded != null) {
+        operations.add({
+          "op": "replace",
+          "path": "/MatchEnded",
+          "value": matchUpdate.matchEnded,
+        });
+      }
+
+      if (matchUpdate.matchPaused != null) {
+        operations.add({
+          "op": "replace",
+          "path": "/MatchPaused",
+          "value": matchUpdate.matchPaused,
+        });
+      }
+
+      try {
+        final response = await Api().dio.patch(
+              url,
+              data: operations,
+              options: Options(
+                headers: {
+                  "Accept": "application/json",
+                  "content-type": "application/json",
+                },
+              ),
+            );
+
+        if (response.statusCode == 204) {
+          result = true;
+        } else {
+          result = false;
+        }
+      } catch (e) {
         rethrow;
       }
     }

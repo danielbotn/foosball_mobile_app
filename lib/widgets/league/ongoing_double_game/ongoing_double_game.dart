@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/api/LeagueApi.dart';
 import 'package:foosball_mobile_app/models/double-league-matches/double_league_match_model.dart';
@@ -9,7 +8,7 @@ import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
 import 'package:foosball_mobile_app/utils/helpers.dart';
 import 'package:foosball_mobile_app/widgets/extended_Text.dart';
-import 'package:foosball_mobile_app/widgets/league/ongoing_game/ongoing_game_button/ongoing_game_button.dart';
+import 'package:foosball_mobile_app/widgets/league/ongoing_double_game/ongoing_double_game_button/ongoing_double_game_button.dart';
 import 'package:foosball_mobile_app/widgets/league/ongoing_game/player_card/playerCard.dart';
 import 'package:foosball_mobile_app/widgets/league/ongoing_game/player_score/player_score.dart';
 import 'package:foosball_mobile_app/widgets/league/ongoing_game/time_keeper/time_keeper.dart';
@@ -154,7 +153,7 @@ class _OngoingDoubleGameState extends State<OngoingDoubleGame> {
     // }
   }
 
-  Future createGoalForTeamOne() async {
+  Future createGoalForTeamOne(bool isPlayerOne) async {
     // SingleLeagueGoalApi api = SingleLeagueGoalApi();
     // var playerOne = getPlayerOne();
     // var playerTwo = getPlayerTwo();
@@ -176,7 +175,7 @@ class _OngoingDoubleGameState extends State<OngoingDoubleGame> {
     // }
   }
 
-  Future createGoalForTeamTwo() async {
+  Future createGoalForTeamTwo(bool isPlayerOne) async {
     // SingleLeagueGoalApi api = SingleLeagueGoalApi();
     // var playerOne = getPlayerOne();
     // var playerTwo = getPlayerTwo();
@@ -262,7 +261,7 @@ class _OngoingDoubleGameState extends State<OngoingDoubleGame> {
                           flex: 1,
                           child: GestureDetector(
                             onTap: () {
-                              createGoalForTeamOne();
+                              createGoalForTeamOne(true);
                             },
                             child: PlayerCard(
                               userState: widget.userState,
@@ -275,7 +274,7 @@ class _OngoingDoubleGameState extends State<OngoingDoubleGame> {
                           flex: 1,
                           child: GestureDetector(
                             onTap: () {
-                              createGoalForTeamOne();
+                              createGoalForTeamOne(false);
                             },
                             child: PlayerCard(
                               userState: widget.userState,
@@ -318,7 +317,7 @@ class _OngoingDoubleGameState extends State<OngoingDoubleGame> {
                           flex: 1,
                           child: GestureDetector(
                             onTap: () {
-                              createGoalForTeamTwo();
+                              createGoalForTeamTwo(true);
                             },
                             child: PlayerCard(
                               userState: widget.userState,
@@ -331,7 +330,7 @@ class _OngoingDoubleGameState extends State<OngoingDoubleGame> {
                           flex: 1,
                           child: GestureDetector(
                             onTap: () {
-                              createGoalForTeamTwo();
+                              createGoalForTeamTwo(false);
                             },
                             child: PlayerCard(
                               userState: widget.userState,
@@ -367,10 +366,10 @@ class _OngoingDoubleGameState extends State<OngoingDoubleGame> {
                     ),
 
                     const Spacer(),
-                    OngoingGameButton(
+                    OnGoingDoubleGameButton(
                       gameStarted: gameStarted,
                       userState: widget.userState,
-                      matchId: widget.matchModel!.id,
+                      matchId: widget.matchModel.id,
                       startGameFunction: (value) {
                         startGame(value);
                       },

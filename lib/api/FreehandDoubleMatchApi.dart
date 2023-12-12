@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:foosball_mobile_app/api/dio_api/dio_api.dart';
+import 'package:foosball_mobile_app/models/double-league-matches/double_league_match_update_model.dart';
 import 'package:foosball_mobile_app/models/freehand-double-matches/freehand_double_match_body.dart';
 import 'package:foosball_mobile_app/models/freehand-double-matches/freehand_double_match_create_response.dart';
 import 'package:foosball_mobile_app/models/freehand-double-matches/freehand_double_match_model.dart';
