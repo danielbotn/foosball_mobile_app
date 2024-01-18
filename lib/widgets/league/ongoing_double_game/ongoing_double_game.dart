@@ -1,6 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:foosball_mobile_app/api/DoubleLeagueGoalsApi.dart';
 import 'package:foosball_mobile_app/api/LeagueApi.dart';
+import 'package:foosball_mobile_app/models/double-league-goals/double-league-goal-body.dart';
+import 'package:foosball_mobile_app/models/double-league-goals/double_league_goal_create_response.dart';
 import 'package:foosball_mobile_app/models/double-league-matches/double_league_match_model.dart';
 import 'package:foosball_mobile_app/models/leagues/get-league-response.dart';
 import 'package:foosball_mobile_app/models/user/user_response.dart';
@@ -153,48 +156,74 @@ class _OngoingDoubleGameState extends State<OngoingDoubleGame> {
     // }
   }
 
+  bool isWinnerGoal(int goal) {
+    bool result = false;
+    if (leagueData!.upTo == goal) {
+      result = true;
+    }
+
+    return result;
+  }
+
+  void checkIfGameIsOver(DoubleLeagueGoalCreateResponse data) {
+    if (data.winnerGoal == true) {
+      // Go to match result screen
+      // Navigator.push(
+      //     context,
+      //     MaterialPageRoute(
+      //         builder: (context) => MatchDetails(
+      //               userState: userState,
+      //               matchModel: widget.matchModel,
+      //             )));
+    }
+  }
+
   Future createGoalForTeamOne(bool isPlayerOne) async {
-    // SingleLeagueGoalApi api = SingleLeagueGoalApi();
-    // var playerOne = getPlayerOne();
-    // var playerTwo = getPlayerTwo();
-    // SingleLeagueGoalBody goalBody = SingleLeagueGoalBody(
-    //     matchId: widget.matchModel!.id,
-    //     scoredByUserId: playerOne.id,
-    //     opponentId: playerTwo.id,
-    //     scorerScore: playerOneScore + 1,
-    //     opponentScore: playerTwoScore,
-    //     winnerGoal: isWinnerGoal(playerOneScore + 1));
+    DoubleLeagueGoalsApi api = DoubleLeagueGoalsApi();
+    var playerOne = getPlayerOneTeamOne();
+    var playerTwo = getPlayerTwoTeamOne();
+    DoubleLeagueGoalBody goalBody = DoubleLeagueGoalBody(
+        matchId: widget.matchModel.id,
+        scoredByTeamId: widget.matchModel.teamOne[0].id,
+        opponentTeamId: widget.matchModel.teamOne[1].id,
+        scorerTeamScore: teamOneScore + 1,
+        opponentTeamScore: teamTwoScore,
+        userScorerId: isPlayerOne ? playerOne.id : playerTwo.id,
+        timeOfGoal: DateTime.now(),
+        winnerGoal: isWinnerGoal(teamOneScore + 1));
 
-    // var data = await api.createSingleLeagueGoal(goalBody);
+    var data = await api.createDoubleLeagueGoal(goalBody);
 
-    // if (data != null) {
-    //   setState(() {
-    //     playerOneScore = data.scorerScore;
-    //   });
-    //   checkIfGameIsOver(data);
-    // }
+    if (data != null) {
+      setState(() {
+        teamOneScore = data.scorerTeamScore;
+      });
+      checkIfGameIsOver(data);
+    }
   }
 
   Future createGoalForTeamTwo(bool isPlayerOne) async {
-    // SingleLeagueGoalApi api = SingleLeagueGoalApi();
-    // var playerOne = getPlayerOne();
-    // var playerTwo = getPlayerTwo();
-    // SingleLeagueGoalBody goalBody = SingleLeagueGoalBody(
-    //     matchId: widget.matchModel!.id,
-    //     scoredByUserId: playerOne.id,
-    //     opponentId: playerTwo.id,
-    //     scorerScore: playerOneScore + 1,
-    //     opponentScore: playerTwoScore,
-    //     winnerGoal: isWinnerGoal(playerOneScore + 1));
+    DoubleLeagueGoalsApi api = DoubleLeagueGoalsApi();
+    var playerOne = getPlayerOneTeamTwo();
+    var playerTwo = getPlayerTwoTeamTwo();
+    DoubleLeagueGoalBody goalBody = DoubleLeagueGoalBody(
+        matchId: widget.matchModel.id,
+        scoredByTeamId: widget.matchModel.teamTwo[0].id,
+        opponentTeamId: widget.matchModel.teamTwo[1].id,
+        scorerTeamScore: teamTwoScore + 1,
+        opponentTeamScore: teamOneScore,
+        userScorerId: isPlayerOne ? playerOne.id : playerTwo.id,
+        timeOfGoal: DateTime.now(),
+        winnerGoal: isWinnerGoal(teamTwoScore + 1));
 
-    // var data = await api.createSingleLeagueGoal(goalBody);
+    var data = await api.createDoubleLeagueGoal(goalBody);
 
-    // if (data != null) {
-    //   setState(() {
-    //     playerOneScore = data.scorerScore;
-    //   });
-    //   checkIfGameIsOver(data);
-    // }
+    if (data != null) {
+      setState(() {
+        teamTwoScore = data.scorerTeamScore;
+      });
+      checkIfGameIsOver(data);
+    }
   }
 
   @override
