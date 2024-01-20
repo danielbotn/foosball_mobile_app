@@ -85,4 +85,34 @@ class DoubleLeagueGoalsApi {
     }
     return result;
   }
+
+  Future<bool> deleteDoubleLeagueGoal(int goalId) async {
+    bool result = false;
+    String? baseUrl = kReleaseMode
+        ? dotenv.env['REST_URL_PATH_PROD']
+        : dotenv.env['REST_URL_PATH_DEV'];
+    if (baseUrl != null) {
+      try {
+        final dio = Api().dio;
+        final response = await dio.delete(
+          '$baseUrl/api/DoubleLeagueGoals/$goalId',
+          options: Options(
+            headers: {
+              "Accept": "application/json",
+              "content-type": "application/json",
+            },
+          ),
+        );
+
+        if (response.statusCode == 204) {
+          result = true;
+        } else {
+          result = false;
+        }
+      } catch (e) {
+        rethrow;
+      }
+    }
+    return result;
+  }
 }

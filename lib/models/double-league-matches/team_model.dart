@@ -11,6 +11,7 @@ class TeamModel {
   final String photoUrl;
   final String teamName;
   final int userId;
+  final int teamId;
 
   TeamModel(
       {required this.id,
@@ -19,7 +20,8 @@ class TeamModel {
       required this.email,
       required this.photoUrl,
       required this.teamName,
-      required this.userId});
+      required this.userId,
+      required this.teamId});
 
   factory TeamModel.fromJson(Map<String, dynamic> json) =>
       _$TeamModelFromJson(json);

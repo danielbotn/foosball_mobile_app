@@ -4,12 +4,15 @@ import 'package:foosball_mobile_app/api/DoubleLeagueGoalsApi.dart';
 import 'package:foosball_mobile_app/api/LeagueApi.dart';
 import 'package:foosball_mobile_app/models/double-league-goals/double-league-goal-body.dart';
 import 'package:foosball_mobile_app/models/double-league-goals/double_league_goal_create_response.dart';
+import 'package:foosball_mobile_app/models/double-league-goals/double_league_goal_model.dart';
 import 'package:foosball_mobile_app/models/double-league-matches/double_league_match_model.dart';
 import 'package:foosball_mobile_app/models/leagues/get-league-response.dart';
+import 'package:foosball_mobile_app/models/other/TwoPlayersObject.dart';
 import 'package:foosball_mobile_app/models/user/user_response.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
 import 'package:foosball_mobile_app/utils/helpers.dart';
+import 'package:foosball_mobile_app/widgets/double_league_history/double_league_match_detail.dart';
 import 'package:foosball_mobile_app/widgets/extended_Text.dart';
 import 'package:foosball_mobile_app/widgets/league/ongoing_double_game/ongoing_double_game_button/ongoing_double_game_button.dart';
 import 'package:foosball_mobile_app/widgets/league/ongoing_game/player_card/playerCard.dart';
@@ -75,7 +78,7 @@ class _OngoingDoubleGameState extends State<OngoingDoubleGame> {
 
   UserResponse getPlayerOneTeamOne() {
     UserResponse userResponse = UserResponse(
-        id: widget.matchModel.teamOne[0].id,
+        id: widget.matchModel.teamOne[0].userId,
         email: widget.matchModel.teamOne[0].email,
         firstName: widget.matchModel.teamOne[0].firstName,
         lastName: widget.matchModel.teamOne[0].lastName,
@@ -89,7 +92,7 @@ class _OngoingDoubleGameState extends State<OngoingDoubleGame> {
 
   UserResponse getPlayerTwoTeamOne() {
     UserResponse userResponse = UserResponse(
-        id: widget.matchModel.teamOne[1].id,
+        id: widget.matchModel.teamOne[1].userId,
         email: widget.matchModel.teamOne[1].email,
         firstName: widget.matchModel.teamOne[1].firstName,
         lastName: widget.matchModel.teamOne[1].lastName,
@@ -103,7 +106,7 @@ class _OngoingDoubleGameState extends State<OngoingDoubleGame> {
 
   UserResponse getPlayerOneTeamTwo() {
     UserResponse userResponse = UserResponse(
-        id: widget.matchModel.teamTwo[0].id,
+        id: widget.matchModel.teamTwo[0].userId,
         email: widget.matchModel.teamTwo[0].email,
         firstName: widget.matchModel.teamTwo[0].firstName,
         lastName: widget.matchModel.teamTwo[0].lastName,
@@ -117,7 +120,7 @@ class _OngoingDoubleGameState extends State<OngoingDoubleGame> {
 
   UserResponse getPlayerTwoTeamTwo() {
     UserResponse userResponse = UserResponse(
-        id: widget.matchModel.teamTwo[1].id,
+        id: widget.matchModel.teamTwo[1].userId,
         email: widget.matchModel.teamTwo[1].email,
         firstName: widget.matchModel.teamTwo[1].firstName,
         lastName: widget.matchModel.teamTwo[1].lastName,
@@ -129,31 +132,42 @@ class _OngoingDoubleGameState extends State<OngoingDoubleGame> {
     return userResponse;
   }
 
+  Future<List<DoubleLeagueGoalModel>?> getGoals() async {
+    DoubleLeagueGoalsApi api = DoubleLeagueGoalsApi();
+    var goals = await api.getDoubleLeagueGoals(widget.matchModel.id);
+    return goals;
+  }
+
+  Future<bool> deleteLastGoal(int lastGoalId) async {
+    DoubleLeagueGoalsApi api = DoubleLeagueGoalsApi();
+    return await api.deleteDoubleLeagueGoal(lastGoalId);
+  }
+
   void deleteLastScoredGoal() async {
-    // if (gameStarted == true) {
-    //   var allGoals = await getGoals();
-    //   if (allGoals != null) {
-    //     DoubleLeagueGoalModel lastGoal = allGoals[allGoals.length - 1];
-    //     bool goalDeleted = await deleteLastGoal(lastGoal.id);
-    //     if (goalDeleted) {
-    //       // successfully deleted goal
-    //       if (lastGoal.scoredByUserId == getPlayerOne().id &&
-    //           playerOneScore > 0) {
-    //         setState(() {
-    //           playerOneScore -= 1;
-    //         });
-    //       } else {
-    //         if (playerTwoScore > 0) {
-    //           setState(() {
-    //             playerTwoScore -= 1;
-    //           });
-    //         }
-    //       }
-    //     } else {
-    //       // could not delete goal
-    //     }
-    //   }
-    // }
+    if (gameStarted == true) {
+      var allGoals = await getGoals();
+      if (allGoals != null) {
+        DoubleLeagueGoalModel lastGoal = allGoals[allGoals.length - 1];
+        bool goalDeleted = await deleteLastGoal(lastGoal.id);
+        if (goalDeleted) {
+          // successfully deleted goal
+          if (lastGoal.scoredByTeamId == widget.matchModel.teamOneId &&
+              teamOneScore > 0) {
+            setState(() {
+              teamOneScore -= 1;
+            });
+          } else {
+            if (teamTwoScore > 0) {
+              setState(() {
+                teamTwoScore -= 1;
+              });
+            }
+          }
+        } else {
+          // could not delete goal
+        }
+      }
+    }
   }
 
   bool isWinnerGoal(int goal) {
@@ -167,14 +181,16 @@ class _OngoingDoubleGameState extends State<OngoingDoubleGame> {
 
   void checkIfGameIsOver(DoubleLeagueGoalCreateResponse data) {
     if (data.winnerGoal == true) {
-      // Go to match result screen
-      // Navigator.push(
-      //     context,
-      //     MaterialPageRoute(
-      //         builder: (context) => MatchDetails(
-      //               userState: userState,
-      //               matchModel: widget.matchModel,
-      //             )));
+      TwoPlayersObject object = TwoPlayersObject(
+          matchId: widget.matchModel.id,
+          typeOfMatch: 'doubleLeagueMatch',
+          userState: widget.userState);
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => DoubleLeagueMatchDetail(
+                    twoPlayersObject: object,
+                  )));
     }
   }
 
@@ -184,8 +200,8 @@ class _OngoingDoubleGameState extends State<OngoingDoubleGame> {
     var playerTwo = getPlayerTwoTeamOne();
     DoubleLeagueGoalBody goalBody = DoubleLeagueGoalBody(
         matchId: widget.matchModel.id,
-        scoredByTeamId: widget.matchModel.teamOne[0].id,
-        opponentTeamId: widget.matchModel.teamOne[1].id,
+        scoredByTeamId: widget.matchModel.teamOne[0].teamId,
+        opponentTeamId: widget.matchModel.teamTwo[0].teamId,
         scorerTeamScore: teamOneScore + 1,
         opponentTeamScore: teamTwoScore,
         userScorerId: isPlayerOne ? playerOne.id : playerTwo.id,
@@ -208,8 +224,8 @@ class _OngoingDoubleGameState extends State<OngoingDoubleGame> {
     var playerTwo = getPlayerTwoTeamTwo();
     DoubleLeagueGoalBody goalBody = DoubleLeagueGoalBody(
         matchId: widget.matchModel.id,
-        scoredByTeamId: widget.matchModel.teamTwo[0].id,
-        opponentTeamId: widget.matchModel.teamTwo[1].id,
+        scoredByTeamId: widget.matchModel.teamTwo[0].teamId,
+        opponentTeamId: widget.matchModel.teamOne[1].teamId,
         scorerTeamScore: teamTwoScore + 1,
         opponentTeamScore: teamOneScore,
         userScorerId: isPlayerOne ? playerOne.id : playerTwo.id,

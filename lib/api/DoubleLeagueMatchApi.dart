@@ -17,7 +17,7 @@ class DoubleLeagueMatchApi {
         ? dotenv.env['REST_URL_PATH_PROD']
         : dotenv.env['REST_URL_PATH_DEV'];
     if (baseUrl != null) {
-      var url = '$baseUrl/api/DoubleLeagueMatches/$matchId';
+      var url = '$baseUrl/api/DoubleLeagueMatches/match/$matchId';
 
       try {
         final response = await Api().dio.get(

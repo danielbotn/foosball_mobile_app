@@ -39,12 +39,12 @@ class _DoubleLeagueMatchDetailState extends State<DoubleLeagueMatchDetail> {
   void initState() {
     super.initState();
 
-    goalsFuture = getFreehandDoubleGoals();
+    goalsFuture = gedDoubleLeagueGoals();
     userFuture = getUser();
-    matchFuture = getFreehandDoubleMatch();
+    matchFuture = getDoubleLeaugeMatch();
   }
 
-  Future<List<DoubleLeagueGoalModel>?> getFreehandDoubleGoals() async {
+  Future<List<DoubleLeagueGoalModel>?> gedDoubleLeagueGoals() async {
     DoubleLeagueGoalsApi fgapi = DoubleLeagueGoalsApi();
     var freehandGoals =
         await fgapi.getDoubleLeagueGoals(widget.twoPlayersObject.matchId);
@@ -58,11 +58,11 @@ class _DoubleLeagueMatchDetailState extends State<DoubleLeagueMatchDetail> {
     return user;
   }
 
-  Future<DoubleLeagueMatchModel?> getFreehandDoubleMatch() async {
+  Future<DoubleLeagueMatchModel?> getDoubleLeaugeMatch() async {
     DoubleLeagueMatchApi fmapi = DoubleLeagueMatchApi();
-    var freehandMatch =
+    var match =
         await fmapi.getDoubleLeagueMatch(widget.twoPlayersObject.matchId);
-    return freehandMatch;
+    return match;
   }
 
   @override
