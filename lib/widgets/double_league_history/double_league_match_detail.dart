@@ -8,6 +8,7 @@ import 'package:foosball_mobile_app/models/double-league-matches/double_league_m
 import 'package:foosball_mobile_app/models/other/TwoPlayersObject.dart';
 import 'package:foosball_mobile_app/models/user/user_response.dart';
 import 'package:foosball_mobile_app/utils/helpers.dart';
+import 'package:foosball_mobile_app/widgets/dashboard/New_Dashboard.dart';
 import 'package:foosball_mobile_app/widgets/loading.dart';
 import '../extended_Text.dart';
 import '../match_card.dart';
@@ -74,9 +75,16 @@ class _DoubleLeagueMatchDetailState extends State<DoubleLeagueMatchDetail> {
       appBar: AppBar(
           title: ExtendedText(text: matchDetails, userState: userState),
           leading: IconButton(
-            icon: const Icon(Icons.chevron_left),
+            icon: const Icon(Icons.close),
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => NewDashboard(
+                    userState: userState,
+                  ),
+                ),
+              );
             },
           ),
           iconTheme: helpers.getIconTheme(userState.darkmode),

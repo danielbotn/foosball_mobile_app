@@ -306,7 +306,9 @@ class _OngoingDoubleGameState extends State<OngoingDoubleGame> {
                           flex: 1,
                           child: GestureDetector(
                             onTap: () {
-                              createGoalForTeamOne(true);
+                              if (gameStarted) {
+                                createGoalForTeamOne(true);
+                              }
                             },
                             child: PlayerCard(
                               userState: widget.userState,
@@ -319,7 +321,9 @@ class _OngoingDoubleGameState extends State<OngoingDoubleGame> {
                           flex: 1,
                           child: GestureDetector(
                             onTap: () {
-                              createGoalForTeamOne(false);
+                              if (gameStarted) {
+                                createGoalForTeamOne(false);
+                              }
                             },
                             child: PlayerCard(
                               userState: widget.userState,
@@ -362,7 +366,9 @@ class _OngoingDoubleGameState extends State<OngoingDoubleGame> {
                           flex: 1,
                           child: GestureDetector(
                             onTap: () {
-                              createGoalForTeamTwo(true);
+                              if (gameStarted) {
+                                createGoalForTeamTwo(true);
+                              }
                             },
                             child: PlayerCard(
                               userState: widget.userState,
@@ -375,7 +381,9 @@ class _OngoingDoubleGameState extends State<OngoingDoubleGame> {
                           flex: 1,
                           child: GestureDetector(
                             onTap: () {
-                              createGoalForTeamTwo(false);
+                              if (gameStarted) {
+                                createGoalForTeamTwo(false);
+                              }
                             },
                             child: PlayerCard(
                               userState: widget.userState,
