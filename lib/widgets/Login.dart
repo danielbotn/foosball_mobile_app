@@ -80,11 +80,14 @@ class _LoginState extends State<Login> {
     widget.userState.setToken(loginResponse.token);
   }
 
-  Future<String> _recoverPassword(String name) {
-    Duration loginTime = const Duration(milliseconds: 2250);
-    return Future.delayed(loginTime).then((_) {
+  Future<String?> _recoverPassword(String name) async {
+    AuthApi auth = AuthApi();
+    var data = await auth.forgotPassword(name);
+    if (data.statusCode == 200) {
+      return null;
+    } else {
       return "null";
-    });
+    }
   }
 
   Future<String?> _signupUser(SignupData data) async {

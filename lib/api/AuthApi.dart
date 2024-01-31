@@ -154,4 +154,39 @@ class AuthApi {
     }
     throw Exception('Unable to verify email.');
   }
+
+  // Verify email at route verify-email with token
+  // this is a post request with token as a parameter
+  Future<Response> forgotPassword(String email) async {
+    final dio = Dio();
+    String? baseUrl = kReleaseMode
+        ? dotenv.env['REST_URL_PATH_PROD']
+        : dotenv.env['REST_URL_PATH_DEV'];
+    if (baseUrl != null) {
+      var url = '$baseUrl/api/Auth/forgot-password';
+
+      try {
+        final response = await dio.post(
+          url,
+          data: {
+            'email': email,
+          },
+          options: Options(
+            headers: {
+              "Accept": "application/json",
+              "content-type": "application/json"
+            },
+            followRedirects: false,
+            validateStatus: (status) {
+              return status! >= 200 && status <= 500;
+            },
+          ),
+        );
+        return response;
+      } catch (e) {
+        rethrow;
+      }
+    }
+    throw Exception('Unable to verify email.');
+  }
 }
