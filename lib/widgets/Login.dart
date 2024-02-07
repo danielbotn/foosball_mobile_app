@@ -110,7 +110,7 @@ class _LoginState extends State<Login> {
 
     if (verifyEmailData.statusCode == 200) {
       // login user
-      loginUser(data);
+      await loginUser(data);
       return null;
     } else {
       String errorMessage = "Could not verify email";

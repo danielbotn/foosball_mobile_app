@@ -29,9 +29,18 @@ class _DashBoardUserInfoState extends State<DashBoardUserInfo> {
     final orgId = widget.userState.currentOrganisationId!;
     try {
       final userData = await UserApi().getUser(userId);
-      final orgData = await Organisation().getOrganisationById(orgId);
-      widget.userState.setUserInfoGlobalObject(userData.id, userData.firstName,
-          userData.lastName, userData.email, orgData!.id, orgData.name);
+      dynamic orgData; // Define orgData as dynamic type
+      if (orgId != 0) {
+        orgData = await Organisation().getOrganisationById(orgId);
+      }
+
+      widget.userState.setUserInfoGlobalObject(
+          userData.id,
+          userData.firstName,
+          userData.lastName,
+          userData.email,
+          orgData?.id ?? 0,
+          orgData?.name ?? ""); // Pass null if orgData is null
       return {'user': userData, 'org': orgData};
     } catch (error) {
       throw Exception('Failed to load user data: $error');
@@ -52,14 +61,18 @@ class _DashBoardUserInfoState extends State<DashBoardUserInfo> {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else {
           final userData = snapshot.data!['user'] as UserResponse;
-          final orgData = snapshot.data!['org'] as OrganisationResponse;
+          final orgData = snapshot.data!['org'] as OrganisationResponse?;
+          String organistionName = "";
+          if (orgData != null) {
+            organistionName = orgData.name;
+          }
           return Card(
             // elevation: 5,
             child: ListTile(
               leading: const Icon(Icons.email, color: Colors.grey),
               title: Text('${userData.firstName} ${userData.lastName}'),
               subtitle: Text(userData.email),
-              trailing: Text(orgData.name),
+              trailing: Text(organistionName),
             ),
           );
         }

@@ -6,6 +6,7 @@ import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
 import 'package:foosball_mobile_app/widgets/dashboard/dahsboard_user_info.dart/dashboard_user_info.dart';
 import 'package:foosball_mobile_app/widgets/dashboard/dashboard_charts/dashboard_charts.dart';
+import 'package:foosball_mobile_app/widgets/dashboard/dashboard_first_visit.dart';
 import 'package:foosball_mobile_app/widgets/dashboard/dashboard_last_five.dart';
 import 'package:foosball_mobile_app/widgets/dashboard/dashboard_quick_actions.dart';
 import 'package:foosball_mobile_app/widgets/drawer_sidebar.dart';
@@ -89,7 +90,17 @@ class _NewDashboardState extends State<NewDashboard> {
                         child: Column(
                       children: <Widget>[
                         DashBoardUserInfo(userState: widget.userState),
-                        DashboardCharts(userState: widget.userState),
+                        Visibility(
+                            visible:
+                                widget.userState.currentOrganisationId == 0,
+                            child: DashBoardFirstVisit(
+                              userState: widget.userState,
+                            )),
+                        Visibility(
+                            visible:
+                                widget.userState.currentOrganisationId != 0,
+                            child:
+                                DashboardCharts(userState: widget.userState)),
                         Headline(
                             headline:
                                 widget.userState.hardcodedStrings.quickActions,
@@ -98,10 +109,13 @@ class _NewDashboardState extends State<NewDashboard> {
                           userState: userState,
                           notifyParent: updateAllState,
                         ),
-                        Headline(
-                            headline: widget
-                                .userState.hardcodedStrings.lastTenMatches,
-                            userState: userState),
+                        Visibility(
+                          visible: widget.userState.currentOrganisationId != 0,
+                          child: Headline(
+                              headline: widget
+                                  .userState.hardcodedStrings.lastTenMatches,
+                              userState: userState),
+                        ),
                         SizedBox(
                             height: 200,
                             child: DashBoardLastFive(
