@@ -118,6 +118,7 @@ HardcodedStrings _$HardcodedStringsFromJson(Map<String, dynamic> json) =>
       welcomeTextBody: json['welcomeTextBody'] as String,
       welcomeTextButton: json['welcomeTextButton'] as String,
       welcomeTextHeadline: json['welcomeTextHeadline'] as String,
+      noUsersExists: json['noUsersExists'] as String,
     );
 
 Map<String, dynamic> _$HardcodedStringsToJson(HardcodedStrings instance) =>
@@ -229,4 +230,5 @@ Map<String, dynamic> _$HardcodedStringsToJson(HardcodedStrings instance) =>
       'welcomeTextBody': instance.welcomeTextBody,
       'welcomeTextButton': instance.welcomeTextButton,
       'welcomeTextHeadline': instance.welcomeTextHeadline,
+      'noUsersExists': instance.noUsersExists,
     };

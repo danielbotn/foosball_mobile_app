@@ -109,6 +109,7 @@ class HardcodedStrings {
   final String welcomeTextBody;
   final String welcomeTextButton;
   final String welcomeTextHeadline;
+  final String noUsersExists;
 
   HardcodedStrings(
       {required this.matches,
@@ -215,7 +216,8 @@ class HardcodedStrings {
       required this.notStarted,
       required this.welcomeTextBody,
       required this.welcomeTextButton,
-      required this.welcomeTextHeadline});
+      required this.welcomeTextHeadline,
+      required this.noUsersExists});
 
   factory HardcodedStrings.fromJson(Map<String, dynamic> item) =>
       _$HardcodedStringsFromJson(item);

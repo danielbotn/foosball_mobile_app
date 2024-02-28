@@ -8,6 +8,7 @@ import 'package:foosball_mobile_app/utils/helpers.dart';
 import 'package:foosball_mobile_app/widgets/loading.dart';
 import 'package:foosball_mobile_app/widgets/new_game/new_game_oppositions_left.dart';
 import 'package:foosball_mobile_app/widgets/new_game/new_game_vs.dart';
+import 'package:foosball_mobile_app/widgets/new_game/no_users_found.dart';
 import 'package:foosball_mobile_app/widgets/new_game/start_game_button.dart';
 import '../extended_Text.dart';
 import '../headline_big.dart';
@@ -36,8 +37,8 @@ class _NewGameState extends State<NewGame> {
   }
 
   Future<List<UserResponse>?> getAllUsers() async {
-    UserApi datoCMS = UserApi();
-    var users = await datoCMS.getUsers();
+    UserApi userApi = UserApi();
+    var users = await userApi.getUsers();
     return users;
   }
 
@@ -54,72 +55,92 @@ class _NewGameState extends State<NewGame> {
     return Scaffold(
       appBar: AppBar(
           title: ExtendedText(
-              text: userState.hardcodedStrings.newGame, userState: userState),
+              text: widget.userState.hardcodedStrings.newGame,
+              userState: widget.userState),
           leading: IconButton(
             icon: const Icon(Icons.chevron_left),
             onPressed: () {
               Navigator.pop(context);
             },
           ),
-          iconTheme: helpers.getIconTheme(userState.darkmode),
-          backgroundColor: helpers.getBackgroundColor(userState.darkmode)),
+          iconTheme: helpers.getIconTheme(widget.userState.darkmode),
+          backgroundColor:
+              helpers.getBackgroundColor(widget.userState.darkmode)),
       body: FutureBuilder(
           future: usersFuture,
           builder: (context, AsyncSnapshot<List<UserResponse>?> snapshot) {
-            if (snapshot.hasData) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              // Display loading widget while waiting for the future
+              return Center(child: Loading(userState: widget.userState));
+            } else if (snapshot.hasError) {
+              // Handle error case
+              return Center(child: Text('Error: ${snapshot.error}'));
+            } else if (snapshot.hasData && snapshot.data!.isEmpty) {
+              // Display message to the user if snapshot has no data
+              return Center(
+                  child: NoUsersFoundMessage(
+                userState: widget.userState,
+              ));
+            } else if (snapshot.hasData) {
+              // If data is available, build your UI with the data
               return Container(
-                  color: helpers.getBackgroundColor(userState.darkmode),
-                  child: Theme(
-                      data: userState.darkmode
-                          ? ThemeData.dark()
-                          : ThemeData.light(),
-                      child: Column(children: <Widget>[
-                        NewGameButtons(
-                            userState: userState,
-                            notifyParent: setRandomString,
-                            newGameState: newGameState),
-                        HeadlineBigTeammatesOpponents(
-                          userState: userState,
+                color: helpers.getBackgroundColor(widget.userState.darkmode),
+                child: Theme(
+                  data: widget.userState.darkmode
+                      ? ThemeData.dark()
+                      : ThemeData.light(),
+                  child: Column(
+                    children: <Widget>[
+                      NewGameButtons(
+                          userState: widget.userState,
+                          notifyParent: setRandomString,
+                          newGameState: newGameState),
+                      HeadlineBigTeammatesOpponents(
+                        userState: widget.userState,
+                        fontSize: 20,
+                        paddingLeft: 10,
+                        randomString: '',
+                        newGameState: newGameState,
+                      ),
+                      NewGamePlayers(
+                          userState: widget.userState,
+                          players: snapshot.data,
+                          notifyParent: setRandomString,
+                          newGameState: newGameState),
+                      HeadlineBig(
+                          headline: widget.userState.hardcodedStrings.match,
+                          userState: widget.userState,
                           fontSize: 20,
-                          paddingLeft: 10,
-                          randomString: '',
-                          newGameState: newGameState,
-                        ),
-                        NewGamePlayers(
-                            userState: userState,
-                            players: snapshot.data,
-                            notifyParent: setRandomString,
-                            newGameState: newGameState),
-                        HeadlineBig(
-                            headline: userState.hardcodedStrings.match,
-                            userState: userState,
-                            fontSize: 20,
-                            paddingLeft: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            NewGameOppostionsLeft(
-                              userState: userState,
-                              newGameState: newGameState,
-                            ),
-                            NewGameVs(
-                              newGameState: newGameState,
-                            ),
-                            NewGameOppostionsRight(
-                              userState: userState,
-                              newGameState: newGameState,
-                            )
-                          ],
-                        ),
-                        const Spacer(),
-                        StartGameButton(
-                          userState: userState,
-                          newGameState: newGameState,
-                          buttonText: userState.hardcodedStrings.startGame,
-                        )
-                      ])));
+                          paddingLeft: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          NewGameOppostionsLeft(
+                            userState: widget.userState,
+                            newGameState: newGameState,
+                          ),
+                          NewGameVs(
+                            newGameState: newGameState,
+                          ),
+                          NewGameOppostionsRight(
+                            userState: widget.userState,
+                            newGameState: newGameState,
+                          )
+                        ],
+                      ),
+                      const Spacer(),
+                      StartGameButton(
+                        userState: widget.userState,
+                        newGameState: newGameState,
+                        buttonText: widget.userState.hardcodedStrings.startGame,
+                      )
+                    ],
+                  ),
+                ),
+              );
             } else {
-              return Center(child: Loading(userState: userState));
+              // Default case, show an empty container
+              return Container();
             }
           }),
     );

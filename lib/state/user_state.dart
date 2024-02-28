@@ -138,7 +138,8 @@ abstract class _UserState with Store {
       notStarted: "",
       welcomeTextBody: "",
       welcomeTextButton: "",
-      welcomeTextHeadline: "");
+      welcomeTextHeadline: "",
+      noUsersExists: "");
 
   @observable
   bool darkmode = false;
