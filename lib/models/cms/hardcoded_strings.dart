@@ -106,6 +106,9 @@ class HardcodedStrings {
   final String standings;
   final String fixtures;
   final String notStarted;
+  final String welcomeTextBody;
+  final String welcomeTextButton;
+  final String welcomeTextHeadline;
 
   HardcodedStrings(
       {required this.matches,
@@ -209,7 +212,10 @@ class HardcodedStrings {
       required this.leagueName,
       required this.standings,
       required this.fixtures,
-      required this.notStarted});
+      required this.notStarted,
+      required this.welcomeTextBody,
+      required this.welcomeTextButton,
+      required this.welcomeTextHeadline});
 
   factory HardcodedStrings.fromJson(Map<String, dynamic> item) =>
       _$HardcodedStringsFromJson(item);

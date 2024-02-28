@@ -135,7 +135,10 @@ abstract class _UserState with Store {
       leagueName: "",
       standings: "",
       fixtures: "",
-      notStarted: "");
+      notStarted: "",
+      welcomeTextBody: "",
+      welcomeTextButton: "",
+      welcomeTextHeadline: "");
 
   @observable
   bool darkmode = false;

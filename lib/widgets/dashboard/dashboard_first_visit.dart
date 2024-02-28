@@ -21,18 +21,17 @@ class _DashBoardFirstVisitState extends State<DashBoardFirstVisit> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text(
-            'Welcome to Dano!',
-            style: TextStyle(
+          Text(
+            widget.userState.hardcodedStrings.welcomeTextHeadline,
+            style: const TextStyle(
               fontSize: 24.0,
               fontWeight: FontWeight.bold,
             ),
           ),
           const SizedBox(height: 20.0),
-          const Text(
-            'Dano is a foosball game tracker where you can play foosball matches, '
-            'create leagues, and enjoy both team games and individual games. To get started you need to create or join an organisation.',
-            style: TextStyle(
+          Text(
+            widget.userState.hardcodedStrings.welcomeTextBody,
+            style: const TextStyle(
               fontSize: 16.0,
             ),
             textAlign: TextAlign.center,
@@ -48,7 +47,7 @@ class _DashBoardFirstVisitState extends State<DashBoardFirstVisit> {
                             notifyOrganisationButtons: notifyOrganisation,
                           )));
             },
-            child: const Text('Get Started'),
+            child: Text(widget.userState.hardcodedStrings.welcomeTextButton),
           ),
         ],
       ),
