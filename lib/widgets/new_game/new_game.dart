@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/api/UserApi.dart';
-import 'package:foosball_mobile_app/main.dart';
 import 'package:foosball_mobile_app/models/user/user_response.dart';
 import 'package:foosball_mobile_app/state/new_game_state.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';

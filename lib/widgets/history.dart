@@ -5,6 +5,7 @@ import 'package:foosball_mobile_app/models/history/userStats.dart';
 import 'package:foosball_mobile_app/models/other/TwoPlayersObject.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
+import 'package:foosball_mobile_app/widgets/emptyData/emptyData.dart';
 import 'package:foosball_mobile_app/widgets/loading.dart';
 import 'package:foosball_mobile_app/widgets/single_league_history/single_league_match_detail.dart';
 import 'package:intl/intl.dart';
@@ -246,20 +247,42 @@ class _HistoryState extends State<History> {
       body: FutureBuilder(
         future: Future.wait([statsFuture, historyFuture]),
         builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
-          if (snapshot.hasData) {
-            return Container(
-              color: widget.userState.darkmode
-                  ? AppColors.darkModeBackground
-                  : AppColors.white,
-              // add listview with variable two
-              child: ListView(
-                controller: _controller,
-                padding: const EdgeInsets.all(8),
-                children: _buildHistoryList(historylist),
-              ),
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Loading(
+                userState: widget.userState); // Display loading widget
+          } else if (snapshot.hasError) {
+            // Display error message
+            return Center(
+              child: Text('Error: ${snapshot.error}'),
             );
+          } else if (snapshot.hasData) {
+            // Extract history data from the snapshot
+            List<dynamic>? historyData = snapshot.data![1];
+
+            // Check if historyData is empty
+            if (historyData == null || historyData.isEmpty) {
+              // Display message if historyData is empty
+              return Center(
+                  child: EmptyData(
+                      userState: widget.userState,
+                      message: widget.userState.hardcodedStrings.noData,
+                      iconData: Icons.person_off_sharp));
+            } else {
+              // Display your UI with the data
+              return Container(
+                color: widget.userState.darkmode
+                    ? AppColors.darkModeBackground
+                    : AppColors.white,
+                child: ListView(
+                  controller: _controller,
+                  padding: const EdgeInsets.all(8),
+                  children: _buildHistoryList(historylist),
+                ),
+              );
+            }
           } else {
-            return Loading(userState: widget.userState);
+            // Default case, show an empty container
+            return Container();
           }
         },
       ),

@@ -78,7 +78,8 @@ class _LeagueState extends State<League> {
                     ),
                     const Spacer(),
                     Visibility(
-                        visible: showButton,
+                        visible: showButton &&
+                            widget.userState.currentOrganisationId != 0,
                         child: LeagueButton(
                           userState: userState,
                           newLeaugeCreated: updateLeagueList,

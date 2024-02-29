@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
+import 'package:foosball_mobile_app/widgets/extended_Text.dart';
 import 'package:foosball_mobile_app/widgets/organisation/new_organisation.dart';
 
 class DashBoardFirstVisit extends StatefulWidget {
@@ -21,20 +22,16 @@ class _DashBoardFirstVisitState extends State<DashBoardFirstVisit> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            widget.userState.hardcodedStrings.welcomeTextHeadline,
-            style: const TextStyle(
-              fontSize: 24.0,
-              fontWeight: FontWeight.bold,
-            ),
+          ExtendedText(
+            text: widget.userState.hardcodedStrings.welcomeTextHeadline,
+            userState: widget.userState,
+            fontSize: 24,
           ),
           const SizedBox(height: 20.0),
-          Text(
-            widget.userState.hardcodedStrings.welcomeTextBody,
-            style: const TextStyle(
-              fontSize: 16.0,
-            ),
-            textAlign: TextAlign.center,
+          ExtendedText(
+            text: widget.userState.hardcodedStrings.welcomeTextBody,
+            userState: widget.userState,
+            fontSize: 16,
           ),
           const SizedBox(height: 20.0),
           ElevatedButton(
