@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
+import 'package:foosball_mobile_app/utils/helpers.dart';
 
 class EmptyData extends StatelessWidget {
   final UserState userState;
@@ -16,7 +17,9 @@ class EmptyData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Helpers helpers = Helpers();
     return Container(
+      color: helpers.getBackgroundColor(userState.darkmode),
       padding: const EdgeInsets.all(16),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

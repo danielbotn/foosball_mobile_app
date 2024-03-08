@@ -4,6 +4,7 @@ import 'package:foosball_mobile_app/models/user/user_response.dart';
 import 'package:foosball_mobile_app/state/new_game_state.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/helpers.dart';
+import 'package:foosball_mobile_app/widgets/emptyData/emptyData.dart';
 import 'package:foosball_mobile_app/widgets/loading.dart';
 import 'package:foosball_mobile_app/widgets/new_game/new_game_oppositions_left.dart';
 import 'package:foosball_mobile_app/widgets/new_game/new_game_vs.dart';
@@ -38,6 +39,11 @@ class _NewGameState extends State<NewGame> {
   Future<List<UserResponse>?> getAllUsers() async {
     UserApi userApi = UserApi();
     var users = await userApi.getUsers();
+
+    if (users!.isEmpty) {
+      return null;
+    }
+
     return users;
   }
 
@@ -74,12 +80,14 @@ class _NewGameState extends State<NewGame> {
             } else if (snapshot.hasError) {
               // Handle error case
               return Center(child: Text('Error: ${snapshot.error}'));
-            } else if (snapshot.hasData && snapshot.data!.isEmpty) {
+            } else if (!snapshot.hasData) {
               // Display message to the user if snapshot has no data
-              return Center(
-                  child: NoUsersFoundMessage(
-                userState: widget.userState,
-              ));
+              return Container(
+                  color: helpers.getBackgroundColor(widget.userState.darkmode),
+                  child: EmptyData(
+                      userState: widget.userState,
+                      message: widget.userState.hardcodedStrings.noData,
+                      iconData: Icons.error));
             } else if (snapshot.hasData) {
               // If data is available, build your UI with the data
               return Container(
