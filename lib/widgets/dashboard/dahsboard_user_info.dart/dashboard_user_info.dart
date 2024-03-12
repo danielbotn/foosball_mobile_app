@@ -26,7 +26,7 @@ class _DashBoardUserInfoState extends State<DashBoardUserInfo> {
 
   Future<Map<String, dynamic>> loadData() async {
     final userId = widget.userState.userId.toString();
-    final orgId = widget.userState.currentOrganisationId!;
+    final orgId = widget.userState.currentOrganisationId;
     try {
       final userData = await UserApi().getUser(userId);
       dynamic orgData; // Define orgData as dynamic type

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/main.dart';
+import 'package:foosball_mobile_app/utils/helpers.dart';
+import 'package:foosball_mobile_app/widgets/emptyData/emptyData.dart';
 import 'package:foosball_mobile_app/widgets/extended_Text.dart';
 
 import '../../api/UserApi.dart';
@@ -60,50 +62,67 @@ class _OrganisationPlayersState extends State<OrganisationPlayers> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: FutureBuilder(
+    Helpers helpers = Helpers();
+    return FutureBuilder(
       future: playersFuture,
       builder: (context, AsyncSnapshot<List<UserResponse>?> snapshot) {
-        if (snapshot.hasData) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Loading(
+            userState: widget.userState,
+          );
+        } else if (snapshot.hasError) {
+          return Container(
+            color: Colors.white,
+            child: Center(
+              child: Text(
+                'Error: ${snapshot.error}',
+                style: TextStyle(color: Colors.red),
+              ),
+            ),
+          );
+        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return EmptyData(
+              userState: widget.userState,
+              message: widget.userState.hardcodedStrings.noData,
+              iconData: Icons.error);
+        } else {
           return SafeArea(
-              child: ListView.builder(
-            itemCount: playersData!.length,
-            itemBuilder: (context, index) {
-              String headline = getHeadline(playersData![index]);
+            child: ListView.builder(
+              itemCount: playersData!.length,
+              itemBuilder: (context, index) {
+                String headline = getHeadline(playersData![index]);
 
-              return Card(
-                elevation: 0,
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.zero,
-                ),
-                margin: EdgeInsets.zero,
-                color: widget.userState.darkmode
-                    ? AppColors.darkModeBackground
-                    : AppColors.white,
-                child: ListTile(
+                return Card(
+                  elevation: 0,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.zero,
+                  ),
+                  margin: EdgeInsets.zero,
+                  color: widget.userState.darkmode
+                      ? AppColors.darkModeBackground
+                      : AppColors.white,
+                  child: ListTile(
                     leading: Image.network(playersData![index].photoUrl),
                     title: ExtendedText(
                       text: headline,
-                      userState: userState,
+                      userState: widget.userState,
                     ),
                     subtitle: ExtendedText(
                       text: getIsAdmin(playersData![index]),
-                      userState: userState,
+                      userState: widget.userState,
                       colorOverride: AppColors.textGrey,
                     ),
                     trailing: Icon(Icons.chevron_right,
                         color: widget.userState.darkmode
                             ? AppColors.white
-                            : AppColors.textGrey)),
-              );
-            },
-          ));
-        } else {
-          return Loading(
-            userState: widget.userState,
+                            : AppColors.textGrey),
+                  ),
+                );
+              },
+            ),
           );
         }
       },
-    ));
+    );
   }
 }

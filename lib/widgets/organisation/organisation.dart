@@ -79,7 +79,7 @@ class _OrganisationScreenState extends State<OrganisationScreen> {
                   fontSize: 20,
                   paddingLeft: 10),
               SizedBox(
-                  height: 115,
+                  height: 215,
                   child: Organisations(
                     userState: userState,
                     randomString: randomString,

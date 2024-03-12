@@ -47,7 +47,7 @@ class _OngoingDoubleGameState extends State<OngoingDoubleGame> {
 
   Future<GetLeagueResponse?> getLeagueById() async {
     LeagueApi api = LeagueApi();
-    var data = await api.getLeagueById(widget.matchModel!.leagueId);
+    var data = await api.getLeagueById(widget.matchModel.leagueId);
     setState(() {
       leagueData = data;
     });
