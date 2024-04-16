@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:foosball_mobile_app/main.dart';
 import 'package:foosball_mobile_app/utils/helpers.dart';
 import 'package:foosball_mobile_app/widgets/emptyData/emptyData.dart';
 import 'package:foosball_mobile_app/widgets/extended_Text.dart';

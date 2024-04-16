@@ -97,13 +97,15 @@ class _OrganisationSettingsState extends State<OrganisationSettings> {
     }
 
     goToCreateGroupUser(BuildContext context) {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => CreateGroupPlayer(
-                    userState: widget.userState,
-                    // to do
-                  )));
+      if (widget.userState.currentOrganisationId != 0) {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => CreateGroupPlayer(
+                      userState: widget.userState,
+                      // to do
+                    )));
+      }
     }
 
     List<AbstractSettingsTile> setTiles(UserResponse userData) {
@@ -118,26 +120,30 @@ class _OrganisationSettingsState extends State<OrganisationSettings> {
         SettingsTile(
           title:
               Text(widget.userState.hardcodedStrings.joinExistingOrganisation),
-          leading: const Icon(Icons.account_box),
+          leading: const Icon(Icons.add_circle_outline_sharp),
           onPressed: (BuildContext context) {
             goToJoinOrganisation(context);
           },
         ),
-        SettingsTile(
+      ];
+
+      if (widget.userState.currentOrganisationId != 0) {
+        result.add(SettingsTile(
           title: Text(widget.userState.hardcodedStrings.changeOrganisation),
           leading: const Icon(Icons.change_circle),
           onPressed: (BuildContext context) {
             goToChangeOrganisation(context);
           },
-        ),
-        SettingsTile(
-          title: const Text('Create Group Player'),
+        ));
+
+        result.add(SettingsTile(
+          title: Text(widget.userState.hardcodedStrings.createGroupPlayer),
           leading: const Icon(Icons.emoji_people),
           onPressed: (BuildContext context) {
             goToCreateGroupUser(context);
           },
-        ),
-      ];
+        ));
+      }
 
       if (userData.isAdmin != null && userData.isAdmin == true) {
         result.add(SettingsTile(
@@ -150,6 +156,67 @@ class _OrganisationSettingsState extends State<OrganisationSettings> {
       }
 
       return result;
+    }
+
+    List<AbstractSettingsTile> setInformationTiles() {
+      List<AbstractSettingsTile> result = [];
+
+      if (widget.userState.currentOrganisationId != 0) {
+        result.add(SettingsTile(
+          title: Text(widget.userState.hardcodedStrings.organisationCode),
+          description: Text(widget
+              .userState.hardcodedStrings.letOtherPlayersJoinYourOrganisation),
+          leading: const Icon(Icons.qr_code),
+          onPressed: (BuildContext context) {
+            goToOrganisationCode(context);
+          },
+        ));
+      }
+
+      return result;
+    }
+
+    SettingsList buildSettingsList(UserResponse userData) {
+      List<SettingsSection> sections = [];
+
+      // Actions section
+      sections.add(SettingsSection(
+        title: Text(widget.userState.hardcodedStrings.actions),
+        tiles: setTiles(userData),
+      ));
+
+      // Information section
+      if (widget.userState.currentOrganisationId != 0) {
+        sections.add(SettingsSection(
+          title: Text(widget.userState.hardcodedStrings.information),
+          tiles: setInformationTiles(),
+        ));
+      }
+
+      // Integrations section
+      if (widget.userState.currentOrganisationId != 0) {
+        sections.add(SettingsSection(
+          title: Text(widget.userState.hardcodedStrings.integration),
+          tiles: [
+            SettingsTile(
+              title: Text(widget.userState.hardcodedStrings.slack),
+              description: const Text(
+                  "https://hooks.slack.com/services/T0J5QJQQP/B0J5QJQQQ/0J5QJQQQQ"),
+              leading: const Icon(Icons.abc),
+              onPressed: (BuildContext context) {},
+            ),
+            SettingsTile(
+              title: Text(widget.userState.hardcodedStrings.discord),
+              description: const Text(
+                  "https://hooks.discord.com/services/T0J5QJQQP/B0J5QJQQQ/0J5QJQQQQ"),
+              leading: const Icon(Icons.discord),
+              onPressed: (BuildContext context) {},
+            ),
+          ],
+        ));
+      }
+
+      return SettingsList(sections: sections);
     }
 
     return Scaffold(
@@ -176,60 +243,11 @@ class _OrganisationSettingsState extends State<OrganisationSettings> {
                       ? AppColors.darkModeBackground
                       : AppColors.white,
                   child: Theme(
-                      data: widget.userState.darkmode
-                          ? ThemeData.dark()
-                          : ThemeData.light(),
-                      child: SettingsList(
-                        sections: [
-                          SettingsSection(
-                              title: Text(
-                                widget.userState.hardcodedStrings.actions,
-                              ),
-                              tiles: setTiles(userData)),
-                          // person section
-                          SettingsSection(
-                            title: Text(
-                                widget.userState.hardcodedStrings.information),
-                            tiles: [
-                              SettingsTile(
-                                title: Text(widget.userState.hardcodedStrings
-                                    .organisationCode),
-                                description: Text(widget
-                                    .userState
-                                    .hardcodedStrings
-                                    .letOtherPlayersJoinYourOrganisation),
-                                leading: const Icon(Icons.qr_code),
-                                onPressed: (BuildContext context) {
-                                  goToOrganisationCode(context);
-                                },
-                              ),
-                            ],
-                          ),
-                          // integrations
-                          SettingsSection(
-                            title: Text(
-                                widget.userState.hardcodedStrings.integration),
-                            tiles: [
-                              SettingsTile(
-                                title: Text(
-                                    widget.userState.hardcodedStrings.slack),
-                                description: const Text(
-                                    "https://hooks.slack.com/services/T0J5QJQQP/B0J5QJQQQ/0J5QJQQQQ"),
-                                leading: const Icon(Icons.abc),
-                                onPressed: (BuildContext context) {},
-                              ),
-                              SettingsTile(
-                                title: Text(
-                                    widget.userState.hardcodedStrings.discord),
-                                description: const Text(
-                                    "https://hooks.discord.com/services/T0J5QJQQP/B0J5QJQQQ/0J5QJQQQQ"),
-                                leading: const Icon(Icons.discord),
-                                onPressed: (BuildContext context) {},
-                              ),
-                            ],
-                          ),
-                        ],
-                      )));
+                    data: widget.userState.darkmode
+                        ? ThemeData.dark()
+                        : ThemeData.light(),
+                    child: buildSettingsList(userData),
+                  ));
             } else {
               return Loading(
                 userState: widget.userState,
