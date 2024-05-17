@@ -42,55 +42,68 @@ class _OrganisationScreenState extends State<OrganisationScreen> {
   Widget build(BuildContext context) {
     Helpers helpers = Helpers();
     return Scaffold(
-        appBar: AppBar(
-            title: ExtendedText(
-                text: widget.userState.hardcodedStrings.organisation,
-                userState: widget.userState),
-            leading: IconButton(
-              icon: const Icon(Icons.chevron_left),
-              onPressed: () {
-                Navigator.pop(context);
-              },
+      appBar: AppBar(
+        title: ExtendedText(
+          text: widget.userState.hardcodedStrings.organisation,
+          userState: widget.userState,
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.chevron_left),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        iconTheme: helpers.getIconTheme(widget.userState.darkmode),
+        backgroundColor: helpers.getBackgroundColor(widget.userState.darkmode),
+      ),
+      body: Container(
+        color: widget.userState.darkmode
+            ? AppColors.darkModeBackground
+            : AppColors.white,
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    OrganisationCard(
+                        userState: widget.userState,
+                        notifyParent: notifyOrganisationPlayers),
+                    HeadlineBig(
+                        headline: widget.userState.hardcodedStrings.players,
+                        userState: widget.userState,
+                        fontSize: 20,
+                        paddingLeft: 10),
+                    SizedBox(
+                      height: 215,
+                      child: OrganisationPlayers(
+                          userState: widget.userState,
+                          randomString: randomString),
+                    ),
+                    HeadlineBig(
+                        headline:
+                            widget.userState.hardcodedStrings.organisations,
+                        userState: widget.userState,
+                        fontSize: 20,
+                        paddingLeft: 10),
+                    SizedBox(
+                      height: 215,
+                      child: Organisations(
+                        userState: widget.userState,
+                        randomString: randomString,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
-            iconTheme: helpers.getIconTheme(widget.userState.darkmode),
-            backgroundColor:
-                helpers.getBackgroundColor(widget.userState.darkmode)),
-        body: Container(
-          color: widget.userState.darkmode
-              ? AppColors.darkModeBackground
-              : AppColors.white,
-          child: Column(
-            children: <Widget>[
-              OrganisationCard(
-                  userState: userState,
-                  notifyParent: notifyOrganisationPlayers),
-              HeadlineBig(
-                  headline: userState.hardcodedStrings.players,
-                  userState: userState,
-                  fontSize: 20,
-                  paddingLeft: 10),
-              SizedBox(
-                  height: 215,
-                  child: OrganisationPlayers(
-                      userState: userState, randomString: randomString)),
-              HeadlineBig(
-                  headline: userState.hardcodedStrings.organisations,
-                  userState: userState,
-                  fontSize: 20,
-                  paddingLeft: 10),
-              SizedBox(
-                  height: 215,
-                  child: Organisations(
-                    userState: userState,
-                    randomString: randomString,
-                  )),
-              const Spacer(),
-              OrganisationButtons(
-                userState: userState,
-                notifyOrganisation: notifyOrganisations,
-              )
-            ],
-          ),
-        ));
+            OrganisationButtons(
+              userState: widget.userState,
+              notifyOrganisation: notifyOrganisations,
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

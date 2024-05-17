@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:foosball_mobile_app/utils/app_color.dart';
+import 'package:foosball_mobile_app/widgets/extended_Text.dart';
 
 import '../../state/user_state.dart';
 
@@ -10,6 +12,8 @@ class JoinOrganisationInfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color:
+          userState.darkmode ? AppColors.darkModeBackground : AppColors.white,
       clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(24),
@@ -41,21 +45,12 @@ class JoinOrganisationInfoCard extends StatelessWidget {
             ],
           ),
           Padding(
-            padding: const EdgeInsets.all(16).copyWith(bottom: 0),
-            child: Text(
-              userState.hardcodedStrings.organisationCardInfo,
-              style: const TextStyle(fontSize: 16),
-            ),
-          ),
-          ButtonBar(
-            alignment: MainAxisAlignment.start,
-            children: [
-              OutlinedButton(
-                child: Text(userState.hardcodedStrings.scanQrCode),
-                onPressed: () {},
-              ),
-            ],
-          )
+              padding: const EdgeInsets.all(16).copyWith(bottom: 0),
+              child: ExtendedText(
+                userState: userState,
+                text: userState.hardcodedStrings.organisationCardInfo,
+                colorOverride: AppColors.white,
+              )),
         ],
       ),
     );

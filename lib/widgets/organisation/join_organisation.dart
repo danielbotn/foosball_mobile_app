@@ -136,45 +136,58 @@ class _JoinOrganisationState extends State<JoinOrganisation> {
   Widget build(BuildContext context) {
     Helpers helpers = Helpers();
     return Scaffold(
-        appBar: AppBar(
-            title: ExtendedText(
-                text: widget.userState.hardcodedStrings.joinOrganisation,
-                userState: widget.userState),
-            leading: IconButton(
-              icon: const Icon(Icons.chevron_left),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-            iconTheme: helpers.getIconTheme(widget.userState.darkmode),
-            backgroundColor:
-                helpers.getBackgroundColor(widget.userState.darkmode)),
-        body: Column(
+      appBar: AppBar(
+        title: ExtendedText(
+          text: widget.userState.hardcodedStrings.joinOrganisation,
+          userState: widget.userState,
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.chevron_left),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        iconTheme: helpers.getIconTheme(widget.userState.darkmode),
+        backgroundColor: helpers.getBackgroundColor(widget.userState.darkmode),
+      ),
+      body: Container(
+        color: widget.userState.darkmode
+            ? AppColors.darkModeBackground
+            : AppColors.white,
+        child: Column(
           children: [
             JoinOrganisationInfoCard(userState: widget.userState),
             const Spacer(),
             Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: Container(
-                  height: 60,
-                  width: double.infinity,
-                  color: Colors.blue[800],
-                  child: ElevatedButton(
-                    onPressed: () => {
-                      setState(() {
-                        qrScanInProgress = !qrScanInProgress;
-                        scanQrWithContext(context);
-                      })
-                    },
-                    style: ElevatedButton.styleFrom(
-                        primary: widget.userState.darkmode
-                            ? AppColors.lightThemeShadowColor
-                            : AppColors.buttonsLightTheme,
-                        minimumSize: const Size(200, 50)),
-                    child: Text(widget.userState.hardcodedStrings.scanQrCode),
+              padding: const EdgeInsets.all(4.0),
+              child: Container(
+                height: 60,
+                width: double.infinity,
+                color: Colors.blue[800],
+                child: ElevatedButton(
+                  onPressed: () => {
+                    setState(() {
+                      qrScanInProgress = !qrScanInProgress;
+                      scanQrWithContext(context);
+                    })
+                  },
+                  style: ElevatedButton.styleFrom(
+                    primary: widget.userState.darkmode
+                        ? AppColors.lightThemeShadowColor
+                        : AppColors.buttonsLightTheme,
+                    minimumSize: const Size(200, 50),
                   ),
-                ))
+                  child: ExtendedText(
+                    userState: widget.userState,
+                    text: widget.userState.hardcodedStrings.scanQrCode,
+                    colorOverride: AppColors.white,
+                  ),
+                ),
+              ),
+            ),
           ],
-        ));
+        ),
+      ),
+    );
   }
 }
