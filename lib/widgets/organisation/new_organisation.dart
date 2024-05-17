@@ -31,7 +31,7 @@ class _NewOrganisationState extends State<NewOrganisation> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(userState.hardcodedStrings.newOrganisation),
+          title: Text(widget.userState.hardcodedStrings.newOrganisation),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
@@ -41,7 +41,7 @@ class _NewOrganisationState extends State<NewOrganisation> {
           ),
           actions: <Widget>[
             TextButton(
-              child: Text(userState.hardcodedStrings.close),
+              child: Text(widget.userState.hardcodedStrings.close),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -56,71 +56,83 @@ class _NewOrganisationState extends State<NewOrganisation> {
   Widget build(BuildContext context) {
     Helpers helpers = Helpers();
     return Scaffold(
-        appBar: AppBar(
-            title: ExtendedText(
-                text: widget.userState.hardcodedStrings.newOrganisation,
-                userState: widget.userState),
-            leading: IconButton(
-              icon: const Icon(Icons.chevron_left),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-            iconTheme: helpers.getIconTheme(widget.userState.darkmode),
-            backgroundColor:
-                helpers.getBackgroundColor(widget.userState.darkmode)),
-        body: Container(
-            color: widget.userState.darkmode
-                ? AppColors.darkModeBackground
-                : AppColors.white,
-            child: Padding(
+      appBar: AppBar(
+        title: ExtendedText(
+          text: widget.userState.hardcodedStrings.newOrganisation,
+          userState: widget.userState,
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.chevron_left),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        iconTheme: helpers.getIconTheme(widget.userState.darkmode),
+        backgroundColor: helpers.getBackgroundColor(widget.userState.darkmode),
+      ),
+      body: Container(
+        color: widget.userState.darkmode
+            ? AppColors.darkModeBackground
+            : AppColors.white,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Padding(
               padding: const EdgeInsets.all(20.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  TextField(
-                    controller: _textController,
-                    decoration: InputDecoration(
-                        border: const OutlineInputBorder(),
-                        suffixIcon: IconButton(
-                            onPressed: () {
-                              _textController.clear();
-                            },
-                            icon: const Icon(Icons.clear)),
-                        hintText:
-                            userState.hardcodedStrings.nameOfNewOrganisation),
+              child: TextField(
+                controller: _textController,
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      _textController.clear();
+                    },
+                    icon: const Icon(Icons.clear),
                   ),
-                  MaterialButton(
-                      onPressed: () async {
-                        String inputText = _textController.text;
-                        if (inputText.isNotEmpty) {
-                          Organisation api = Organisation();
-                          var result =
-                              await api.createNewOrganisation(inputText);
-
-                          if (result.statusCode == 201) {
-                            // success
-                            _textController.clear();
-                            await _showMyDialog(userState.hardcodedStrings
-                                .newOrganisationSuccessMessage);
-                            widget.notifyOrganisationButtons();
-                          } else {
-                            // error handling
-                            await _showMyDialog(userState
-                                .hardcodedStrings.newOrganisationErrorMessage);
-                          }
-                        }
-                      },
-                      color: widget.userState.darkmode
-                          ? AppColors.lightThemeShadowColor
-                          : AppColors.buttonsLightTheme,
-                      child: ExtendedText(
-                        text: userState.hardcodedStrings.create,
-                        userState: userState,
-                        colorOverride: AppColors.white,
-                      ))
-                ],
+                  hintText:
+                      widget.userState.hardcodedStrings.nameOfNewOrganisation,
+                ),
               ),
-            )));
+            ),
+            Expanded(child: Container()), // This takes up the remaining space
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: SizedBox(
+                height: 50, // Adjust the height as needed
+                child: MaterialButton(
+                  onPressed: () async {
+                    String inputText = _textController.text;
+                    if (inputText.isNotEmpty) {
+                      Organisation api = Organisation();
+                      var result = await api.createNewOrganisation(inputText);
+
+                      if (result.statusCode == 201) {
+                        // success
+                        _textController.clear();
+                        await _showMyDialog(widget.userState.hardcodedStrings
+                            .newOrganisationSuccessMessage);
+                        widget.notifyOrganisationButtons();
+                      } else {
+                        // error handling
+                        await _showMyDialog(widget.userState.hardcodedStrings
+                            .newOrganisationErrorMessage);
+                      }
+                    }
+                  },
+                  color: widget.userState.darkmode
+                      ? AppColors.lightThemeShadowColor
+                      : AppColors.buttonsLightTheme,
+                  child: ExtendedText(
+                    text: widget.userState.hardcodedStrings.create,
+                    userState: widget.userState,
+                    colorOverride: AppColors.white,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
