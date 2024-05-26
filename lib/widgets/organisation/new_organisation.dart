@@ -72,7 +72,7 @@ class _NewOrganisationState extends State<NewOrganisation> {
       ),
       body: Container(
         color: widget.userState.darkmode
-            ? AppColors.darkModeBackground
+            ? AppColors.darkModeLighterBackground
             : AppColors.white,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -82,7 +82,33 @@ class _NewOrganisationState extends State<NewOrganisation> {
               child: TextField(
                 controller: _textController,
                 decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: widget.userState.darkmode
+                          ? Colors.white
+                          : Colors.grey,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: widget.userState.darkmode
+                          ? Colors.white
+                          : Colors.grey,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: widget.userState.darkmode
+                          ? Colors.white
+                          : Colors.blue,
+                    ),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color:
+                          widget.userState.darkmode ? Colors.white : Colors.red,
+                    ),
+                  ),
                   suffixIcon: IconButton(
                     onPressed: () {
                       _textController.clear();
@@ -120,7 +146,7 @@ class _NewOrganisationState extends State<NewOrganisation> {
                     }
                   },
                   color: widget.userState.darkmode
-                      ? AppColors.lightThemeShadowColor
+                      ? AppColors.darkModeButtonColor
                       : AppColors.buttonsLightTheme,
                   child: ExtendedText(
                     text: widget.userState.hardcodedStrings.create,

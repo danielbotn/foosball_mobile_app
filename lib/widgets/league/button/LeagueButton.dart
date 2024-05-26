@@ -54,7 +54,7 @@ class _LeagueButtonState extends State<LeagueButton> {
                 },
                 style: ElevatedButton.styleFrom(
                     primary: widget.userState.darkmode
-                        ? AppColors.lightThemeShadowColor
+                        ? AppColors.darkModeButtonColor
                         : AppColors.buttonsLightTheme,
                     minimumSize: const Size(100, 50)),
                 child: Text(userState.hardcodedStrings.createNewLeague),

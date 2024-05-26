@@ -271,7 +271,7 @@ class _HistoryState extends State<History> {
               // Display your UI with the data
               return Container(
                 color: widget.userState.darkmode
-                    ? AppColors.darkModeBackground
+                    ? AppColors.darkModeLighterBackground
                     : AppColors.white,
                 child: ListView(
                   controller: _controller,

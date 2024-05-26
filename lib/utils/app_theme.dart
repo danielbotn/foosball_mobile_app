@@ -12,15 +12,17 @@ class AppTheme {
           labelStyle: TextStyle(color: AppColors.white),
         ),
         brightness: Brightness.dark,
-        canvasColor: AppColors.lightGreyDarkMode,
+        canvasColor: AppColors.textBlack,
         accentColor: AppColors.darkPink,
         accentIconTheme: IconThemeData(color: Colors.white),
       );
 
   get lightTheme => ThemeData(
         primarySwatch: Colors.grey,
-        appBarTheme:
-            AppBarTheme(brightness: Brightness.light, color: AppColors.grey2,),
+        appBarTheme: AppBarTheme(
+          brightness: Brightness.light,
+          color: AppColors.grey2,
+        ),
         inputDecorationTheme: InputDecorationTheme(
           hintStyle: TextStyle(color: AppColors.textGrey),
           labelStyle: TextStyle(color: AppColors.white),

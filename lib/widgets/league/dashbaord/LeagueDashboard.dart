@@ -103,7 +103,7 @@ class _LeagueDashboardState extends State<LeagueDashboard> {
                   } else if (snapshot.hasData) {
                     return Container(
                       color: widget.userState.darkmode
-                          ? AppColors.darkModeBackground
+                          ? AppColors.darkModeLighterBackground
                           : AppColors.white,
                       child: LeagueList(
                         userState: userState,

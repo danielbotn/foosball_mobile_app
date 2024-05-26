@@ -1,3 +1,4 @@
+import 'package:foosball_mobile_app/utils/app_color.dart';
 import 'package:foosball_mobile_app/widgets/double_league_history/double_league_match_detail.dart';
 import 'package:foosball_mobile_app/widgets/single_league_history/single_league_match_detail.dart';
 import 'package:intl/intl.dart';
@@ -149,6 +150,9 @@ class _DashBoardLastFiveState extends State<DashBoardLastFive> {
                     colorOfMatch == Colors.green[400] ? 'W' : 'L';
 
                 return Card(
+                  color: widget.userState.darkmode
+                      ? AppColors.darkModeBackground
+                      : AppColors.white,
                   margin: EdgeInsets.zero,
                   child: ListTile(
                     onTap: () {

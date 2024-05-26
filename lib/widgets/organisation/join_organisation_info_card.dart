@@ -12,8 +12,9 @@ class JoinOrganisationInfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color:
-          userState.darkmode ? AppColors.darkModeBackground : AppColors.white,
+      color: userState.darkmode
+          ? AppColors.darkModeLighterBackground
+          : AppColors.white,
       clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(24),

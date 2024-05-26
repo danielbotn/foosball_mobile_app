@@ -64,6 +64,9 @@ class _DashboardGoalsChartState extends State<DashboardGoalsChart> {
         child: Container(
           padding: const EdgeInsets.all(0),
           child: Card(
+            color: widget.userState.darkmode
+                ? AppColors.darkModeBackground
+                : AppColors.white,
             child: Padding(
               padding: const EdgeInsets.all(2.0),
               child: Column(

@@ -4,6 +4,7 @@ import 'package:foosball_mobile_app/api/UserApi.dart';
 import 'package:foosball_mobile_app/models/organisation/organisation_response.dart';
 import 'package:foosball_mobile_app/models/user/user_response.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
+import 'package:foosball_mobile_app/utils/app_color.dart';
 import 'package:foosball_mobile_app/widgets/loading.dart';
 
 class DashBoardUserInfo extends StatefulWidget {
@@ -67,6 +68,9 @@ class _DashBoardUserInfoState extends State<DashBoardUserInfo> {
             organistionName = orgData.name;
           }
           return Card(
+            color: widget.userState.darkmode
+                ? AppColors.darkModeBackground
+                : AppColors.white,
             // elevation: 5,
             child: ListTile(
               leading: const Icon(Icons.email, color: Colors.grey),

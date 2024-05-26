@@ -59,8 +59,9 @@ class _LeagueState extends State<League> {
         body: Theme(
             data: darkMode ? ThemeData.dark() : ThemeData.light(),
             child: Container(
-                color:
-                    darkMode ? AppColors.darkModeBackground : AppColors.white,
+                color: darkMode
+                    ? AppColors.darkModeLighterBackground
+                    : AppColors.white,
                 child: Column(
                   children: <Widget>[
                     Row(

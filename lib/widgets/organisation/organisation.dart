@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:foosball_mobile_app/main.dart';
-
 import '../../state/user_state.dart';
 import '../../utils/app_color.dart';
 import '../../utils/helpers.dart';

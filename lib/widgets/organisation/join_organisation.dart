@@ -152,7 +152,7 @@ class _JoinOrganisationState extends State<JoinOrganisation> {
       ),
       body: Container(
         color: widget.userState.darkmode
-            ? AppColors.darkModeBackground
+            ? AppColors.darkModeLighterBackground
             : AppColors.white,
         child: Column(
           children: [
@@ -173,7 +173,7 @@ class _JoinOrganisationState extends State<JoinOrganisation> {
                   },
                   style: ElevatedButton.styleFrom(
                     primary: widget.userState.darkmode
-                        ? AppColors.lightThemeShadowColor
+                        ? AppColors.darkModeButtonColor
                         : AppColors.buttonsLightTheme,
                     minimumSize: const Size(200, 50),
                   ),

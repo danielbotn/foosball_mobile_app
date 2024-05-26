@@ -18,9 +18,11 @@ class AppColors {
   static const purple = Color(0xFF411846);
   static const lightThemeShadowColor = Color(0xFF000014);
   static const darkThemeShadowColor = Color(0xFF1E2247);
-  static const darkModeBackground = Color(0xff424242);
+  static const darkModeBackground = Colors.black;
+  static const darkModeButtonColor = Color(0xff424242);
   static const buttonsLightTheme = Color(0xff2F80ED);
   static const lightThemeBackground = Color(0xffFAFAFA);
   static const leagueDarkModeColorOne = Color.fromARGB(255, 112, 111, 111);
   static const leagueDarkModeColorTwo = Color.fromARGB(255, 94, 93, 93);
+  static const darkModeLighterBackground = Color.fromARGB(255, 27, 27, 27);
 }

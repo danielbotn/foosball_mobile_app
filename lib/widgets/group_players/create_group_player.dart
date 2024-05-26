@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/api/UserApi.dart';
 import 'package:foosball_mobile_app/main.dart';
