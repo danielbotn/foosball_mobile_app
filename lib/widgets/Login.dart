@@ -52,6 +52,8 @@ class _LoginState extends State<Login> {
         widget.userState.setLanguage('en');
       }
       dashboardData = widget.userState;
+
+      await handleDarkTheme();
       return null;
     } else if (loginData is ErrorResponse) {
       // Do something with the ErrorResponse
@@ -59,6 +61,16 @@ class _LoginState extends State<Login> {
     } else {
       // Handle unexpected response type
       return "unexpected error";
+    }
+  }
+
+  Future handleDarkTheme() async {
+    PreferencesService preferencesService = PreferencesService();
+    bool? darkTheme = await preferencesService.getDarkTheme();
+
+    if (darkTheme == null) {
+      await preferencesService.setDarkTheme(true);
+      widget.userState.setDarkmode(true);
     }
   }
 
