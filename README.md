@@ -89,5 +89,5 @@ To Do!
 
 ## Thanks
 
-**Foosball** © 2022+, Mossfellsbær City. Released under the [MIT License].<br>
+**Foosball** © 2022+, Mossfellsbær City.<br>
 Authored and maintained by Daniel Freyr Sigurdsson. With help from [contributors].
