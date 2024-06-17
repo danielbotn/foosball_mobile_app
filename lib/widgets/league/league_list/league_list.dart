@@ -84,7 +84,7 @@ class LeagueList extends StatelessWidget {
           onTap: () => handleLeagueTap(context, league),
           leading: CircleAvatar(
             backgroundColor: userState.darkmode
-                ? AppColors.lightThemeShadowColor
+                ? AppColors.darkModeButtonColor
                 : AppColors.buttonsLightTheme,
             child: ExtendedText(
               text: '${index + 1}',

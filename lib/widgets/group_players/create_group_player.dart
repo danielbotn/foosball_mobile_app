@@ -187,7 +187,7 @@ class _CreateGroupPlayerState extends State<CreateGroupPlayer> {
                           },
                           style: ElevatedButton.styleFrom(
                               primary: widget.userState.darkmode
-                                  ? AppColors.lightThemeShadowColor
+                                  ? AppColors.darkModeButtonColor
                                   : AppColors.buttonsLightTheme,
                               minimumSize: const Size(200, 50)),
                           child: Text(widget.userState.hardcodedStrings.create),

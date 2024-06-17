@@ -119,7 +119,7 @@ class FreehandDoubleMatchButtons extends StatelessWidget {
                 onPressed: () => {newMatch()},
                 style: ElevatedButton.styleFrom(
                     primary: userState.darkmode
-                        ? AppColors.lightThemeShadowColor
+                        ? AppColors.darkModeButtonColor
                         : AppColors.buttonsLightTheme,
                     minimumSize: const Size(100, 50)),
                 child: Text(userState.hardcodedStrings.newMatch),
@@ -133,7 +133,7 @@ class FreehandDoubleMatchButtons extends StatelessWidget {
                 onPressed: () => {rematch()},
                 style: ElevatedButton.styleFrom(
                     primary: userState.darkmode
-                        ? AppColors.lightThemeShadowColor
+                        ? AppColors.darkModeButtonColor
                         : AppColors.buttonsLightTheme,
                     minimumSize: const Size(100, 50)),
                 child: Text(userState.hardcodedStrings.rematch),

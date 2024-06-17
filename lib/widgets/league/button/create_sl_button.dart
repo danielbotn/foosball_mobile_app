@@ -78,7 +78,7 @@ class _CreateSingleLeagueButtonState extends State<CreateSingleLeagueButton> {
                 onPressed: () => {addSingleLeaguePlayers()},
                 style: ElevatedButton.styleFrom(
                   primary: widget.userState.darkmode
-                      ? AppColors.lightThemeShadowColor
+                      ? AppColors.darkModeButtonColor
                       : AppColors.buttonsLightTheme,
                   minimumSize: const Size(100, 50),
                 ),

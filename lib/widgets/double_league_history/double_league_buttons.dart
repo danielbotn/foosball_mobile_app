@@ -20,7 +20,7 @@ class DoubleLeagueButtons extends StatelessWidget {
                 onPressed: () => {},
                 style: ElevatedButton.styleFrom(
                     primary: userState.darkmode
-                        ? AppColors.lightThemeShadowColor
+                        ? AppColors.darkModeButtonColor
                         : AppColors.buttonsLightTheme,
                     minimumSize: const Size(100, 50)),
                 child: ExtendedText(
@@ -37,7 +37,7 @@ class DoubleLeagueButtons extends StatelessWidget {
                 onPressed: () => {},
                 style: ElevatedButton.styleFrom(
                     primary: userState.darkmode
-                        ? AppColors.lightThemeShadowColor
+                        ? AppColors.darkModeButtonColor
                         : AppColors.buttonsLightTheme,
                     minimumSize: const Size(100, 50)),
                 child: ExtendedText(

@@ -81,7 +81,7 @@ class _OngoingGameButtonState extends State<OngoingGameButton> {
                   },
                   style: ElevatedButton.styleFrom(
                       primary: widget.userState.darkmode
-                          ? AppColors.lightThemeShadowColor
+                          ? AppColors.darkModeButtonColor
                           : AppColors.buttonsLightTheme,
                       minimumSize: const Size(100, 50)),
                   child: ExtendedText(

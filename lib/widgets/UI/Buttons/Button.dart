@@ -44,7 +44,7 @@ class _ButtonState extends State<Button> {
               onPressed: () => widget.onClick(),
               style: ElevatedButton.styleFrom(
                 primary: widget.userState.darkmode
-                    ? AppColors.lightThemeShadowColor
+                    ? AppColors.darkModeButtonColor
                     : AppColors.buttonsLightTheme,
                 minimumSize: const Size(100, 50),
               ),

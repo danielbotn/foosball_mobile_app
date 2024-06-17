@@ -70,7 +70,7 @@ class MatchDetailButtons extends StatelessWidget {
                   child: Text(userState.hardcodedStrings.rematch),
                   style: ElevatedButton.styleFrom(
                       primary: userState.darkmode
-                          ? AppColors.lightThemeShadowColor
+                          ? AppColors.darkModeButtonColor
                           : AppColors.buttonsLightTheme,
                       minimumSize: Size(100, 50)),
                 ),
@@ -88,7 +88,7 @@ class MatchDetailButtons extends StatelessWidget {
                   child: Text(userState.hardcodedStrings.close),
                   style: ElevatedButton.styleFrom(
                       primary: userState.darkmode
-                          ? AppColors.lightThemeShadowColor
+                          ? AppColors.darkModeButtonColor
                           : AppColors.buttonsLightTheme,
                       minimumSize: Size(100, 50)),
                 ),
