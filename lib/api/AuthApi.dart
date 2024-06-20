@@ -1,11 +1,16 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_login/flutter_login.dart';
+import 'package:foosball_mobile_app/api/dio_api/dio_api.dart';
 import 'package:foosball_mobile_app/models/auth/error_response.dart';
 import 'package:foosball_mobile_app/models/auth/login_response.dart';
 import 'package:foosball_mobile_app/models/auth/refresh_model.dart';
 import 'package:foosball_mobile_app/models/auth/register_response.dart';
+import 'package:foosball_mobile_app/models/auth/update_password_request.dart';
+import 'package:foosball_mobile_app/models/auth/update_password_response.dart';
 
 class AuthApi {
   AuthApi();
@@ -188,5 +193,47 @@ class AuthApi {
       }
     }
     throw Exception('Unable to verify email.');
+  }
+
+  // TO DO
+  Future<UpdatePasswordResponse?> updatePassword(
+      UpdatePasswordRequest body) async {
+    String? baseUrl = kReleaseMode
+        ? dotenv.env['REST_URL_PATH_PROD']
+        : dotenv.env['REST_URL_PATH_DEV'];
+
+    if (baseUrl != null) {
+      var url = '$baseUrl/api/Auth/update-password';
+
+      var jsonObject = {
+        "password": body.password,
+        "confirmPassword": body.confirmPassword,
+        "verificationCode":
+            body.verificationCode == "" ? null : body.verificationCode
+      };
+
+      try {
+        final response = await Api().dio.put(
+              url,
+              options: Options(
+                headers: {
+                  "Accept": "application/json",
+                  "content-type": "application/json",
+                },
+              ),
+              data: jsonEncode(jsonObject),
+            );
+
+        if (response.statusCode == 200) {
+          return UpdatePasswordResponse.fromJson(response.data);
+        } else {
+          throw Exception('Failed to update password');
+        }
+      } catch (e) {
+        // rethrow the caught exception
+        rethrow;
+      }
+    }
+    return null;
   }
 }

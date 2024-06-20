@@ -5,6 +5,7 @@ import 'package:foosball_mobile_app/main.dart';
 import 'package:foosball_mobile_app/models/cms/hardcoded_strings.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
+import 'package:foosball_mobile_app/widgets/change_password/ChangePassword.dart';
 import 'package:foosball_mobile_app/widgets/loading.dart';
 import 'package:settings_ui/settings_ui.dart';
 
@@ -167,6 +168,17 @@ class _SettingsState extends State<Settings> {
       }
     }
 
+    goToChangePassword(BuildContext context) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ChangePassword(
+            userState: userState,
+          ),
+        ),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
           leading: IconButton(
@@ -280,12 +292,13 @@ class _SettingsState extends State<Settings> {
                       SettingsSection(
                         title: Text(userState.hardcodedStrings.security),
                         tiles: [
-                          SettingsTile.switchTile(
+                          SettingsTile(
                             title:
                                 Text(userState.hardcodedStrings.changePassword),
                             leading: const Icon(Icons.lock),
-                            initialValue: true,
-                            onToggle: (bool value) {},
+                            onPressed: (BuildContext context) {
+                              goToChangePassword(context);
+                            },
                           ),
                           SettingsTile.switchTile(
                             title: Text(

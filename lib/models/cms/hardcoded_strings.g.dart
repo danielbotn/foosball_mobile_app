@@ -121,6 +121,16 @@ HardcodedStrings _$HardcodedStringsFromJson(Map<String, dynamic> json) =>
       noUsersExists: json['noUsersExists'] as String,
       noData: json['noData'] as String,
       noOrganisation: json['noOrganisation'] as String,
+      pleaseCheckYourInbox: json['pleaseCheckYourInbox'] as String,
+      passwordSuccessfullyChanged:
+          json['passwordSuccessfullyChanged'] as String,
+      enterNewPassword: json['enterNewPassword'] as String,
+      newPassword: json['newPassword'] as String,
+      pleaseEnterVerificationCode:
+          json['pleaseEnterVerificationCode'] as String,
+      submitPasswordButtonText: json['submitPasswordButtonText'] as String,
+      submitVerificationButtonText:
+          json['submitVerificationButtonText'] as String,
     );
 
 Map<String, dynamic> _$HardcodedStringsToJson(HardcodedStrings instance) =>
@@ -235,4 +245,11 @@ Map<String, dynamic> _$HardcodedStringsToJson(HardcodedStrings instance) =>
       'noUsersExists': instance.noUsersExists,
       'noData': instance.noData,
       'noOrganisation': instance.noOrganisation,
+      'pleaseCheckYourInbox': instance.pleaseCheckYourInbox,
+      'passwordSuccessfullyChanged': instance.passwordSuccessfullyChanged,
+      'enterNewPassword': instance.enterNewPassword,
+      'newPassword': instance.newPassword,
+      'pleaseEnterVerificationCode': instance.pleaseEnterVerificationCode,
+      'submitPasswordButtonText': instance.submitPasswordButtonText,
+      'submitVerificationButtonText': instance.submitVerificationButtonText,
     };
