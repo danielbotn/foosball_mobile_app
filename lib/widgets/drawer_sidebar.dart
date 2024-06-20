@@ -120,7 +120,9 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
   Widget build(BuildContext context) {
     return Drawer(
       child: Container(
-        color: userState.darkmode ? Colors.grey.shade800 : AppColors.white,
+        color: userState.darkmode
+            ? AppColors.darkModeLighterBackground
+            : AppColors.white,
         child: ListView(
           children: <Widget>[
             UserAccountsDrawerHeader(
@@ -135,13 +137,14 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
                           : Color.fromRGBO(33, 150, 243, 1))),
               decoration: BoxDecoration(
                   color: userState.darkmode
-                      ? Colors.grey.shade800
+                      ? AppColors.darkModeLighterBackground
                       : AppColors.white),
               currentAccountPicture: CircleAvatar(child: Text(initials)),
             ),
             ListTile(
-              tileColor:
-                  userState.darkmode ? Colors.grey.shade800 : AppColors.white,
+              tileColor: userState.darkmode
+                  ? AppColors.darkModeLighterBackground
+                  : AppColors.white,
               leading: Icon(Icons.play_circle_filled_sharp,
                   color: userState.darkmode ? AppColors.white : null),
               title: Text(newGame,
@@ -155,8 +158,9 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
               },
             ),
             ListTile(
-              tileColor:
-                  userState.darkmode ? Colors.grey.shade800 : AppColors.white,
+              tileColor: userState.darkmode
+                  ? AppColors.darkModeLighterBackground
+                  : AppColors.white,
               leading: Icon(Icons.houseboat,
                   color: userState.darkmode ? AppColors.white : null),
               title: Text(organisation,
@@ -170,8 +174,9 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
               },
             ),
             ListTile(
-              tileColor:
-                  userState.darkmode ? Colors.grey.shade800 : AppColors.white,
+              tileColor: userState.darkmode
+                  ? AppColors.darkModeLighterBackground
+                  : AppColors.white,
               leading: Icon(Icons.history_sharp,
                   color: userState.darkmode ? AppColors.white : null),
               title: Text(history,
@@ -185,8 +190,9 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
               },
             ),
             ListTile(
-              tileColor:
-                  userState.darkmode ? Colors.grey.shade800 : AppColors.white,
+              tileColor: userState.darkmode
+                  ? AppColors.darkModeLighterBackground
+                  : AppColors.white,
               leading: Icon(Icons.group,
                   color: userState.darkmode ? AppColors.white : null),
               title: Text(leagues,
@@ -199,8 +205,9 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
               },
             ),
             ListTile(
-              tileColor:
-                  userState.darkmode ? Colors.grey.shade800 : AppColors.white,
+              tileColor: userState.darkmode
+                  ? AppColors.darkModeLighterBackground
+                  : AppColors.white,
               leading: Icon(Icons.settings,
                   color: userState.darkmode ? AppColors.white : null),
               title: Text(settings,
@@ -213,22 +220,10 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
                 goToSettings(context);
               },
             ),
-            Container(
-              height: 10.0,
-              decoration: BoxDecoration(
-                  color: userState.darkmode
-                      ? Colors.grey.shade800
-                      : AppColors.white,
-                  border: Border(
-                      bottom: BorderSide(
-                          color: userState.darkmode
-                              ? Colors.grey.shade700
-                              : AppColors.white,
-                          width: 7.0))),
-            ),
             ListTile(
-              tileColor:
-                  userState.darkmode ? Colors.grey.shade800 : AppColors.white,
+              tileColor: userState.darkmode
+                  ? AppColors.darkModeLighterBackground
+                  : AppColors.white,
               leading: Icon(Icons.power_settings_new,
                   color: userState.darkmode ? AppColors.white : null),
               title: Text(logout,
