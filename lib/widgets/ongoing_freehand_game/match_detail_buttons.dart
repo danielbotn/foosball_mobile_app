@@ -6,6 +6,7 @@ import 'package:foosball_mobile_app/models/other/ongoing_game_object.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
 import 'package:foosball_mobile_app/widgets/dashboard/New_Dashboard.dart';
+import 'package:foosball_mobile_app/widgets/extended_Text.dart';
 import 'ongoing_freehand_game.dart';
 
 class MatchDetailButtons extends StatelessWidget {
@@ -62,17 +63,18 @@ class MatchDetailButtons extends StatelessWidget {
             flex: 5,
             child: Padding(
               padding: const EdgeInsets.all(4.0),
-              child: Container(
-                child: ElevatedButton(
-                  onPressed: () => {
-                    rematch(),
-                  },
-                  child: Text(userState.hardcodedStrings.rematch),
-                  style: ElevatedButton.styleFrom(
-                      primary: userState.darkmode
-                          ? AppColors.darkModeButtonColor
-                          : AppColors.buttonsLightTheme,
-                      minimumSize: Size(100, 50)),
+              child: ElevatedButton(
+                onPressed: () => {
+                  rematch(),
+                },
+                style: ElevatedButton.styleFrom(
+                    primary: userState.darkmode
+                        ? AppColors.darkModeButtonColor
+                        : AppColors.buttonsLightTheme,
+                    minimumSize: const Size(100, 50)),
+                child: ExtendedText(
+                  text: userState.hardcodedStrings.rematch,
+                  userState: userState,
                 ),
               ),
             )),
@@ -80,17 +82,18 @@ class MatchDetailButtons extends StatelessWidget {
             flex: 5,
             child: Padding(
               padding: const EdgeInsets.all(4.0),
-              child: Container(
-                child: ElevatedButton(
-                  onPressed: () => {
-                    close(),
-                  },
-                  child: Text(userState.hardcodedStrings.close),
-                  style: ElevatedButton.styleFrom(
-                      primary: userState.darkmode
-                          ? AppColors.darkModeButtonColor
-                          : AppColors.buttonsLightTheme,
-                      minimumSize: Size(100, 50)),
+              child: ElevatedButton(
+                onPressed: () => {
+                  close(),
+                },
+                style: ElevatedButton.styleFrom(
+                    primary: userState.darkmode
+                        ? AppColors.darkModeButtonColor
+                        : AppColors.buttonsLightTheme,
+                    minimumSize: const Size(100, 50)),
+                child: ExtendedText(
+                  text: userState.hardcodedStrings.close,
+                  userState: userState,
                 ),
               ),
             )),
