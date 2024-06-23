@@ -131,6 +131,9 @@ HardcodedStrings _$HardcodedStringsFromJson(Map<String, dynamic> json) =>
       submitPasswordButtonText: json['submitPasswordButtonText'] as String,
       submitVerificationButtonText:
           json['submitVerificationButtonText'] as String,
+      enterSlackWebhook: json['enterSlackWebhook'] as String,
+      slackWebhook: json['slackWebhook'] as String,
+      save: json['save'] as String,
     );
 
 Map<String, dynamic> _$HardcodedStringsToJson(HardcodedStrings instance) =>
@@ -252,4 +255,7 @@ Map<String, dynamic> _$HardcodedStringsToJson(HardcodedStrings instance) =>
       'pleaseEnterVerificationCode': instance.pleaseEnterVerificationCode,
       'submitPasswordButtonText': instance.submitPasswordButtonText,
       'submitVerificationButtonText': instance.submitVerificationButtonText,
+      'enterSlackWebhook': instance.enterSlackWebhook,
+      'slackWebhook': instance.slackWebhook,
+      'save': instance.save,
     };

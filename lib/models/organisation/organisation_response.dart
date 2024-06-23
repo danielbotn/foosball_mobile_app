@@ -9,13 +9,15 @@ class OrganisationResponse {
   final DateTime createdAt;
   final int organisationType;
   final String organisationCode;
+  final String? slackWebhookUrl;
 
   OrganisationResponse(
       {required this.id,
       required this.name,
       required this.createdAt,
       required this.organisationType,
-      required this.organisationCode});
+      required this.organisationCode,
+      required this.slackWebhookUrl});
 
   factory OrganisationResponse.fromJson(Map<String, dynamic> item) =>
       _$OrganisationResponseFromJson(item);

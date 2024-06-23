@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/api/Dato_CMS.dart';
+import 'package:foosball_mobile_app/api/Organisation.dart';
 import 'package:foosball_mobile_app/icons/custom_icons.dart';
 import 'package:foosball_mobile_app/main.dart';
 import 'package:foosball_mobile_app/models/cms/hardcoded_strings.dart';
+import 'package:foosball_mobile_app/models/organisation/organisation_response.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
+import 'package:foosball_mobile_app/widgets/Settings/SlackSettings.dart';
 import 'package:foosball_mobile_app/widgets/change_password/ChangePassword.dart';
 import 'package:foosball_mobile_app/widgets/loading.dart';
 import 'package:settings_ui/settings_ui.dart';
-
 import '../utils/preferences_service.dart';
 
 class Settings extends StatefulWidget {
@@ -19,31 +21,35 @@ class Settings extends StatefulWidget {
   State<Settings> createState() => _SettingsState();
 }
 
-class _SettingsState extends State<Settings> {
+class _SettingsState extends State<Settings> with RouteAware {
   var selectedLanguage = "";
   bool isSwitched = false;
-
   var isDarkTheme;
 
   late Future<HardcodedStrings?> hardcodedStringsFuture;
+  late Future<OrganisationResponse?> organisationFuture;
 
   @override
   void initState() {
     super.initState();
-
     setSelectedLanguage(widget.userState.language);
     hardcodedStringsFuture = getHardcodedStrings(widget.userState.language);
+    organisationFuture = getOrganisation();
   }
 
-  // Get hardcoded strings from datoCMS
+  Future<OrganisationResponse?> getOrganisation() async {
+    Organisation api = Organisation();
+    var data =
+        await api.getOrganisationById(widget.userState.currentOrganisationId);
+    return data;
+  }
+
   Future<HardcodedStrings?> getHardcodedStrings(String language) async {
     DatoCMS datoCMS = DatoCMS();
     var hardcodedStrings = await datoCMS.getHardcodedStrings(language);
-
     return hardcodedStrings;
   }
 
-  // Sets the subtitle of the language selection
   setSelectedLanguage(String language) {
     String result = "";
 
@@ -73,6 +79,19 @@ class _SettingsState extends State<Settings> {
   }
 
   @override
+  void didPopNext() {
+    // Called when this widget is navigated to again (comes back to the top of the stack).
+    setState(() {
+      organisationFuture = getOrganisation();
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     isDarkTheme = Theme.of(context).brightness == Brightness.dark;
 
@@ -89,8 +108,6 @@ class _SettingsState extends State<Settings> {
       }
     }
 
-    // changes the language to the user's language
-    // I think we need to use futurebuilder here
     changeHardcodedStrings(String language) {
       hardcodedStringsFuture = getHardcodedStrings(language);
 
@@ -101,7 +118,6 @@ class _SettingsState extends State<Settings> {
       });
     }
 
-    // Sets the subtitle of the language selection
     setSelectedLanguage(String language) {
       String result = "";
 
@@ -118,7 +134,6 @@ class _SettingsState extends State<Settings> {
       });
     }
 
-    // sets the language that the user chooses
     setLanguage(String value) async {
       PreferencesService preferencesService = PreferencesService();
       await preferencesService.setLanguage(value);
@@ -127,7 +142,6 @@ class _SettingsState extends State<Settings> {
       changeHardcodedStrings(value);
     }
 
-    // Popup menu for language selection
     Future<void> selectLanguagePopup(BuildContext context) async {
       switch (await showDialog<String>(
           context: context,
@@ -173,10 +187,26 @@ class _SettingsState extends State<Settings> {
         context,
         MaterialPageRoute(
           builder: (context) => ChangePassword(
-            userState: userState,
+            userState: widget.userState,
           ),
         ),
       );
+    }
+
+    goToChangeSlackWebHook(BuildContext context) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SlackSettings(
+            userState: widget.userState,
+          ),
+        ),
+      ).then((_) {
+        // Fetch new organisation data when coming back from SlackSettings
+        setState(() {
+          organisationFuture = getOrganisation();
+        });
+      });
     }
 
     return Scaffold(
@@ -187,139 +217,145 @@ class _SettingsState extends State<Settings> {
               Navigator.pop(context, widget.userState);
             },
           ),
-          iconTheme: userState.darkmode
+          iconTheme: widget.userState.darkmode
               ? const IconThemeData(color: AppColors.white)
               : IconThemeData(color: Colors.grey[700]),
-          backgroundColor: userState.darkmode
+          backgroundColor: widget.userState.darkmode
               ? AppColors.darkModeBackground
               : AppColors.white),
       body: FutureBuilder(
-          future: hardcodedStringsFuture,
-          builder: (context, AsyncSnapshot<HardcodedStrings?> snapshot) {
-            if (snapshot.hasData) {
-              return Theme(
-                  data:
-                      userState.darkmode ? ThemeData.dark() : ThemeData.light(),
-                  child: SettingsList(
-                    sections: [
-                      SettingsSection(
-                        title: Text(
-                          userState.hardcodedStrings.common,
+        future: Future.wait([hardcodedStringsFuture, organisationFuture]),
+        builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
+          if (snapshot.hasData) {
+            var hardcodedStrings = snapshot.data?[0] as HardcodedStrings?;
+            var organisation = snapshot.data?[1] as OrganisationResponse?;
+            return Theme(
+                data: widget.userState.darkmode
+                    ? ThemeData.dark()
+                    : ThemeData.light(),
+                child: SettingsList(
+                  sections: [
+                    SettingsSection(
+                      title: Text(
+                        hardcodedStrings?.common ?? "Common",
+                      ),
+                      tiles: [
+                        SettingsTile(
+                          title: Text(hardcodedStrings?.language ?? "Language"),
+                          trailing: Text(selectedLanguage),
+                          leading: const Icon(Icons.language),
+                          onPressed: (BuildContext context) {
+                            selectLanguagePopup(context);
+                          },
                         ),
-                        tiles: [
-                          SettingsTile(
-                            title: Text(userState.hardcodedStrings.language),
-                            trailing: Text(selectedLanguage),
-                            leading: const Icon(Icons.language),
-                            onPressed: (BuildContext context) {
-                              selectLanguagePopup(context);
-                            },
+                        SettingsTile(
+                          title: Text(hardcodedStrings?.pricing ?? "Pricing"),
+                          trailing: const Text('Premium'),
+                          leading: const Icon(Icons.money),
+                          onPressed: (BuildContext context) {},
+                        ),
+                        SettingsTile.switchTile(
+                          title: Text(
+                            widget.userState.darkmode
+                                ? hardcodedStrings?.darkTheme ?? "Dark Theme"
+                                : hardcodedStrings?.lightTheme ?? "Light Theme",
                           ),
-                          SettingsTile(
-                            title: Text(userState.hardcodedStrings.pricing),
-                            trailing: const Text('Premium'),
-                            leading: const Icon(Icons.money),
-                            onPressed: (BuildContext context) {},
-                          ),
-                          SettingsTile.switchTile(
-                            title: Text(
-                              userState.darkmode
-                                  ? userState.hardcodedStrings.darkTheme
-                                  : userState.hardcodedStrings.lightTheme,
-                            ),
-                            leading: const Icon(Icons.phone_android),
-                            initialValue: userState.darkmode,
-                            onToggle: (value) {
-                              changeTheme(value);
-                            },
-                          ),
-                        ],
-                      ),
-                      // person section
-                      SettingsSection(
-                        title: Text(
-                            userState.hardcodedStrings.personalInformation),
-                        tiles: [
-                          SettingsTile(
-                            title: Text(userState.hardcodedStrings.username),
-                            description: Text(userState.userInfoGlobal.email),
-                            leading: const Icon(Icons.email),
-                            onPressed: (BuildContext context) {
-                              selectLanguagePopup(context);
-                            },
-                          ),
-                          SettingsTile(
-                            title: Text(userState.hardcodedStrings.user),
-                            description: Text(
-                                "${userState.userInfoGlobal.firstName} ${userState.userInfoGlobal.lastName}"),
-                            leading: const Icon(Icons.person),
-                            onPressed: (BuildContext context) {},
-                          ),
-                          SettingsTile(
-                            title:
-                                Text(userState.hardcodedStrings.organisation),
-                            description: Text(userState
-                                .userInfoGlobal.currentOrganisationName),
-                            leading: const Icon(Icons.business),
-                            onPressed: (BuildContext context) {},
-                          ),
-                        ],
-                      ),
-                      // integrations
-                      SettingsSection(
-                        title: Text(userState.hardcodedStrings.integration),
-                        tiles: [
-                          SettingsTile(
-                            title: Text(userState.hardcodedStrings.slack),
-                            description: const Text(
-                                "https://hooks.slack.com/services/T0J5QJQQP/B0J5QJQQQ/0J5QJQQQQ"),
-                            leading: const Icon(CustomIcons.slack),
-                            onPressed: (BuildContext context) {
-                              selectLanguagePopup(context);
-                            },
-                          ),
-                          SettingsTile(
-                            title: Text(userState.hardcodedStrings.discord),
-                            description: const Text(
-                                "https://hooks.discord.com/services/T0J5QJQQP/B0J5QJQQQ/0J5QJQQQQ"),
-                            leading: const Icon(CustomIcons.discord),
-                            onPressed: (BuildContext context) {
-                              selectLanguagePopup(context);
-                            },
-                          ),
-                        ],
-                      ),
-                      SettingsSection(
-                        title: Text(userState.hardcodedStrings.security),
-                        tiles: [
-                          SettingsTile(
-                            title:
-                                Text(userState.hardcodedStrings.changePassword),
-                            leading: const Icon(Icons.lock),
-                            onPressed: (BuildContext context) {
-                              goToChangePassword(context);
-                            },
-                          ),
-                          SettingsTile.switchTile(
-                            title: Text(
-                                userState.hardcodedStrings.enableNotifications),
-                            enabled: false,
-                            leading: const Icon(Icons.notifications_active),
-                            initialValue: true,
-                            onToggle: (value) {},
-                          ),
-                        ],
-                      ),
-                    ],
-                  ));
-            } else {
-              return Center(
-                child: Loading(
-                  userState: widget.userState,
-                ),
-              );
-            }
-          }),
+                          leading: const Icon(Icons.phone_android),
+                          initialValue: widget.userState.darkmode,
+                          onToggle: (value) {
+                            changeTheme(value);
+                          },
+                        ),
+                      ],
+                    ),
+                    // person section
+                    SettingsSection(
+                      title: Text(hardcodedStrings?.personalInformation ??
+                          "Personal Information"),
+                      tiles: [
+                        SettingsTile(
+                          title: Text(hardcodedStrings?.username ?? "Username"),
+                          description:
+                              Text(widget.userState.userInfoGlobal.email),
+                          leading: const Icon(Icons.email),
+                          onPressed: (BuildContext context) {
+                            selectLanguagePopup(context);
+                          },
+                        ),
+                        SettingsTile(
+                          title: Text(hardcodedStrings?.user ?? "User"),
+                          description: Text(
+                              "${widget.userState.userInfoGlobal.firstName} ${widget.userState.userInfoGlobal.lastName}"),
+                          leading: const Icon(Icons.person),
+                          onPressed: (BuildContext context) {},
+                        ),
+                        SettingsTile(
+                          title: Text(
+                              hardcodedStrings?.organisation ?? "Organisation"),
+                          description: Text(widget.userState.userInfoGlobal
+                              .currentOrganisationName),
+                          leading: const Icon(Icons.business),
+                          onPressed: (BuildContext context) {},
+                        ),
+                      ],
+                    ),
+                    // integrations
+                    SettingsSection(
+                      title:
+                          Text(hardcodedStrings?.integration ?? "Integration"),
+                      tiles: [
+                        SettingsTile(
+                          title: Text(hardcodedStrings?.slack ?? "Slack"),
+                          description: Text(organisation?.slackWebhookUrl ??
+                              "No Slack Webhook URL"),
+                          leading: const Icon(CustomIcons.slack),
+                          onPressed: (BuildContext context) {
+                            goToChangeSlackWebHook(context);
+                          },
+                        ),
+                        SettingsTile(
+                          title: Text(hardcodedStrings?.discord ?? "Discord"),
+                          description: const Text(
+                              "https://hooks.discord.com/services/T0J5QJQQP/B0J5QJQQQ/0J5QJQQQQ"),
+                          leading: const Icon(CustomIcons.discord),
+                          onPressed: (BuildContext context) {
+                            selectLanguagePopup(context);
+                          },
+                        ),
+                      ],
+                    ),
+                    SettingsSection(
+                      title: Text(hardcodedStrings?.security ?? "Security"),
+                      tiles: [
+                        SettingsTile(
+                          title: Text(hardcodedStrings?.changePassword ??
+                              "Change Password"),
+                          leading: const Icon(Icons.lock),
+                          onPressed: (BuildContext context) {
+                            goToChangePassword(context);
+                          },
+                        ),
+                        SettingsTile.switchTile(
+                          title: Text(hardcodedStrings?.enableNotifications ??
+                              "Enable Notifications"),
+                          enabled: false,
+                          leading: const Icon(Icons.notifications_active),
+                          initialValue: true,
+                          onToggle: (value) {},
+                        ),
+                      ],
+                    ),
+                  ],
+                ));
+          } else {
+            return Center(
+              child: Loading(
+                userState: widget.userState,
+              ),
+            );
+          }
+        },
+      ),
     );
   }
 }

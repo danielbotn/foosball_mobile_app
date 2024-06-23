@@ -14,6 +14,7 @@ OrganisationResponse _$OrganisationResponseFromJson(
       createdAt: DateTime.parse(json['createdAt'] as String),
       organisationType: json['organisationType'] as int,
       organisationCode: json['organisationCode'] as String,
+      slackWebhookUrl: json['slackWebhookUrl'] as String?,
     );
 
 Map<String, dynamic> _$OrganisationResponseToJson(
@@ -24,4 +25,5 @@ Map<String, dynamic> _$OrganisationResponseToJson(
       'createdAt': instance.createdAt.toIso8601String(),
       'organisationType': instance.organisationType,
       'organisationCode': instance.organisationCode,
+      'slackWebhookUrl': instance.slackWebhookUrl,
     };

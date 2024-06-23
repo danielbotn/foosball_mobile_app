@@ -224,4 +224,48 @@ class Organisation {
     }
     return result;
   }
+
+  Future<bool> updateOrganisation(
+    int organisationId,
+    OrganisationResponse organisationBody,
+  ) async {
+    bool result = false;
+
+    String? baseUrl = kReleaseMode
+        ? dotenv.env['REST_URL_PATH_PROD']
+        : dotenv.env['REST_URL_PATH_DEV'];
+    if (baseUrl != null) {
+      var url = '$baseUrl/api/Organisations/$organisationId';
+
+      final List<Map<String, dynamic>> operations = [];
+
+      operations.add({
+        "op": "replace",
+        "path": "/SlackWebhookUrl",
+        "value": organisationBody.slackWebhookUrl,
+      });
+
+      try {
+        final response = await Api().dio.patch(
+              url,
+              data: operations,
+              options: Options(
+                headers: {
+                  "Accept": "application/json",
+                  "content-type": "application/json",
+                },
+              ),
+            );
+
+        if (response.statusCode == 204) {
+          result = true;
+        } else {
+          result = false;
+        }
+      } catch (e) {
+        rethrow;
+      }
+    }
+    return result;
+  }
 }
