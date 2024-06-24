@@ -12,6 +12,7 @@ import 'package:foosball_mobile_app/models/user/user_response.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
 import 'package:foosball_mobile_app/utils/helpers.dart';
+import 'package:foosball_mobile_app/widgets/UI/Error/ServerError.dart';
 import 'package:foosball_mobile_app/widgets/league/ongoing_game/match_details/match_details.dart';
 import 'package:foosball_mobile_app/widgets/league/ongoing_game/ongoing_game_button/ongoing_game_button.dart';
 import 'package:foosball_mobile_app/widgets/league/ongoing_game/player_card/playerCard.dart';
@@ -317,7 +318,7 @@ class _OngoingGameState extends State<OngoingGame> {
                 ]),
               );
             } else if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
+              return ServerError(userState: widget.userState);
             } else {
               return const Text('No data found');
             }

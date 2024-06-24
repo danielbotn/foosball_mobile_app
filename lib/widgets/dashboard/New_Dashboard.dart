@@ -4,6 +4,7 @@ import 'package:foosball_mobile_app/main.dart';
 import 'package:foosball_mobile_app/models/cms/hardcoded_strings.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
+import 'package:foosball_mobile_app/widgets/UI/Error/ServerError.dart';
 import 'package:foosball_mobile_app/widgets/dashboard/dahsboard_user_info.dart/dashboard_user_info.dart';
 import 'package:foosball_mobile_app/widgets/dashboard/dashboard_charts/dashboard_charts.dart';
 import 'package:foosball_mobile_app/widgets/dashboard/dashboard_first_visit.dart';
@@ -76,7 +77,7 @@ class _NewDashboardState extends State<NewDashboard> {
             );
           } else if (snapshot.hasError) {
             // Show an error message if the future completes with an error
-            return Text('Error: ${snapshot.error}');
+            return ServerError(userState: userState);
           } else if (snapshot.hasData) {
             // Show the widget tree if the future completes successfully
             return Theme(

@@ -4,6 +4,7 @@ import 'package:foosball_mobile_app/models/leagues/double-league-standings-model
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
 import 'package:foosball_mobile_app/utils/helpers.dart';
+import 'package:foosball_mobile_app/widgets/UI/Error/ServerError.dart';
 import 'package:foosball_mobile_app/widgets/league/single_league_standings/table_cell_standings.dart';
 import 'package:foosball_mobile_app/widgets/loading.dart';
 
@@ -40,9 +41,7 @@ class _DoubleLeagueStandingsState extends State<DoubleLeagueStandings> {
             ),
           );
         } else if (snapshot.hasError) {
-          return const Center(
-            child: Text('Error fetching standings.'),
-          );
+          return ServerError(userState: widget.userState);
         } else if (snapshot.hasData) {
           final standings = snapshot.data!;
 

@@ -1,4 +1,5 @@
 import 'package:foosball_mobile_app/utils/app_color.dart';
+import 'package:foosball_mobile_app/widgets/UI/Error/ServerError.dart';
 import 'package:foosball_mobile_app/widgets/double_league_history/double_league_match_detail.dart';
 import 'package:foosball_mobile_app/widgets/single_league_history/single_league_match_detail.dart';
 import 'package:intl/intl.dart';
@@ -133,9 +134,7 @@ class _DashBoardLastFiveState extends State<DashBoardLastFive> {
           );
         } else if (snapshot.hasError) {
           // Handle errors here
-          return Center(
-            child: Text('An error occurred: ${snapshot.error}'),
-          );
+          return ServerError(userState: widget.userState);
         } else if (snapshot.hasData) {
           return SafeArea(
             child: ListView.builder(

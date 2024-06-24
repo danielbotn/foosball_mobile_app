@@ -11,6 +11,7 @@ import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
 import 'package:foosball_mobile_app/utils/helpers.dart';
 import 'package:foosball_mobile_app/widgets/UI/Buttons/Button.dart';
+import 'package:foosball_mobile_app/widgets/UI/Error/ServerError.dart';
 import 'package:foosball_mobile_app/widgets/dashboard/New_Dashboard.dart';
 import 'package:foosball_mobile_app/widgets/extended_Text.dart';
 import 'package:foosball_mobile_app/widgets/headline.dart';
@@ -162,10 +163,7 @@ class _AddDoubleLeagueTeamsState extends State<AddDoubleLeagueTeams> {
                         .userState), // Show a loading indicator while waiting for the future to complete
               );
             } else if (snapshot.hasError) {
-              return Center(
-                child: Text(
-                    'Error: ${snapshot.error}'), // Show an error message if the future encountered an error
-              );
+              return ServerError(userState: widget.userState);
             } else {
               List<DoubleLeaguePlayerModel>? players = snapshot.data;
               return Theme(

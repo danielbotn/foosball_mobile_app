@@ -3,6 +3,7 @@ import 'package:foosball_mobile_app/api/LeagueApi.dart';
 import 'package:foosball_mobile_app/main.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
+import 'package:foosball_mobile_app/widgets/UI/Error/ServerError.dart';
 import 'package:foosball_mobile_app/widgets/emptyData/emptyData.dart';
 import 'package:foosball_mobile_app/widgets/league/league_list/league_list.dart';
 import 'package:foosball_mobile_app/widgets/loading.dart';
@@ -73,9 +74,7 @@ class _LeagueDashboardState extends State<LeagueDashboard> {
                 userState: widget.userState); // Display loading widget
           } else if (snapshot.hasError) {
             // Handle error case
-            return Center(
-              child: Text('Error: ${snapshot.error}'),
-            );
+            return ServerError(userState: widget.userState);
           } else if (snapshot.hasData) {
             // Check if leaguesFuture data is empty
             List<GetLeagueResponse>? leagueData = snapshot.data![0];
@@ -97,9 +96,7 @@ class _LeagueDashboardState extends State<LeagueDashboard> {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Loading(userState: widget.userState);
                   } else if (snapshot.hasError) {
-                    return Center(
-                      child: Text('Error: ${snapshot.error}'),
-                    );
+                    return ServerError(userState: widget.userState);
                   } else if (snapshot.hasData) {
                     return Container(
                       color: widget.userState.darkmode

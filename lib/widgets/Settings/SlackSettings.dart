@@ -4,6 +4,7 @@ import 'package:foosball_mobile_app/models/organisation/organisation_response.da
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
 import 'package:foosball_mobile_app/utils/helpers.dart';
+import 'package:foosball_mobile_app/widgets/UI/Error/ServerError.dart';
 import 'package:foosball_mobile_app/widgets/loading.dart';
 
 class SlackSettings extends StatefulWidget {
@@ -108,7 +109,7 @@ class _SlackSettingsState extends State<SlackSettings> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: Loading(userState: widget.userState));
           } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
+            return ServerError(userState: widget.userState);
           } else if (!snapshot.hasData) {
             return const Center(child: Text('No data available'));
           } else {

@@ -5,6 +5,7 @@ import 'package:foosball_mobile_app/models/organisation/organisation_response.da
 import 'package:foosball_mobile_app/models/user/user_response.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
+import 'package:foosball_mobile_app/widgets/UI/Error/ServerError.dart';
 import 'package:foosball_mobile_app/widgets/loading.dart';
 
 class DashBoardUserInfo extends StatefulWidget {
@@ -59,7 +60,7 @@ class _DashBoardUserInfoState extends State<DashBoardUserInfo> {
             userState: widget.userState,
           ));
         } else if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
+          return ServerError(userState: widget.userState);
         } else {
           final userData = snapshot.data!['user'] as UserResponse;
           final orgData = snapshot.data!['org'] as OrganisationResponse?;

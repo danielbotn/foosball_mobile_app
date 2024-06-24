@@ -5,6 +5,7 @@ import 'package:foosball_mobile_app/models/single-league-goals/single_league_goa
 import 'package:foosball_mobile_app/models/single-league-matches/single_league_match_model.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/helpers.dart';
+import 'package:foosball_mobile_app/widgets/UI/Error/ServerError.dart';
 import 'package:foosball_mobile_app/widgets/extended_Text.dart';
 import 'package:foosball_mobile_app/widgets/league/ongoing_game/match_details/match_detail_buttons/match_detail_buttons.dart';
 import 'package:foosball_mobile_app/widgets/league/ongoing_game/match_details/match_detail_card/MatchDetailCard.dart';
@@ -138,7 +139,7 @@ class _MatchDetailsState extends State<MatchDetails> {
               ),
             );
           } else if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
+            return ServerError(userState: widget.userState);
           } else {
             return const Text('No data found');
           }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/main.dart';
 import 'package:foosball_mobile_app/models/organisation/organisation_response.dart';
+import 'package:foosball_mobile_app/widgets/UI/Error/ServerError.dart';
 import 'package:foosball_mobile_app/widgets/emptyData/emptyData.dart';
 import 'package:foosball_mobile_app/widgets/extended_Text.dart';
 
@@ -88,15 +89,7 @@ class _OrganisationsState extends State<Organisations> {
               userState: widget.userState,
             );
           } else if (snapshot.hasError) {
-            return Container(
-              color: Colors.white,
-              child: Center(
-                child: Text(
-                  'Error: ${snapshot.error}',
-                  style: TextStyle(color: Colors.red),
-                ),
-              ),
-            );
+            return ServerError(userState: widget.userState);
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return EmptyData(
                 userState: widget.userState,

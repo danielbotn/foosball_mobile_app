@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/api/UserApi.dart';
 import 'package:foosball_mobile_app/models/charts/user_stats_response.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
+import 'package:foosball_mobile_app/widgets/UI/Error/ServerError.dart';
 import 'package:foosball_mobile_app/widgets/dashboard/dashboard_goals_chart.dart';
 import 'package:foosball_mobile_app/widgets/dashboard/dashboard_matches_chart.dart';
 import 'package:foosball_mobile_app/widgets/loading.dart';
@@ -34,7 +35,7 @@ class _DashboardChartsState extends State<DashboardCharts> {
             userState: widget.userState,
           ));
         } else if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
+          return ServerError(userState: widget.userState);
         } else if (snapshot.hasData) {
           // Use the user stats data here
           return Row(

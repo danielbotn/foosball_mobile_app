@@ -5,6 +5,7 @@ import 'package:foosball_mobile_app/models/history/userStats.dart';
 import 'package:foosball_mobile_app/models/other/TwoPlayersObject.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
+import 'package:foosball_mobile_app/widgets/UI/Error/ServerError.dart';
 import 'package:foosball_mobile_app/widgets/emptyData/emptyData.dart';
 import 'package:foosball_mobile_app/widgets/loading.dart';
 import 'package:foosball_mobile_app/widgets/single_league_history/single_league_match_detail.dart';
@@ -252,9 +253,7 @@ class _HistoryState extends State<History> {
                 userState: widget.userState); // Display loading widget
           } else if (snapshot.hasError) {
             // Display error message
-            return Center(
-              child: Text('Error: ${snapshot.error}'),
-            );
+            return ServerError(userState: widget.userState);
           } else if (snapshot.hasData) {
             // Extract history data from the snapshot
             List<dynamic>? historyData = snapshot.data![1];

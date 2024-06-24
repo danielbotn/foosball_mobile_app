@@ -4,6 +4,7 @@ import 'package:foosball_mobile_app/models/user/user_response.dart';
 import 'package:foosball_mobile_app/state/new_game_state.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/helpers.dart';
+import 'package:foosball_mobile_app/widgets/UI/Error/ServerError.dart';
 import 'package:foosball_mobile_app/widgets/emptyData/emptyData.dart';
 import 'package:foosball_mobile_app/widgets/loading.dart';
 import 'package:foosball_mobile_app/widgets/new_game/new_game_oppositions_left.dart';
@@ -79,7 +80,7 @@ class _NewGameState extends State<NewGame> {
               return Center(child: Loading(userState: widget.userState));
             } else if (snapshot.hasError) {
               // Handle error case
-              return Center(child: Text('Error: ${snapshot.error}'));
+              return ServerError(userState: widget.userState);
             } else if (!snapshot.hasData) {
               // Display message to the user if snapshot has no data
               return Container(

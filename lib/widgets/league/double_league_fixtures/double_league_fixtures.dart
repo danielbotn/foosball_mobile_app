@@ -5,6 +5,7 @@ import 'package:foosball_mobile_app/models/double-league-matches/double_league_m
 import 'package:foosball_mobile_app/models/single-league-matches/single_league_match_model.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/helpers.dart';
+import 'package:foosball_mobile_app/widgets/UI/Error/ServerError.dart';
 import 'package:foosball_mobile_app/widgets/league/ongoing_double_game/ongoing_double_game.dart';
 import 'package:foosball_mobile_app/widgets/league/ongoing_game/ongoing_game.dart';
 import 'package:foosball_mobile_app/widgets/loading.dart';
@@ -102,7 +103,7 @@ class _DoubleLeagueFixturesState extends State<DoubleLeagueFixtures> {
                 },
               ));
         } else if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
+          return ServerError(userState: widget.userState);
         } else {
           return const Text('No data found');
         }
