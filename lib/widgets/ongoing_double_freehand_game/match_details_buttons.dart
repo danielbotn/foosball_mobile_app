@@ -5,6 +5,7 @@ import 'package:foosball_mobile_app/models/other/freehandDoubleMatchDetailObject
 import 'package:foosball_mobile_app/models/other/ongoing_double_game_object.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
+import 'package:foosball_mobile_app/widgets/extended_Text.dart';
 import 'package:foosball_mobile_app/widgets/ongoing_double_freehand_game/ongoing_double_freehand_game.dart';
 import '../dashboard/Dashboard.dart';
 
@@ -74,7 +75,10 @@ class MatchDetailButtons extends StatelessWidget {
                         ? AppColors.darkModeButtonColor
                         : AppColors.buttonsLightTheme,
                     minimumSize: const Size(100, 50)),
-                child: Text(userState.hardcodedStrings.rematch),
+                child: ExtendedText(
+                  text: userState.hardcodedStrings.rematch,
+                  userState: userState,
+                ),
               ),
             )),
         Expanded(
@@ -90,7 +94,10 @@ class MatchDetailButtons extends StatelessWidget {
                         ? AppColors.darkModeButtonColor
                         : AppColors.buttonsLightTheme,
                     minimumSize: const Size(100, 50)),
-                child: Text(userState.hardcodedStrings.close),
+                child: ExtendedText(
+                  text: userState.hardcodedStrings.close,
+                  userState: userState,
+                ),
               ),
             )),
       ],
