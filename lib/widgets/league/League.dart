@@ -38,55 +38,46 @@ class _LeagueState extends State<League> {
     bool darkMode = widget.userState.darkmode;
     Helpers helpers = Helpers();
     return Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.chevron_left),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-          iconTheme: helpers.getIconTheme(widget.userState.darkmode),
-          backgroundColor:
-              helpers.getBackgroundColor(widget.userState.darkmode),
-          title: ExtendedText(
-            text: userState.hardcodedStrings.league,
-            userState: userState,
-            colorOverride:
-                userState.darkmode ? AppColors.white : AppColors.textBlack,
-          ),
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.chevron_left),
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
-        body: Theme(
-            data: darkMode ? ThemeData.dark() : ThemeData.light(),
-            child: Container(
-                color: darkMode
-                    ? AppColors.darkModeLighterBackground
-                    : AppColors.white,
-                child: Column(
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                            flex: 1,
-                            child: SizedBox(
-                              height: 400,
-                              child: LeagueDashboard(
-                                userState: userState,
-                                randomNumber: randomNumber,
-                              ),
-                            )),
-                      ],
-                    ),
-                    const Spacer(),
-                    Visibility(
-                        visible: showButton &&
-                            widget.userState.currentOrganisationId != 0,
-                        child: LeagueButton(
-                          userState: userState,
-                          newLeaugeCreated: updateLeagueList,
-                          hideButton: hideButton,
-                        ))
-                  ],
-                ))));
+        iconTheme: helpers.getIconTheme(widget.userState.darkmode),
+        backgroundColor: helpers.getBackgroundColor(widget.userState.darkmode),
+        title: ExtendedText(
+          text: widget.userState.hardcodedStrings.league,
+          userState: widget.userState,
+          colorOverride:
+              widget.userState.darkmode ? AppColors.white : AppColors.textBlack,
+        ),
+      ),
+      body: Theme(
+        data: darkMode ? ThemeData.dark() : ThemeData.light(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Expanded(
+              child: LeagueDashboard(
+                userState: widget.userState,
+                randomNumber: randomNumber,
+              ),
+            ),
+            Visibility(
+              visible:
+                  showButton && widget.userState.currentOrganisationId != 0,
+              child: LeagueButton(
+                userState: widget.userState,
+                newLeaugeCreated: updateLeagueList,
+                hideButton: hideButton,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

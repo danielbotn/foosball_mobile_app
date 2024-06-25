@@ -22,8 +22,8 @@ class LeagueButton extends StatefulWidget {
 enum SingleOrDouble { single, double }
 
 class _LeagueButtonState extends State<LeagueButton> {
-  void onSubmit(bool createdLeagueSuccessfull) {
-    if (createdLeagueSuccessfull == true) {
+  void onSubmit(bool createdLeagueSuccessful) {
+    if (createdLeagueSuccessful == true) {
       widget.newLeaugeCreated();
     }
     widget.hideButton();
@@ -35,32 +35,41 @@ class _LeagueButtonState extends State<LeagueButton> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        Expanded(
+    return Container(
+      color: widget.userState.darkmode
+          ? AppColors
+              .darkModeBackground // Replace with your desired dark mode background color
+          : AppColors
+              .white, // Replace with your desired light mode background color
+      child: Row(
+        children: <Widget>[
+          Expanded(
             flex: 5,
-            child: Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: ElevatedButton(
-                onPressed: () => {
-                  widget.hideButton(),
-                  showDialog(
-                      context: context,
-                      builder: (context) => CreateLeagueDialog(
-                            onSubmit: onSubmit,
-                            onCancel: onCancel,
-                            userState: widget.userState,
-                          )),
-                },
-                style: ElevatedButton.styleFrom(
-                    primary: widget.userState.darkmode
-                        ? AppColors.darkModeButtonColor
-                        : AppColors.buttonsLightTheme,
-                    minimumSize: const Size(100, 50)),
-                child: Text(userState.hardcodedStrings.createNewLeague),
+            child: ElevatedButton(
+              onPressed: () => {
+                widget.hideButton(),
+                showDialog(
+                  context: context,
+                  builder: (context) => CreateLeagueDialog(
+                    onSubmit: onSubmit,
+                    onCancel: onCancel,
+                    userState: widget.userState,
+                  ),
+                ),
+              },
+              style: ElevatedButton.styleFrom(
+                primary: widget.userState.darkmode
+                    ? AppColors
+                        .darkModeButtonColor // Replace with your dark mode button color
+                    : AppColors
+                        .buttonsLightTheme, // Replace with your light mode button color
+                minimumSize: const Size(100, 50),
               ),
-            )),
-      ],
+              child: Text(widget.userState.hardcodedStrings.createNewLeague),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
