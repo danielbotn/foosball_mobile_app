@@ -60,11 +60,9 @@ class _LeagueState extends State<League> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Expanded(
-              child: LeagueDashboard(
-                userState: widget.userState,
-                randomNumber: randomNumber,
-              ),
+            LeagueDashboard(
+              userState: widget.userState,
+              randomNumber: randomNumber,
             ),
             Visibility(
               visible:

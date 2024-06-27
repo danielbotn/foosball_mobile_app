@@ -49,6 +49,18 @@ class _AddDoubleLeagueTeamsState extends State<AddDoubleLeagueTeams> {
     var tmp = await getLeaguePlayers();
   }
 
+  bool CheckIfUserIsInLeague() {
+    bool result = false;
+
+    for (var element in leaguePlayers) {
+      if (userState.userId == element.userId) {
+        result = true;
+        break;
+      }
+    }
+    return result;
+  }
+
   void goToLeagueOverview() {
     final navigator = Navigator.of(context);
     navigator.pushAndRemoveUntil(
@@ -76,6 +88,12 @@ class _AddDoubleLeagueTeamsState extends State<AddDoubleLeagueTeams> {
 
   void startLeague() async {
     try {
+      if (CheckIfUserIsInLeague() == false) {
+        Helpers helpers = Helpers();
+        helpers.showSnackbar(
+            context, "You have to be part of the league to start it", true);
+        return;
+      }
       DoubleLeagueMatchApi api = DoubleLeagueMatchApi();
       LeagueApi lApi = LeagueApi();
       CreateLeagueBody body = CreateLeagueBody(
