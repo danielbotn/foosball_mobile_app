@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/api/DoubleLeaguePlayersApi.dart';
 import 'package:foosball_mobile_app/api/DoubleLeagueTeams.dart';
 import 'package:foosball_mobile_app/api/LeagueApi.dart';
+import 'package:foosball_mobile_app/main.dart';
 import 'package:foosball_mobile_app/models/double-league-players/double_league_player_create_body.dart';
 import 'package:foosball_mobile_app/models/double-league-teams/createDoubleLeagueTeamBody.dart';
 import 'package:foosball_mobile_app/models/user/user_response.dart';
@@ -75,7 +76,7 @@ class _CreateDoubleLeagueTeamState extends State<CreateDoubleLeagueTeam> {
     } on Exception catch (_) {
       Helpers helpers = Helpers();
       helpers.showSnackbar(
-          context, "Error occurred. Could not create a new team", true);
+          context, userState.hardcodedStrings.errorCouldNotCreateTeam, true);
     }
   }
 
@@ -95,15 +96,17 @@ class _CreateDoubleLeagueTeamState extends State<CreateDoubleLeagueTeam> {
           backgroundColor:
               helpers.getBackgroundColor(widget.userState.darkmode),
           title: ExtendedText(
-            text: "Create Team",
+            text: userState.hardcodedStrings.createTeam,
             userState: widget.userState,
             colorOverride: widget.userState.darkmode
                 ? AppColors.white
                 : AppColors.textBlack,
           ),
         ),
-        body: Theme(
-          data: darkMode ? ThemeData.dark() : ThemeData.light(),
+        body: Container(
+          color: widget.userState.darkmode
+              ? AppColors.darkModeLighterBackground
+              : AppColors.white,
           child: Column(
             children: <Widget>[
               Padding(
@@ -112,14 +115,14 @@ class _CreateDoubleLeagueTeamState extends State<CreateDoubleLeagueTeam> {
                       userState: widget.userState,
                       onChangeInput: onChangeInput,
                       clearInputText: false,
-                      hintText: "Team Name")),
+                      hintText: userState.hardcodedStrings.teamName)),
               TeamOverview(
                   userState: widget.userState, team: widget.teamPlayers),
               const Spacer(),
               Button(
                   userState: widget.userState,
                   onClick: onButtonClick,
-                  text: 'Create Team',
+                  text: userState.hardcodedStrings.createTeam,
                   paddingBottom: 4,
                   paddingLeft: 4,
                   paddingRight: 4,

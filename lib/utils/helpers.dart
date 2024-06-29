@@ -115,6 +115,14 @@ class Helpers {
     }
   }
 
+  Color getCheckMarkBorderColor(bool darkMode) {
+    if (darkMode == true) {
+      return AppColors.white;
+    } else {
+      return AppColors.buttonsLightTheme;
+    }
+  }
+
   Color getButtonTextColor(bool darkMode, bool isTwoPlayers) {
     if (darkMode) {
       return AppColors.white;

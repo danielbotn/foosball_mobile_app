@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/api/UserApi.dart';
 import 'package:foosball_mobile_app/models/user/user_response.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
+import 'package:foosball_mobile_app/utils/app_color.dart';
 import 'package:foosball_mobile_app/utils/helpers.dart';
+import 'package:foosball_mobile_app/widgets/extended_Text.dart';
 import 'package:foosball_mobile_app/widgets/loading.dart';
 import 'package:tuple/tuple.dart';
 
@@ -101,10 +103,15 @@ class _TeamsSelecterState extends State<TeamsSelecter> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text("${users[i].firstName} ${users[i].lastName}"),
+                ExtendedText(
+                    text: "${users[i].firstName} ${users[i].lastName}",
+                    userState: widget.userState),
               ],
             ),
-            subtitle: Text(users[i].email),
+            subtitle: ExtendedText(
+              text: users[i].email,
+              userState: widget.userState,
+            ),
             leading: SizedBox(
                 height: 100,
                 width: 50,
@@ -120,6 +127,17 @@ class _TeamsSelecterState extends State<TeamsSelecter> {
                       Visibility(
                         visible: true,
                         child: Checkbox(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(2.0),
+                          ),
+                          side: MaterialStateBorderSide.resolveWith((states) {
+                            if (widget.userState.darkmode) {
+                              return const BorderSide(
+                                  width: 1.0, color: AppColors.white);
+                            }
+                            return const BorderSide(
+                                width: 1.0, color: AppColors.textGrey);
+                          }),
                           checkColor: Colors.white,
                           activeColor: helpers
                               .getCheckMarkColor(widget.userState.darkmode),

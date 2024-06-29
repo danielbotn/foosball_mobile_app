@@ -122,6 +122,15 @@ class HardcodedStrings {
   final String enterSlackWebhook;
   final String slackWebhook;
   final String save;
+  final String createTeam;
+  final String teamName;
+  final String errorCouldNotCreateTeam;
+  final String addTeam;
+  final String selectedPlayers;
+  final String startLeague;
+  final String totalTeamsInLeague;
+  final String partOfLeagueToStartIt;
+  final String startLeagueError;
 
   HardcodedStrings(
       {required this.matches,
@@ -241,7 +250,16 @@ class HardcodedStrings {
       required this.submitVerificationButtonText,
       required this.enterSlackWebhook,
       required this.slackWebhook,
-      required this.save});
+      required this.save,
+      required this.createTeam,
+      required this.teamName,
+      required this.errorCouldNotCreateTeam,
+      required this.addTeam,
+      required this.selectedPlayers,
+      required this.startLeague,
+      required this.totalTeamsInLeague,
+      required this.partOfLeagueToStartIt,
+      required this.startLeagueError});
 
   factory HardcodedStrings.fromJson(Map<String, dynamic> item) =>
       _$HardcodedStringsFromJson(item);

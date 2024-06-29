@@ -49,7 +49,7 @@ class _AddDoubleLeagueTeamsState extends State<AddDoubleLeagueTeams> {
     var tmp = await getLeaguePlayers();
   }
 
-  bool CheckIfUserIsInLeague() {
+  bool checkIfUserIsInLeague() {
     bool result = false;
 
     for (var element in leaguePlayers) {
@@ -88,10 +88,10 @@ class _AddDoubleLeagueTeamsState extends State<AddDoubleLeagueTeams> {
 
   void startLeague() async {
     try {
-      if (CheckIfUserIsInLeague() == false) {
+      if (checkIfUserIsInLeague() == false) {
         Helpers helpers = Helpers();
         helpers.showSnackbar(
-            context, "You have to be part of the league to start it", true);
+            context, userState.hardcodedStrings.partOfLeagueToStartIt, true);
         return;
       }
       DoubleLeagueMatchApi api = DoubleLeagueMatchApi();
@@ -120,7 +120,7 @@ class _AddDoubleLeagueTeamsState extends State<AddDoubleLeagueTeams> {
     } on Exception catch (_) {
       Helpers helpers = Helpers();
       helpers.showSnackbar(
-          context, "Error occurred. Could not update league", true);
+          context, userState.hardcodedStrings.startLeagueError, true);
     }
   }
 
@@ -163,7 +163,7 @@ class _AddDoubleLeagueTeamsState extends State<AddDoubleLeagueTeams> {
           backgroundColor:
               helpers.getBackgroundColor(widget.userState.darkmode),
           title: ExtendedText(
-            text: "Add Teams",
+            text: widget.userState.hardcodedStrings.addTeam,
             userState: widget.userState,
             colorOverride: widget.userState.darkmode
                 ? AppColors.white
@@ -183,22 +183,28 @@ class _AddDoubleLeagueTeamsState extends State<AddDoubleLeagueTeams> {
             } else if (snapshot.hasError) {
               return ServerError(userState: widget.userState);
             } else {
-              List<DoubleLeaguePlayerModel>? players = snapshot.data;
-              return Theme(
-                data: darkMode ? ThemeData.dark() : ThemeData.light(),
+              return Container(
+                color: darkMode
+                    ? AppColors.darkModeLighterBackground
+                    : AppColors.white,
                 child: Column(
                   children: <Widget>[
                     TeamsSelecter(userState: userState, addTeam: teamReady),
                     Visibility(
                       visible: selectedPlayers.isNotEmpty,
                       child: Headline(
-                          headline: 'Selected players', userState: userState),
+                          headline: userState.hardcodedStrings.selectedPlayers,
+                          userState: userState),
                     ),
                     TeamOverview(userState: userState, team: selectedPlayers),
                     const Spacer(),
                     Visibility(
                       visible: totalTeams >= 2,
-                      child: Text("Total Teams in league $totalTeams"),
+                      child: ExtendedText(
+                        text:
+                            '${userState.hardcodedStrings.totalTeamsInLeague} $totalTeams',
+                        userState: userState,
+                      ),
                     ),
                     Visibility(
                       visible: selectedPlayers.length >= 2,
@@ -218,7 +224,7 @@ class _AddDoubleLeagueTeamsState extends State<AddDoubleLeagueTeams> {
                       child: Button(
                           userState: userState,
                           onClick: startLeague,
-                          text: "Start League",
+                          text: userState.hardcodedStrings.startLeague,
                           paddingBottom: 4,
                           paddingLeft: 4,
                           paddingRight: 4,

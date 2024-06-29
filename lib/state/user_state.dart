@@ -151,7 +151,16 @@ abstract class _UserState with Store {
       submitVerificationButtonText: "",
       enterSlackWebhook: "",
       slackWebhook: "",
-      save: "");
+      save: "",
+      createTeam: "",
+      addTeam: "",
+      errorCouldNotCreateTeam: "",
+      teamName: "",
+      selectedPlayers: "",
+      startLeague: "",
+      totalTeamsInLeague: "",
+      partOfLeagueToStartIt: "",
+      startLeagueError: "");
 
   @observable
   bool darkmode = false;

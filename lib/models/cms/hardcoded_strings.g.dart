@@ -134,6 +134,15 @@ HardcodedStrings _$HardcodedStringsFromJson(Map<String, dynamic> json) =>
       enterSlackWebhook: json['enterSlackWebhook'] as String,
       slackWebhook: json['slackWebhook'] as String,
       save: json['save'] as String,
+      createTeam: json['createTeam'] as String,
+      teamName: json['teamName'] as String,
+      errorCouldNotCreateTeam: json['errorCouldNotCreateTeam'] as String,
+      addTeam: json['addTeam'] as String,
+      selectedPlayers: json['selectedPlayers'] as String,
+      startLeague: json['startLeague'] as String,
+      totalTeamsInLeague: json['totalTeamsInLeague'] as String,
+      partOfLeagueToStartIt: json['partOfLeagueToStartIt'] as String,
+      startLeagueError: json['startLeagueError'] as String,
     );
 
 Map<String, dynamic> _$HardcodedStringsToJson(HardcodedStrings instance) =>
@@ -258,4 +267,13 @@ Map<String, dynamic> _$HardcodedStringsToJson(HardcodedStrings instance) =>
       'enterSlackWebhook': instance.enterSlackWebhook,
       'slackWebhook': instance.slackWebhook,
       'save': instance.save,
+      'createTeam': instance.createTeam,
+      'teamName': instance.teamName,
+      'errorCouldNotCreateTeam': instance.errorCouldNotCreateTeam,
+      'addTeam': instance.addTeam,
+      'selectedPlayers': instance.selectedPlayers,
+      'startLeague': instance.startLeague,
+      'totalTeamsInLeague': instance.totalTeamsInLeague,
+      'partOfLeagueToStartIt': instance.partOfLeagueToStartIt,
+      'startLeagueError': instance.startLeagueError,
     };
