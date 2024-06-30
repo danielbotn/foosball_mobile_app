@@ -5,8 +5,6 @@ import 'package:foosball_mobile_app/models/auth/error_response.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
-import 'dart:convert';
-import 'package:foosball_mobile_app/widgets/dashboard/Dashboard.dart';
 import 'package:foosball_mobile_app/widgets/dashboard/New_Dashboard.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 

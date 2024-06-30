@@ -8,7 +8,7 @@ import 'package:foosball_mobile_app/models/freehand-matches/freehand_match_model
 import 'package:foosball_mobile_app/models/other/TwoPlayersObject.dart';
 import 'package:foosball_mobile_app/models/user/user_response.dart';
 import 'package:foosball_mobile_app/utils/helpers.dart';
-import 'package:foosball_mobile_app/widgets/dashboard/Dashboard.dart';
+import 'package:foosball_mobile_app/widgets/dashboard/New_Dashboard.dart';
 import 'package:foosball_mobile_app/widgets/loading.dart';
 import '../extended_Text.dart';
 import 'freehand_match_buttons.dart';
@@ -76,8 +76,8 @@ class _FreehandMatchDetailState extends State<FreehandMatchDetail> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => Dashboard(
-                      param: widget.twoPlayersObject.userState,
+                builder: (context) => NewDashboard(
+                      userState: widget.twoPlayersObject.userState,
                     )));
       }
     });

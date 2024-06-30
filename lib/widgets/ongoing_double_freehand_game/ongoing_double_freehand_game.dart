@@ -6,7 +6,7 @@ import 'package:foosball_mobile_app/models/other/ongoing_double_game_object.dart
 import 'package:foosball_mobile_app/models/user/user_response.dart';
 import 'package:foosball_mobile_app/state/ongoing_double_freehand_state.dart';
 import 'package:foosball_mobile_app/utils/helpers.dart';
-import 'package:foosball_mobile_app/widgets/dashboard/Dashboard.dart';
+import 'package:foosball_mobile_app/widgets/dashboard/New_Dashboard.dart';
 import 'package:foosball_mobile_app/widgets/ongoing_double_freehand_game/buttons.dart';
 import 'package:foosball_mobile_app/widgets/ongoing_double_freehand_game/player_card.dart';
 import 'package:foosball_mobile_app/widgets/ongoing_double_freehand_game/player_score.dart';
@@ -83,8 +83,8 @@ class _OngoingDoubleFreehandGameState extends State<OngoingDoubleFreehandGame> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => Dashboard(
-                      param: widget.ongoingDoubleGameObject.userState,
+                builder: (context) => NewDashboard(
+                      userState: widget.ongoingDoubleGameObject.userState,
                     )));
       }
     });

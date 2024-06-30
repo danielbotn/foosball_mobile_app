@@ -7,11 +7,11 @@ import 'package:foosball_mobile_app/models/freehand-matches/userScoreObject.dart
 import 'package:foosball_mobile_app/models/other/ongoing_game_object.dart';
 import 'package:foosball_mobile_app/state/ongoing_freehand_state.dart';
 import 'package:foosball_mobile_app/utils/helpers.dart';
+import 'package:foosball_mobile_app/widgets/dashboard/New_Dashboard.dart';
 import 'package:foosball_mobile_app/widgets/ongoing_freehand_game/player_card.dart';
 import 'package:foosball_mobile_app/widgets/ongoing_freehand_game/player_score.dart';
 import 'package:foosball_mobile_app/widgets/ongoing_freehand_game/time_keeper.dart';
 import 'package:provider/provider.dart';
-import '../dashboard/Dashboard.dart';
 import '../extended_Text.dart';
 import 'ongoing_buttons.dart';
 
@@ -80,8 +80,8 @@ class _OngoingFreehandGameState extends State<OngoingFreehandGame> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => Dashboard(
-                      param: widget.ongoingGameObject.userState,
+                builder: (context) => NewDashboard(
+                      userState: widget.ongoingGameObject.userState,
                     )));
       }
     });
