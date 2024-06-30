@@ -1,3 +1,4 @@
+// InputWidget.dart
 import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
@@ -7,13 +8,14 @@ class InputWidget extends StatefulWidget {
   final Function(String value) onChangeInput;
   final bool clearInputText;
   final String hintText;
-  const InputWidget(
-      {Key? key,
-      required this.userState,
-      required this.onChangeInput,
-      required this.clearInputText,
-      required this.hintText})
-      : super(key: key);
+
+  const InputWidget({
+    Key? key,
+    required this.userState,
+    required this.onChangeInput,
+    required this.clearInputText,
+    required this.hintText,
+  }) : super(key: key);
 
   @override
   State<InputWidget> createState() => _InputWidgetState();
@@ -36,43 +38,46 @@ class _InputWidgetState extends State<InputWidget> {
   Widget build(BuildContext context) {
     return TextField(
       style: TextStyle(
-          color:
-              widget.userState.darkmode ? AppColors.white : AppColors.textGrey),
+        color:
+            widget.userState.darkmode ? AppColors.white : AppColors.textBlack,
+      ),
       focusNode: focusNode,
       controller: _inputController,
       onChanged: (String value) {
         widget.onChangeInput(value);
       },
       decoration: InputDecoration(
-          hintStyle: TextStyle(
-              color: widget.userState.darkmode
-                  ? AppColors.white
-                  : AppColors.textGrey),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-                color: widget.userState.darkmode
-                    ? AppColors.white
-                    : AppColors.textGrey,
-                width: 1.0),
+        labelText: widget.hintText,
+        labelStyle: TextStyle(
+          color:
+              widget.userState.darkmode ? AppColors.white : AppColors.textBlack,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: widget.userState.darkmode
+                ? AppColors.white
+                : AppColors.textBlack,
           ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-                color: widget.userState.darkmode
-                    ? AppColors.white
-                    : AppColors.textGrey,
-                width: 1.0),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: widget.userState.darkmode
+                ? AppColors.white
+                : AppColors.textBlack,
           ),
-          suffixIcon: IconButton(
-              onPressed: () {
-                _inputController.clear();
-              },
-              icon: Icon(
-                Icons.clear,
-                color: widget.userState.darkmode
-                    ? AppColors.white
-                    : AppColors.textGrey,
-              )),
-          hintText: widget.hintText),
+        ),
+        suffixIcon: IconButton(
+          onPressed: () {
+            _inputController.clear();
+          },
+          icon: Icon(
+            Icons.clear,
+            color: widget.userState.darkmode
+                ? AppColors.white
+                : AppColors.textGrey,
+          ),
+        ),
+      ),
     );
   }
 }

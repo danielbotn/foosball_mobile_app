@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:foosball_mobile_app/main.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
+import 'package:foosball_mobile_app/widgets/extended_Text.dart';
 
 class Button extends StatefulWidget {
   final UserState userState;
@@ -48,7 +50,7 @@ class _ButtonState extends State<Button> {
                     : AppColors.buttonsLightTheme,
                 minimumSize: const Size(100, 50),
               ),
-              child: Text(widget.text),
+              child: ExtendedText(text: widget.text, userState: userState),
             ),
           ),
         ),
