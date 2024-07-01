@@ -74,9 +74,21 @@ class AuthApi {
             },
           ),
         );
+      } on DioError catch (dioError) {
+        // Handle DioError specifically
+        if (dioError.response != null) {
+          // The server responded with a status other than 2xx
+          result = dioError.response!;
+        } else {
+          // Something happened in setting up or sending the request that triggered an error
+          throw Exception('Failed to refresh token: ${dioError.message}');
+        }
       } catch (e) {
-        rethrow;
+        // Handle any other errors
+        throw Exception('An unexpected error occurred: $e');
       }
+    } else {
+      throw Exception('Base URL is not defined');
     }
 
     return result;

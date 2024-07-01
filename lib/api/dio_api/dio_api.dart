@@ -48,11 +48,23 @@ class RefreshTokenInterceptor extends QueuedInterceptor {
   ) async {
     PreferencesService preferencesService = PreferencesService();
     String? token = await preferencesService.getJwtToken();
+
+    // Check if token is null
+    if (token == null) {
+      // Handle the situation when the token is null
+      // You can abort the request or handle it based on your requirements
+      handler.reject(
+        DioError(
+          requestOptions: options,
+          error: 'Token is null. Request cannot proceed.',
+          type: DioErrorType.cancel,
+        ),
+      );
+      return;
+    }
+
     TokenHelper helper = TokenHelper();
-    // var token = options.headers['authorization'];
-
-    var remainingTime = await helper.getAccessTokenRemainingTime(token!);
-
+    var remainingTime = await helper.getAccessTokenRemainingTime(token);
     // Check if remaining time of token is less or equal to a minute
     if (remainingTime != null && remainingTime <= const Duration(minutes: 1)) {
       Helpers helper = Helpers();
@@ -61,7 +73,14 @@ class RefreshTokenInterceptor extends QueuedInterceptor {
         options.headers['authorization'] = 'Bearer $newToken';
         cancelToken = CancelToken();
       } else {
-        options.headers['authorization'] = 'Bearer $newToken';
+        handler.reject(
+          DioError(
+            requestOptions: options,
+            error: 'Failed to refresh token. Request aborted.',
+            type: DioErrorType.cancel,
+          ),
+        );
+        return;
       }
     } else {
       options.headers['authorization'] = 'Bearer $token';
