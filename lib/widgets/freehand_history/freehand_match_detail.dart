@@ -220,11 +220,12 @@ class _FreehandMatchDetailState extends State<FreehandMatchDetail> {
                             freehandMatch.totalPlayingTime.toString(),
                         totalPlayingTimeLabel: widget.twoPlayersObject.userState
                             .hardcodedStrings.totalPlayingTime),
-                    FreehandMatchGoals(
-                      userState: widget.twoPlayersObject.userState,
-                      freehandGoals: freehandGoals,
+                    Expanded(
+                      child: FreehandMatchGoals(
+                        userState: widget.twoPlayersObject.userState,
+                        freehandGoals: freehandGoals,
+                      ),
                     ),
-                    const Spacer(),
                     FreehandMatchButtons(
                         userState: userState, freehandMatchData: freehandMatch)
                   ],
