@@ -6,6 +6,7 @@ import 'package:foosball_mobile_app/models/other/ongoing_double_game_object.dart
 import 'package:foosball_mobile_app/models/user/user_response.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
+import 'package:foosball_mobile_app/widgets/extended_Text.dart';
 import 'package:foosball_mobile_app/widgets/new_game/new_game.dart';
 import 'package:foosball_mobile_app/widgets/ongoing_double_freehand_game/ongoing_double_freehand_game.dart';
 
@@ -122,7 +123,10 @@ class FreehandDoubleMatchButtons extends StatelessWidget {
                         ? AppColors.darkModeButtonColor
                         : AppColors.buttonsLightTheme,
                     minimumSize: const Size(100, 50)),
-                child: Text(userState.hardcodedStrings.newMatch),
+                child: ExtendedText(
+                  text: userState.hardcodedStrings.newMatch,
+                  userState: userState,
+                ),
               ),
             )),
         Expanded(
@@ -136,7 +140,10 @@ class FreehandDoubleMatchButtons extends StatelessWidget {
                         ? AppColors.darkModeButtonColor
                         : AppColors.buttonsLightTheme,
                     minimumSize: const Size(100, 50)),
-                child: Text(userState.hardcodedStrings.rematch),
+                child: ExtendedText(
+                  text: userState.hardcodedStrings.rematch,
+                  userState: userState,
+                ),
               ),
             )),
       ],

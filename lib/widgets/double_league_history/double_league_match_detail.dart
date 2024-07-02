@@ -170,11 +170,12 @@ class _DoubleLeagueMatchDetailState extends State<DoubleLeagueMatchDetail> {
                             : "",
                         totalPlayingTimeLabel: widget.twoPlayersObject.userState
                             .hardcodedStrings.totalPlayingTime),
-                    DoubleLeagueGoals(
-                      userState: widget.twoPlayersObject.userState,
-                      goals: dlg,
+                    Expanded(
+                      child: DoubleLeagueGoals(
+                        userState: widget.twoPlayersObject.userState,
+                        goals: dlg,
+                      ),
                     ),
-                    const Spacer(),
                     DoubleLeagueButtons(
                         userState: widget.twoPlayersObject.userState)
                   ],

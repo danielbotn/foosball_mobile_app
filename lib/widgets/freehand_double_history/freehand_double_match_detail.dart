@@ -164,85 +164,89 @@ class _FreehandDoubleMatchDetailState extends State<FreehandDoubleMatchDetail> {
                 helpers.getFreehandDoubleMatchObject(match!, userInfo);
 
             return Container(
-                color: helpers.getBackgroundColor(userState.darkmode),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              color: helpers.getBackgroundColor(userState.darkmode),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Column(
                       children: [
-                        FreehandDoubleMatchCard(
-                          userState: widget.twoPlayersObject.userState,
-                          firstName: userInfo.firstName,
-                          lastName: userInfo.lastName,
-                          photoUrl: userInfo.photoUrl,
-                          lefOrRight: true,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            FreehandDoubleMatchCard(
+                              userState: widget.twoPlayersObject.userState,
+                              firstName: userInfo.firstName,
+                              lastName: userInfo.lastName,
+                              photoUrl: userInfo.photoUrl,
+                              lefOrRight: true,
+                            ),
+                            FreehandDoubleMatchCard(
+                              userState: widget.twoPlayersObject.userState,
+                              firstName: matchObject.opponentOneFirstName,
+                              lastName: matchObject.opponentOneLastName,
+                              photoUrl: matchObject.opponentOnePhotoUrl,
+                              lefOrRight: false,
+                            ),
+                          ],
                         ),
-                        FreehandDoubleMatchCard(
-                          userState: widget.twoPlayersObject.userState,
-                          firstName: matchObject.opponentOneFirstName,
-                          lastName: matchObject.opponentOneLastName,
-                          photoUrl: matchObject.opponentOnePhotoUrl,
-                          lefOrRight: false,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            FreehandDoubleMatchCard(
+                              userState: widget.twoPlayersObject.userState,
+                              firstName: matchObject.teamMateFirstName,
+                              lastName: matchObject.teamMateLastName,
+                              photoUrl: matchObject.teamMatePhotoUrl,
+                              lefOrRight: true,
+                            ),
+                            Visibility(
+                              visible: matchObject.opponentTwoFirstName != null,
+                              child: FreehandDoubleMatchCard(
+                                userState: widget.twoPlayersObject.userState,
+                                firstName:
+                                    matchObject.opponentTwoFirstName ?? "",
+                                lastName: matchObject.opponentTwoLastName ?? "",
+                                photoUrl: matchObject.opponentTwoPhotoUrl ?? "",
+                                lefOrRight: false,
+                              ),
+                            )
+                          ],
                         ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        FreehandDoubleMatchCard(
-                          userState: widget.twoPlayersObject.userState,
-                          firstName: matchObject.teamMateFirstName,
-                          lastName: matchObject.teamMateLastName,
-                          photoUrl: matchObject.teamMatePhotoUrl,
-                          lefOrRight: true,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            MatchScore(
+                              userState: widget.twoPlayersObject.userState,
+                              userScore: matchObject.userScore,
+                            ),
+                            MatchScore(
+                              userState: widget.twoPlayersObject.userState,
+                              userScore: matchObject.opponentScore,
+                            ),
+                          ],
                         ),
-                        Visibility(
-                          visible: matchObject.opponentTwoFirstName != null,
-                          child: FreehandDoubleMatchCard(
+                        TotalPlayingTime(
+                          userState: widget.twoPlayersObject.userState,
+                          totalPlayingTime: match.totalPlayingTime,
+                          totalPlayingTimeLabel: widget.twoPlayersObject
+                              .userState.hardcodedStrings.totalPlayingTime,
+                        ),
+                        Expanded(
+                          child: FreehandDoubleGoals(
                             userState: widget.twoPlayersObject.userState,
-                            firstName: matchObject.opponentTwoFirstName != null
-                                ? matchObject.opponentTwoFirstName!
-                                : "",
-                            lastName: matchObject.opponentTwoLastName != null
-                                ? matchObject.opponentTwoLastName!
-                                : "",
-                            photoUrl: matchObject.opponentTwoPhotoUrl != null
-                                ? matchObject.opponentTwoPhotoUrl!
-                                : "",
-                            lefOrRight: false,
+                            freehandGoals: freehandGoals,
                           ),
-                        )
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        MatchScore(
-                          userState: widget.twoPlayersObject.userState,
-                          userScore: matchObject.userScore,
-                        ),
-                        MatchScore(
-                          userState: widget.twoPlayersObject.userState,
-                          userScore: matchObject.opponentScore,
                         ),
                       ],
                     ),
-                    TotalPlayingTime(
-                        userState: widget.twoPlayersObject.userState,
-                        totalPlayingTime: match.totalPlayingTime,
-                        totalPlayingTimeLabel: widget.twoPlayersObject.userState
-                            .hardcodedStrings.totalPlayingTime),
-                    FreehandDoubleGoals(
-                      userState: widget.twoPlayersObject.userState,
-                      freehandGoals: freehandGoals,
-                    ),
-                    const Spacer(),
-                    FreehandDoubleMatchButtons(
-                      userState: userState,
-                      matchData: match,
-                    )
-                  ],
-                ));
+                  ),
+                  FreehandDoubleMatchButtons(
+                    userState: userState,
+                    matchData: match,
+                  )
+                ],
+              ),
+            );
           } else {
             return Loading(userState: userState);
           }
