@@ -60,6 +60,8 @@ flutter_native_splash:
     image: assets/images/dano-scaled.png
 
 dev_dependencies:
+  integration_test:
+    sdk: flutter
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: "^0.10.0"

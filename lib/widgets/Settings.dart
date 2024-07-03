@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/api/Dato_CMS.dart';
 import 'package:foosball_mobile_app/api/Organisation.dart';
 import 'package:foosball_mobile_app/icons/custom_icons.dart';
-import 'package:foosball_mobile_app/main.dart';
 import 'package:foosball_mobile_app/models/cms/hardcoded_strings.dart';
 import 'package:foosball_mobile_app/models/organisation/organisation_response.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
