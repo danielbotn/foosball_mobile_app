@@ -104,7 +104,6 @@ class _MatchDetailsState extends State<MatchDetails> {
               child: Column(
                 children: [
                   Row(
-                    // align to center
                     children: [
                       MatchDetailCard(
                         match: match,
@@ -137,15 +136,16 @@ class _MatchDetailsState extends State<MatchDetails> {
                     totalPlayingTimeLabel: widget.freehandMatchDetailObject
                         .userState.hardcodedStrings.totalPlayingTime,
                   ),
-                  FreehandMatchGoals(
-                    userState: widget.freehandMatchDetailObject.userState,
-                    freehandGoals: goals,
-                  ),
-                  const Spacer(),
-                  MatchDetailButtons(
+                  Expanded(
+                    child: FreehandMatchGoals(
                       userState: widget.freehandMatchDetailObject.userState,
-                      freehandMatchDetailObject:
-                          widget.freehandMatchDetailObject),
+                      freehandGoals: goals,
+                    ),
+                  ),
+                  MatchDetailButtons(
+                    userState: widget.freehandMatchDetailObject.userState,
+                    freehandMatchDetailObject: widget.freehandMatchDetailObject,
+                  ),
                 ],
               ),
             );

@@ -35,6 +35,10 @@ void main() {
 
       // Optional: Verify some elements on the Dashboard
       expect(find.text('Mark Andersen'), findsOneWidget);
+      expect(find.text('Matches'), findsOneWidget);
+      expect(find.text('Goals'), findsOneWidget);
+      expect(find.text('Quick Actions'), findsOneWidget);
+      expect(find.text('Last Ten Matches'), findsOneWidget);
     });
   });
 }
