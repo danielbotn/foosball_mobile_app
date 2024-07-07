@@ -75,6 +75,7 @@ class MatchDetailButtons extends StatelessWidget {
                 child: ExtendedText(
                   text: userState.hardcodedStrings.rematch,
                   userState: userState,
+                   colorOverride: userState.darkmode ? AppColors.white : AppColors.white,
                 ),
               ),
             )),
@@ -94,6 +95,7 @@ class MatchDetailButtons extends StatelessWidget {
                 child: ExtendedText(
                   text: userState.hardcodedStrings.close,
                   userState: userState,
+                  colorOverride: userState.darkmode ? AppColors.white : AppColors.white,
                 ),
               ),
             )),
