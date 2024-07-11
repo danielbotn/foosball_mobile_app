@@ -63,6 +63,7 @@ class QuicActions extends StatelessWidget {
             Row(
               children: [
                 InkWell(
+                  key: const Key('newGameButton'),
                   onTap: () {
                     goToNewGame(context);
                   },

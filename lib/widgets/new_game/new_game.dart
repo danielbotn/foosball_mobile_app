@@ -9,7 +9,6 @@ import 'package:foosball_mobile_app/widgets/emptyData/emptyData.dart';
 import 'package:foosball_mobile_app/widgets/loading.dart';
 import 'package:foosball_mobile_app/widgets/new_game/new_game_oppositions_left.dart';
 import 'package:foosball_mobile_app/widgets/new_game/new_game_vs.dart';
-import 'package:foosball_mobile_app/widgets/new_game/no_users_found.dart';
 import 'package:foosball_mobile_app/widgets/new_game/start_game_button.dart';
 import '../extended_Text.dart';
 import '../headline_big.dart';

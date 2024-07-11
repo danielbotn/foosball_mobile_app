@@ -41,4 +41,58 @@ void main() {
       expect(find.text('Last Ten Matches'), findsOneWidget);
     });
   });
+
+  testWidgets('verify new game function', (tester) async {
+    // Start the app and log in (assuming this is necessary)
+    app.main();
+    await tester.pumpAndSettle();
+    // Perform login steps if needed
+    // ...
+
+    // Find and tap the new game icon/button
+    // Find and tap the new game button using the key
+    final newGameButton = find.byKey(const Key('newGameButton'));
+    await tester.tap(newGameButton);
+    await tester.pumpAndSettle();
+
+    // Verify that "Choose opponent" is visible
+    expect(find.text('Choose Opponent'), findsOneWidget);
+
+    // Find the ListTile for Allen Turner
+    final allenTurnerTile = find.ancestor(
+      of: find.text('Allen Turner'),
+      matching: find.byType(ListTile),
+    );
+
+    // Find the Checkbox within Allen Turner's ListTile
+    final allenTurnerCheckbox = find.descendant(
+      of: allenTurnerTile,
+      matching: find.byType(Checkbox),
+    );
+
+    // Tap the checkbox
+    await tester.tap(allenTurnerCheckbox);
+    await tester.pumpAndSettle();
+
+    // Verify that Allen Turner is added to a team
+    // This might be Team One or Team Two depending on the state
+    expect(find.text('Allen Turner'), findsOneWidget);
+
+    // Verify that "Match" text is visible (if applicable)
+    // Note: Your code doesn't show where "Match" text appears, so this might need adjustment
+    expect(find.text('Match'), findsOneWidget);
+
+    // Verify that the current user (e.g., "Mark Andersen") is also visible
+    // Note: Replace "Mark Andersen" with the actual name of the logged-in user
+    expect(find.text('Mark'), findsOneWidget);
+    expect(find.text('Andersen'), findsOneWidget);
+
+    // Verify the "vs" text if it's shown somewhere
+    expect(find.text('VS'), findsOneWidget);
+
+    // Verify that the current user (e.g., "Mark Andersen") is also visible
+    // Note: Replace "Mark Andersen" with the actual name of the logged-in user
+    expect(find.text('Allen'), findsOneWidget);
+    expect(find.text('Turner'), findsOneWidget);
+  });
 }
