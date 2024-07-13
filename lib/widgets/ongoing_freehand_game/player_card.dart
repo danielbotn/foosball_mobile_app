@@ -16,7 +16,7 @@ class PlayerCard extends StatefulWidget {
   final OngoingFreehandState counter;
   final Function() notifyParent;
   final Function() stopClockFromChild;
-  PlayerCard(
+  const PlayerCard(
       {Key? key,
       required this.ongoingGameObject,
       required this.userState,
@@ -107,11 +107,13 @@ class _PlayerCardState extends State<PlayerCard> {
               Column(
                 children: [
                   Image.network(
+                      key: Key(
+                          "freehandGame${widget.isPlayerOne ? widget.ongoingGameObject.playerOne.firstName : widget.ongoingGameObject.playerTwo.firstName}"),
                       widget.isPlayerOne
                           ? widget.ongoingGameObject.playerOne.photoUrl
                           : widget.ongoingGameObject.playerTwo.photoUrl,
                       width: 60,
-                      height: 60),
+                      height: 60)
                 ],
               ),
               Column(

@@ -179,6 +179,7 @@ class _OngoingFreehandGameState extends State<OngoingFreehandGame> {
           title: ExtendedText(
               text: userState.hardcodedStrings.newGame, userState: userState),
           leading: IconButton(
+            key: const Key("closeFreehandGameIcon"),
             icon: const Icon(Icons.close),
             onPressed: () {
               showAlertModal(context);
