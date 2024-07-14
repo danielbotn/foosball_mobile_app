@@ -184,7 +184,7 @@ class SingleLeagueMatchApi {
         : dotenv.env['REST_URL_PATH_DEV'];
 
     if (baseUrl != null) {
-      String url = '$baseUrl/api/DoubleLeagueMatches/create-matches';
+      String url = '$baseUrl/api/SingleLeagueMatches/create-matches';
 
       var jsonObject = {
         "leagueId": leagueId,

@@ -82,7 +82,7 @@ class _CreateSingleLeagueButtonState extends State<CreateSingleLeagueButton> {
                       : AppColors.buttonsLightTheme,
                   minimumSize: const Size(100, 50),
                 ),
-                child: const Text('start league'),
+                child: Text(widget.userState.hardcodedStrings.startLeague),
               ),
             ),
           ),
