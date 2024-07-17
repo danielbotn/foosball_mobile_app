@@ -39,7 +39,7 @@ class UserApi {
         // To do Error handling
       }
     } catch (e) {
-      // To do Error handling
+      // To do Error handling.
     }
 
     return result;
