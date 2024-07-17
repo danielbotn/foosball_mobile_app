@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:ntp/ntp.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class TokenHelper {
   //TESTING
@@ -63,16 +64,25 @@ class TokenHelper {
     if (exp == null) {
       return null;
     }
-    bool? isExpired = await isTokenExpired(token);
-    DateTime currentNTPTime = await NTP.now();
-    DateTime expToDateTime = DateTime.fromMillisecondsSinceEpoch(exp * 1000);
 
-    if (isExpired == true || currentNTPTime.isAfter(expToDateTime)) {
+    bool? isExpired = await isTokenExpired(token);
+    DateTime currentTime;
+
+    if (kIsWeb) {
+      // Use default DateTime for web platform
+      currentTime = DateTime.now();
+    } else {
+      // Use NTP for other platforms
+      currentTime = await NTP.now();
+    }
+
+    DateTime expToDateTime = DateTime.fromMillisecondsSinceEpoch(exp * 1000);
+    if (isExpired == true || currentTime.isAfter(expToDateTime)) {
       // Token has expired
       return Duration.zero;
     } else {
       // Calculate remaining time as a Duration
-      Duration remainingTime = expToDateTime.difference(currentNTPTime);
+      Duration remainingTime = expToDateTime.difference(currentTime);
       return remainingTime;
     }
   }

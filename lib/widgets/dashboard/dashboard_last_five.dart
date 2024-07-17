@@ -1,17 +1,16 @@
-import 'package:foosball_mobile_app/utils/app_color.dart';
-import 'package:foosball_mobile_app/widgets/UI/Error/ServerError.dart';
-import 'package:foosball_mobile_app/widgets/double_league_history/double_league_match_detail.dart';
-import 'package:foosball_mobile_app/widgets/single_league_history/single_league_match_detail.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:foosball_mobile_app/api/UserApi.dart';
 import 'package:foosball_mobile_app/models/user/user_last_ten.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
+import 'package:foosball_mobile_app/utils/app_color.dart';
+import 'package:foosball_mobile_app/widgets/UI/Error/ServerError.dart';
 import 'package:foosball_mobile_app/widgets/loading.dart';
-
-import '../../models/other/TwoPlayersObject.dart';
-import '../freehand_double_history/freehand_double_match_detail.dart';
-import '../freehand_history/freehand_match_detail.dart';
+import 'package:foosball_mobile_app/widgets/double_league_history/double_league_match_detail.dart';
+import 'package:foosball_mobile_app/widgets/single_league_history/single_league_match_detail.dart';
+import 'package:foosball_mobile_app/widgets/freehand_double_history/freehand_double_match_detail.dart';
+import 'package:foosball_mobile_app/widgets/freehand_history/freehand_match_detail.dart';
+import 'package:foosball_mobile_app/models/other/TwoPlayersObject.dart';
+import 'package:intl/intl.dart';
 
 class DashBoardLastFive extends StatefulWidget {
   const DashBoardLastFive({Key? key, required this.userState})
@@ -23,8 +22,6 @@ class DashBoardLastFive extends StatefulWidget {
 }
 
 class _DashBoardLastFiveState extends State<DashBoardLastFive> {
-  // state
-  late List<UserLastTen>? lastTenMatches;
   late Future<List<UserLastTen>?> userStatsFuture;
 
   @override
@@ -35,36 +32,23 @@ class _DashBoardLastFiveState extends State<DashBoardLastFive> {
 
   Future<List<UserLastTen>?> getUserStatsData() async {
     UserApi user = UserApi();
-    var lastTenMatchesData = await user.getLastTenMatches();
-    lastTenMatches = lastTenMatchesData;
-    return lastTenMatchesData;
+    return await user.getLastTenMatches();
   }
 
   String getHeadline(UserLastTen userLastTenObject) {
-    String result = "";
-
-    if (userLastTenObject.typeOfMatchName == "SingleLeagueMatch") {
-      result =
-          "${userLastTenObject.opponentOneFirstName} ${userLastTenObject.opponentOneLastName}";
-    } else if (userLastTenObject.typeOfMatchName == "DoubleLeagueMatch") {
-      result =
-          '${userLastTenObject.opponentOneFirstName} ${userLastTenObject.opponentOneLastName} ${userLastTenObject.opponentTwoFirstName} ${userLastTenObject.opponentTwoLastName}';
-    } else if (userLastTenObject.typeOfMatchName == "FreehandMatch") {
-      result =
-          "${userLastTenObject.opponentOneFirstName} ${userLastTenObject.opponentOneLastName}";
-    } else if (userLastTenObject.typeOfMatchName == "DoubleFreehandMatch") {
-      String? oponentTwoFirstName, oponentTwoLastName;
-      if (userLastTenObject.opponentTwoFirstName != null) {
-        oponentTwoFirstName = userLastTenObject.opponentTwoFirstName;
-      }
-      if (userLastTenObject.opponentTwoLastName != null) {
-        oponentTwoLastName = userLastTenObject.opponentTwoLastName;
-      }
-      result =
-          '${userLastTenObject.opponentOneFirstName} ${userLastTenObject.opponentOneLastName} $oponentTwoFirstName $oponentTwoLastName';
+    switch (userLastTenObject.typeOfMatchName) {
+      case "SingleLeagueMatch":
+      case "FreehandMatch":
+        return "${userLastTenObject.opponentOneFirstName} ${userLastTenObject.opponentOneLastName}";
+      case "DoubleLeagueMatch":
+        return '${userLastTenObject.opponentOneFirstName} ${userLastTenObject.opponentOneLastName} ${userLastTenObject.opponentTwoFirstName} ${userLastTenObject.opponentTwoLastName}';
+      case "DoubleFreehandMatch":
+        String? opponentTwoFirstName = userLastTenObject.opponentTwoFirstName;
+        String? opponentTwoLastName = userLastTenObject.opponentTwoLastName;
+        return '${userLastTenObject.opponentOneFirstName} ${userLastTenObject.opponentOneLastName} $opponentTwoFirstName $opponentTwoLastName';
+      default:
+        return "";
     }
-
-    return result;
   }
 
   String getScore(UserLastTen userLastTenObject) {
@@ -72,14 +56,10 @@ class _DashBoardLastFiveState extends State<DashBoardLastFive> {
   }
 
   Color? getColorOfMatch(UserLastTen userLastTenObject) {
-    Color? result;
-    if (userLastTenObject.userScore >
-        userLastTenObject.opponentUserOrTeamScore) {
-      result = Colors.green[400];
-    } else {
-      result = Colors.red[400];
-    }
-    return result;
+    return userLastTenObject.userScore >
+            userLastTenObject.opponentUserOrTeamScore
+        ? Colors.green[400]
+        : Colors.red[400];
   }
 
   void navigateToHistoryDetails(UserLastTen data) {
@@ -88,39 +68,27 @@ class _DashBoardLastFiveState extends State<DashBoardLastFive> {
       typeOfMatch: data.typeOfMatch.toString(),
       matchId: data.matchId,
     );
-    if (data.typeOfMatch == 0) {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => FreehandMatchDetail(
-                    twoPlayersObject: tpo,
-                  )));
-    } else if (data.typeOfMatch == 1) {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => FreehandDoubleMatchDetail(
-                    twoPlayersObject: tpo,
-                  )));
-    } else if (data.typeOfMatch == 2) {
-      // Go to SingleLeagueMatchDetail
-      tpo.leagueId = data.leagueId;
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => SingleLeagueMatchDetail(
-                    twoPlayersObject: tpo,
-                  )));
-    } else if (data.typeOfMatch == 3) {
-      // Go to DoubleLeagueMatchDetail
-      tpo.leagueId = data.leagueId;
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => DoubleLeagueMatchDetail(
-                    twoPlayersObject: tpo,
-                  )));
+    Widget destination;
+    switch (data.typeOfMatch) {
+      case 0:
+        destination = FreehandMatchDetail(twoPlayersObject: tpo);
+        break;
+      case 1:
+        destination = FreehandDoubleMatchDetail(twoPlayersObject: tpo);
+        break;
+      case 2:
+        tpo.leagueId = data.leagueId;
+        destination = SingleLeagueMatchDetail(twoPlayersObject: tpo);
+        break;
+      case 3:
+        tpo.leagueId = data.leagueId;
+        destination = DoubleLeagueMatchDetail(twoPlayersObject: tpo);
+        break;
+      default:
+        return;
     }
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => destination));
   }
 
   @override
@@ -129,55 +97,45 @@ class _DashBoardLastFiveState extends State<DashBoardLastFive> {
       future: userStatsFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Loading(
-            userState: widget.userState,
-          );
+          return Loading(userState: widget.userState);
         } else if (snapshot.hasError) {
-          // Handle errors here
           return ServerError(userState: widget.userState);
-        } else if (snapshot.hasData) {
-          return SafeArea(
-            child: ListView.builder(
-              itemCount: lastTenMatches!.length,
-              itemBuilder: (context, index) {
-                String headline = getHeadline(lastTenMatches![index]);
-                String score = getScore(lastTenMatches![index]);
-                Color? colorOfMatch = getColorOfMatch(lastTenMatches![index]);
-                String formattedDate = DateFormat('dd-MM-yyyy | kk:mm')
-                    .format(lastTenMatches![index].dateOfGame);
-                String wonOrLostSymbol =
-                    colorOfMatch == Colors.green[400] ? 'W' : 'L';
+        } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+          return ListView.builder(
+            itemCount: snapshot.data!.length,
+            itemBuilder: (context, index) {
+              UserLastTen match = snapshot.data![index];
+              String headline = getHeadline(match);
+              String score = getScore(match);
+              Color? colorOfMatch = getColorOfMatch(match);
+              String formattedDate =
+                  DateFormat('dd-MM-yyyy | kk:mm').format(match.dateOfGame);
+              String wonOrLostSymbol =
+                  colorOfMatch == Colors.green[400] ? 'W' : 'L';
 
-                return Card(
-                  color: widget.userState.darkmode
-                      ? AppColors.darkModeBackground
-                      : AppColors.white,
-                  margin: EdgeInsets.zero,
-                  child: ListTile(
-                    onTap: () {
-                      navigateToHistoryDetails(lastTenMatches![index]);
-                    },
-                    leading: CircleAvatar(
-                      backgroundColor: colorOfMatch,
-                      child: Text(
-                        wonOrLostSymbol,
-                        style: const TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
+              return Card(
+                color: widget.userState.darkmode
+                    ? AppColors.darkModeBackground
+                    : AppColors.white,
+                margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                child: ListTile(
+                  onTap: () => navigateToHistoryDetails(match),
+                  leading: CircleAvatar(
+                    backgroundColor: colorOfMatch,
+                    child: Text(
+                      wonOrLostSymbol,
+                      style: const TextStyle(color: Colors.white),
                     ),
-                    title: Text(headline),
-                    subtitle: Text(formattedDate),
-                    trailing: Text(score),
                   ),
-                );
-              },
-            ),
+                  title: Text(headline),
+                  subtitle: Text(formattedDate),
+                  trailing: Text(score),
+                ),
+              );
+            },
           );
         } else {
-          return Loading(
-            userState: widget.userState,
-          );
+          return Center(child: Text('No matches found'));
         }
       },
     );

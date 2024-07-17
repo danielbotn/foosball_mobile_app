@@ -9,6 +9,8 @@ import 'package:foosball_mobile_app/models/user/user_response.dart';
 import 'package:foosball_mobile_app/utils/preferences_service.dart';
 import 'app_color.dart';
 import 'package:foosball_mobile_app/main.dart';
+import 'package:flutter/foundation.dart';
+import 'dart:io' show Platform;
 
 class Helpers {
   IconThemeData getIconTheme(bool darkMode) {
@@ -16,6 +18,26 @@ class Helpers {
       return const IconThemeData(color: AppColors.white);
     } else {
       return IconThemeData(color: Colors.grey[700]);
+    }
+  }
+
+  String getProdUrl() {
+    if (kIsWeb) {
+      return 'https://prod.api.example.com';
+    } else if (Platform.isAndroid || Platform.isIOS) {
+      return 'https://mobile-prod.api.example.com';
+    } else {
+      return 'https://desktop-prod.api.example.com';
+    }
+  }
+
+  String getDevUrl() {
+    if (kIsWeb) {
+      return 'https://localhost:7145';
+    } else if (Platform.isAndroid || Platform.isIOS) {
+      return 'https://10.0.2.2:7145';
+    } else {
+      return 'https://localhost:7145';
     }
   }
 
