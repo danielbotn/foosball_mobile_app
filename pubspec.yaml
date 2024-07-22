@@ -52,7 +52,6 @@ dependencies:
   jwt_decode: ^0.3.1
   ntp: ^2.0.0
   dio: ^5.1.0
-  flutter_web_frame: ^0.0.3
 
 flutter_native_splash:
   color: "#ffffff"
