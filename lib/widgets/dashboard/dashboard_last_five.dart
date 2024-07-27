@@ -101,10 +101,8 @@ class _DashBoardLastFiveState extends State<DashBoardLastFive> {
         } else if (snapshot.hasError) {
           return ServerError(userState: widget.userState);
         } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-          return ListView.builder(
-            itemCount: snapshot.data!.length,
-            itemBuilder: (context, index) {
-              UserLastTen match = snapshot.data![index];
+          return Column(
+            children: snapshot.data!.map((match) {
               String headline = getHeadline(match);
               String score = getScore(match);
               Color? colorOfMatch = getColorOfMatch(match);
@@ -132,10 +130,10 @@ class _DashBoardLastFiveState extends State<DashBoardLastFive> {
                   trailing: Text(score),
                 ),
               );
-            },
+            }).toList(),
           );
         } else {
-          return Center(child: Text('No matches found'));
+          return const Center(child: Text('No matches found'));
         }
       },
     );

@@ -72,32 +72,33 @@ class _NewDashboardState extends State<NewDashboard> {
               child: Container(
                 color:
                     darkMode ? AppColors.darkModeBackground : AppColors.white,
-                child: Column(
-                  children: <Widget>[
-                    DashBoardUserInfo(userState: widget.userState),
-                    if (widget.userState.currentOrganisationId == 0)
-                      DashBoardFirstVisit(userState: widget.userState),
-                    if (widget.userState.currentOrganisationId != 0)
-                      DashboardCharts(userState: widget.userState),
-                    Headline(
-                      headline: widget.userState.hardcodedStrings.quickActions,
-                      userState: widget.userState,
-                    ),
-                    QuicActions(
-                      userState: widget.userState,
-                      notifyParent: updateAllState,
-                    ),
-                    if (widget.userState.currentOrganisationId != 0)
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: <Widget>[
+                      DashBoardUserInfo(userState: widget.userState),
+                      if (widget.userState.currentOrganisationId == 0)
+                        DashBoardFirstVisit(userState: widget.userState),
+                      if (widget.userState.currentOrganisationId != 0)
+                        DashboardCharts(userState: widget.userState),
                       Headline(
                         headline:
-                            widget.userState.hardcodedStrings.lastTenMatches,
+                            widget.userState.hardcodedStrings.quickActions,
                         userState: widget.userState,
                       ),
-                    if (widget.userState.currentOrganisationId != 0)
-                      Expanded(
-                        child: DashBoardLastFive(userState: widget.userState),
+                      QuicActions(
+                        userState: widget.userState,
+                        notifyParent: updateAllState,
                       ),
-                  ],
+                      if (widget.userState.currentOrganisationId != 0)
+                        Headline(
+                          headline:
+                              widget.userState.hardcodedStrings.lastTenMatches,
+                          userState: widget.userState,
+                        ),
+                      if (widget.userState.currentOrganisationId != 0)
+                        DashBoardLastFive(userState: widget.userState),
+                    ],
+                  ),
                 ),
               ),
             );
