@@ -7,19 +7,20 @@ import 'package:foosball_mobile_app/utils/helpers.dart';
 import 'package:foosball_mobile_app/widgets/UI/Error/ServerError.dart';
 import 'package:foosball_mobile_app/widgets/loading.dart';
 
-class SlackSettings extends StatefulWidget {
+class DiscordSettings extends StatefulWidget {
   final UserState userState;
-  const SlackSettings({super.key, required this.userState});
+  const DiscordSettings({super.key, required this.userState});
 
   @override
-  State<SlackSettings> createState() => _SlackSettingsState();
+  State<DiscordSettings> createState() => _DiscordSettingsState();
 }
 
-class _SlackSettingsState extends State<SlackSettings> {
-  final TextEditingController _slackWebhookController = TextEditingController();
+class _DiscordSettingsState extends State<DiscordSettings> {
+  final TextEditingController _discordWebhookController =
+      TextEditingController();
   late Future<OrganisationResponse?> organisationFuture;
   String _infoText = '';
-  String _slackWebhook = '';
+  String _discordWebhook = '';
 
   @override
   void initState() {
@@ -33,24 +34,24 @@ class _SlackSettingsState extends State<SlackSettings> {
         await api.getOrganisationById(widget.userState.currentOrganisationId);
 
     if (data != null &&
-        data.slackWebhookUrl != null &&
-        data.slackWebhookUrl != "") {
+        data.discordWebhookUrl != null &&
+        data.discordWebhookUrl != "") {
       setState(() {
-        _slackWebhook = data.slackWebhookUrl!;
-        _slackWebhookController.text = data.slackWebhookUrl!;
+        _discordWebhook = data.discordWebhookUrl!;
+        _discordWebhookController.text = data.discordWebhookUrl!;
       });
     }
 
     return data;
   }
 
-  void _submitSlackWebHook() async {
+  void _submitDiscordWebHook() async {
     Helpers helpers = Helpers();
     Organisation api = Organisation();
     OrganisationResponse? existingData = await organisationFuture;
 
     if (existingData != null) {
-      String updatedSlackWebhook = _slackWebhookController.text;
+      String updatedDiscordWebhook = _discordWebhookController.text;
 
       // Assuming you have an OrganisationUpdateRequest model that matches your API's expected update request body
       var organisationUpdateRequest = OrganisationResponse(
@@ -59,14 +60,14 @@ class _SlackSettingsState extends State<SlackSettings> {
           createdAt: existingData.createdAt,
           organisationCode: existingData.organisationCode,
           organisationType: existingData.organisationType,
-          slackWebhookUrl: updatedSlackWebhook,
-          discordWebhookUrl: existingData.discordWebhookUrl,
+          slackWebhookUrl: existingData.slackWebhookUrl,
+          discordWebhookUrl: updatedDiscordWebhook,
           microsoftTeamsWebhookUrl: existingData.microsoftTeamsWebhookUrl);
 
       var response = await api.updateOrganisation(
           widget.userState.currentOrganisationId,
           organisationUpdateRequest,
-          false,
+          true,
           false);
 
       if (!mounted) return; // Ensure the widget is still mounted
@@ -74,10 +75,10 @@ class _SlackSettingsState extends State<SlackSettings> {
       if (response == true) {
         // success
         FocusScope.of(context).unfocus(); // Close the keyboard
-        helpers.showSnackbar(context, "Slack Webhook updated", false);
+        helpers.showSnackbar(context, "Discord Webhook updated", false);
       } else {
         // failure
-        helpers.showSnackbar(context, "failed to update Slack webhook", true);
+        helpers.showSnackbar(context, "failed to update Discord webhook", true);
       }
     } else {
       if (!mounted) return; // Ensure the widget is still mounted
@@ -89,7 +90,7 @@ class _SlackSettingsState extends State<SlackSettings> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.userState.hardcodedStrings.slack,
+        title: Text(widget.userState.hardcodedStrings.discord,
             style: TextStyle(
                 color: widget.userState.darkmode
                     ? AppColors.white
@@ -136,7 +137,7 @@ class _SlackSettingsState extends State<SlackSettings> {
                   ),
                   const SizedBox(height: 16.0),
                   TextField(
-                    controller: _slackWebhookController,
+                    controller: _discordWebhookController,
                     decoration: InputDecoration(
                       labelText: widget.userState.hardcodedStrings.slackWebhook,
                       labelStyle: TextStyle(
@@ -182,7 +183,7 @@ class _SlackSettingsState extends State<SlackSettings> {
                     child: SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: _submitSlackWebHook,
+                        onPressed: _submitDiscordWebHook,
                         style: ElevatedButton.styleFrom(
                           primary: widget.userState.darkmode
                               ? AppColors.darkModeButtonColor

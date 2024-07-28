@@ -145,5 +145,109 @@ void main() {
     expect(find.text('Match Report'), findsOneWidget);
     expect(find.text('Rematch'), findsOneWidget);
     expect(find.text('Close'), findsOneWidget);
+  }, skip: true);
+
+  testWidgets('verify freehand double game', (tester) async {
+    // Start the app and log in (assuming this is necessary)
+    app.main();
+    await tester.pumpAndSettle();
+
+    // Find and tap the new game button using the key
+    final newGameButton = find.byKey(const Key('newGameButton'));
+    await tester.tap(newGameButton);
+    await tester.pumpAndSettle();
+
+    // Click on button with text: 4 Players
+    final fourPlayersButton = find.text('4 Players');
+    await tester.tap(fourPlayersButton);
+    await tester.pumpAndSettle();
+
+    // Check if text "Choose Teammate" appears
+    expect(find.text('Choose Teammate'), findsOneWidget);
+
+    // Choose Harry Christensen as teammate
+    final harryChristensenTile = find.ancestor(
+      of: find.text('Harry Christensen'),
+      matching: find.byType(ListTile),
+    );
+    await tester.tap(harryChristensenTile);
+    await tester.pumpAndSettle();
+
+    // Check if Text "Choose Opponents" appears
+    expect(find.text('Choose Opponents'), findsOneWidget);
+
+    // Choose Allen Turner and Luke Johnson as opponents
+    final allenTurnerTile = find.ancestor(
+      of: find.text('Allen Turner'),
+      matching: find.byType(ListTile),
+    );
+    await tester.tap(allenTurnerTile);
+    await tester.pumpAndSettle();
+
+    final lukeJohnsonTile = find.ancestor(
+      of: find.text('Luke Johnson'),
+      matching: find.byType(ListTile),
+    );
+    await tester.tap(lukeJohnsonTile);
+    await tester.pumpAndSettle();
+
+    // Click Start Game button
+    final startGameButton = find.text('Start Game');
+    await tester.tap(startGameButton);
+    await tester.pumpAndSettle();
+
+    // Verify the new game screen elements
+    expect(find.text('New Game'), findsOneWidget);
+    expect(find.text('Mark'), findsOneWidget);
+    expect(find.text('Andersen'), findsOneWidget);
+    expect(find.text('Harry'), findsOneWidget);
+    expect(find.text('Christensen'), findsOneWidget);
+    expect(find.text('Allen'), findsOneWidget);
+    expect(find.text('Turner'), findsOneWidget);
+    expect(find.text('Luke'), findsOneWidget);
+    expect(find.text('Johnson'), findsOneWidget);
+    expect(
+        find.text('0'), findsNWidgets(2)); // Expecting two '0's for the score
+    expect(find.text('Pause'), findsOneWidget);
+
+    // Start scoring goals
+    int teamOneScore = 0;
+    int teamTwoScore = 0;
+
+    while (teamOneScore < 10 && teamTwoScore < 10) {
+      String playerName = (teamOneScore <= teamTwoScore) ? "Mark" : "Allen";
+
+      final playerIcon = find.byKey(Key("freehandGame$playerName"));
+      await tester.tap(playerIcon);
+
+      await tester.pump(const Duration(milliseconds: 500));
+
+      if (playerName == "Mark") {
+        teamOneScore++;
+      } else {
+        teamTwoScore++;
+      }
+    }
+
+    // Wait for the MatchDetails screen to appear
+    await tester.pumpAndSettle();
+
+    // Final score verification
+    expect(find.text('10'), findsOneWidget);
+    expect(find.text('9'), findsOneWidget);
+
+    // Verify player names are still visible
+    expect(find.text('Mark'), findsOneWidget);
+    expect(find.text('Andersen'), findsOneWidget);
+    expect(find.text('Harry'), findsOneWidget);
+    expect(find.text('Christensen'), findsOneWidget);
+    expect(find.text('Allen'), findsOneWidget);
+    expect(find.text('Turner'), findsOneWidget);
+    expect(find.text('Luke'), findsOneWidget);
+    expect(find.text('Johnson'), findsOneWidget);
+
+    expect(find.text('Match Report'), findsOneWidget);
+    expect(find.text('Rematch'), findsOneWidget);
+    expect(find.text('Close'), findsOneWidget);
   });
 }

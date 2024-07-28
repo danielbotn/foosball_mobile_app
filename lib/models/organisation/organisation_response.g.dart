@@ -15,6 +15,8 @@ OrganisationResponse _$OrganisationResponseFromJson(
       organisationType: json['organisationType'] as int,
       organisationCode: json['organisationCode'] as String,
       slackWebhookUrl: json['slackWebhookUrl'] as String?,
+      discordWebhookUrl: json['discordWebhookUrl'] as String?,
+      microsoftTeamsWebhookUrl: json['microsoftTeamsWebhookUrl'] as String?,
     );
 
 Map<String, dynamic> _$OrganisationResponseToJson(
@@ -26,4 +28,6 @@ Map<String, dynamic> _$OrganisationResponseToJson(
       'organisationType': instance.organisationType,
       'organisationCode': instance.organisationCode,
       'slackWebhookUrl': instance.slackWebhookUrl,
+      'discordWebhookUrl': instance.discordWebhookUrl,
+      'microsoftTeamsWebhookUrl': instance.microsoftTeamsWebhookUrl,
     };

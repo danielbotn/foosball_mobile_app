@@ -6,6 +6,8 @@ import 'package:foosball_mobile_app/models/cms/hardcoded_strings.dart';
 import 'package:foosball_mobile_app/models/organisation/organisation_response.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
+import 'package:foosball_mobile_app/widgets/Settings/DiscordSettings.dart';
+import 'package:foosball_mobile_app/widgets/Settings/MicrosoftTeamsSettings.dart';
 import 'package:foosball_mobile_app/widgets/Settings/SlackSettings.dart';
 import 'package:foosball_mobile_app/widgets/change_password/ChangePassword.dart';
 import 'package:foosball_mobile_app/widgets/loading.dart';
@@ -208,6 +210,38 @@ class _SettingsState extends State<Settings> with RouteAware {
       });
     }
 
+    goToChangeDiscordWebHook(BuildContext context) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => DiscordSettings(
+            userState: widget.userState,
+          ),
+        ),
+      ).then((_) {
+        // Fetch new organisation data when coming back from SlackSettings
+        setState(() {
+          organisationFuture = getOrganisation();
+        });
+      });
+    }
+
+    goToChangeTeamsWebHook(BuildContext context) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => TeamsSettings(
+            userState: widget.userState,
+          ),
+        ),
+      ).then((_) {
+        // Fetch new organisation data when coming back from SlackSettings
+        setState(() {
+          organisationFuture = getOrganisation();
+        });
+      });
+    }
+
     return Scaffold(
       appBar: AppBar(
           leading: IconButton(
@@ -305,8 +339,8 @@ class _SettingsState extends State<Settings> with RouteAware {
                       tiles: [
                         SettingsTile(
                           title: Text(hardcodedStrings?.slack ?? "Slack"),
-                          description: Text(organisation?.slackWebhookUrl ??
-                              "No Slack Webhook URL"),
+                          description:
+                              Text(organisation?.slackWebhookUrl ?? ""),
                           leading: const Icon(CustomIcons.slack),
                           onPressed: (BuildContext context) {
                             goToChangeSlackWebHook(context);
@@ -314,11 +348,20 @@ class _SettingsState extends State<Settings> with RouteAware {
                         ),
                         SettingsTile(
                           title: Text(hardcodedStrings?.discord ?? "Discord"),
-                          description: const Text(
-                              "https://hooks.discord.com/services/T0J5QJQQP/B0J5QJQQQ/0J5QJQQQQ"),
+                          description:
+                              Text(organisation?.discordWebhookUrl ?? ""),
                           leading: const Icon(CustomIcons.discord),
                           onPressed: (BuildContext context) {
-                            selectLanguagePopup(context);
+                            goToChangeDiscordWebHook(context);
+                          },
+                        ),
+                        SettingsTile(
+                          title: const Text("Microsoft Teams"),
+                          description: Text(
+                              organisation?.microsoftTeamsWebhookUrl ?? ""),
+                          leading: const Icon(Icons.window),
+                          onPressed: (BuildContext context) {
+                            goToChangeTeamsWebHook(context);
                           },
                         ),
                       ],

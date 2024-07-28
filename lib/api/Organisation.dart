@@ -195,9 +195,10 @@ class Organisation {
   }
 
   Future<bool> updateOrganisation(
-    int organisationId,
-    OrganisationResponse organisationBody,
-  ) async {
+      int organisationId,
+      OrganisationResponse organisationBody,
+      bool updateDiscord,
+      bool updateTeams) async {
     bool result = false;
 
     var url = '$baseUrl/api/Organisations/$organisationId';
@@ -209,6 +210,22 @@ class Organisation {
       "path": "/SlackWebhookUrl",
       "value": organisationBody.slackWebhookUrl,
     });
+
+    if (updateDiscord) {
+      operations.add({
+        "op": "replace",
+        "path": "/DiscordWebhookUrl",
+        "value": organisationBody.discordWebhookUrl,
+      });
+    }
+
+    if (updateTeams) {
+      operations.add({
+        "op": "replace",
+        "path": "/MicrosoftTeamsWebhookUrl",
+        "value": organisationBody.microsoftTeamsWebhookUrl,
+      });
+    }
 
     try {
       final response = await Api().dio.patch(

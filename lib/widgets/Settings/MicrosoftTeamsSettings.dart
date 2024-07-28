@@ -7,19 +7,19 @@ import 'package:foosball_mobile_app/utils/helpers.dart';
 import 'package:foosball_mobile_app/widgets/UI/Error/ServerError.dart';
 import 'package:foosball_mobile_app/widgets/loading.dart';
 
-class SlackSettings extends StatefulWidget {
+class TeamsSettings extends StatefulWidget {
   final UserState userState;
-  const SlackSettings({super.key, required this.userState});
+  const TeamsSettings({super.key, required this.userState});
 
   @override
-  State<SlackSettings> createState() => _SlackSettingsState();
+  State<TeamsSettings> createState() => _TeamsSettingsState();
 }
 
-class _SlackSettingsState extends State<SlackSettings> {
-  final TextEditingController _slackWebhookController = TextEditingController();
+class _TeamsSettingsState extends State<TeamsSettings> {
+  final TextEditingController _teamsWebhookController = TextEditingController();
   late Future<OrganisationResponse?> organisationFuture;
   String _infoText = '';
-  String _slackWebhook = '';
+  String _teamsWebhook = '';
 
   @override
   void initState() {
@@ -33,55 +33,53 @@ class _SlackSettingsState extends State<SlackSettings> {
         await api.getOrganisationById(widget.userState.currentOrganisationId);
 
     if (data != null &&
-        data.slackWebhookUrl != null &&
-        data.slackWebhookUrl != "") {
+        data.microsoftTeamsWebhookUrl != null &&
+        data.microsoftTeamsWebhookUrl != "") {
       setState(() {
-        _slackWebhook = data.slackWebhookUrl!;
-        _slackWebhookController.text = data.slackWebhookUrl!;
+        _teamsWebhook = data.microsoftTeamsWebhookUrl!;
+        _teamsWebhookController.text = data.microsoftTeamsWebhookUrl!;
       });
     }
 
     return data;
   }
 
-  void _submitSlackWebHook() async {
+  void _submitTeamsWebHook() async {
     Helpers helpers = Helpers();
     Organisation api = Organisation();
     OrganisationResponse? existingData = await organisationFuture;
 
     if (existingData != null) {
-      String updatedSlackWebhook = _slackWebhookController.text;
+      String updatedTeamsWebhook = _teamsWebhookController.text;
 
-      // Assuming you have an OrganisationUpdateRequest model that matches your API's expected update request body
       var organisationUpdateRequest = OrganisationResponse(
           id: widget.userState.currentOrganisationId,
           name: existingData.name,
           createdAt: existingData.createdAt,
           organisationCode: existingData.organisationCode,
           organisationType: existingData.organisationType,
-          slackWebhookUrl: updatedSlackWebhook,
+          slackWebhookUrl: existingData.slackWebhookUrl,
           discordWebhookUrl: existingData.discordWebhookUrl,
-          microsoftTeamsWebhookUrl: existingData.microsoftTeamsWebhookUrl);
+          microsoftTeamsWebhookUrl: updatedTeamsWebhook);
 
       var response = await api.updateOrganisation(
           widget.userState.currentOrganisationId,
           organisationUpdateRequest,
           false,
-          false);
+          true);
 
-      if (!mounted) return; // Ensure the widget is still mounted
+      if (!mounted) return;
 
       if (response == true) {
-        // success
-        FocusScope.of(context).unfocus(); // Close the keyboard
-        helpers.showSnackbar(context, "Slack Webhook updated", false);
+        FocusScope.of(context).unfocus();
+        helpers.showSnackbar(context, "Microsoft Teams Webhook updated", false);
       } else {
-        // failure
-        helpers.showSnackbar(context, "failed to update Slack webhook", true);
+        helpers.showSnackbar(
+            context, "Failed to update Microsoft Teams webhook", true);
       }
     } else {
-      if (!mounted) return; // Ensure the widget is still mounted
-      helpers.showSnackbar(context, "failed to fetch organisation data", false);
+      if (!mounted) return;
+      helpers.showSnackbar(context, "Failed to fetch organisation data", false);
     }
   }
 
@@ -89,7 +87,7 @@ class _SlackSettingsState extends State<SlackSettings> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.userState.hardcodedStrings.slack,
+        title: Text("Teams",
             style: TextStyle(
                 color: widget.userState.darkmode
                     ? AppColors.white
@@ -126,7 +124,7 @@ class _SlackSettingsState extends State<SlackSettings> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.userState.hardcodedStrings.enterSlackWebhook,
+                    "Enter Teams webhook",
                     style: TextStyle(
                       color: widget.userState.darkmode
                           ? AppColors.white
@@ -136,9 +134,9 @@ class _SlackSettingsState extends State<SlackSettings> {
                   ),
                   const SizedBox(height: 16.0),
                   TextField(
-                    controller: _slackWebhookController,
+                    controller: _teamsWebhookController,
                     decoration: InputDecoration(
-                      labelText: widget.userState.hardcodedStrings.slackWebhook,
+                      labelText: "Teams webhook",
                       labelStyle: TextStyle(
                         color: widget.userState.darkmode
                             ? AppColors.white
@@ -182,7 +180,7 @@ class _SlackSettingsState extends State<SlackSettings> {
                     child: SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: _submitSlackWebHook,
+                        onPressed: _submitTeamsWebHook,
                         style: ElevatedButton.styleFrom(
                           primary: widget.userState.darkmode
                               ? AppColors.darkModeButtonColor

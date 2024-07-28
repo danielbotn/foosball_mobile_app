@@ -10,6 +10,8 @@ class OrganisationResponse {
   final int organisationType;
   final String organisationCode;
   final String? slackWebhookUrl;
+  final String? discordWebhookUrl;
+  final String? microsoftTeamsWebhookUrl;
 
   OrganisationResponse(
       {required this.id,
@@ -17,7 +19,9 @@ class OrganisationResponse {
       required this.createdAt,
       required this.organisationType,
       required this.organisationCode,
-      required this.slackWebhookUrl});
+      required this.slackWebhookUrl,
+      required this.discordWebhookUrl,
+      required this.microsoftTeamsWebhookUrl});
 
   factory OrganisationResponse.fromJson(Map<String, dynamic> item) =>
       _$OrganisationResponseFromJson(item);
