@@ -72,14 +72,16 @@ class _TeamsSettingsState extends State<TeamsSettings> {
 
       if (response == true) {
         FocusScope.of(context).unfocus();
-        helpers.showSnackbar(context, "Microsoft Teams Webhook updated", false);
+        helpers.showSnackbar(context,
+            widget.userState.hardcodedStrings.teamsWebhookUpdated, false);
       } else {
         helpers.showSnackbar(
-            context, "Failed to update Microsoft Teams webhook", true);
+            context, widget.userState.hardcodedStrings.teamsWebhookError, true);
       }
     } else {
       if (!mounted) return;
-      helpers.showSnackbar(context, "Failed to fetch organisation data", false);
+      helpers.showSnackbar(
+          context, widget.userState.hardcodedStrings.unknownError, false);
     }
   }
 
@@ -113,7 +115,8 @@ class _TeamsSettingsState extends State<TeamsSettings> {
           } else if (snapshot.hasError) {
             return ServerError(userState: widget.userState);
           } else if (!snapshot.hasData) {
-            return const Center(child: Text('No data available'));
+            return Center(
+                child: Text(widget.userState.hardcodedStrings.noData));
           } else {
             return Container(
               color: widget.userState.darkmode
@@ -124,7 +127,7 @@ class _TeamsSettingsState extends State<TeamsSettings> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Enter Teams webhook",
+                    widget.userState.hardcodedStrings.enterTeamsWebhook,
                     style: TextStyle(
                       color: widget.userState.darkmode
                           ? AppColors.white
@@ -136,7 +139,7 @@ class _TeamsSettingsState extends State<TeamsSettings> {
                   TextField(
                     controller: _teamsWebhookController,
                     decoration: InputDecoration(
-                      labelText: "Teams webhook",
+                      labelText: widget.userState.hardcodedStrings.teamsWebhook,
                       labelStyle: TextStyle(
                         color: widget.userState.darkmode
                             ? AppColors.white

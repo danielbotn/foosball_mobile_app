@@ -75,14 +75,17 @@ class _DiscordSettingsState extends State<DiscordSettings> {
       if (response == true) {
         // success
         FocusScope.of(context).unfocus(); // Close the keyboard
-        helpers.showSnackbar(context, "Discord Webhook updated", false);
+        helpers.showSnackbar(context,
+            widget.userState.hardcodedStrings.discordWebhookUpdated, false);
       } else {
         // failure
-        helpers.showSnackbar(context, "failed to update Discord webhook", true);
+        helpers.showSnackbar(context,
+            widget.userState.hardcodedStrings.discordWebhookError, true);
       }
     } else {
       if (!mounted) return; // Ensure the widget is still mounted
-      helpers.showSnackbar(context, "failed to fetch organisation data", false);
+      helpers.showSnackbar(
+          context, widget.userState.hardcodedStrings.unknownError, false);
     }
   }
 
@@ -116,7 +119,8 @@ class _DiscordSettingsState extends State<DiscordSettings> {
           } else if (snapshot.hasError) {
             return ServerError(userState: widget.userState);
           } else if (!snapshot.hasData) {
-            return const Center(child: Text('No data available'));
+            return Center(
+                child: Text(widget.userState.hardcodedStrings.noData));
           } else {
             return Container(
               color: widget.userState.darkmode
@@ -127,7 +131,7 @@ class _DiscordSettingsState extends State<DiscordSettings> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.userState.hardcodedStrings.enterSlackWebhook,
+                    widget.userState.hardcodedStrings.enterDiscordWebhook,
                     style: TextStyle(
                       color: widget.userState.darkmode
                           ? AppColors.white
@@ -139,7 +143,8 @@ class _DiscordSettingsState extends State<DiscordSettings> {
                   TextField(
                     controller: _discordWebhookController,
                     decoration: InputDecoration(
-                      labelText: widget.userState.hardcodedStrings.slackWebhook,
+                      labelText:
+                          widget.userState.hardcodedStrings.discordWebhook,
                       labelStyle: TextStyle(
                         color: widget.userState.darkmode
                             ? AppColors.white

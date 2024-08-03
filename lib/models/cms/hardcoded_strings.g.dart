@@ -143,6 +143,16 @@ HardcodedStrings _$HardcodedStringsFromJson(Map<String, dynamic> json) =>
       totalTeamsInLeague: json['totalTeamsInLeague'] as String,
       partOfLeagueToStartIt: json['partOfLeagueToStartIt'] as String,
       startLeagueError: json['startLeagueError'] as String,
+      enterDiscordWebhook: json['enterDiscordWebhook'] as String,
+      discordWebhook: json['discordWebhook'] as String,
+      discordWebhookError: json['discordWebhookError'] as String,
+      discordWebhookUpdated: json['discordWebhookUpdated'] as String,
+      enterTeamsWebhook: json['enterTeamsWebhook'] as String,
+      teamsWebhook: json['teamsWebhook'] as String,
+      teamsWebhookError: json['teamsWebhookError'] as String,
+      teamsWebhookUpdated: json['teamsWebhookUpdated'] as String,
+      slackWebhookError: json['slackWebhookError'] as String,
+      slackWebhookUpdated: json['slackWebhookUpdated'] as String,
     );
 
 Map<String, dynamic> _$HardcodedStringsToJson(HardcodedStrings instance) =>
@@ -276,4 +286,14 @@ Map<String, dynamic> _$HardcodedStringsToJson(HardcodedStrings instance) =>
       'totalTeamsInLeague': instance.totalTeamsInLeague,
       'partOfLeagueToStartIt': instance.partOfLeagueToStartIt,
       'startLeagueError': instance.startLeagueError,
+      'enterDiscordWebhook': instance.enterDiscordWebhook,
+      'discordWebhook': instance.discordWebhook,
+      'discordWebhookError': instance.discordWebhookError,
+      'discordWebhookUpdated': instance.discordWebhookUpdated,
+      'enterTeamsWebhook': instance.enterTeamsWebhook,
+      'teamsWebhook': instance.teamsWebhook,
+      'teamsWebhookError': instance.teamsWebhookError,
+      'teamsWebhookUpdated': instance.teamsWebhookUpdated,
+      'slackWebhookError': instance.slackWebhookError,
+      'slackWebhookUpdated': instance.slackWebhookUpdated,
     };

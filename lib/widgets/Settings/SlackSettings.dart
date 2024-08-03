@@ -74,14 +74,17 @@ class _SlackSettingsState extends State<SlackSettings> {
       if (response == true) {
         // success
         FocusScope.of(context).unfocus(); // Close the keyboard
-        helpers.showSnackbar(context, "Slack Webhook updated", false);
+        helpers.showSnackbar(context,
+            widget.userState.hardcodedStrings.slackWebhookUpdated, false);
       } else {
         // failure
-        helpers.showSnackbar(context, "failed to update Slack webhook", true);
+        helpers.showSnackbar(
+            context, widget.userState.hardcodedStrings.slackWebhookError, true);
       }
     } else {
       if (!mounted) return; // Ensure the widget is still mounted
-      helpers.showSnackbar(context, "failed to fetch organisation data", false);
+      helpers.showSnackbar(
+          context, widget.userState.hardcodedStrings.unknownError, false);
     }
   }
 
@@ -115,7 +118,8 @@ class _SlackSettingsState extends State<SlackSettings> {
           } else if (snapshot.hasError) {
             return ServerError(userState: widget.userState);
           } else if (!snapshot.hasData) {
-            return const Center(child: Text('No data available'));
+            return Center(
+                child: Text(widget.userState.hardcodedStrings.noData));
           } else {
             return Container(
               color: widget.userState.darkmode
