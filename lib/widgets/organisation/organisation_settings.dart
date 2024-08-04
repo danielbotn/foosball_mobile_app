@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:foosball_mobile_app/api/Organisation.dart';
+import 'package:foosball_mobile_app/icons/custom_icons.dart';
+import 'package:foosball_mobile_app/models/organisation/organisation_response.dart';
+import 'package:foosball_mobile_app/widgets/Settings/DiscordSettings.dart';
+import 'package:foosball_mobile_app/widgets/Settings/MicrosoftTeamsSettings.dart';
+import 'package:foosball_mobile_app/widgets/Settings/SlackSettings.dart';
 import 'package:foosball_mobile_app/widgets/group_players/create_group_player.dart';
 import 'package:foosball_mobile_app/widgets/organisation/change_organisation.dart';
 import 'package:foosball_mobile_app/widgets/organisation/join_organisation.dart';
@@ -28,17 +34,26 @@ class _OrganisationSettingsState extends State<OrganisationSettings> {
   // state
   late Future<UserResponse> userFuture;
   late UserResponse playersData;
+  late Future<OrganisationResponse?> organisationFuture;
 
   @override
   void initState() {
     super.initState();
     userFuture = getUser();
+    organisationFuture = getOrganisation();
   }
 
   Future<UserResponse> getUser() async {
     UserApi user = UserApi();
     var data = await user.getUser(widget.userState.userId.toString());
     playersData = data;
+    return data;
+  }
+
+  Future<OrganisationResponse?> getOrganisation() async {
+    Organisation api = Organisation();
+    var data =
+        await api.getOrganisationById(widget.userState.currentOrganisationId);
     return data;
   }
 
@@ -61,7 +76,6 @@ class _OrganisationSettingsState extends State<OrganisationSettings> {
           MaterialPageRoute(
               builder: (context) => NewOrganisation(
                     userState: widget.userState,
-                    // to do
                     notifyOrganisationButtons: () {},
                   )));
     }
@@ -72,7 +86,6 @@ class _OrganisationSettingsState extends State<OrganisationSettings> {
           MaterialPageRoute(
               builder: (context) => JoinOrganisation(
                     userState: widget.userState,
-                    // to do
                   )));
     }
 
@@ -82,7 +95,6 @@ class _OrganisationSettingsState extends State<OrganisationSettings> {
           MaterialPageRoute(
               builder: (context) => OrganisationManagePlayers(
                     userState: widget.userState,
-                    // to do
                   )));
     }
 
@@ -92,7 +104,6 @@ class _OrganisationSettingsState extends State<OrganisationSettings> {
           MaterialPageRoute(
               builder: (context) => ChangeOrganisation(
                     userState: widget.userState,
-                    // to do
                   )));
     }
 
@@ -103,9 +114,56 @@ class _OrganisationSettingsState extends State<OrganisationSettings> {
             MaterialPageRoute(
                 builder: (context) => CreateGroupPlayer(
                       userState: widget.userState,
-                      // to do
                     )));
       }
+    }
+
+    goToChangeSlackWebHook(BuildContext context) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SlackSettings(
+            userState: widget.userState,
+          ),
+        ),
+      ).then((_) {
+        // Fetch new organisation data when coming back from SlackSettings
+        setState(() {
+          organisationFuture = getOrganisation();
+        });
+      });
+    }
+
+    goToChangeDiscordWebHook(BuildContext context) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => DiscordSettings(
+            userState: widget.userState,
+          ),
+        ),
+      ).then((_) {
+        // Fetch new organisation data when coming back from SlackSettings
+        setState(() {
+          organisationFuture = getOrganisation();
+        });
+      });
+    }
+
+    goToChangeTeamsWebHook(BuildContext context) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => TeamsSettings(
+            userState: widget.userState,
+          ),
+        ),
+      ).then((_) {
+        // Fetch new organisation data when coming back from SlackSettings
+        setState(() {
+          organisationFuture = getOrganisation();
+        });
+      });
     }
 
     List<AbstractSettingsTile> setTiles(UserResponse userData) {
@@ -176,7 +234,38 @@ class _OrganisationSettingsState extends State<OrganisationSettings> {
       return result;
     }
 
-    SettingsList buildSettingsList(UserResponse userData) {
+    List<AbstractSettingsTile> setIntegrationTiles(
+        OrganisationResponse? organisation) {
+      return [
+        SettingsTile(
+          title: Text(widget.userState.hardcodedStrings.slack),
+          description: Text(organisation?.slackWebhookUrl ?? ""),
+          leading: const Icon(CustomIcons.slack),
+          onPressed: (BuildContext context) {
+            goToChangeSlackWebHook(context);
+          },
+        ),
+        SettingsTile(
+          title: Text(widget.userState.hardcodedStrings.discord),
+          description: Text(organisation?.discordWebhookUrl ?? ""),
+          leading: const Icon(CustomIcons.discord),
+          onPressed: (BuildContext context) {
+            goToChangeDiscordWebHook(context);
+          },
+        ),
+        SettingsTile(
+          title: const Text("Microsoft Teams"),
+          description: Text(organisation?.microsoftTeamsWebhookUrl ?? ""),
+          leading: const Icon(Icons.window),
+          onPressed: (BuildContext context) {
+            goToChangeTeamsWebHook(context);
+          },
+        ),
+      ];
+    }
+
+    SettingsList buildSettingsList(
+        UserResponse userData, OrganisationResponse? organisationData) {
       List<SettingsSection> sections = [];
 
       // Actions section
@@ -197,22 +286,7 @@ class _OrganisationSettingsState extends State<OrganisationSettings> {
       if (widget.userState.currentOrganisationId != 0) {
         sections.add(SettingsSection(
           title: Text(widget.userState.hardcodedStrings.integration),
-          tiles: [
-            SettingsTile(
-              title: Text(widget.userState.hardcodedStrings.slack),
-              description: const Text(
-                  "https://hooks.slack.com/services/T0J5QJQQP/B0J5QJQQQ/0J5QJQQQQ"),
-              leading: const Icon(Icons.abc),
-              onPressed: (BuildContext context) {},
-            ),
-            SettingsTile(
-              title: Text(widget.userState.hardcodedStrings.discord),
-              description: const Text(
-                  "https://hooks.discord.com/services/T0J5QJQQP/B0J5QJQQQ/0J5QJQQQQ"),
-              leading: const Icon(Icons.discord),
-              onPressed: (BuildContext context) {},
-            ),
-          ],
+          tiles: setIntegrationTiles(organisationData),
         ));
       }
 
@@ -234,10 +308,18 @@ class _OrganisationSettingsState extends State<OrganisationSettings> {
             backgroundColor:
                 helpers.getBackgroundColor(widget.userState.darkmode)),
         body: FutureBuilder(
-          future: userFuture,
-          builder: (context, AsyncSnapshot<UserResponse> snapshot) {
-            if (snapshot.hasData) {
-              var userData = snapshot.data as UserResponse;
+          future: Future.wait([userFuture, organisationFuture]),
+          builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Loading(
+                userState: widget.userState,
+              );
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            } else if (snapshot.hasData) {
+              var userData = snapshot.data![0] as UserResponse;
+              var organisationData = snapshot.data![1] as OrganisationResponse?;
+
               return Container(
                   color: widget.userState.darkmode
                       ? AppColors.darkModeBackground
@@ -246,12 +328,10 @@ class _OrganisationSettingsState extends State<OrganisationSettings> {
                     data: widget.userState.darkmode
                         ? ThemeData.dark()
                         : ThemeData.light(),
-                    child: buildSettingsList(userData),
+                    child: buildSettingsList(userData, organisationData),
                   ));
             } else {
-              return Loading(
-                userState: widget.userState,
-              );
+              return Center(child: Text('No data available'));
             }
           },
         ));
