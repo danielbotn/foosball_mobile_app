@@ -70,37 +70,52 @@ class LeagueList extends StatelessWidget {
       return const SizedBox();
     }
 
-    return SafeArea(
-        child: ListView.builder(
-      shrinkWrap: true,
-      itemCount: data!.length,
-      itemBuilder: (context, index) {
-        final league = data![index];
-        if (league == null) {
-          return const SizedBox();
-        }
+    // Filter the data list
+    final filteredData = data!.where((league) {
+      if (league == null) return false;
+      return !(league.hasLeagueStarted == true && league.hasAccess == false);
+    }).toList();
 
-        return ListTile(
-          onTap: () => handleLeagueTap(context, league),
-          leading: CircleAvatar(
-            backgroundColor: userState.darkmode
-                ? AppColors.darkModeButtonColor
-                : AppColors.buttonsLightTheme,
-            child: ExtendedText(
-              text: '${index + 1}',
+    if (filteredData.isEmpty) {
+      return const SizedBox();
+    }
+
+    return SafeArea(
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: filteredData.length,
+        itemBuilder: (context, index) {
+          final league = filteredData[index];
+          if (league == null) {
+            return const SizedBox();
+          }
+
+          Icon leagueIcon = league.typeOfLeague == 0
+              ? Icon(Icons.person,
+                  color: userState.darkmode ? AppColors.white : null)
+              : Icon(Icons.people,
+                  color: userState.darkmode ? AppColors.white : null);
+
+          String subtitleText;
+          if (league.hasLeagueStarted) {
+            subtitleText = league.hasLeagueEnded!
+                ? userState.hardcodedStrings.finished
+                : userState.hardcodedStrings.ongoing;
+          } else {
+            subtitleText = userState.hardcodedStrings.notStarted;
+          }
+
+          return ListTile(
+            onTap: () => handleLeagueTap(context, league),
+            leading: leagueIcon,
+            title: ExtendedText(
+              text: league.name,
               userState: userState,
-              colorOverride: AppColors.white,
             ),
-          ),
-          title: ExtendedText(
-            text: league.name,
-            userState: userState,
-          ),
-          subtitle: league.hasLeagueStarted
-              ? null
-              : Text(userState.hardcodedStrings.notStarted),
-        );
-      },
-    ));
+            subtitle: Text(subtitleText),
+          );
+        },
+      ),
+    );
   }
 }

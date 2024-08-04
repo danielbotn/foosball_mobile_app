@@ -16,6 +16,8 @@ GetLeagueResponse _$GetLeagueResponseFromJson(Map<String, dynamic> json) =>
       upTo: json['upTo'] as int,
       hasLeagueStarted: json['hasLeagueStarted'] as bool,
       howManyRounds: json['howManyRounds'] as int,
+      hasLeagueEnded: json['hasLeagueEnded'] as bool?,
+      hasAccess: json['hasAccess'] as bool?,
     );
 
 Map<String, dynamic> _$GetLeagueResponseToJson(GetLeagueResponse instance) =>
@@ -28,4 +30,6 @@ Map<String, dynamic> _$GetLeagueResponseToJson(GetLeagueResponse instance) =>
       'organisationId': instance.organisationId,
       'hasLeagueStarted': instance.hasLeagueStarted,
       'howManyRounds': instance.howManyRounds,
+      'hasLeagueEnded': instance.hasLeagueEnded,
+      'hasAccess': instance.hasAccess,
     };

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:foosball_mobile_app/main.dart';
 import 'package:foosball_mobile_app/state/user_state.dart';
 import 'package:foosball_mobile_app/utils/app_color.dart';
 import 'package:foosball_mobile_app/utils/helpers.dart';

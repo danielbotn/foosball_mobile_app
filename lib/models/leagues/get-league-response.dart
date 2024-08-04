@@ -12,6 +12,8 @@ class GetLeagueResponse {
   final int organisationId;
   final bool hasLeagueStarted;
   final int howManyRounds;
+  final bool? hasLeagueEnded;
+  final bool? hasAccess;
 
   GetLeagueResponse(
       {required this.id,
@@ -21,7 +23,9 @@ class GetLeagueResponse {
       required this.organisationId,
       required this.upTo,
       required this.hasLeagueStarted,
-      required this.howManyRounds});
+      required this.howManyRounds,
+      this.hasLeagueEnded,
+      this.hasAccess});
 
   factory GetLeagueResponse.fromJson(Map<String, dynamic> item) =>
       _$GetLeagueResponseFromJson(item);
