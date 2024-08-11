@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:foosball_mobile_app/api/LeagueApi.dart';
-import 'package:foosball_mobile_app/models/leagues/single-league-standings-model.dart';
-import 'package:foosball_mobile_app/state/user_state.dart';
-import 'package:foosball_mobile_app/utils/app_color.dart';
-import 'package:foosball_mobile_app/utils/helpers.dart';
-import 'package:foosball_mobile_app/widgets/UI/Error/ServerError.dart';
-import 'package:foosball_mobile_app/widgets/league/single_league_standings/table_cell_standings.dart';
-import 'package:foosball_mobile_app/widgets/loading.dart';
+import 'package:dano_foosball/api/LeagueApi.dart';
+import 'package:dano_foosball/models/leagues/single-league-standings-model.dart';
+import 'package:dano_foosball/state/user_state.dart';
+import 'package:dano_foosball/utils/app_color.dart';
+import 'package:dano_foosball/utils/helpers.dart';
+import 'package:dano_foosball/widgets/UI/Error/ServerError.dart';
+import 'package:dano_foosball/widgets/league/single_league_standings/table_cell_standings.dart';
+import 'package:dano_foosball/widgets/loading.dart';
 
 class SingleLeagueStandings extends StatefulWidget {
   final UserState userState;

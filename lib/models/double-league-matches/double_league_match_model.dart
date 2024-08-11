@@ -1,4 +1,4 @@
-import 'package:foosball_mobile_app/models/double-league-matches/team_model.dart';
+import 'package:dano_foosball/models/double-league-matches/team_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'double_league_match_model.g.dart';

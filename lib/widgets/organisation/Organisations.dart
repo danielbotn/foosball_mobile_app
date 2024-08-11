@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:foosball_mobile_app/main.dart';
-import 'package:foosball_mobile_app/models/organisation/organisation_response.dart';
-import 'package:foosball_mobile_app/widgets/UI/Error/ServerError.dart';
-import 'package:foosball_mobile_app/widgets/emptyData/emptyData.dart';
-import 'package:foosball_mobile_app/widgets/extended_Text.dart';
+import 'package:dano_foosball/main.dart';
+import 'package:dano_foosball/models/organisation/organisation_response.dart';
+import 'package:dano_foosball/widgets/UI/Error/ServerError.dart';
+import 'package:dano_foosball/widgets/emptyData/emptyData.dart';
+import 'package:dano_foosball/widgets/extended_Text.dart';
 
 import '../../api/UserApi.dart';
 import '../../models/user/user_response.dart';

@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:foosball_mobile_app/api/dio_api/dio_api.dart';
-import 'package:foosball_mobile_app/models/charts/user_stats_response.dart';
-import 'package:foosball_mobile_app/models/user/create_group_user_model.dart';
-import 'package:foosball_mobile_app/models/user/user_last_ten.dart';
-import 'package:foosball_mobile_app/models/user/user_response.dart';
-import 'package:foosball_mobile_app/utils/helpers.dart';
+import 'package:dano_foosball/api/dio_api/dio_api.dart';
+import 'package:dano_foosball/models/charts/user_stats_response.dart';
+import 'package:dano_foosball/models/user/create_group_user_model.dart';
+import 'package:dano_foosball/models/user/user_last_ten.dart';
+import 'package:dano_foosball/models/user/user_response.dart';
+import 'package:dano_foosball/utils/helpers.dart';
 
 class UserApi {
   UserApi();

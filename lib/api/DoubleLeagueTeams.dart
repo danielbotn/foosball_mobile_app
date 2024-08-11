@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:foosball_mobile_app/api/dio_api/dio_api.dart';
-import 'package:foosball_mobile_app/models/double-league-teams/createDoubleLeagueTeamBody.dart';
-import 'package:foosball_mobile_app/models/double-league-teams/create_double_league_team_return.dart';
-import 'package:foosball_mobile_app/utils/helpers.dart';
+import 'package:dano_foosball/api/dio_api/dio_api.dart';
+import 'package:dano_foosball/models/double-league-teams/createDoubleLeagueTeamBody.dart';
+import 'package:dano_foosball/models/double-league-teams/create_double_league_team_return.dart';
+import 'package:dano_foosball/utils/helpers.dart';
 
 class DoubleLeagueTeamsApi {
   DoubleLeagueTeamsApi();

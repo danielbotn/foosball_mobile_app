@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:community_charts_flutter/community_charts_flutter.dart'
     as charts;
-import 'package:foosball_mobile_app/main.dart';
-import 'package:foosball_mobile_app/models/charts/user_stats_response.dart';
-import 'package:foosball_mobile_app/models/charts/matches_chart.dart';
-import 'package:foosball_mobile_app/state/user_state.dart';
-import 'package:foosball_mobile_app/utils/app_color.dart';
+import 'package:dano_foosball/main.dart';
+import 'package:dano_foosball/models/charts/user_stats_response.dart';
+import 'package:dano_foosball/models/charts/matches_chart.dart';
+import 'package:dano_foosball/state/user_state.dart';
+import 'package:dano_foosball/utils/app_color.dart';
 
 class DashboardMatchesChart extends StatefulWidget {
   final UserState userState;
@@ -21,7 +21,6 @@ class DashboardMatchesChart extends StatefulWidget {
 class _DashboardMatchesChartState extends State<DashboardMatchesChart> {
   // state variables
   late List<MatchesChart> data = [];
-  Color dude = Colors.pink[50] as Color;
 
   // sets the data for the chart
   _setChartData() {
@@ -59,11 +58,12 @@ class _DashboardMatchesChartState extends State<DashboardMatchesChart> {
 
   @override
   Widget build(BuildContext context) {
+    // Ensure chart data is set
     _setChartData();
 
     List<charts.Series<MatchesChart, String>> series = [
       charts.Series(
-        id: "developers",
+        id: "matches",
         data: data,
         domainFn: (MatchesChart series, _) => series.name,
         measureFn: (MatchesChart series, _) => series.matches,
@@ -85,7 +85,8 @@ class _DashboardMatchesChartState extends State<DashboardMatchesChart> {
                 children: <Widget>[
                   Text(
                     widget.userState.hardcodedStrings.matches,
-                    style: Theme.of(context).textTheme.bodyText1,
+                    style:
+                        Theme.of(context).textTheme.bodyLarge, // Updated line
                   ),
                   // change label style of BarChart to fit the theme
                   Expanded(

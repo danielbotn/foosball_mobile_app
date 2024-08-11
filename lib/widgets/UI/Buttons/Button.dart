@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:foosball_mobile_app/main.dart';
-import 'package:foosball_mobile_app/state/user_state.dart';
-import 'package:foosball_mobile_app/utils/app_color.dart';
-import 'package:foosball_mobile_app/widgets/extended_Text.dart';
+import 'package:dano_foosball/state/user_state.dart';
+import 'package:dano_foosball/utils/app_color.dart';
+import 'package:dano_foosball/widgets/extended_Text.dart';
 
 class Button extends StatefulWidget {
   final UserState userState;
@@ -43,14 +42,15 @@ class _ButtonState extends State<Button> {
               bottom: widget.paddingBottom,
             ),
             child: ElevatedButton(
-              onPressed: () => widget.onClick(),
+              onPressed: widget.onClick,
               style: ElevatedButton.styleFrom(
-                primary: widget.userState.darkmode
+                backgroundColor: widget.userState.darkmode
                     ? AppColors.darkModeButtonColor
                     : AppColors.buttonsLightTheme,
                 minimumSize: const Size(100, 50),
               ),
-              child: ExtendedText(text: widget.text, userState: userState),
+              child:
+                  ExtendedText(text: widget.text, userState: widget.userState),
             ),
           ),
         ),

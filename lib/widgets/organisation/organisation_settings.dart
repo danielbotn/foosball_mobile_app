@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:foosball_mobile_app/api/Organisation.dart';
-import 'package:foosball_mobile_app/icons/custom_icons.dart';
-import 'package:foosball_mobile_app/models/organisation/organisation_response.dart';
-import 'package:foosball_mobile_app/widgets/Settings/DiscordSettings.dart';
-import 'package:foosball_mobile_app/widgets/Settings/MicrosoftTeamsSettings.dart';
-import 'package:foosball_mobile_app/widgets/Settings/SlackSettings.dart';
-import 'package:foosball_mobile_app/widgets/group_players/create_group_player.dart';
-import 'package:foosball_mobile_app/widgets/organisation/change_organisation.dart';
-import 'package:foosball_mobile_app/widgets/organisation/join_organisation.dart';
-import 'package:foosball_mobile_app/widgets/organisation/new_organisation.dart';
-import 'package:foosball_mobile_app/widgets/organisation/organisation_manage_players.dart';
+import 'package:dano_foosball/api/Organisation.dart';
+import 'package:dano_foosball/icons/custom_icons.dart';
+import 'package:dano_foosball/models/organisation/organisation_response.dart';
+import 'package:dano_foosball/widgets/Settings/DiscordSettings.dart';
+import 'package:dano_foosball/widgets/Settings/MicrosoftTeamsSettings.dart';
+import 'package:dano_foosball/widgets/Settings/SlackSettings.dart';
+import 'package:dano_foosball/widgets/group_players/create_group_player.dart';
+import 'package:dano_foosball/widgets/organisation/change_organisation.dart';
+import 'package:dano_foosball/widgets/organisation/join_organisation.dart';
+import 'package:dano_foosball/widgets/organisation/new_organisation.dart';
+import 'package:dano_foosball/widgets/organisation/organisation_manage_players.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 import '../../api/UserApi.dart';

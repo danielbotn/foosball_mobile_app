@@ -1,5 +1,5 @@
-import 'package:foosball_mobile_app/models/freehand-matches/userScoreObject.dart';
-import 'package:foosball_mobile_app/models/user/user_response.dart';
+import 'package:dano_foosball/models/freehand-matches/userScoreObject.dart';
+import 'package:dano_foosball/models/user/user_response.dart';
 import 'package:mobx/mobx.dart';
 // Include generated file
 part 'ongoing_freehand_state.g.dart';

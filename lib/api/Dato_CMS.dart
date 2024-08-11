@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:foosball_mobile_app/api/dio_api/dio_api.dart';
-import 'package:foosball_mobile_app/models/cms/hardcoded_strings.dart';
-import 'package:foosball_mobile_app/utils/helpers.dart';
+import 'package:dano_foosball/api/dio_api/dio_api.dart';
+import 'package:dano_foosball/models/cms/hardcoded_strings.dart';
+import 'package:dano_foosball/utils/helpers.dart';
 
 class DatoCMS {
   DatoCMS();

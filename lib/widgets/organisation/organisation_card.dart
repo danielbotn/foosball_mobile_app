@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:foosball_mobile_app/widgets/extended_Text.dart';
+import 'package:dano_foosball/widgets/extended_Text.dart';
 
 import '../../state/user_state.dart';
 import '../../utils/app_color.dart';

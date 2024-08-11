@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:foosball_mobile_app/models/user/user_response.dart';
-import 'package:foosball_mobile_app/state/user_state.dart';
+import 'package:dano_foosball/models/user/user_response.dart';
+import 'package:dano_foosball/state/user_state.dart';
 
 class SelectedPlayers extends StatefulWidget {
   final UserState userState;

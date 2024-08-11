@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:foosball_mobile_app/main.dart';
-import 'package:foosball_mobile_app/models/organisation/organisation_response.dart';
-import 'package:foosball_mobile_app/widgets/loading.dart';
+import 'package:dano_foosball/main.dart';
+import 'package:dano_foosball/models/organisation/organisation_response.dart';
+import 'package:dano_foosball/widgets/loading.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import '../../api/Organisation.dart';
 import '../../state/user_state.dart';
@@ -64,7 +64,7 @@ class _OrganisationCodeState extends State<OrganisationCode> {
                     : AppColors.white,
                 child: Column(
                   children: <Widget>[
-                    QrImage(
+                    QrImageView(
                       backgroundColor: AppColors.white,
                       data:
                           'organisationCode: ${organisationData!.organisationCode}, organisationId: ${organisationData!.id}',

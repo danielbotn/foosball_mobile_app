@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:foosball_mobile_app/api/HistoryApi.dart';
-import 'package:foosball_mobile_app/models/history/historyModel.dart';
-import 'package:foosball_mobile_app/models/history/userStats.dart';
-import 'package:foosball_mobile_app/models/other/TwoPlayersObject.dart';
-import 'package:foosball_mobile_app/state/user_state.dart';
-import 'package:foosball_mobile_app/utils/app_color.dart';
-import 'package:foosball_mobile_app/widgets/UI/Error/ServerError.dart';
-import 'package:foosball_mobile_app/widgets/emptyData/emptyData.dart';
-import 'package:foosball_mobile_app/widgets/loading.dart';
-import 'package:foosball_mobile_app/widgets/single_league_history/single_league_match_detail.dart';
+import 'package:dano_foosball/api/HistoryApi.dart';
+import 'package:dano_foosball/models/history/historyModel.dart';
+import 'package:dano_foosball/models/history/userStats.dart';
+import 'package:dano_foosball/models/other/TwoPlayersObject.dart';
+import 'package:dano_foosball/state/user_state.dart';
+import 'package:dano_foosball/utils/app_color.dart';
+import 'package:dano_foosball/widgets/UI/Error/ServerError.dart';
+import 'package:dano_foosball/widgets/emptyData/emptyData.dart';
+import 'package:dano_foosball/widgets/loading.dart';
+import 'package:dano_foosball/widgets/single_league_history/single_league_match_detail.dart';
 import 'package:intl/intl.dart';
 
 import 'double_league_history/double_league_match_detail.dart';

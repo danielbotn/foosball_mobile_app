@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:foosball_mobile_app/api/SingleLeagueGoalApi.dart';
-import 'package:foosball_mobile_app/api/SingleLeagueMatchApi.dart';
-import 'package:foosball_mobile_app/api/UserApi.dart';
-import 'package:foosball_mobile_app/main.dart';
-import 'package:foosball_mobile_app/models/other/TwoPlayersObject.dart';
-import 'package:foosball_mobile_app/models/single-league-goals/single_league_goal_model.dart';
-import 'package:foosball_mobile_app/models/single-league-matches/single_league_match_model.dart';
-import 'package:foosball_mobile_app/models/user/user_response.dart';
-import 'package:foosball_mobile_app/utils/helpers.dart';
-import 'package:foosball_mobile_app/widgets/loading.dart';
-import 'package:foosball_mobile_app/widgets/single_league_history/single_league_buttons.dart';
-import 'package:foosball_mobile_app/widgets/single_league_history/single_league_goals.dart';
-import 'package:foosball_mobile_app/widgets/total_playing_time.dart';
-import 'package:foosball_mobile_app/widgets/match_score.dart';
-import 'package:foosball_mobile_app/widgets/match_card.dart';
+import 'package:dano_foosball/api/SingleLeagueGoalApi.dart';
+import 'package:dano_foosball/api/SingleLeagueMatchApi.dart';
+import 'package:dano_foosball/api/UserApi.dart';
+import 'package:dano_foosball/main.dart';
+import 'package:dano_foosball/models/other/TwoPlayersObject.dart';
+import 'package:dano_foosball/models/single-league-goals/single_league_goal_model.dart';
+import 'package:dano_foosball/models/single-league-matches/single_league_match_model.dart';
+import 'package:dano_foosball/models/user/user_response.dart';
+import 'package:dano_foosball/utils/helpers.dart';
+import 'package:dano_foosball/widgets/loading.dart';
+import 'package:dano_foosball/widgets/single_league_history/single_league_buttons.dart';
+import 'package:dano_foosball/widgets/single_league_history/single_league_goals.dart';
+import 'package:dano_foosball/widgets/total_playing_time.dart';
+import 'package:dano_foosball/widgets/match_score.dart';
+import 'package:dano_foosball/widgets/match_card.dart';
 
 import '../extended_Text.dart';
 

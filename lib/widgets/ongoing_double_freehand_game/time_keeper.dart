@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:foosball_mobile_app/models/other/ongoing_double_game_object.dart';
-import 'package:foosball_mobile_app/state/ongoing_double_freehand_state.dart';
-import 'package:foosball_mobile_app/utils/app_color.dart';
-import 'package:foosball_mobile_app/utils/helpers.dart';
+import 'package:dano_foosball/models/other/ongoing_double_game_object.dart';
+import 'package:dano_foosball/state/ongoing_double_freehand_state.dart';
+import 'package:dano_foosball/utils/app_color.dart';
+import 'package:dano_foosball/utils/helpers.dart';
 import '../extended_Text.dart';
 
 class TimeKeeper extends StatefulWidget {

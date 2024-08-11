@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:foosball_mobile_app/api/SingleLeagueMatchApi.dart';
-import 'package:foosball_mobile_app/main.dart';
-import 'package:foosball_mobile_app/models/single-league-matches/single_league_match_model.dart';
-import 'package:foosball_mobile_app/state/user_state.dart';
-import 'package:foosball_mobile_app/utils/helpers.dart';
-import 'package:foosball_mobile_app/widgets/UI/Error/ServerError.dart';
-import 'package:foosball_mobile_app/widgets/league/ongoing_game/ongoing_game.dart';
-import 'package:foosball_mobile_app/widgets/loading.dart';
+import 'package:dano_foosball/api/SingleLeagueMatchApi.dart';
+import 'package:dano_foosball/main.dart';
+import 'package:dano_foosball/models/single-league-matches/single_league_match_model.dart';
+import 'package:dano_foosball/state/user_state.dart';
+import 'package:dano_foosball/utils/helpers.dart';
+import 'package:dano_foosball/widgets/UI/Error/ServerError.dart';
+import 'package:dano_foosball/widgets/league/ongoing_game/ongoing_game.dart';
+import 'package:dano_foosball/widgets/loading.dart';
 
 class SingleLeagueFixtures extends StatefulWidget {
   final UserState userState;

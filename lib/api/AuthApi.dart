@@ -2,14 +2,14 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_login/flutter_login.dart';
-import 'package:foosball_mobile_app/api/dio_api/dio_api.dart';
-import 'package:foosball_mobile_app/models/auth/error_response.dart';
-import 'package:foosball_mobile_app/models/auth/login_response.dart';
-import 'package:foosball_mobile_app/models/auth/refresh_model.dart';
-import 'package:foosball_mobile_app/models/auth/register_response.dart';
-import 'package:foosball_mobile_app/models/auth/update_password_request.dart';
-import 'package:foosball_mobile_app/models/auth/update_password_response.dart';
-import 'package:foosball_mobile_app/utils/helpers.dart';
+import 'package:dano_foosball/api/dio_api/dio_api.dart';
+import 'package:dano_foosball/models/auth/error_response.dart';
+import 'package:dano_foosball/models/auth/login_response.dart';
+import 'package:dano_foosball/models/auth/refresh_model.dart';
+import 'package:dano_foosball/models/auth/register_response.dart';
+import 'package:dano_foosball/models/auth/update_password_request.dart';
+import 'package:dano_foosball/models/auth/update_password_response.dart';
+import 'package:dano_foosball/utils/helpers.dart';
 
 class AuthApi {
   AuthApi();

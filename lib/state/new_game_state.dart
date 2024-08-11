@@ -1,4 +1,4 @@
-import 'package:foosball_mobile_app/models/user/user_response.dart';
+import 'package:dano_foosball/models/user/user_response.dart';
 import 'package:mobx/mobx.dart';
 import 'package:tuple/tuple.dart';
 

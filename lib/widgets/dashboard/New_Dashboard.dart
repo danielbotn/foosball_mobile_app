@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:foosball_mobile_app/api/Dato_CMS.dart';
-import 'package:foosball_mobile_app/models/cms/hardcoded_strings.dart';
-import 'package:foosball_mobile_app/state/user_state.dart';
-import 'package:foosball_mobile_app/utils/app_color.dart';
-import 'package:foosball_mobile_app/widgets/UI/Error/ServerError.dart';
-import 'package:foosball_mobile_app/widgets/dashboard/dahsboard_user_info.dart/dashboard_user_info.dart';
-import 'package:foosball_mobile_app/widgets/dashboard/dashboard_charts/dashboard_charts.dart';
-import 'package:foosball_mobile_app/widgets/dashboard/dashboard_first_visit.dart';
-import 'package:foosball_mobile_app/widgets/dashboard/dashboard_last_five.dart';
-import 'package:foosball_mobile_app/widgets/dashboard/dashboard_quick_actions.dart';
-import 'package:foosball_mobile_app/widgets/drawer_sidebar.dart';
-import 'package:foosball_mobile_app/widgets/headline.dart';
-import 'package:foosball_mobile_app/widgets/loading.dart';
+import 'package:dano_foosball/api/Dato_CMS.dart';
+import 'package:dano_foosball/models/cms/hardcoded_strings.dart';
+import 'package:dano_foosball/state/user_state.dart';
+import 'package:dano_foosball/utils/app_color.dart';
+import 'package:dano_foosball/widgets/UI/Error/ServerError.dart';
+import 'package:dano_foosball/widgets/dashboard/dahsboard_user_info.dart/dashboard_user_info.dart';
+import 'package:dano_foosball/widgets/dashboard/dashboard_charts/dashboard_charts.dart';
+import 'package:dano_foosball/widgets/dashboard/dashboard_first_visit.dart';
+import 'package:dano_foosball/widgets/dashboard/dashboard_last_five.dart';
+import 'package:dano_foosball/widgets/dashboard/dashboard_quick_actions.dart';
+import 'package:dano_foosball/widgets/drawer_sidebar.dart';
+import 'package:dano_foosball/widgets/headline.dart';
+import 'package:dano_foosball/widgets/loading.dart';
 
 class NewDashboard extends StatefulWidget {
   final UserState userState;

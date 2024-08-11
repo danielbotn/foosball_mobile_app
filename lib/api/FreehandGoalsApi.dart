@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:foosball_mobile_app/api/dio_api/dio_api.dart';
-import 'package:foosball_mobile_app/models/freehand-goals/freehand_goal_body.dart';
-import 'package:foosball_mobile_app/models/freehand-goals/freehand_goal_model.dart';
-import 'package:foosball_mobile_app/models/freehand-goals/freehand_goals_model.dart';
-import 'package:foosball_mobile_app/utils/helpers.dart';
+import 'package:dano_foosball/api/dio_api/dio_api.dart';
+import 'package:dano_foosball/models/freehand-goals/freehand_goal_body.dart';
+import 'package:dano_foosball/models/freehand-goals/freehand_goal_model.dart';
+import 'package:dano_foosball/models/freehand-goals/freehand_goals_model.dart';
+import 'package:dano_foosball/utils/helpers.dart';
 
 class FreehandGoalsApi {
   FreehandGoalsApi();

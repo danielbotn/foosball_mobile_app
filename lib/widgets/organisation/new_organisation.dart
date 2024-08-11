@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:foosball_mobile_app/api/Organisation.dart';
-import 'package:foosball_mobile_app/main.dart';
+import 'package:dano_foosball/api/Organisation.dart';
+import 'package:dano_foosball/main.dart';
 
 import '../../state/user_state.dart';
 import '../../utils/app_color.dart';

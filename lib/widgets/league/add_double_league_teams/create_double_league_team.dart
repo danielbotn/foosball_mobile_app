@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:foosball_mobile_app/api/DoubleLeaguePlayersApi.dart';
-import 'package:foosball_mobile_app/api/DoubleLeagueTeams.dart';
-import 'package:foosball_mobile_app/api/LeagueApi.dart';
-import 'package:foosball_mobile_app/main.dart';
-import 'package:foosball_mobile_app/models/double-league-players/double_league_player_create_body.dart';
-import 'package:foosball_mobile_app/models/double-league-teams/createDoubleLeagueTeamBody.dart';
-import 'package:foosball_mobile_app/models/user/user_response.dart';
-import 'package:foosball_mobile_app/state/user_state.dart';
-import 'package:foosball_mobile_app/utils/app_color.dart';
-import 'package:foosball_mobile_app/utils/helpers.dart';
-import 'package:foosball_mobile_app/widgets/UI/Buttons/Button.dart';
-import 'package:foosball_mobile_app/widgets/extended_Text.dart';
-import 'package:foosball_mobile_app/widgets/inputs/InputWidget.dart';
-import 'package:foosball_mobile_app/widgets/league/add_double_league_teams/add_double_league_teams.dart';
-import 'package:foosball_mobile_app/widgets/league/add_double_league_teams/team_overview.dart';
+import 'package:dano_foosball/api/DoubleLeaguePlayersApi.dart';
+import 'package:dano_foosball/api/DoubleLeagueTeams.dart';
+import 'package:dano_foosball/api/LeagueApi.dart';
+import 'package:dano_foosball/main.dart';
+import 'package:dano_foosball/models/double-league-players/double_league_player_create_body.dart';
+import 'package:dano_foosball/models/double-league-teams/createDoubleLeagueTeamBody.dart';
+import 'package:dano_foosball/models/user/user_response.dart';
+import 'package:dano_foosball/state/user_state.dart';
+import 'package:dano_foosball/utils/app_color.dart';
+import 'package:dano_foosball/utils/helpers.dart';
+import 'package:dano_foosball/widgets/UI/Buttons/Button.dart';
+import 'package:dano_foosball/widgets/extended_Text.dart';
+import 'package:dano_foosball/widgets/inputs/InputWidget.dart';
+import 'package:dano_foosball/widgets/league/add_double_league_teams/add_double_league_teams.dart';
+import 'package:dano_foosball/widgets/league/add_double_league_teams/team_overview.dart';
 
 class CreateDoubleLeagueTeam extends StatefulWidget {
   final UserState userState;

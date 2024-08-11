@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:foosball_mobile_app/api/dio_api/dio_api.dart';
-import 'package:foosball_mobile_app/models/single-league-matches/create-single-league-matches-response.dart';
-import 'package:foosball_mobile_app/models/single-league-matches/single-league-match-update/single_league_match_update_model.dart';
-import 'package:foosball_mobile_app/models/single-league-matches/single_league_match_model.dart';
-import 'package:foosball_mobile_app/utils/helpers.dart';
+import 'package:dano_foosball/api/dio_api/dio_api.dart';
+import 'package:dano_foosball/models/single-league-matches/create-single-league-matches-response.dart';
+import 'package:dano_foosball/models/single-league-matches/single-league-match-update/single_league_match_update_model.dart';
+import 'package:dano_foosball/models/single-league-matches/single_league_match_model.dart';
+import 'package:dano_foosball/utils/helpers.dart';
 
 class SingleLeagueMatchApi {
   SingleLeagueMatchApi();

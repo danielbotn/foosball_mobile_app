@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:foosball_mobile_app/state/user_state.dart';
+import 'package:dano_foosball/state/user_state.dart';
 import '../extended_Text.dart';
 
 class FreehandDoubleMatchCard extends StatelessWidget {

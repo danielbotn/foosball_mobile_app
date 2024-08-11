@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:foosball_mobile_app/main.dart';
-import 'package:foosball_mobile_app/state/user_state.dart';
-import 'package:foosball_mobile_app/utils/app_color.dart';
-import 'package:foosball_mobile_app/utils/preferences_service.dart';
-import 'package:foosball_mobile_app/widgets/Login.dart';
-import 'package:foosball_mobile_app/widgets/Settings.dart';
-import 'package:foosball_mobile_app/widgets/history.dart';
-import 'package:foosball_mobile_app/widgets/league/League.dart';
+import 'package:dano_foosball/main.dart';
+import 'package:dano_foosball/state/user_state.dart';
+import 'package:dano_foosball/utils/app_color.dart';
+import 'package:dano_foosball/utils/preferences_service.dart';
+import 'package:dano_foosball/widgets/Login.dart';
+import 'package:dano_foosball/widgets/Settings.dart';
+import 'package:dano_foosball/widgets/history.dart';
+import 'package:dano_foosball/widgets/league/League.dart';
 
 import 'new_game/new_game.dart';
 import 'organisation/organisation.dart';

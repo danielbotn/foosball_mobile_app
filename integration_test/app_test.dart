@@ -1,9 +1,9 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:foosball_mobile_app/widgets/dashboard/New_Dashboard.dart';
+import 'package:dano_foosball/widgets/dashboard/New_Dashboard.dart';
 import 'package:integration_test/integration_test.dart';
-import 'package:foosball_mobile_app/main.dart' as app;
+import 'package:dano_foosball/main.dart' as app;
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();

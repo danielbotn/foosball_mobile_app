@@ -1,11 +1,11 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
-import 'package:foosball_mobile_app/api/LeagueApi.dart';
-import 'package:foosball_mobile_app/models/leagues/create-league-body.dart';
-import 'package:foosball_mobile_app/models/leagues/create-league-response.dart';
-import 'package:foosball_mobile_app/state/user_state.dart';
-import 'package:foosball_mobile_app/widgets/inputs/InputWidget.dart';
+import 'package:dano_foosball/api/LeagueApi.dart';
+import 'package:dano_foosball/models/leagues/create-league-body.dart';
+import 'package:dano_foosball/models/leagues/create-league-response.dart';
+import 'package:dano_foosball/state/user_state.dart';
+import 'package:dano_foosball/widgets/inputs/InputWidget.dart';
 
 typedef MyFormCallback = void Function(bool result);
 

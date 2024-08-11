@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:foosball_mobile_app/api/FreehandGoalsApi.dart';
-import 'package:foosball_mobile_app/models/freehand-goals/freehand_goal_body.dart';
-import 'package:foosball_mobile_app/models/freehand-goals/freehand_goal_model.dart';
-import 'package:foosball_mobile_app/models/other/freehandMatchDetailObject.dart';
-import 'package:foosball_mobile_app/models/other/ongoing_game_object.dart';
-import 'package:foosball_mobile_app/state/ongoing_freehand_state.dart';
-import 'package:foosball_mobile_app/state/user_state.dart';
+import 'package:dano_foosball/api/FreehandGoalsApi.dart';
+import 'package:dano_foosball/models/freehand-goals/freehand_goal_body.dart';
+import 'package:dano_foosball/models/freehand-goals/freehand_goal_model.dart';
+import 'package:dano_foosball/models/other/freehandMatchDetailObject.dart';
+import 'package:dano_foosball/models/other/ongoing_game_object.dart';
+import 'package:dano_foosball/state/ongoing_freehand_state.dart';
+import 'package:dano_foosball/state/user_state.dart';
 import '../extended_Text.dart';
 import 'match_details.dart';
 

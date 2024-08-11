@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:foosball_mobile_app/main.dart';
+import 'package:dano_foosball/main.dart';
 
 import '../../api/Organisation.dart';
 import '../../api/UserApi.dart';

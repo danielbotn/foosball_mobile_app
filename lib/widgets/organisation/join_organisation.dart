@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:foosball_mobile_app/widgets/organisation/organisation.dart';
+import 'package:dano_foosball/widgets/organisation/organisation.dart';
 import 'package:majascan/majascan.dart';
 import '../../api/Organisation.dart';
 import '../../state/user_state.dart';
@@ -172,7 +172,7 @@ class _JoinOrganisationState extends State<JoinOrganisation> {
                     })
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: widget.userState.darkmode
+                    backgroundColor: widget.userState.darkmode
                         ? AppColors.darkModeButtonColor
                         : AppColors.buttonsLightTheme,
                     minimumSize: const Size(200, 50),

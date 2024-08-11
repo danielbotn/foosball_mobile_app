@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:foosball_mobile_app/api/UserApi.dart';
-import 'package:foosball_mobile_app/models/user/user_last_ten.dart';
-import 'package:foosball_mobile_app/state/user_state.dart';
-import 'package:foosball_mobile_app/utils/app_color.dart';
-import 'package:foosball_mobile_app/widgets/UI/Error/ServerError.dart';
-import 'package:foosball_mobile_app/widgets/loading.dart';
-import 'package:foosball_mobile_app/widgets/double_league_history/double_league_match_detail.dart';
-import 'package:foosball_mobile_app/widgets/single_league_history/single_league_match_detail.dart';
-import 'package:foosball_mobile_app/widgets/freehand_double_history/freehand_double_match_detail.dart';
-import 'package:foosball_mobile_app/widgets/freehand_history/freehand_match_detail.dart';
-import 'package:foosball_mobile_app/models/other/TwoPlayersObject.dart';
+import 'package:dano_foosball/api/UserApi.dart';
+import 'package:dano_foosball/models/user/user_last_ten.dart';
+import 'package:dano_foosball/state/user_state.dart';
+import 'package:dano_foosball/utils/app_color.dart';
+import 'package:dano_foosball/widgets/UI/Error/ServerError.dart';
+import 'package:dano_foosball/widgets/loading.dart';
+import 'package:dano_foosball/widgets/double_league_history/double_league_match_detail.dart';
+import 'package:dano_foosball/widgets/single_league_history/single_league_match_detail.dart';
+import 'package:dano_foosball/widgets/freehand_double_history/freehand_double_match_detail.dart';
+import 'package:dano_foosball/widgets/freehand_history/freehand_match_detail.dart';
+import 'package:dano_foosball/models/other/TwoPlayersObject.dart';
 import 'package:intl/intl.dart';
 
 class DashBoardLastFive extends StatefulWidget {

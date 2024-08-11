@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:foosball_mobile_app/api/Organisation.dart';
-import 'package:foosball_mobile_app/models/organisation/organisation_response.dart';
-import 'package:foosball_mobile_app/state/user_state.dart';
-import 'package:foosball_mobile_app/utils/app_color.dart';
-import 'package:foosball_mobile_app/utils/helpers.dart';
-import 'package:foosball_mobile_app/widgets/UI/Error/ServerError.dart';
-import 'package:foosball_mobile_app/widgets/loading.dart';
+import 'package:dano_foosball/api/Organisation.dart';
+import 'package:dano_foosball/models/organisation/organisation_response.dart';
+import 'package:dano_foosball/state/user_state.dart';
+import 'package:dano_foosball/utils/app_color.dart';
+import 'package:dano_foosball/utils/helpers.dart';
+import 'package:dano_foosball/widgets/UI/Error/ServerError.dart';
+import 'package:dano_foosball/widgets/loading.dart';
 
 class DiscordSettings extends StatefulWidget {
   final UserState userState;
@@ -35,7 +35,7 @@ class _DiscordSettingsState extends State<DiscordSettings> {
 
     if (data != null &&
         data.discordWebhookUrl != null &&
-        data.discordWebhookUrl != "") {
+        data.discordWebhookUrl!.isNotEmpty) {
       setState(() {
         _discordWebhook = data.discordWebhookUrl!;
         _discordWebhookController.text = data.discordWebhookUrl!;
@@ -190,18 +190,14 @@ class _DiscordSettingsState extends State<DiscordSettings> {
                       child: ElevatedButton(
                         onPressed: _submitDiscordWebHook,
                         style: ElevatedButton.styleFrom(
-                          primary: widget.userState.darkmode
+                          backgroundColor: widget.userState.darkmode
                               ? AppColors.darkModeButtonColor
                               : AppColors.buttonsLightTheme,
                           minimumSize: const Size(double.infinity, 50),
                         ),
                         child: Text(
                           widget.userState.hardcodedStrings.save,
-                          style: TextStyle(
-                            color: widget.userState.darkmode
-                                ? AppColors.white
-                                : AppColors.white,
-                          ),
+                          style: const TextStyle(color: AppColors.white),
                         ),
                       ),
                     ),

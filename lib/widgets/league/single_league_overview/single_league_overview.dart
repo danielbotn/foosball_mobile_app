@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:foosball_mobile_app/models/leagues/get-league-response.dart';
-import 'package:foosball_mobile_app/state/user_state.dart';
-import 'package:foosball_mobile_app/utils/app_color.dart';
-import 'package:foosball_mobile_app/utils/helpers.dart';
-import 'package:foosball_mobile_app/widgets/extended_Text.dart';
-import 'package:foosball_mobile_app/widgets/league/single_league_fixtures/single_league_fixtures.dart';
-import 'package:foosball_mobile_app/widgets/league/single_league_standings/single_league_standings.dart';
+import 'package:dano_foosball/models/leagues/get-league-response.dart';
+import 'package:dano_foosball/state/user_state.dart';
+import 'package:dano_foosball/utils/app_color.dart';
+import 'package:dano_foosball/utils/helpers.dart';
+import 'package:dano_foosball/widgets/extended_Text.dart';
+import 'package:dano_foosball/widgets/league/single_league_fixtures/single_league_fixtures.dart';
+import 'package:dano_foosball/widgets/league/single_league_standings/single_league_standings.dart';
 
 class SingleLeagueOverview extends StatefulWidget {
   final UserState userState;

@@ -1,25 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:foosball_mobile_app/main.dart';
-import 'package:foosball_mobile_app/state/user_state.dart';
-import 'package:foosball_mobile_app/utils/app_color.dart';
-import 'package:foosball_mobile_app/widgets/league/dialogs/create_new_league_dialog.dart';
+import 'package:dano_foosball/main.dart';
+import 'package:dano_foosball/state/user_state.dart';
+import 'package:dano_foosball/utils/app_color.dart';
+import 'package:dano_foosball/widgets/league/dialogs/create_new_league_dialog.dart';
 
 class LeagueButton extends StatefulWidget {
   final UserState userState;
   final Function() newLeaugeCreated;
   final Function() hideButton;
-  const LeagueButton(
-      {Key? key,
-      required this.userState,
-      required this.newLeaugeCreated,
-      required this.hideButton})
-      : super(key: key);
+
+  const LeagueButton({
+    Key? key,
+    required this.userState,
+    required this.newLeaugeCreated,
+    required this.hideButton,
+  }) : super(key: key);
 
   @override
   State<LeagueButton> createState() => _LeagueButtonState();
 }
-
-enum SingleOrDouble { single, double }
 
 class _LeagueButtonState extends State<LeagueButton> {
   void onSubmit(bool createdLeagueSuccessful) {
@@ -46,8 +45,8 @@ class _LeagueButtonState extends State<LeagueButton> {
           Expanded(
             flex: 5,
             child: ElevatedButton(
-              onPressed: () => {
-                widget.hideButton(),
+              onPressed: () {
+                widget.hideButton();
                 showDialog(
                   context: context,
                   builder: (context) => CreateLeagueDialog(
@@ -55,10 +54,10 @@ class _LeagueButtonState extends State<LeagueButton> {
                     onCancel: onCancel,
                     userState: widget.userState,
                   ),
-                ),
+                );
               },
               style: ElevatedButton.styleFrom(
-                primary: widget.userState.darkmode
+                backgroundColor: widget.userState.darkmode
                     ? AppColors
                         .darkModeButtonColor // Replace with your dark mode button color
                     : AppColors
