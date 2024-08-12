@@ -615,14 +615,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
-  majascan:
-    dependency: "direct main"
-    description:
-      name: majascan
-      sha256: "530ba542909a9a938e4be722f403523884a9176f61af0e25cb05afbc27dcbd64"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.5.0"
   matcher:
     dependency: transitive
     description:
@@ -655,6 +647,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
+  mobile_scanner:
+    dependency: "direct main"
+    description:
+      name: mobile_scanner
+      sha256: b8c0e9afcfd52534f85ec666f3d52156f560b5e6c25b1e3d4fe2087763607926
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.1.1"
   mobx:
     dependency: "direct main"
     description:
@@ -1120,10 +1120,10 @@ packages:
     dependency: transitive
     description:
       name: web
-      sha256: d43c1d6b787bf0afad444700ae7f4db8827f701bc61c255ac8d328c6f4d52062
+      sha256: "97da13628db363c635202ad97068d47c5b8aa555808e7a9411963c533b449b27"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.0"
+    version: "0.5.1"
   web_socket:
     dependency: transitive
     description:
