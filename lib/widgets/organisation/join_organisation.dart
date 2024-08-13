@@ -20,10 +20,28 @@ class JoinOrganisation extends StatefulWidget {
 class _JoinOrganisationState extends State<JoinOrganisation> {
   String result = "Hey there !";
 
-  String? _result;
+  String? _result = "";
 
-  void setResult(String result) {
+  void setResult(String result) async {
     setState(() => _result = result);
+
+    if (result.isNotEmpty &&
+        result.contains('organisationCode') &&
+        result.contains('organisationId')) {
+      bool wasJoiningSuccessful = await joinOrganisation();
+
+      // let user know
+      if (wasJoiningSuccessful) {
+        await showMyDialog(
+            'You have joined a new organisation. Congratulations',
+            widget.userState.hardcodedStrings.success);
+        if (!mounted) return;
+        goToOrganisation(context);
+      } else {
+        await showMyDialog(widget.userState.hardcodedStrings.obsFailure,
+            widget.userState.hardcodedStrings.failure);
+      }
+    }
   }
 
   // Dialog for success or error message when
@@ -87,7 +105,6 @@ class _JoinOrganisationState extends State<JoinOrganisation> {
     Navigator.of(context).push(MaterialPageRoute(
       builder: (context) => QrCodeScanner(setResult: setResult),
     ));
-    // await scanQR(context);
   }
 
 /*
