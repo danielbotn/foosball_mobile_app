@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:foosball_mobile_app/api/TokenHelper.dart';
-import 'package:foosball_mobile_app/utils/helpers.dart';
-import 'package:foosball_mobile_app/utils/preferences_service.dart';
+import 'package:dano_foosball/api/TokenHelper.dart';
+import 'package:dano_foosball/utils/helpers.dart';
+import 'package:dano_foosball/utils/preferences_service.dart';
 
 class Api {
   final Dio dio;

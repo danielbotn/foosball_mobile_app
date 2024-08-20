@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:community_charts_flutter/community_charts_flutter.dart'
     as charts;
-import 'package:foosball_mobile_app/models/charts/goals_chart.dart';
-import 'package:foosball_mobile_app/models/charts/user_stats_response.dart';
-import 'package:foosball_mobile_app/state/user_state.dart';
-import 'package:foosball_mobile_app/utils/app_color.dart';
+import 'package:dano_foosball/models/charts/goals_chart.dart';
+import 'package:dano_foosball/models/charts/user_stats_response.dart';
+import 'package:dano_foosball/state/user_state.dart';
+import 'package:dano_foosball/utils/app_color.dart';
 
 class DashboardGoalsChart extends StatefulWidget {
   final UserState userState;
@@ -73,7 +73,8 @@ class _DashboardGoalsChartState extends State<DashboardGoalsChart> {
                 children: <Widget>[
                   Text(
                     widget.userState.hardcodedStrings.goals,
-                    style: Theme.of(context).textTheme.bodyText1,
+                    style:
+                        Theme.of(context).textTheme.bodyLarge, // Updated line
                   ),
                   Expanded(
                     child: charts.BarChart(series,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:foosball_mobile_app/state/user_state.dart';
-import 'package:foosball_mobile_app/utils/app_color.dart';
+import 'package:dano_foosball/state/user_state.dart';
+import 'package:dano_foosball/utils/app_color.dart';
 import 'extended_Text.dart';
 
 class TotalPlayingTime extends StatelessWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:foosball_mobile_app/main.dart';
-import 'package:foosball_mobile_app/state/new_game_state.dart';
-import 'package:foosball_mobile_app/widgets/extended_Text.dart';
+import 'package:dano_foosball/main.dart';
+import 'package:dano_foosball/state/new_game_state.dart';
+import 'package:dano_foosball/widgets/extended_Text.dart';
 
 class NewGameVs extends StatelessWidget {
   final NewGameState newGameState;

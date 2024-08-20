@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:foosball_mobile_app/api/Organisation.dart';
-import 'package:foosball_mobile_app/api/UserApi.dart';
-import 'package:foosball_mobile_app/models/organisation/organisation_response.dart';
-import 'package:foosball_mobile_app/models/user/user_response.dart';
-import 'package:foosball_mobile_app/state/user_state.dart';
-import 'package:foosball_mobile_app/utils/app_color.dart';
-import 'package:foosball_mobile_app/widgets/UI/Error/ServerError.dart';
-import 'package:foosball_mobile_app/widgets/loading.dart';
+import 'package:dano_foosball/api/Organisation.dart';
+import 'package:dano_foosball/api/UserApi.dart';
+import 'package:dano_foosball/models/organisation/organisation_response.dart';
+import 'package:dano_foosball/models/user/user_response.dart';
+import 'package:dano_foosball/state/user_state.dart';
+import 'package:dano_foosball/utils/app_color.dart';
+import 'package:dano_foosball/widgets/UI/Error/ServerError.dart';
+import 'package:dano_foosball/widgets/loading.dart';
 
 class DashBoardUserInfo extends StatefulWidget {
   final UserState userState;

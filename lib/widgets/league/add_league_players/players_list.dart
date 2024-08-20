@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:foosball_mobile_app/main.dart';
-import 'package:foosball_mobile_app/models/user/user_response.dart';
-import 'package:foosball_mobile_app/state/user_state.dart';
-import 'package:foosball_mobile_app/utils/helpers.dart';
+import 'package:dano_foosball/main.dart';
+import 'package:dano_foosball/models/user/user_response.dart';
+import 'package:dano_foosball/state/user_state.dart';
+import 'package:dano_foosball/utils/helpers.dart';
 import 'package:tuple/tuple.dart';
 
 class PlayersList extends StatefulWidget {

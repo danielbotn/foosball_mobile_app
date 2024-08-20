@@ -1,4 +1,4 @@
-import 'package:foosball_mobile_app/state/user_state.dart';
+import 'package:dano_foosball/state/user_state.dart';
 
 class TwoPlayersObject {
   UserState userState;

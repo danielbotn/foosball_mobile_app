@@ -1,13 +1,13 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:foosball_mobile_app/models/auth/jwt_model.dart';
-import 'package:foosball_mobile_app/route_generator.dart';
-import 'package:foosball_mobile_app/state/user_state.dart';
-import 'package:foosball_mobile_app/utils/app_theme.dart';
-import 'package:foosball_mobile_app/utils/preferences_service.dart';
-import 'package:foosball_mobile_app/widgets/Login.dart';
-import 'package:foosball_mobile_app/widgets/Settings.dart';
-import 'package:foosball_mobile_app/widgets/dashboard/New_Dashboard.dart';
+import 'package:dano_foosball/models/auth/jwt_model.dart';
+import 'package:dano_foosball/route_generator.dart';
+import 'package:dano_foosball/state/user_state.dart';
+import 'package:dano_foosball/utils/app_theme.dart';
+import 'package:dano_foosball/utils/preferences_service.dart';
+import 'package:dano_foosball/widgets/Login.dart';
+import 'package:dano_foosball/widgets/Settings.dart';
+import 'package:dano_foosball/widgets/dashboard/New_Dashboard.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 

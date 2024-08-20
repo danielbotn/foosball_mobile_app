@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:foosball_mobile_app/main.dart';
-import 'package:foosball_mobile_app/models/user/user_response.dart';
-import 'package:foosball_mobile_app/state/user_state.dart';
-import 'package:foosball_mobile_app/widgets/extended_Text.dart';
+import 'package:dano_foosball/main.dart';
+import 'package:dano_foosball/models/user/user_response.dart';
+import 'package:dano_foosball/state/user_state.dart';
+import 'package:dano_foosball/widgets/extended_Text.dart';
 
 class TeamOverview extends StatefulWidget {
   final UserState userState;

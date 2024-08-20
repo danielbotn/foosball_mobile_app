@@ -5,19 +5,19 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "foosball_mobile_app",
+      "name": "dano_foosabll",
       "request": "launch",
       "type": "dart"
       // "args": ["-d", "chrome", "--web-port", "8000"]
     },
     {
-      "name": "foosball_mobile_app (profile mode)",
+      "name": "dano_foosabll (profile mode)",
       "request": "launch",
       "type": "dart",
       "flutterMode": "profile"
     },
     {
-      "name": "foosball_mobile_app (release mode)",
+      "name": "dano_foosabll (release mode)",
       "request": "launch",
       "type": "dart",
       "flutterMode": "release"

@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:foosball_mobile_app/api/UserApi.dart';
-import 'package:foosball_mobile_app/main.dart';
-import 'package:foosball_mobile_app/models/user/create_group_user_model.dart';
-import 'package:foosball_mobile_app/models/user/user_response.dart';
-import 'package:foosball_mobile_app/state/user_state.dart';
-import 'package:foosball_mobile_app/utils/app_color.dart';
-import 'package:foosball_mobile_app/utils/helpers.dart';
-import 'package:foosball_mobile_app/widgets/extended_Text.dart';
-import 'package:foosball_mobile_app/widgets/group_players/info_card.dart';
+import 'package:dano_foosball/api/UserApi.dart';
+import 'package:dano_foosball/models/user/create_group_user_model.dart';
+import 'package:dano_foosball/models/user/user_response.dart';
+import 'package:dano_foosball/state/user_state.dart';
+import 'package:dano_foosball/utils/app_color.dart';
+import 'package:dano_foosball/utils/helpers.dart';
+import 'package:dano_foosball/widgets/extended_Text.dart';
+import 'package:dano_foosball/widgets/group_players/info_card.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'dart:async';
-
-import 'package:foosball_mobile_app/widgets/inputs/InputWidget.dart';
+import 'package:dano_foosball/widgets/inputs/InputWidget.dart';
 
 class CreateGroupPlayer extends StatefulWidget {
   final UserState userState;
@@ -40,26 +38,19 @@ class _CreateGroupPlayerState extends State<CreateGroupPlayer> {
       setState(() {
         isKeyPadOpen = visible;
       });
-      if (visible == false) {
+      if (!visible) {
         FocusScope.of(context).unfocus();
       }
     });
   }
 
   Future<UserResponse?> createNewGroupUser() async {
-    late UserResponse? result;
     UserApi userApi = UserApi();
     CreateGroupUserModel groupUser =
         CreateGroupUserModel(firstName: firstNameText, lastName: lastNameText);
     var response = await userApi.createGroupUser(groupUser);
 
-    if (response != null) {
-      result = response;
-    } else {
-      result = null;
-    }
-
-    return result;
+    return response;
   }
 
   // Alert Dialog if user wants to create new group user
@@ -124,7 +115,7 @@ class _CreateGroupPlayerState extends State<CreateGroupPlayer> {
           child: Column(
             children: [
               Visibility(
-                visible: isKeyPadOpen == false,
+                visible: !isKeyPadOpen,
                 child: InfoCard(userState: widget.userState),
               ),
               Padding(
@@ -137,13 +128,13 @@ class _CreateGroupPlayerState extends State<CreateGroupPlayer> {
                           clearInputs = false;
                         });
                       },
-                      hintText: userState.hardcodedStrings.firstName,
+                      hintText: widget.userState.hardcodedStrings.firstName,
                       clearInputText: clearInputs)),
               Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: InputWidget(
                       userState: widget.userState,
-                      hintText: userState.hardcodedStrings.lastName,
+                      hintText: widget.userState.hardcodedStrings.lastName,
                       onChangeInput: (value) {
                         setState(() {
                           lastNameText = value;
@@ -153,9 +144,9 @@ class _CreateGroupPlayerState extends State<CreateGroupPlayer> {
                       clearInputText: clearInputs)),
               const Spacer(),
               Visibility(
-                  visible: firstNameText != "" &&
-                      lastNameText != "" &&
-                      isKeyPadOpen == false,
+                  visible: firstNameText.isNotEmpty &&
+                      lastNameText.isNotEmpty &&
+                      !isKeyPadOpen,
                   child: Padding(
                       padding: const EdgeInsets.all(4.0),
                       child: Container(
@@ -186,7 +177,7 @@ class _CreateGroupPlayerState extends State<CreateGroupPlayer> {
                             clearAllInputs();
                           },
                           style: ElevatedButton.styleFrom(
-                              primary: widget.userState.darkmode
+                              backgroundColor: widget.userState.darkmode
                                   ? AppColors.darkModeButtonColor
                                   : AppColors.buttonsLightTheme,
                               minimumSize: const Size(200, 50)),

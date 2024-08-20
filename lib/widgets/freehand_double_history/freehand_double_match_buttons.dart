@@ -1,36 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:foosball_mobile_app/api/FreehandDoubleMatchApi.dart';
-import 'package:foosball_mobile_app/models/freehand-double-matches/freehand_double_match_body.dart';
-import 'package:foosball_mobile_app/models/freehand-double-matches/freehand_double_match_model.dart';
-import 'package:foosball_mobile_app/models/other/ongoing_double_game_object.dart';
-import 'package:foosball_mobile_app/models/user/user_response.dart';
-import 'package:foosball_mobile_app/state/user_state.dart';
-import 'package:foosball_mobile_app/utils/app_color.dart';
-import 'package:foosball_mobile_app/widgets/extended_Text.dart';
-import 'package:foosball_mobile_app/widgets/new_game/new_game.dart';
-import 'package:foosball_mobile_app/widgets/ongoing_double_freehand_game/ongoing_double_freehand_game.dart';
+import 'package:dano_foosball/api/FreehandDoubleMatchApi.dart';
+import 'package:dano_foosball/models/freehand-double-matches/freehand_double_match_body.dart';
+import 'package:dano_foosball/models/freehand-double-matches/freehand_double_match_model.dart';
+import 'package:dano_foosball/models/other/ongoing_double_game_object.dart';
+import 'package:dano_foosball/models/user/user_response.dart';
+import 'package:dano_foosball/state/user_state.dart';
+import 'package:dano_foosball/utils/app_color.dart';
+import 'package:dano_foosball/widgets/extended_Text.dart';
+import 'package:dano_foosball/widgets/new_game/new_game.dart';
+import 'package:dano_foosball/widgets/ongoing_double_freehand_game/ongoing_double_freehand_game.dart';
 
 class FreehandDoubleMatchButtons extends StatelessWidget {
   final UserState userState;
   final FreehandDoubleMatchModel matchData;
-  const FreehandDoubleMatchButtons(
-      {Key? key, required this.userState, required this.matchData})
-      : super(key: key);
+
+  const FreehandDoubleMatchButtons({
+    Key? key,
+    required this.userState,
+    required this.matchData,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     void newMatch() {
       Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => NewGame(
-                    userState: userState,
-                  )));
+        context,
+        MaterialPageRoute(
+          builder: (context) => NewGame(userState: userState),
+        ),
+      );
     }
 
     void rematch() {
-      FreehandDoubleMatchApi doubleMatchApi = FreehandDoubleMatchApi();
-      FreehandDoubleMatchBody fdmb = FreehandDoubleMatchBody(
+      final FreehandDoubleMatchApi doubleMatchApi = FreehandDoubleMatchApi();
+      final FreehandDoubleMatchBody fdmb = FreehandDoubleMatchBody(
         playerOneTeamA: matchData.playerOneTeamA,
         playerTwoTeamA: matchData.playerTwoTeamA,
         playerOneTeamB: matchData.playerOneTeamB,
@@ -42,7 +45,8 @@ class FreehandDoubleMatchButtons extends StatelessWidget {
         nicknameTeamB: null,
         upTo: 10,
       );
-      UserResponse playerOneTeamA = UserResponse(
+
+      final UserResponse playerOneTeamA = UserResponse(
         id: matchData.playerOneTeamA,
         email: '',
         firstName: matchData.playerOneTeamAFirstName,
@@ -53,7 +57,8 @@ class FreehandDoubleMatchButtons extends StatelessWidget {
         isAdmin: true,
         isDeleted: false,
       );
-      UserResponse playerTwoTeamA = UserResponse(
+
+      final UserResponse playerTwoTeamA = UserResponse(
         id: matchData.playerTwoTeamA,
         email: '',
         firstName: matchData.playerTwoTeamAFirstName,
@@ -64,7 +69,8 @@ class FreehandDoubleMatchButtons extends StatelessWidget {
         isAdmin: true,
         isDeleted: false,
       );
-      UserResponse playerOneTeamB = UserResponse(
+
+      final UserResponse playerOneTeamB = UserResponse(
         id: matchData.playerOneTeamB,
         email: '',
         firstName: matchData.playerOneTeamBFirstName,
@@ -75,77 +81,85 @@ class FreehandDoubleMatchButtons extends StatelessWidget {
         isAdmin: true,
         isDeleted: false,
       );
-      UserResponse? playerTwoTeamB;
 
-      if (matchData.playerTwoTeamB != null) {
-        playerTwoTeamB = UserResponse(
-          id: matchData.playerTwoTeamB as int,
-          email: '',
-          firstName: matchData.playerTwoTeamBFirstName as String,
-          lastName: matchData.playerTwoTeamBLastName as String,
-          createdAt: DateTime.now(),
-          currentOrganisationId: userState.currentOrganisationId,
-          photoUrl: matchData.playerTwoTeamBPhotoUrl as String,
-          isAdmin: true,
-          isDeleted: false,
-        );
-      }
+      final UserResponse? playerTwoTeamB = matchData.playerTwoTeamB != null
+          ? UserResponse(
+              id: matchData.playerTwoTeamB!,
+              email: '',
+              firstName: matchData.playerTwoTeamBFirstName!,
+              lastName: matchData.playerTwoTeamBLastName!,
+              createdAt: DateTime.now(),
+              currentOrganisationId: userState.currentOrganisationId,
+              photoUrl: matchData.playerTwoTeamBPhotoUrl!,
+              isAdmin: true,
+              isDeleted: false,
+            )
+          : null;
 
       doubleMatchApi.createNewDoubleFreehandMatch(fdmb).then((value) {
-        OngoingDoubleGameObject ongoingDoubleGameObject =
+        final OngoingDoubleGameObject ongoingDoubleGameObject =
             OngoingDoubleGameObject(
-                freehandDoubleMatchCreateResponse: value,
-                playerOneTeamA: playerOneTeamA,
-                playerTwoTeamA: playerTwoTeamA,
-                playerOneTeamB: playerOneTeamB,
-                playerTwoTeamB: playerTwoTeamB ?? playerTwoTeamB,
-                userState: userState);
+          freehandDoubleMatchCreateResponse: value,
+          playerOneTeamA: playerOneTeamA,
+          playerTwoTeamA: playerTwoTeamA,
+          playerOneTeamB: playerOneTeamB,
+          playerTwoTeamB: playerTwoTeamB,
+          userState: userState,
+        );
 
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => OngoingDoubleFreehandGame(
-                      ongoingDoubleGameObject: ongoingDoubleGameObject,
-                    )));
+          context,
+          MaterialPageRoute(
+            builder: (context) => OngoingDoubleFreehandGame(
+              ongoingDoubleGameObject: ongoingDoubleGameObject,
+            ),
+          ),
+        );
       });
     }
 
     return Row(
       children: <Widget>[
         Expanded(
-            flex: 5,
-            child: Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: ElevatedButton(
-                onPressed: () => {newMatch()},
-                style: ElevatedButton.styleFrom(
-                    primary: userState.darkmode
-                        ? AppColors.darkModeButtonColor
-                        : AppColors.buttonsLightTheme,
-                    minimumSize: const Size(100, 50)),
-                child: ExtendedText(
-                  text: userState.hardcodedStrings.newMatch,
-                  userState: userState,
-                ),
+          flex: 5,
+          child: Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: ElevatedButton(
+              onPressed: newMatch,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: userState.darkmode
+                    ? AppColors.darkModeButtonColor
+                    : AppColors.buttonsLightTheme,
+                minimumSize: const Size(100, 50),
               ),
-            )),
+              child: ExtendedText(
+                text: userState.hardcodedStrings.newMatch,
+                userState: userState,
+                colorOverride: AppColors.white,
+              ),
+            ),
+          ),
+        ),
         Expanded(
-            flex: 5,
-            child: Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: ElevatedButton(
-                onPressed: () => {rematch()},
-                style: ElevatedButton.styleFrom(
-                    primary: userState.darkmode
-                        ? AppColors.darkModeButtonColor
-                        : AppColors.buttonsLightTheme,
-                    minimumSize: const Size(100, 50)),
-                child: ExtendedText(
-                  text: userState.hardcodedStrings.rematch,
-                  userState: userState,
-                ),
+          flex: 5,
+          child: Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: ElevatedButton(
+              onPressed: rematch,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: userState.darkmode
+                    ? AppColors.darkModeButtonColor
+                    : AppColors.buttonsLightTheme,
+                minimumSize: const Size(100, 50),
               ),
-            )),
+              child: ExtendedText(
+                text: userState.hardcodedStrings.rematch,
+                userState: userState,
+                colorOverride: AppColors.white,
+              ),
+            ),
+          ),
+        ),
       ],
     );
   }

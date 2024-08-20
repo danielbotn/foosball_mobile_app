@@ -1,14 +1,14 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:foosball_mobile_app/api/AuthApi.dart';
-import 'package:foosball_mobile_app/models/auth/login_response.dart';
-import 'package:foosball_mobile_app/models/auth/refresh_model.dart';
-import 'package:foosball_mobile_app/models/freehand-double-matches/freehand_double_match_model.dart';
-import 'package:foosball_mobile_app/models/other/freehandDoubleMatchObject.dart';
-import 'package:foosball_mobile_app/models/user/user_response.dart';
-import 'package:foosball_mobile_app/utils/preferences_service.dart';
+import 'package:dano_foosball/api/AuthApi.dart';
+import 'package:dano_foosball/models/auth/login_response.dart';
+import 'package:dano_foosball/models/auth/refresh_model.dart';
+import 'package:dano_foosball/models/freehand-double-matches/freehand_double_match_model.dart';
+import 'package:dano_foosball/models/other/freehandDoubleMatchObject.dart';
+import 'package:dano_foosball/models/user/user_response.dart';
+import 'package:dano_foosball/utils/preferences_service.dart';
 import 'app_color.dart';
-import 'package:foosball_mobile_app/main.dart';
+import 'package:dano_foosball/main.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:io' show Platform;
 
@@ -34,8 +34,10 @@ class Helpers {
   String getDevUrl() {
     if (kIsWeb) {
       return 'https://localhost:7145';
-    } else if (Platform.isAndroid || Platform.isIOS) {
+    } else if (Platform.isAndroid) {
       return 'https://10.0.2.2:7145';
+    } else if (Platform.isIOS) {
+      return 'https://localhost:7145'; // Use 'localhost' for iOS Simulator
     } else {
       return 'https://localhost:7145';
     }

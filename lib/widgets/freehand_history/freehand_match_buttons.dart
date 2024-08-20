@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:foosball_mobile_app/models/user/user_response.dart';
-import 'package:foosball_mobile_app/state/user_state.dart';
-import 'package:foosball_mobile_app/utils/app_color.dart';
-import 'package:foosball_mobile_app/widgets/extended_Text.dart';
-import 'package:foosball_mobile_app/widgets/new_game/new_game.dart';
+import 'package:dano_foosball/models/user/user_response.dart';
+import 'package:dano_foosball/state/user_state.dart';
+import 'package:dano_foosball/utils/app_color.dart';
+import 'package:dano_foosball/widgets/extended_Text.dart';
+import 'package:dano_foosball/widgets/new_game/new_game.dart';
 
 import '../../api/FreehandMatchApi.dart';
 import '../../models/freehand-matches/freehand_match_body.dart';
@@ -92,7 +92,7 @@ class FreehandMatchButtons extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () => {newMatch()},
                 style: ElevatedButton.styleFrom(
-                    primary: userState.darkmode
+                    backgroundColor: userState.darkmode
                         ? AppColors.darkModeButtonColor
                         : AppColors.buttonsLightTheme,
                     minimumSize: const Size(100, 50)),
@@ -110,7 +110,7 @@ class FreehandMatchButtons extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () => {rematch()},
                 style: ElevatedButton.styleFrom(
-                    primary: userState.darkmode
+                    backgroundColor: userState.darkmode
                         ? AppColors.darkModeButtonColor
                         : AppColors.buttonsLightTheme,
                     minimumSize: const Size(100, 50)),

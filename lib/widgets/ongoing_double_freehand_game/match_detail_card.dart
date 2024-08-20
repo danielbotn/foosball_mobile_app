@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:foosball_mobile_app/models/freehand-double-matches/freehand_double_match_model.dart';
-import 'package:foosball_mobile_app/models/user/user_response.dart';
-import 'package:foosball_mobile_app/state/user_state.dart';
+import 'package:dano_foosball/models/freehand-double-matches/freehand_double_match_model.dart';
+import 'package:dano_foosball/models/user/user_response.dart';
+import 'package:dano_foosball/state/user_state.dart';
 import '../extended_Text.dart';
 
 class MatchDetailCard extends StatelessWidget {

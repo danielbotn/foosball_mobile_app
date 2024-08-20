@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:foosball_mobile_app/state/user_state.dart';
-import 'package:foosball_mobile_app/utils/helpers.dart';
+import 'package:dano_foosball/state/user_state.dart';
+import 'package:dano_foosball/utils/helpers.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 
 class Loading extends StatelessWidget {

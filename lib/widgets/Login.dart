@@ -1,11 +1,11 @@
-import 'package:foosball_mobile_app/api/AuthApi.dart';
-import 'package:foosball_mobile_app/models/auth/jwt_model.dart';
-import 'package:foosball_mobile_app/models/auth/login_response.dart';
-import 'package:foosball_mobile_app/models/auth/error_response.dart';
-import 'package:foosball_mobile_app/state/user_state.dart';
+import 'package:dano_foosball/api/AuthApi.dart';
+import 'package:dano_foosball/models/auth/jwt_model.dart';
+import 'package:dano_foosball/models/auth/login_response.dart';
+import 'package:dano_foosball/models/auth/error_response.dart';
+import 'package:dano_foosball/state/user_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
-import 'package:foosball_mobile_app/widgets/dashboard/New_Dashboard.dart';
+import 'package:dano_foosball/widgets/dashboard/New_Dashboard.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 
 import '../models/auth/register_response.dart';

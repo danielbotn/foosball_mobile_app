@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:foosball_mobile_app/state/user_state.dart';
-import 'package:foosball_mobile_app/utils/app_color.dart';
-import 'package:foosball_mobile_app/utils/helpers.dart';
-import 'package:foosball_mobile_app/widgets/extended_Text.dart';
-import 'package:foosball_mobile_app/widgets/league/button/LeagueButton.dart';
-import 'package:foosball_mobile_app/widgets/league/dashbaord/LeagueDashboard.dart';
+import 'package:dano_foosball/state/user_state.dart';
+import 'package:dano_foosball/utils/app_color.dart';
+import 'package:dano_foosball/utils/helpers.dart';
+import 'package:dano_foosball/widgets/extended_Text.dart';
+import 'package:dano_foosball/widgets/league/button/LeagueButton.dart';
+import 'package:dano_foosball/widgets/league/dashbaord/LeagueDashboard.dart';
 
 class League extends StatefulWidget {
   final UserState userState;

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:foosball_mobile_app/api/UserApi.dart';
-import 'package:foosball_mobile_app/models/charts/user_stats_response.dart';
-import 'package:foosball_mobile_app/state/user_state.dart';
-import 'package:foosball_mobile_app/widgets/UI/Error/ServerError.dart';
-import 'package:foosball_mobile_app/widgets/dashboard/dashboard_goals_chart.dart';
-import 'package:foosball_mobile_app/widgets/dashboard/dashboard_matches_chart.dart';
-import 'package:foosball_mobile_app/widgets/loading.dart';
+import 'package:dano_foosball/api/UserApi.dart';
+import 'package:dano_foosball/models/charts/user_stats_response.dart';
+import 'package:dano_foosball/state/user_state.dart';
+import 'package:dano_foosball/widgets/UI/Error/ServerError.dart';
+import 'package:dano_foosball/widgets/dashboard/dashboard_goals_chart.dart';
+import 'package:dano_foosball/widgets/dashboard/dashboard_matches_chart.dart';
+import 'package:dano_foosball/widgets/loading.dart';
 
 Future<UserStatsResponse> getUserStatsData(
     int userId, int currentOrganisationId) async {

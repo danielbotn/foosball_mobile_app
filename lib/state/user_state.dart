@@ -1,5 +1,5 @@
-import 'package:foosball_mobile_app/models/cms/hardcoded_strings.dart';
-import 'package:foosball_mobile_app/models/user/user_info_global.dart';
+import 'package:dano_foosball/models/cms/hardcoded_strings.dart';
+import 'package:dano_foosball/models/user/user_info_global.dart';
 import 'package:mobx/mobx.dart';
 
 // Include generated file

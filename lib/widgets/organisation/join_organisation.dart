@@ -1,7 +1,7 @@
+import 'package:dano_foosball/utils/qr_code_scanner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:foosball_mobile_app/widgets/organisation/organisation.dart';
-import 'package:majascan/majascan.dart';
+import 'package:dano_foosball/widgets/organisation/organisation.dart';
 import '../../api/Organisation.dart';
 import '../../state/user_state.dart';
 import '../../utils/app_color.dart';
@@ -19,6 +19,30 @@ class JoinOrganisation extends StatefulWidget {
 
 class _JoinOrganisationState extends State<JoinOrganisation> {
   String result = "Hey there !";
+
+  String? _result = "";
+
+  void setResult(String result) async {
+    setState(() => _result = result);
+
+    if (result.isNotEmpty &&
+        result.contains('organisationCode') &&
+        result.contains('organisationId')) {
+      bool wasJoiningSuccessful = await joinOrganisation();
+
+      // let user know
+      if (wasJoiningSuccessful) {
+        await showMyDialog(
+            'You have joined a new organisation. Congratulations',
+            widget.userState.hardcodedStrings.success);
+        if (!mounted) return;
+        goToOrganisation(context);
+      } else {
+        await showMyDialog(widget.userState.hardcodedStrings.obsFailure,
+            widget.userState.hardcodedStrings.failure);
+      }
+    }
+  }
 
   // Dialog for success or error message when
   // user creates a new organisation
@@ -77,10 +101,13 @@ class _JoinOrganisationState extends State<JoinOrganisation> {
                 )));
   }
 
-  void scanQrWithContext(BuildContext context) async {
-    await scanQR(context);
+  void scanQrWithContext(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => QrCodeScanner(setResult: setResult),
+    ));
   }
 
+/*
   Future scanQR(BuildContext context) async {
     try {
       String? qrResult = await MajaScan.startScan(
@@ -129,6 +156,7 @@ class _JoinOrganisationState extends State<JoinOrganisation> {
       });
     }
   }
+  */
 
   // state
   bool qrScanInProgress = false;
@@ -172,7 +200,7 @@ class _JoinOrganisationState extends State<JoinOrganisation> {
                     })
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: widget.userState.darkmode
+                    backgroundColor: widget.userState.darkmode
                         ? AppColors.darkModeButtonColor
                         : AppColors.buttonsLightTheme,
                     minimumSize: const Size(200, 50),

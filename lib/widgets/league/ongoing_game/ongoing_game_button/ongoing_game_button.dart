@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:foosball_mobile_app/api/SingleLeagueMatchApi.dart';
-import 'package:foosball_mobile_app/models/single-league-matches/single-league-match-update/single_league_match_update_model.dart';
-import 'package:foosball_mobile_app/state/user_state.dart';
-import 'package:foosball_mobile_app/utils/app_color.dart';
-import 'package:foosball_mobile_app/widgets/extended_Text.dart';
-import 'package:foosball_mobile_app/widgets/loading.dart';
+import 'package:dano_foosball/api/SingleLeagueMatchApi.dart';
+import 'package:dano_foosball/models/single-league-matches/single-league-match-update/single_league_match_update_model.dart';
+import 'package:dano_foosball/state/user_state.dart';
+import 'package:dano_foosball/utils/app_color.dart';
+import 'package:dano_foosball/widgets/extended_Text.dart';
+import 'package:dano_foosball/widgets/loading.dart';
 import 'package:ntp/ntp.dart';
 
 class OngoingGameButton extends StatefulWidget {
@@ -12,56 +12,57 @@ class OngoingGameButton extends StatefulWidget {
   final bool gameStarted;
   final int matchId;
   final Function(bool gameStarted) startGameFunction;
-  const OngoingGameButton(
-      {super.key,
-      required this.userState,
-      required this.gameStarted,
-      required this.matchId,
-      required this.startGameFunction});
+
+  const OngoingGameButton({
+    Key? key,
+    required this.userState,
+    required this.gameStarted,
+    required this.matchId,
+    required this.startGameFunction,
+  }) : super(key: key);
 
   @override
   State<OngoingGameButton> createState() => _OngoingGameButtonState();
 }
 
 class _OngoingGameButtonState extends State<OngoingGameButton> {
-  // State
   bool loading = false;
   bool hasGameStarted = false;
 
-  Future<bool> startMatch() async {
+  @override
+  void initState() {
+    super.initState();
+    // Initialize state based on the widget's gameStarted prop
+    hasGameStarted = widget.gameStarted;
+  }
+
+  Future<void> startMatch() async {
     setState(() {
       loading = true;
     });
     SingleLeagueMatchApi api = SingleLeagueMatchApi();
     SingleLeagueMatchUpdateModel newMatch = SingleLeagueMatchUpdateModel(
-        startTime: await NTP.now(),
-        endTime: null,
-        playerOneScore: 0,
-        playerTwoScore: 0,
-        matchStarted: true,
-        matchEnded: false,
-        matchPaused: false);
+      startTime: await NTP.now(),
+      endTime: null,
+      playerOneScore: 0,
+      playerTwoScore: 0,
+      matchStarted: true,
+      matchEnded: false,
+      matchPaused: false,
+    );
 
-    bool updateSuccessfull =
+    bool updateSuccessful =
         await api.updateSingleLeagueMatch(widget.matchId, newMatch);
     setState(() {
       loading = false;
     });
-    if (updateSuccessfull) {
-      widget.startGameFunction(updateSuccessfull);
+
+    if (updateSuccessful) {
+      widget.startGameFunction(updateSuccessful);
       setState(() {
         hasGameStarted = true;
       });
     }
-    return updateSuccessfull;
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    setState(() {
-      hasGameStarted = widget.gameStarted;
-    });
   }
 
   @override
@@ -72,27 +73,27 @@ class _OngoingGameButtonState extends State<OngoingGameButton> {
       return Row(
         children: <Widget>[
           Expanded(
-              flex: 5,
-              child: Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: ElevatedButton(
-                  onPressed: () => {
-                    if (widget.gameStarted == false) {startMatch()}
-                  },
-                  style: ElevatedButton.styleFrom(
-                      primary: widget.userState.darkmode
-                          ? AppColors.darkModeButtonColor
-                          : AppColors.buttonsLightTheme,
-                      minimumSize: const Size(100, 50)),
-                  child: ExtendedText(
-                    text: hasGameStarted == false
-                        ? widget.userState.hardcodedStrings.startGame
-                        : widget.userState.hardcodedStrings.pause,
-                    userState: widget.userState,
-                    colorOverride: AppColors.white,
-                  ),
+            flex: 5,
+            child: Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: ElevatedButton(
+                onPressed: widget.gameStarted ? null : startMatch,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: widget.userState.darkmode
+                      ? AppColors.darkModeButtonColor
+                      : AppColors.buttonsLightTheme,
+                  minimumSize: const Size(100, 50),
                 ),
-              )),
+                child: ExtendedText(
+                  text: hasGameStarted
+                      ? widget.userState.hardcodedStrings.pause
+                      : widget.userState.hardcodedStrings.startGame,
+                  userState: widget.userState,
+                  colorOverride: AppColors.white,
+                ),
+              ),
+            ),
+          ),
         ],
       );
     }

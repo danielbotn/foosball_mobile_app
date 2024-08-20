@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:foosball_mobile_app/api/AuthApi.dart';
-import 'package:foosball_mobile_app/main.dart';
-import 'package:foosball_mobile_app/models/auth/update_password_request.dart';
-import 'package:foosball_mobile_app/state/user_state.dart';
-import 'package:foosball_mobile_app/utils/app_color.dart';
+import 'package:dano_foosball/api/AuthApi.dart';
+import 'package:dano_foosball/main.dart';
+import 'package:dano_foosball/models/auth/update_password_request.dart';
+import 'package:dano_foosball/state/user_state.dart';
+import 'package:dano_foosball/utils/app_color.dart';
 
 class ChangePassword extends StatefulWidget {
   final UserState userState;
@@ -92,7 +92,7 @@ class _ChangePasswordState extends State<ChangePassword> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              userState.hardcodedStrings.enterNewPassword,
+              widget.userState.hardcodedStrings.enterNewPassword,
               style: TextStyle(
                 color: widget.userState.darkmode
                     ? AppColors.white
@@ -104,7 +104,7 @@ class _ChangePasswordState extends State<ChangePassword> {
             TextField(
               controller: _passwordController,
               decoration: InputDecoration(
-                labelText: userState.hardcodedStrings.newPassword,
+                labelText: widget.userState.hardcodedStrings.newPassword,
                 labelStyle: TextStyle(
                   color: widget.userState.darkmode
                       ? AppColors.white
@@ -147,8 +147,8 @@ class _ChangePasswordState extends State<ChangePassword> {
               TextField(
                 controller: _verificationCodeController,
                 decoration: InputDecoration(
-                  labelText:
-                      userState.hardcodedStrings.pleaseEnterVerificationCode,
+                  labelText: widget
+                      .userState.hardcodedStrings.pleaseEnterVerificationCode,
                   labelStyle: TextStyle(
                     color: widget.userState.darkmode
                         ? AppColors.white
@@ -184,7 +184,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                 child: ElevatedButton(
                   onPressed: _submitPassword,
                   style: ElevatedButton.styleFrom(
-                    primary: widget.userState.darkmode
+                    backgroundColor: widget.userState.darkmode
                         ? AppColors.darkModeButtonColor
                         : AppColors.buttonsLightTheme,
                     minimumSize: const Size(double.infinity, 50),

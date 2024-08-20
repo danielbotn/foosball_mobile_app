@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:foosball_mobile_app/api/FreehandDoubleGoalsApi.dart';
-import 'package:foosball_mobile_app/api/FreehandDoubleMatchApi.dart';
-import 'package:foosball_mobile_app/models/freehand-double-goals/freehand_double_goal_model.dart';
-import 'package:foosball_mobile_app/models/other/ongoing_double_game_object.dart';
-import 'package:foosball_mobile_app/models/user/user_response.dart';
-import 'package:foosball_mobile_app/state/ongoing_double_freehand_state.dart';
-import 'package:foosball_mobile_app/utils/helpers.dart';
-import 'package:foosball_mobile_app/widgets/dashboard/New_Dashboard.dart';
-import 'package:foosball_mobile_app/widgets/ongoing_double_freehand_game/buttons.dart';
-import 'package:foosball_mobile_app/widgets/ongoing_double_freehand_game/player_card.dart';
-import 'package:foosball_mobile_app/widgets/ongoing_double_freehand_game/player_score.dart';
-import 'package:foosball_mobile_app/widgets/ongoing_double_freehand_game/time_keeper.dart';
+import 'package:dano_foosball/api/FreehandDoubleGoalsApi.dart';
+import 'package:dano_foosball/api/FreehandDoubleMatchApi.dart';
+import 'package:dano_foosball/models/freehand-double-goals/freehand_double_goal_model.dart';
+import 'package:dano_foosball/models/other/ongoing_double_game_object.dart';
+import 'package:dano_foosball/models/user/user_response.dart';
+import 'package:dano_foosball/state/ongoing_double_freehand_state.dart';
+import 'package:dano_foosball/utils/helpers.dart';
+import 'package:dano_foosball/widgets/dashboard/New_Dashboard.dart';
+import 'package:dano_foosball/widgets/ongoing_double_freehand_game/buttons.dart';
+import 'package:dano_foosball/widgets/ongoing_double_freehand_game/player_card.dart';
+import 'package:dano_foosball/widgets/ongoing_double_freehand_game/player_score.dart';
+import 'package:dano_foosball/widgets/ongoing_double_freehand_game/time_keeper.dart';
 import '../extended_Text.dart';
 
 class OngoingDoubleFreehandGame extends StatefulWidget {

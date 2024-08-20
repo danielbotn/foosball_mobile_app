@@ -1,4 +1,4 @@
-import 'package:foosball_mobile_app/models/leagues/team-member-model.dart';
+import 'package:dano_foosball/models/leagues/team-member-model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'double-league-standings-model.g.dart';

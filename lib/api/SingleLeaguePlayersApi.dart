@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:foosball_mobile_app/api/dio_api/dio_api.dart';
-import 'package:foosball_mobile_app/models/single-league-players/single_league_players_model.dart';
-import 'package:foosball_mobile_app/utils/helpers.dart';
+import 'package:dano_foosball/api/dio_api/dio_api.dart';
+import 'package:dano_foosball/models/single-league-players/single_league_players_model.dart';
+import 'package:dano_foosball/utils/helpers.dart';
 
 class SingleLeaguePlayersApi {
   SingleLeaguePlayersApi();

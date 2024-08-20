@@ -1,6 +1,6 @@
-# Foosball Mobile App ⚽
+# Foosball Mobile App (Dano Foosball) ⚽
 
-`Foosball Mobile App`, A mobile app written in `Flutter` and uses the `Dart` programming language.
+`Dano Foosball`, A mobile app written in `Flutter` and uses the `Dart` programming language.
 
 The mobile app interacts with a `Dot net core REST api`.
 
@@ -85,7 +85,7 @@ Right click on project file and choose `Format code`
 
 ## Testing
 
-To Do!
+Integration testing is coded in `integration_test` folder
 
 ## Thanks
 

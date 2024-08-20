@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:foosball_mobile_app/api/LeagueApi.dart';
-import 'package:foosball_mobile_app/main.dart';
-import 'package:foosball_mobile_app/state/user_state.dart';
-import 'package:foosball_mobile_app/utils/app_color.dart';
-import 'package:foosball_mobile_app/widgets/UI/Error/ServerError.dart';
-import 'package:foosball_mobile_app/widgets/emptyData/emptyData.dart';
-import 'package:foosball_mobile_app/widgets/league/league_list/league_list.dart';
-import 'package:foosball_mobile_app/widgets/loading.dart';
+import 'package:dano_foosball/api/LeagueApi.dart';
+import 'package:dano_foosball/main.dart';
+import 'package:dano_foosball/state/user_state.dart';
+import 'package:dano_foosball/utils/app_color.dart';
+import 'package:dano_foosball/widgets/UI/Error/ServerError.dart';
+import 'package:dano_foosball/widgets/emptyData/emptyData.dart';
+import 'package:dano_foosball/widgets/league/league_list/league_list.dart';
+import 'package:dano_foosball/widgets/loading.dart';
 
 import '../../../models/leagues/get-league-response.dart';
 

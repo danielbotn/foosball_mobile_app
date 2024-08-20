@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:foosball_mobile_app/api/UserApi.dart';
-import 'package:foosball_mobile_app/models/leagues/get-league-response.dart';
-import 'package:foosball_mobile_app/models/user/user_response.dart';
-import 'package:foosball_mobile_app/state/new_game_state.dart';
-import 'package:foosball_mobile_app/state/user_state.dart';
-import 'package:foosball_mobile_app/utils/app_color.dart';
-import 'package:foosball_mobile_app/utils/helpers.dart';
-import 'package:foosball_mobile_app/widgets/extended_Text.dart';
-import 'package:foosball_mobile_app/widgets/headline.dart';
-import 'package:foosball_mobile_app/widgets/league/add_league_players/players_list.dart';
-import 'package:foosball_mobile_app/widgets/league/add_league_players/selected_players.dart';
-import 'package:foosball_mobile_app/widgets/league/button/create_sl_button.dart';
-import 'package:foosball_mobile_app/widgets/loading.dart';
+import 'package:dano_foosball/api/UserApi.dart';
+import 'package:dano_foosball/models/leagues/get-league-response.dart';
+import 'package:dano_foosball/models/user/user_response.dart';
+import 'package:dano_foosball/state/new_game_state.dart';
+import 'package:dano_foosball/state/user_state.dart';
+import 'package:dano_foosball/utils/app_color.dart';
+import 'package:dano_foosball/utils/helpers.dart';
+import 'package:dano_foosball/widgets/extended_Text.dart';
+import 'package:dano_foosball/widgets/headline.dart';
+import 'package:dano_foosball/widgets/league/add_league_players/players_list.dart';
+import 'package:dano_foosball/widgets/league/add_league_players/selected_players.dart';
+import 'package:dano_foosball/widgets/league/button/create_sl_button.dart';
+import 'package:dano_foosball/widgets/loading.dart';
 
 class AddLeaguePlayers extends StatefulWidget {
   final UserState userState;
