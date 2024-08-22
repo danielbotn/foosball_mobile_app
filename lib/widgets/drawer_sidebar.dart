@@ -150,7 +150,7 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
                   style: TextStyle(
                       color: userState.darkmode
                           ? Colors.white
-                          : Color.fromRGBO(33, 150, 243, 1))),
+                          : const Color.fromRGBO(33, 150, 243, 1))),
               decoration: BoxDecoration(
                   color: userState.darkmode
                       ? AppColors.darkModeLighterBackground

@@ -4,7 +4,8 @@ import 'package:dano_foosball/state/user_state.dart';
 import 'package:dano_foosball/utils/app_color.dart';
 import 'package:dano_foosball/widgets/loading.dart';
 import 'package:dano_foosball/models/live-matches/match.dart';
-import 'package:intl/intl.dart'; // For date formatting
+import 'package:intl/intl.dart';
+import 'package:signalr_netcore/signalr_client.dart' as signalr;
 
 class LiveMatches extends StatefulWidget {
   final UserState userState;
@@ -17,11 +18,25 @@ class LiveMatches extends StatefulWidget {
 
 class _LiveMatchesState extends State<LiveMatches> {
   late Future<List<Match>?> matchesFuture;
+  late signalr.HubConnection _hubConnection;
+  List<Match>? _matches; // Store matches in local state
 
   @override
   void initState() {
     super.initState();
-    matchesFuture = getLiveMatches();
+    matchesFuture = getLiveMatches().then((matches) {
+      setState(() {
+        _matches = matches;
+      });
+      return matches;
+    });
+    _initializeSignalR();
+  }
+
+  @override
+  void dispose() {
+    _hubConnection.stop();
+    super.dispose();
   }
 
   Future<List<Match>?> getLiveMatches() async {
@@ -29,10 +44,55 @@ class _LiveMatchesState extends State<LiveMatches> {
     return await api.getLiveMatches();
   }
 
+  void _initializeSignalR() async {
+    _hubConnection = signalr.HubConnectionBuilder()
+        .withUrl(
+          'https://localhost:7145/messageHub',
+        )
+        .build();
+
+    _hubConnection.on("UpdateScore", (List<Object?>? message) {
+      if (message != null && message.isNotEmpty) {
+        _handleScoreUpdate(message.cast<Object>());
+      }
+    });
+
+    _hubConnection.onclose((Exception? error) {
+      print("Connection closed: ${error?.toString()}");
+    } as signalr.ClosedCallback);
+
+    try {
+      await _hubConnection.start();
+      print("SignalR Connection started");
+
+      String organisationId = widget.userState.currentOrganisationId.toString();
+      await _hubConnection.invoke("JoinGroup", args: [organisationId]);
+    } catch (e) {
+      print("Error starting SignalR connection: $e");
+    }
+  }
+
+  void _handleScoreUpdate(List<Object>? message) {
+    if (message != null && message.isNotEmpty) {
+      final matchData = message[0] as Map<String, dynamic>;
+      final updatedMatch = Match.fromJson(matchData);
+
+      setState(() {
+        if (_matches != null) {
+          _matches = _matches!.map((match) {
+            if (match.matchId == updatedMatch.matchId) {
+              return updatedMatch; // Update match with new data
+            }
+            return match;
+          }).toList();
+        }
+      });
+    }
+  }
+
   Widget _buildMatchTile(Match match) {
     final isDarkMode = widget.userState.darkmode;
 
-    // Determine the correct icon based on match type
     Icon matchIcon;
     if (match.typeOfMatch == ETypeOfMatch.freehandMatch) {
       matchIcon = Icon(Icons.person,
@@ -51,7 +111,6 @@ class _LiveMatchesState extends State<LiveMatches> {
     String formattedDate =
         DateFormat('dd-MM-yyyy | kk:mm').format(match.dateOfGame);
 
-    // Building the participant names based on the match type
     String participants;
     if (match.typeOfMatch == ETypeOfMatch.doubleFreehandMatch ||
         match.typeOfMatch == ETypeOfMatch.doubleLeagueMatch) {
@@ -62,7 +121,6 @@ class _LiveMatchesState extends State<LiveMatches> {
           "${match.userFirstName} ${match.userLastName} vs ${match.opponentOneFirstName} ${match.opponentOneLastName}";
     }
 
-    // Determine player tiles based on match type and number of players
     List<Widget> leadingWidgets = [];
     List<Widget> trailingWidgets = [];
 
@@ -106,7 +164,6 @@ class _LiveMatchesState extends State<LiveMatches> {
       }
     }
 
-    // When there are 4 players, no images are displayed
     if (match.typeOfMatch == ETypeOfMatch.doubleFreehandMatch ||
         match.typeOfMatch == ETypeOfMatch.doubleLeagueMatch) {
       leadingWidgets.clear();
@@ -136,7 +193,7 @@ class _LiveMatchesState extends State<LiveMatches> {
           Text(
             formattedDate,
             style: TextStyle(
-              color: isDarkMode ? AppColors.white : AppColors.grey2,
+              color: isDarkMode ? AppColors.white : AppColors.textBlack,
               fontSize: 12.0,
             ),
           ),
@@ -178,49 +235,24 @@ class _LiveMatchesState extends State<LiveMatches> {
         iconTheme: IconThemeData(
             color: isDarkMode ? AppColors.white : Colors.grey[700]),
       ),
-      body: FutureBuilder<List<Match>?>(
-        future: matchesFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
+      body: _matches == null
+          ? Center(
               child: Loading(userState: widget.userState),
-            );
-          } else if (snapshot.hasData) {
-            var matches = snapshot.data;
-
-            if (matches == null || matches.isEmpty) {
-              return Center(
+            )
+          : (_matches!.isEmpty
+              ? Center(
                   child: Text('No live matches available',
                       style: TextStyle(
                           color: isDarkMode
                               ? AppColors.white
-                              : AppColors.textBlack)));
-            }
-
-            return ListView.builder(
-              itemCount: matches.length,
-              itemBuilder: (context, index) {
-                final match = matches[index];
-                return _buildMatchTile(match);
-              },
-            );
-          } else if (snapshot.hasError) {
-            return Center(
-                child: Text('Error: ${snapshot.error}',
-                    style: TextStyle(
-                        color: isDarkMode
-                            ? AppColors.white
-                            : AppColors.textBlack)));
-          } else {
-            return Center(
-                child: Text('No live matches available',
-                    style: TextStyle(
-                        color: isDarkMode
-                            ? AppColors.white
-                            : AppColors.textBlack)));
-          }
-        },
-      ),
+                              : AppColors.textBlack)))
+              : ListView.builder(
+                  itemCount: _matches!.length,
+                  itemBuilder: (context, index) {
+                    final match = _matches![index];
+                    return _buildMatchTile(match);
+                  },
+                )),
     );
   }
 }
