@@ -8,14 +8,14 @@ part of 'get-league-response.dart';
 
 GetLeagueResponse _$GetLeagueResponseFromJson(Map<String, dynamic> json) =>
     GetLeagueResponse(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       name: json['name'] as String,
-      typeOfLeague: json['typeOfLeague'] as int,
+      typeOfLeague: (json['typeOfLeague'] as num).toInt(),
       createdAt: DateTime.parse(json['createdAt'] as String),
-      organisationId: json['organisationId'] as int,
-      upTo: json['upTo'] as int,
+      organisationId: (json['organisationId'] as num).toInt(),
+      upTo: (json['upTo'] as num).toInt(),
       hasLeagueStarted: json['hasLeagueStarted'] as bool,
-      howManyRounds: json['howManyRounds'] as int,
+      howManyRounds: (json['howManyRounds'] as num).toInt(),
       hasLeagueEnded: json['hasLeagueEnded'] as bool?,
       hasAccess: json['hasAccess'] as bool?,
     );

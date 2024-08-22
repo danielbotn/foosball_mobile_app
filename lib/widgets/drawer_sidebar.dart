@@ -1,3 +1,4 @@
+import 'package:dano_foosball/widgets/live_matches/live_matches.dart';
 import 'package:flutter/material.dart';
 import 'package:dano_foosball/main.dart';
 import 'package:dano_foosball/state/user_state.dart';
@@ -7,6 +8,7 @@ import 'package:dano_foosball/widgets/Login.dart';
 import 'package:dano_foosball/widgets/Settings.dart';
 import 'package:dano_foosball/widgets/history.dart';
 import 'package:dano_foosball/widgets/league/League.dart';
+// Import the LiveMatches screen
 
 import 'new_game/new_game.dart';
 import 'organisation/organisation.dart';
@@ -36,6 +38,7 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
   String settings = userState.hardcodedStrings.settings;
   String logout = userState.hardcodedStrings.logout;
   String organisation = userState.hardcodedStrings.organisation;
+  String liveMatches = "Live Matches"; // New string
 
   void logoutUser() async {
     PreferencesService preferencesService = PreferencesService();
@@ -108,6 +111,19 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
       context,
       MaterialPageRoute(
         builder: (context) => League(
+          userState: userState,
+        ),
+      ),
+    ).then(((value) {
+      widget.notifyParent();
+    }));
+  }
+
+  goToLiveMatches(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => LiveMatches(
           userState: userState,
         ),
       ),
@@ -202,6 +218,23 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
                           : AppColors.textBlack)),
               onTap: () {
                 goToLeague(context);
+              },
+            ),
+            ListTile(
+              // New ListTile for Live Matches
+              tileColor: userState.darkmode
+                  ? AppColors.darkModeLighterBackground
+                  : AppColors.white,
+              leading: Icon(Icons.live_tv,
+                  color: userState.darkmode ? AppColors.white : null),
+              title: Text(liveMatches,
+                  style: TextStyle(
+                      color: userState.darkmode
+                          ? AppColors.white
+                          : AppColors.textBlack)),
+              onTap: () {
+                Navigator.of(context).pop();
+                goToLiveMatches(context);
               },
             ),
             ListTile(

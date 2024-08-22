@@ -9,11 +9,11 @@ part of 'create_double_league_team_return.dart';
 CreateDoubleLeagueTeamReturn _$CreateDoubleLeagueTeamReturnFromJson(
         Map<String, dynamic> json) =>
     CreateDoubleLeagueTeamReturn(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       name: json['name'] as String,
       createdAt: DateTime.parse(json['createdAt'] as String),
-      organisationId: json['organisationId'] as int,
-      leagueId: json['leagueId'] as int,
+      organisationId: (json['organisationId'] as num).toInt(),
+      leagueId: (json['leagueId'] as num).toInt(),
     );
 
 Map<String, dynamic> _$CreateDoubleLeagueTeamReturnToJson(

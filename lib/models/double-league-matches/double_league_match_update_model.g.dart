@@ -15,8 +15,8 @@ DoubleLeagueMatchUpdateModel _$DoubleLeagueMatchUpdateModelFromJson(
       endTime: json['endTime'] == null
           ? null
           : DateTime.parse(json['endTime'] as String),
-      teamOneScore: json['teamOneScore'] as int?,
-      teamTwoScore: json['teamTwoScore'] as int?,
+      teamOneScore: (json['teamOneScore'] as num?)?.toInt(),
+      teamTwoScore: (json['teamTwoScore'] as num?)?.toInt(),
       matchStarted: json['matchStarted'] as bool?,
       matchEnded: json['matchEnded'] as bool?,
       matchPaused: json['matchPaused'] as bool?,

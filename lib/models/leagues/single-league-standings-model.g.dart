@@ -9,14 +9,14 @@ part of 'single-league-standings-model.dart';
 SingleLeagueStandingsModel _$SingleLeagueStandingsModelFromJson(
         Map<String, dynamic> json) =>
     SingleLeagueStandingsModel(
-      userId: json['userId'] as int,
-      leagueId: json['leagueId'] as int,
-      totalMatchesWon: json['totalMatchesWon'] as int,
-      totalMatchesLost: json['totalMatchesLost'] as int,
-      totalGoalsScored: json['totalGoalsScored'] as int,
-      totalGoalsRecieved: json['totalGoalsRecieved'] as int,
-      positionInLeague: json['positionInLeague'] as int,
-      points: json['points'] as int,
+      userId: (json['userId'] as num).toInt(),
+      leagueId: (json['leagueId'] as num).toInt(),
+      totalMatchesWon: (json['totalMatchesWon'] as num).toInt(),
+      totalMatchesLost: (json['totalMatchesLost'] as num).toInt(),
+      totalGoalsScored: (json['totalGoalsScored'] as num).toInt(),
+      totalGoalsRecieved: (json['totalGoalsRecieved'] as num).toInt(),
+      positionInLeague: (json['positionInLeague'] as num).toInt(),
+      points: (json['points'] as num).toInt(),
       firstName: json['firstName'] as String,
       lastName: json['lastName'] as String,
       email: json['email'] as String,

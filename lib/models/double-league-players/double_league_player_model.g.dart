@@ -9,13 +9,13 @@ part of 'double_league_player_model.dart';
 DoubleLeaguePlayerModel _$DoubleLeaguePlayerModelFromJson(
         Map<String, dynamic> json) =>
     DoubleLeaguePlayerModel(
-      id: json['id'] as int,
-      userId: json['userId'] as int,
-      doubleLeagueTeamId: json['doubleLeagueTeamId'] as int,
+      id: (json['id'] as num).toInt(),
+      userId: (json['userId'] as num).toInt(),
+      doubleLeagueTeamId: (json['doubleLeagueTeamId'] as num).toInt(),
       firstName: json['firstName'] as String,
       lastName: json['lastName'] as String,
       email: json['email'] as String,
-      teamId: json['teamId'] as int,
+      teamId: (json['teamId'] as num).toInt(),
       teamName: json['teamName'] as String?,
     );
 

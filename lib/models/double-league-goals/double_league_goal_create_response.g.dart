@@ -9,15 +9,15 @@ part of 'double_league_goal_create_response.dart';
 DoubleLeagueGoalCreateResponse _$DoubleLeagueGoalCreateResponseFromJson(
         Map<String, dynamic> json) =>
     DoubleLeagueGoalCreateResponse(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       timeOfGoal: DateTime.parse(json['timeOfGoal'] as String),
-      matchId: json['matchId'] as int,
-      scoredByTeamId: json['scoredByTeamId'] as int,
-      opponentTeamId: json['opponentTeamId'] as int,
-      scorerTeamScore: json['scorerTeamScore'] as int,
-      opponentTeamScore: json['opponentTeamScore'] as int,
+      matchId: (json['matchId'] as num).toInt(),
+      scoredByTeamId: (json['scoredByTeamId'] as num).toInt(),
+      opponentTeamId: (json['opponentTeamId'] as num).toInt(),
+      scorerTeamScore: (json['scorerTeamScore'] as num).toInt(),
+      opponentTeamScore: (json['opponentTeamScore'] as num).toInt(),
       winnerGoal: json['winnerGoal'] as bool,
-      userScorerId: json['userScorerId'] as int,
+      userScorerId: (json['userScorerId'] as num).toInt(),
     );
 
 Map<String, dynamic> _$DoubleLeagueGoalCreateResponseToJson(

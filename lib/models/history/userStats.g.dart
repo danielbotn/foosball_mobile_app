@@ -7,16 +7,19 @@ part of 'userStats.dart';
 // **************************************************************************
 
 UserStats _$UserStatsFromJson(Map<String, dynamic> json) => UserStats(
-      userId: json['userId'] as int,
-      totalMatches: json['totalMatches'] as int,
-      totalFreehandMatches: json['totalFreehandMatches'] as int,
-      totalDoubleFreehandMatches: json['totalDoubleFreehandMatches'] as int,
-      totalSingleLeagueMatches: json['totalSingleLeagueMatches'] as int,
-      totalDoubleLeagueMatches: json['totalDoubleLeagueMatches'] as int,
-      totalMatchesWon: json['totalMatchesWon'] as int,
-      totalMatchesLost: json['totalMatchesLost'] as int,
-      totalGoalsScored: json['totalGoalsScored'] as int,
-      totalGoalsReceived: json['totalGoalsReceived'] as int,
+      userId: (json['userId'] as num).toInt(),
+      totalMatches: (json['totalMatches'] as num).toInt(),
+      totalFreehandMatches: (json['totalFreehandMatches'] as num).toInt(),
+      totalDoubleFreehandMatches:
+          (json['totalDoubleFreehandMatches'] as num).toInt(),
+      totalSingleLeagueMatches:
+          (json['totalSingleLeagueMatches'] as num).toInt(),
+      totalDoubleLeagueMatches:
+          (json['totalDoubleLeagueMatches'] as num).toInt(),
+      totalMatchesWon: (json['totalMatchesWon'] as num).toInt(),
+      totalMatchesLost: (json['totalMatchesLost'] as num).toInt(),
+      totalGoalsScored: (json['totalGoalsScored'] as num).toInt(),
+      totalGoalsReceived: (json['totalGoalsReceived'] as num).toInt(),
     );
 
 Map<String, dynamic> _$UserStatsToJson(UserStats instance) => <String, dynamic>{

@@ -9,10 +9,10 @@ part of 'freehand_double_goal_return.dart';
 FreehandDoubleGoalReturn _$FreehandDoubleGoalReturnFromJson(
         Map<String, dynamic> json) =>
     FreehandDoubleGoalReturn(
-      doubleMatchId: json['doubleMatchId'] as int,
-      scoredByUserId: json['scoredByUserId'] as int,
-      scorerTeamScore: json['scorerTeamScore'] as int,
-      opponentTeamScore: json['opponentTeamScore'] as int,
+      doubleMatchId: (json['doubleMatchId'] as num).toInt(),
+      scoredByUserId: (json['scoredByUserId'] as num).toInt(),
+      scorerTeamScore: (json['scorerTeamScore'] as num).toInt(),
+      opponentTeamScore: (json['opponentTeamScore'] as num).toInt(),
       winnerGoal: json['winnerGoal'] as bool,
     );
 

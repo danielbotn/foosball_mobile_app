@@ -9,15 +9,15 @@ part of 'double-league-standings-model.dart';
 DoubleLeagueStandingsModel _$DoubleLeagueStandingsModelFromJson(
         Map<String, dynamic> json) =>
     DoubleLeagueStandingsModel(
-      teamID: json['teamID'] as int,
-      leagueId: json['leagueId'] as int,
-      totalMatchesWon: json['totalMatchesWon'] as int,
-      totalMatchesLost: json['totalMatchesLost'] as int,
-      totalGoalsScored: json['totalGoalsScored'] as int,
-      totalGoalsRecieved: json['totalGoalsRecieved'] as int,
-      positionInLeague: json['positionInLeague'] as int,
-      matchesPlayed: json['matchesPlayed'] as int,
-      points: json['points'] as int,
+      teamID: (json['teamID'] as num).toInt(),
+      leagueId: (json['leagueId'] as num).toInt(),
+      totalMatchesWon: (json['totalMatchesWon'] as num).toInt(),
+      totalMatchesLost: (json['totalMatchesLost'] as num).toInt(),
+      totalGoalsScored: (json['totalGoalsScored'] as num).toInt(),
+      totalGoalsRecieved: (json['totalGoalsRecieved'] as num).toInt(),
+      positionInLeague: (json['positionInLeague'] as num).toInt(),
+      matchesPlayed: (json['matchesPlayed'] as num).toInt(),
+      points: (json['points'] as num).toInt(),
       teamName: json['teamName'] as String,
       teamMembers: (json['teamMembers'] as List<dynamic>)
           .map((e) => TeamMemberModel.fromJson(e as Map<String, dynamic>))

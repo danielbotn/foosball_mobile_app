@@ -9,15 +9,15 @@ part of 'double_league_goal_model.dart';
 DoubleLeagueGoalModel _$DoubleLeagueGoalModelFromJson(
         Map<String, dynamic> json) =>
     DoubleLeagueGoalModel(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       timeOfGoal: DateTime.parse(json['timeOfGoal'] as String),
-      scoredByTeamId: json['scoredByTeamId'] as int,
-      opponentTeamId: json['opponentTeamId'] as int,
-      scorerTeamScore: json['scorerTeamScore'] as int,
-      opponentTeamScore: json['opponentTeamScore'] as int,
+      scoredByTeamId: (json['scoredByTeamId'] as num).toInt(),
+      opponentTeamId: (json['opponentTeamId'] as num).toInt(),
+      scorerTeamScore: (json['scorerTeamScore'] as num).toInt(),
+      opponentTeamScore: (json['opponentTeamScore'] as num).toInt(),
       winnerGoal: json['winnerGoal'] as bool,
-      userScorerId: json['userScorerId'] as int,
-      doubleLeagueTeamId: json['doubleLeagueTeamId'] as int,
+      userScorerId: (json['userScorerId'] as num).toInt(),
+      doubleLeagueTeamId: (json['doubleLeagueTeamId'] as num).toInt(),
       scorerFirstName: json['scorerFirstName'] as String,
       scorerLastName: json['scorerLastName'] as String,
       scorerPhotoUrl: json['scorerPhotoUrl'] as String,

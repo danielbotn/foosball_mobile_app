@@ -9,8 +9,8 @@ part of 'double_league_player_create.dart';
 DoubleLeaguePlayerCreate _$DoubleLeaguePlayerCreateFromJson(
         Map<String, dynamic> json) =>
     DoubleLeaguePlayerCreate(
-      playerOneId: json['playerOneId'] as int,
-      playerTwoId: json['playerTwoId'] as int,
+      playerOneId: (json['playerOneId'] as num).toInt(),
+      playerTwoId: (json['playerTwoId'] as num).toInt(),
       insertionSuccessfull: json['insertionSuccessfull'] as bool,
     );
 

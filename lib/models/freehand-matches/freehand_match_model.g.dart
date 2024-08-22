@@ -8,21 +8,21 @@ part of 'freehand_match_model.dart';
 
 FreehandMatchModel _$FreehandMatchModelFromJson(Map<String, dynamic> json) =>
     FreehandMatchModel(
-      id: json['id'] as int,
-      playerOneId: json['playerOneId'] as int,
+      id: (json['id'] as num).toInt(),
+      playerOneId: (json['playerOneId'] as num).toInt(),
       playerOneFirstName: json['playerOneFirstName'] as String,
       playerOneLastName: json['playerOneLastName'] as String,
       playerOnePhotoUrl: json['playerOnePhotoUrl'] as String,
-      playerTwoId: json['playerTwoId'] as int,
+      playerTwoId: (json['playerTwoId'] as num).toInt(),
       playerTwoFirstName: json['playerTwoFirstName'] as String,
       playerTwoLastName: json['playerTwoLastName'] as String,
       playerTwoPhotoUrl: json['playerTwoPhotoUrl'] as String,
       startTime: DateTime.parse(json['startTime'] as String),
       endTime: DateTime.parse(json['endTime'] as String),
       totalPlayingTime: json['totalPlayingTime'] as String?,
-      playerOneScore: json['playerOneScore'] as int,
-      playerTwoScore: json['playerTwoScore'] as int,
-      upTo: json['upTo'] as int,
+      playerOneScore: (json['playerOneScore'] as num).toInt(),
+      playerTwoScore: (json['playerTwoScore'] as num).toInt(),
+      upTo: (json['upTo'] as num).toInt(),
       gameFinished: json['gameFinished'] as bool,
       gamePaused: json['gamePaused'] as bool,
     );

@@ -8,20 +8,20 @@ part of 'freehand_goals_model.dart';
 
 FreehandGoalsModel _$FreehandGoalsModelFromJson(Map<String, dynamic> json) =>
     FreehandGoalsModel(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       timeOfGoal: DateTime.parse(json['timeOfGoal'] as String),
       goalTimeStopWatch: json['goalTimeStopWatch'] as String,
-      matchId: json['matchId'] as int,
-      scoredByUserId: json['scoredByUserId'] as int,
+      matchId: (json['matchId'] as num).toInt(),
+      scoredByUserId: (json['scoredByUserId'] as num).toInt(),
       scoredByUserFirstName: json['scoredByUserFirstName'] as String,
       scoredByUserLastName: json['scoredByUserLastName'] as String,
       scoredByUserPhotoUrl: json['scoredByUserPhotoUrl'] as String,
-      oponentId: json['oponentId'] as int,
+      oponentId: (json['oponentId'] as num).toInt(),
       oponentFirstName: json['oponentFirstName'] as String,
       oponentLastName: json['oponentLastName'] as String,
       oponentPhotoUrl: json['oponentPhotoUrl'] as String,
-      scoredByScore: json['scoredByScore'] as int,
-      oponentScore: json['oponentScore'] as int,
+      scoredByScore: (json['scoredByScore'] as num).toInt(),
+      oponentScore: (json['oponentScore'] as num).toInt(),
       winnerGoal: json['winnerGoal'] as bool,
     );
 

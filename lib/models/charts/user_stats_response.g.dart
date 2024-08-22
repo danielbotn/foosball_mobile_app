@@ -8,12 +8,12 @@ part of 'user_stats_response.dart';
 
 UserStatsResponse _$UserStatsResponseFromJson(Map<String, dynamic> json) =>
     UserStatsResponse(
-      userId: json['userId'] as int,
-      totalMatches: json['totalMatches'] as int,
-      totalMatchesWon: json['totalMatchesWon'] as int,
-      totalMatchesLost: json['totalMatchesLost'] as int,
-      totalGoalsScored: json['totalGoalsScored'] as int,
-      totalGoalsReceived: json['totalGoalsReceived'] as int,
+      userId: (json['userId'] as num).toInt(),
+      totalMatches: (json['totalMatches'] as num).toInt(),
+      totalMatchesWon: (json['totalMatchesWon'] as num).toInt(),
+      totalMatchesLost: (json['totalMatchesLost'] as num).toInt(),
+      totalGoalsScored: (json['totalGoalsScored'] as num).toInt(),
+      totalGoalsReceived: (json['totalGoalsReceived'] as num).toInt(),
     );
 
 Map<String, dynamic> _$UserStatsResponseToJson(UserStatsResponse instance) =>

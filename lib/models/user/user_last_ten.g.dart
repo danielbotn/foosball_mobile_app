@@ -7,21 +7,21 @@ part of 'user_last_ten.dart';
 // **************************************************************************
 
 UserLastTen _$UserLastTenFromJson(Map<String, dynamic> json) => UserLastTen(
-      typeOfMatch: json['typeOfMatch'] as int,
+      typeOfMatch: (json['typeOfMatch'] as num).toInt(),
       typeOfMatchName: json['typeOfMatchName'] as String,
-      userId: json['userId'] as int,
-      teamMateId: json['teamMateId'] as int?,
-      matchId: json['matchId'] as int,
-      opponentId: json['opponentId'] as int,
-      opponentTwoId: json['opponentTwoId'] as int?,
+      userId: (json['userId'] as num).toInt(),
+      teamMateId: (json['teamMateId'] as num?)?.toInt(),
+      matchId: (json['matchId'] as num).toInt(),
+      opponentId: (json['opponentId'] as num).toInt(),
+      opponentTwoId: (json['opponentTwoId'] as num?)?.toInt(),
       opponentOneFirstName: json['opponentOneFirstName'] as String,
       opponentOneLastName: json['opponentOneLastName'] as String,
       opponentTwoFirstName: json['opponentTwoFirstName'] as String?,
       opponentTwoLastName: json['opponentTwoLastName'] as String?,
-      userScore: json['userScore'] as int,
-      opponentUserOrTeamScore: json['opponentUserOrTeamScore'] as int,
+      userScore: (json['userScore'] as num).toInt(),
+      opponentUserOrTeamScore: (json['opponentUserOrTeamScore'] as num).toInt(),
       dateOfGame: DateTime.parse(json['dateOfGame'] as String),
-      leagueId: json['leagueId'] as int?,
+      leagueId: (json['leagueId'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$UserLastTenToJson(UserLastTen instance) =>

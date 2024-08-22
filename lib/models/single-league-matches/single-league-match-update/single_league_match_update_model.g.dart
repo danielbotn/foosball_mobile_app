@@ -15,8 +15,8 @@ SingleLeagueMatchUpdateModel _$SingleLeagueMatchUpdateModelFromJson(
       endTime: json['endTime'] == null
           ? null
           : DateTime.parse(json['endTime'] as String),
-      playerOneScore: json['playerOneScore'] as int?,
-      playerTwoScore: json['playerTwoScore'] as int?,
+      playerOneScore: (json['playerOneScore'] as num?)?.toInt(),
+      playerTwoScore: (json['playerTwoScore'] as num?)?.toInt(),
       matchStarted: json['matchStarted'] as bool?,
       matchEnded: json['matchEnded'] as bool?,
       matchPaused: json['matchPaused'] as bool?,

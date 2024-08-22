@@ -9,13 +9,13 @@ part of 'single_league_goal_create_response.dart';
 SingleLeagueGoalCreateResponse _$SingleLeagueGoalCreateResponseFromJson(
         Map<String, dynamic> json) =>
     SingleLeagueGoalCreateResponse(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       timeOfGoal: DateTime.parse(json['timeOfGoal'] as String),
-      matchId: json['matchId'] as int,
-      scoredByUserId: json['scoredByUserId'] as int,
-      opponentId: json['opponentId'] as int,
-      scorerScore: json['scorerScore'] as int,
-      opponentScore: json['opponentScore'] as int,
+      matchId: (json['matchId'] as num).toInt(),
+      scoredByUserId: (json['scoredByUserId'] as num).toInt(),
+      opponentId: (json['opponentId'] as num).toInt(),
+      scorerScore: (json['scorerScore'] as num).toInt(),
+      opponentScore: (json['opponentScore'] as num).toInt(),
       winnerGoal: json['winnerGoal'] as bool,
     );
 

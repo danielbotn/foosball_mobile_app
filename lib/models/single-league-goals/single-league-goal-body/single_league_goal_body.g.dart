@@ -9,11 +9,11 @@ part of 'single_league_goal_body.dart';
 SingleLeagueGoalBody _$SingleLeagueGoalBodyFromJson(
         Map<String, dynamic> json) =>
     SingleLeagueGoalBody(
-      matchId: json['matchId'] as int,
-      scoredByUserId: json['scoredByUserId'] as int,
-      opponentId: json['opponentId'] as int,
-      scorerScore: json['scorerScore'] as int,
-      opponentScore: json['opponentScore'] as int,
+      matchId: (json['matchId'] as num).toInt(),
+      scoredByUserId: (json['scoredByUserId'] as num).toInt(),
+      opponentId: (json['opponentId'] as num).toInt(),
+      scorerScore: (json['scorerScore'] as num).toInt(),
+      opponentScore: (json['opponentScore'] as num).toInt(),
       winnerGoal: json['winnerGoal'] as bool,
     );
 

@@ -8,7 +8,7 @@ part of 'team-member-model.dart';
 
 TeamMemberModel _$TeamMemberModelFromJson(Map<String, dynamic> json) =>
     TeamMemberModel(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       firstName: json['firstName'] as String,
       lastName: json['lastName'] as String,
       email: json['email'] as String,

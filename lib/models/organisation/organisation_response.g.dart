@@ -9,10 +9,10 @@ part of 'organisation_response.dart';
 OrganisationResponse _$OrganisationResponseFromJson(
         Map<String, dynamic> json) =>
     OrganisationResponse(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       name: json['name'] as String,
       createdAt: DateTime.parse(json['createdAt'] as String),
-      organisationType: json['organisationType'] as int,
+      organisationType: (json['organisationType'] as num).toInt(),
       organisationCode: json['organisationCode'] as String,
       slackWebhookUrl: json['slackWebhookUrl'] as String?,
       discordWebhookUrl: json['discordWebhookUrl'] as String?,

@@ -9,10 +9,10 @@ part of 'create-league-body.dart';
 CreateLeagueBody _$CreateLeagueBodyFromJson(Map<String, dynamic> json) =>
     CreateLeagueBody(
       name: json['name'] as String,
-      typeOfLeague: json['typeOfLeague'] as int,
-      upTo: json['upTo'] as int,
-      organisationId: json['organisationId'] as int,
-      howManyRounds: json['howManyRounds'] as int,
+      typeOfLeague: (json['typeOfLeague'] as num).toInt(),
+      upTo: (json['upTo'] as num).toInt(),
+      organisationId: (json['organisationId'] as num).toInt(),
+      howManyRounds: (json['howManyRounds'] as num).toInt(),
       hasLeagueStarted: json['hasLeagueStarted'] as bool?,
     );
 

@@ -7,12 +7,12 @@ part of 'user_response.dart';
 // **************************************************************************
 
 UserResponse _$UserResponseFromJson(Map<String, dynamic> json) => UserResponse(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       email: json['email'] as String,
       firstName: json['firstName'] as String,
       lastName: json['lastName'] as String,
       createdAt: DateTime.parse(json['createdAt'] as String),
-      currentOrganisationId: json['currentOrganisationId'] as int?,
+      currentOrganisationId: (json['currentOrganisationId'] as num?)?.toInt(),
       photoUrl: json['photoUrl'] as String,
       isAdmin: json['isAdmin'] as bool?,
       isDeleted: json['isDeleted'] as bool,

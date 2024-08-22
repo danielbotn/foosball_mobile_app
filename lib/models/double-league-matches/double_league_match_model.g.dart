@@ -9,18 +9,18 @@ part of 'double_league_match_model.dart';
 DoubleLeagueMatchModel _$DoubleLeagueMatchModelFromJson(
         Map<String, dynamic> json) =>
     DoubleLeagueMatchModel(
-      id: json['id'] as int,
-      teamOneId: json['teamOneId'] as int,
-      teamTwoId: json['teamTwoId'] as int,
-      leagueId: json['leagueId'] as int,
+      id: (json['id'] as num).toInt(),
+      teamOneId: (json['teamOneId'] as num).toInt(),
+      teamTwoId: (json['teamTwoId'] as num).toInt(),
+      leagueId: (json['leagueId'] as num).toInt(),
       startTime: json['startTime'] == null
           ? null
           : DateTime.parse(json['startTime'] as String),
       endTime: json['endTime'] == null
           ? null
           : DateTime.parse(json['endTime'] as String),
-      teamOneScore: json['teamOneScore'] as int,
-      teamTwoScore: json['teamTwoScore'] as int,
+      teamOneScore: (json['teamOneScore'] as num).toInt(),
+      teamTwoScore: (json['teamTwoScore'] as num).toInt(),
       matchStarted: json['matchStarted'] as bool,
       matchEnded: json['matchEnded'] as bool,
       matchPaused: json['matchPaused'] as bool,

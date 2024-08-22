@@ -7,14 +7,14 @@ part of 'team_model.dart';
 // **************************************************************************
 
 TeamModel _$TeamModelFromJson(Map<String, dynamic> json) => TeamModel(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       firstName: json['firstName'] as String,
       lastName: json['lastName'] as String,
       email: json['email'] as String,
       photoUrl: json['photoUrl'] as String,
       teamName: json['teamName'] as String,
-      userId: json['userId'] as int,
-      teamId: json['teamId'] as int,
+      userId: (json['userId'] as num).toInt(),
+      teamId: (json['teamId'] as num).toInt(),
     );
 
 Map<String, dynamic> _$TeamModelToJson(TeamModel instance) => <String, dynamic>{

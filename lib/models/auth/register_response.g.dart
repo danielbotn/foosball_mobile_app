@@ -8,12 +8,12 @@ part of 'register_response.dart';
 
 RegisterResponse _$RegisterResponseFromJson(Map<String, dynamic> json) =>
     RegisterResponse(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       email: json['email'] as String,
       firstName: json['firstName'] as String,
       lastName: json['lastName'] as String,
       createdAt: DateTime.parse(json['createdAt'] as String),
-      currentOrganisationId: json['currentOrganisationId'] as int?,
+      currentOrganisationId: (json['currentOrganisationId'] as num?)?.toInt(),
       photoUrl: json['photoUrl'] as String?,
     );
 

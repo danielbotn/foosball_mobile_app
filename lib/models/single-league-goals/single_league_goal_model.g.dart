@@ -9,19 +9,19 @@ part of 'single_league_goal_model.dart';
 SingleLeagueGoalModel _$SingleLeagueGoalModelFromJson(
         Map<String, dynamic> json) =>
     SingleLeagueGoalModel(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       timeOfGoal: DateTime.parse(json['timeOfGoal'] as String),
-      matchId: json['matchId'] as int,
-      scoredByUserId: json['scoredByUserId'] as int,
+      matchId: (json['matchId'] as num).toInt(),
+      scoredByUserId: (json['scoredByUserId'] as num).toInt(),
       scoredByUserFirstName: json['scoredByUserFirstName'] as String,
       scoredByUserLastName: json['scoredByUserLastName'] as String,
       scoredByUserPhotoUrl: json['scoredByUserPhotoUrl'] as String,
-      opponentId: json['opponentId'] as int,
+      opponentId: (json['opponentId'] as num).toInt(),
       opponentFirstName: json['opponentFirstName'] as String,
       opponentLastName: json['opponentLastName'] as String,
       opponentPhotoUrl: json['opponentPhotoUrl'] as String,
-      scorerScore: json['scorerScore'] as int,
-      opponentScore: json['opponentScore'] as int,
+      scorerScore: (json['scorerScore'] as num).toInt(),
+      opponentScore: (json['opponentScore'] as num).toInt(),
       winnerGoal: json['winnerGoal'] as bool,
       goalTimeStopWatch: json['goalTimeStopWatch'] as String,
     );

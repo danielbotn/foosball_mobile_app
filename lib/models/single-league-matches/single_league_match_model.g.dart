@@ -9,24 +9,24 @@ part of 'single_league_match_model.dart';
 SingleLeagueMatchModel _$SingleLeagueMatchModelFromJson(
         Map<String, dynamic> json) =>
     SingleLeagueMatchModel(
-      id: json['id'] as int,
-      playerOne: json['playerOne'] as int,
+      id: (json['id'] as num).toInt(),
+      playerOne: (json['playerOne'] as num).toInt(),
       playerOneFirstName: json['playerOneFirstName'] as String,
       playerOneLastName: json['playerOneLastName'] as String,
       playerOnePhotoUrl: json['playerOnePhotoUrl'] as String,
-      playerTwo: json['playerTwo'] as int,
+      playerTwo: (json['playerTwo'] as num).toInt(),
       playerTwoFirstName: json['playerTwoFirstName'] as String,
       playerTwoLastName: json['playerTwoLastName'] as String,
       playerTwoPhotoUrl: json['playerTwoPhotoUrl'] as String,
-      leagueId: json['leagueId'] as int,
+      leagueId: (json['leagueId'] as num).toInt(),
       startTime: json['startTime'] == null
           ? null
           : DateTime.parse(json['startTime'] as String),
       endTime: json['endTime'] == null
           ? null
           : DateTime.parse(json['endTime'] as String),
-      playerOneScore: json['playerOneScore'] as int?,
-      playerTwoScore: json['playerTwoScore'] as int?,
+      playerOneScore: (json['playerOneScore'] as num?)?.toInt(),
+      playerTwoScore: (json['playerTwoScore'] as num?)?.toInt(),
       matchStarted: json['matchStarted'] as bool?,
       matchEnded: json['matchEnded'] as bool?,
       matchPaused: json['matchPaused'] as bool?,

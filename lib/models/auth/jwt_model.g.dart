@@ -9,9 +9,9 @@ part of 'jwt_model.dart';
 JwtModel _$JwtModelFromJson(Map<String, dynamic> json) => JwtModel(
       name: json['name'] as String,
       currentOrganisationId: json['currentOrganisationId'] as String,
-      nbf: json['nbf'] as int,
-      exp: json['exp'] as int,
-      iat: json['iat'] as int,
+      nbf: (json['nbf'] as num).toInt(),
+      exp: (json['exp'] as num).toInt(),
+      iat: (json['iat'] as num).toInt(),
     );
 
 Map<String, dynamic> _$JwtModelToJson(JwtModel instance) => <String, dynamic>{

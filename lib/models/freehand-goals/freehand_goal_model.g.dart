@@ -8,13 +8,13 @@ part of 'freehand_goal_model.dart';
 
 FreehandGoalModel _$FreehandGoalModelFromJson(Map<String, dynamic> json) =>
     FreehandGoalModel(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       timeOfGoal: DateTime.parse(json['timeOfGoal'] as String),
-      matchId: json['matchId'] as int,
-      scoredByUserId: json['scoredByUserId'] as int,
-      oponentId: json['oponentId'] as int,
-      scoredByScore: json['scoredByScore'] as int,
-      oponentScore: json['oponentScore'] as int,
+      matchId: (json['matchId'] as num).toInt(),
+      scoredByUserId: (json['scoredByUserId'] as num).toInt(),
+      oponentId: (json['oponentId'] as num).toInt(),
+      scoredByScore: (json['scoredByScore'] as num).toInt(),
+      oponentScore: (json['oponentScore'] as num).toInt(),
       winnerGoal: json['winnerGoal'] as bool,
     );
 

@@ -9,19 +9,19 @@ part of 'freehand_match_create_response.dart';
 FreehandMatchCreateResponse _$FreehandMatchCreateResponseFromJson(
         Map<String, dynamic> json) =>
     FreehandMatchCreateResponse(
-      id: json['id'] as int,
-      playerOneId: json['playerOneId'] as int,
-      playerTwoId: json['playerTwoId'] as int,
+      id: (json['id'] as num).toInt(),
+      playerOneId: (json['playerOneId'] as num).toInt(),
+      playerTwoId: (json['playerTwoId'] as num).toInt(),
       startTime: DateTime.parse(json['startTime'] as String),
       endTime: json['endTime'] == null
           ? null
           : DateTime.parse(json['endTime'] as String),
-      playerOneScore: json['playerOneScore'] as int,
-      playerTwoScore: json['playerTwoScore'] as int,
-      upTo: json['upTo'] as int,
+      playerOneScore: (json['playerOneScore'] as num).toInt(),
+      playerTwoScore: (json['playerTwoScore'] as num).toInt(),
+      upTo: (json['upTo'] as num).toInt(),
       gameFinished: json['gameFinished'] as bool,
       gamePaused: json['gamePaused'] as bool,
-      organisationId: json['organisationId'] as int,
+      organisationId: (json['organisationId'] as num).toInt(),
     );
 
 Map<String, dynamic> _$FreehandMatchCreateResponseToJson(

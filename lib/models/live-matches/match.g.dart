@@ -1,15 +1,18 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'historyModel.dart';
+part of 'match.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-HistoryModel _$HistoryModelFromJson(Map<String, dynamic> json) => HistoryModel(
-      typeOfMatch: (json['typeOfMatch'] as num).toInt(),
+Match _$MatchFromJson(Map<String, dynamic> json) => Match(
+      typeOfMatch: $enumDecode(_$ETypeOfMatchEnumMap, json['typeOfMatch']),
       typeOfMatchName: json['typeOfMatchName'] as String,
       userId: (json['userId'] as num).toInt(),
+      userFirstName: json['userFirstName'] as String,
+      userLastName: json['userLastName'] as String,
+      userPhotoUrl: json['userPhotoUrl'] as String,
       teamMateId: (json['teamMateId'] as num?)?.toInt(),
       teamMateFirstName: json['teamMateFirstName'] as String?,
       teamMateLastName: json['teamMateLastName'] as String?,
@@ -29,11 +32,13 @@ HistoryModel _$HistoryModelFromJson(Map<String, dynamic> json) => HistoryModel(
       leagueId: (json['leagueId'] as num?)?.toInt(),
     );
 
-Map<String, dynamic> _$HistoryModelToJson(HistoryModel instance) =>
-    <String, dynamic>{
-      'typeOfMatch': instance.typeOfMatch,
+Map<String, dynamic> _$MatchToJson(Match instance) => <String, dynamic>{
+      'typeOfMatch': _$ETypeOfMatchEnumMap[instance.typeOfMatch]!,
       'typeOfMatchName': instance.typeOfMatchName,
       'userId': instance.userId,
+      'userFirstName': instance.userFirstName,
+      'userLastName': instance.userLastName,
+      'userPhotoUrl': instance.userPhotoUrl,
       'teamMateId': instance.teamMateId,
       'teamMateFirstName': instance.teamMateFirstName,
       'teamMateLastName': instance.teamMateLastName,
@@ -52,3 +57,10 @@ Map<String, dynamic> _$HistoryModelToJson(HistoryModel instance) =>
       'dateOfGame': instance.dateOfGame.toIso8601String(),
       'leagueId': instance.leagueId,
     };
+
+const _$ETypeOfMatchEnumMap = {
+  ETypeOfMatch.freehandMatch: 'freehandMatch',
+  ETypeOfMatch.doubleFreehandMatch: 'doubleFreehandMatch',
+  ETypeOfMatch.singleLeagueMatch: 'singleLeagueMatch',
+  ETypeOfMatch.doubleLeagueMatch: 'doubleLeagueMatch',
+};
