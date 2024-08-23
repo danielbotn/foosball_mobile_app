@@ -1,3 +1,4 @@
+import 'package:dano_foosball/utils/preferences_service.dart';
 import 'package:flutter/material.dart';
 import 'package:dano_foosball/api/LiveMatchesApi.dart';
 import 'package:dano_foosball/state/user_state.dart';
@@ -44,11 +45,27 @@ class _LiveMatchesState extends State<LiveMatches> {
     return await api.getLiveMatches();
   }
 
+  Future<String?> _getJwtToken() async {
+    PreferencesService preferencesService = PreferencesService();
+    return await preferencesService.getJwtToken();
+  }
+
+  Future<dynamic> getAccessToken() async {
+    String result = '';
+    PreferencesService preferencesService = PreferencesService();
+    String? jwtToken = await preferencesService.getJwtToken();
+    if (jwtToken != null) {
+      result = jwtToken;
+    }
+    print("result issss: " + result);
+    return result;
+  }
+
   void _initializeSignalR() async {
     _hubConnection = signalr.HubConnectionBuilder()
-        .withUrl(
-          'https://localhost:7145/messageHub',
-        )
+        .withUrl('https://localhost:7145/messageHub',
+            options: signalr.HttpConnectionOptions(
+                accessTokenFactory: () async => await getAccessToken()))
         .build();
 
     _hubConnection.on("UpdateScore", (List<Object?>? message) {
@@ -57,9 +74,10 @@ class _LiveMatchesState extends State<LiveMatches> {
       }
     });
 
-    _hubConnection.onclose((Exception? error) {
-      print("Connection closed: ${error?.toString()}");
-    } as signalr.ClosedCallback);
+    // not critical skip this
+    //_hubConnection.onclose((Exception? error) {
+    //print("Connection closed: ${error?.toString()}");
+    // } as signalr.ClosedCallback);
 
     try {
       await _hubConnection.start();
