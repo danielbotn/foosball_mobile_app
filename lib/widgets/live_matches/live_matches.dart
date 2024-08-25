@@ -1,4 +1,5 @@
 import 'package:dano_foosball/utils/preferences_service.dart';
+import 'package:dano_foosball/widgets/live_matches/live_freehand_match.dart';
 import 'package:flutter/material.dart';
 import 'package:dano_foosball/api/LiveMatchesApi.dart';
 import 'package:dano_foosball/state/user_state.dart';
@@ -11,7 +12,7 @@ import 'package:signalr_netcore/signalr_client.dart' as signalr;
 class LiveMatches extends StatefulWidget {
   final UserState userState;
 
-  const LiveMatches({Key? key, required this.userState}) : super(key: key);
+  const LiveMatches({super.key, required this.userState});
 
   @override
   State<LiveMatches> createState() => _LiveMatchesState();
@@ -57,7 +58,6 @@ class _LiveMatchesState extends State<LiveMatches> {
     if (jwtToken != null) {
       result = jwtToken;
     }
-    print("result issss: " + result);
     return result;
   }
 
@@ -74,7 +74,7 @@ class _LiveMatchesState extends State<LiveMatches> {
       }
     });
 
-    // not critical skip this
+    // not critical skip
     //_hubConnection.onclose((Exception? error) {
     //print("Connection closed: ${error?.toString()}");
     // } as signalr.ClosedCallback);
@@ -106,6 +106,19 @@ class _LiveMatchesState extends State<LiveMatches> {
         }
       });
     }
+  }
+
+  goToLiveFreehandMatch(BuildContext context, int matchId) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => LiveFreehandMatch(
+          userState: widget.userState,
+          hubConnection: _hubConnection,
+          matchId: matchId,
+        ),
+      ),
+    );
   }
 
   Widget _buildMatchTile(Match match) {
@@ -224,7 +237,9 @@ class _LiveMatchesState extends State<LiveMatches> {
       tileColor: isDarkMode ? AppColors.darkModeBackground : AppColors.white,
       onTap: () {
         // Implement navigation or actions for the match tile tap
-        print('Match tapped: ${match.matchId}');
+        if (match.typeOfMatch == ETypeOfMatch.freehandMatch) {
+          goToLiveFreehandMatch(context, match.matchId);
+        }
       },
     );
   }
