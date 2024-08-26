@@ -121,6 +121,23 @@ class _LiveFreehandMatchState extends State<LiveFreehandMatch> {
     return data;
   }
 
+  String constructSnackbarMessage(Match updatedMatch) {
+    // Assume playerOneScore and playerTwoScore are state variables.
+    // These should be passed into the function or be available in the widget's state.
+
+    // Construct the message based on the comparison of scores
+    if (updatedMatch.userScore > playerOneScore) {
+      // If the userScore in updatedMatch is greater than the current playerOneScore
+      return '${updatedMatch.userFirstName} ${updatedMatch.userLastName} scored a goal!';
+    } else if (updatedMatch.opponentUserOrTeamScore > playerTwoScore) {
+      // If the opponentUserOrTeamScore in updatedMatch is greater than the current playerTwoScore
+      return '${updatedMatch.opponentOneFirstName} ${updatedMatch.opponentOneLastName} scored a goal!';
+    } else {
+      // If no score changes
+      return '';
+    }
+  }
+
   void _handleScoreUpdate(List<Object?>? message) {
     if (message != null && message.isNotEmpty) {
       // Extract the match data from the message
@@ -131,6 +148,12 @@ class _LiveFreehandMatchState extends State<LiveFreehandMatch> {
 
       // Check if the received match update corresponds to the current match
       if (updatedMatch.matchId == widget.matchId) {
+        Helpers helpers = Helpers();
+        var snackbarMessage = constructSnackbarMessage(updatedMatch);
+        if (snackbarMessage != '') {
+          helpers.showSnackbar(context, snackbarMessage, false);
+        }
+
         setState(() {
           // Update the scores of the ongoing match
           counter.updatePlayerOneScore(updatedMatch.userScore);

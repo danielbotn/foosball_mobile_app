@@ -30,6 +30,9 @@ Match _$MatchFromJson(Map<String, dynamic> json) => Match(
       opponentUserOrTeamScore: (json['opponentUserOrTeamScore'] as num).toInt(),
       dateOfGame: DateTime.parse(json['dateOfGame'] as String),
       leagueId: (json['leagueId'] as num?)?.toInt(),
+      goalScorer: json['goalScorer'] == null
+          ? null
+          : UserResponse.fromJson(json['goalScorer'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$MatchToJson(Match instance) => <String, dynamic>{
@@ -56,6 +59,7 @@ Map<String, dynamic> _$MatchToJson(Match instance) => <String, dynamic>{
       'opponentUserOrTeamScore': instance.opponentUserOrTeamScore,
       'dateOfGame': instance.dateOfGame.toIso8601String(),
       'leagueId': instance.leagueId,
+      'goalScorer': instance.goalScorer,
     };
 
 const _$ETypeOfMatchEnumMap = {

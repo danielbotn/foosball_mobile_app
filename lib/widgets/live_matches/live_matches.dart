@@ -68,7 +68,7 @@ class _LiveMatchesState extends State<LiveMatches> {
                 accessTokenFactory: () async => await getAccessToken()))
         .build();
 
-    _hubConnection.on("UpdateScore", (List<Object?>? message) {
+    _hubConnection.on("SendLiveMatches", (List<Object?>? message) {
       if (message != null && message.isNotEmpty) {
         _handleScoreUpdate(message.cast<Object>());
       }
@@ -98,7 +98,10 @@ class _LiveMatchesState extends State<LiveMatches> {
       setState(() {
         if (_matches != null) {
           _matches = _matches!.map((match) {
+            var m = match.matchId;
+            print("printend MATCH: $m");
             if (match.matchId == updatedMatch.matchId) {
+              print("UPDATED MATCH: $updatedMatch");
               return updatedMatch; // Update match with new data
             }
             return match;

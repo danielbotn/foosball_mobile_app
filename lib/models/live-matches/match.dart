@@ -1,3 +1,4 @@
+import 'package:dano_foosball/models/user/user_response.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'match.g.dart';
@@ -40,6 +41,8 @@ class Match {
   final DateTime dateOfGame;
   final int? leagueId; // Nullable field
 
+  final UserResponse? goalScorer; // Nullable field for goalScorer
+
   Match({
     required this.typeOfMatch,
     required this.typeOfMatchName,
@@ -63,7 +66,8 @@ class Match {
     required this.userScore,
     required this.opponentUserOrTeamScore,
     required this.dateOfGame,
-    this.leagueId, // Nullable field
+    this.leagueId,
+    this.goalScorer, // Initialize goalScorer field
   });
 
   /// Factory method for converting JSON to a Match object
@@ -94,6 +98,9 @@ class Match {
       opponentUserOrTeamScore: json['opponentUserOrTeamScore'] as int,
       dateOfGame: DateTime.parse(json['dateOfGame'] as String),
       leagueId: json['leagueId'] as int?,
+      goalScorer: json['goalScorer'] == null
+          ? null
+          : UserResponse.fromJson(json['goalScorer']), // Deserialize goalScorer
     );
   }
 
@@ -123,6 +130,7 @@ class Match {
       'opponentUserOrTeamScore': opponentUserOrTeamScore,
       'dateOfGame': dateOfGame.toIso8601String(),
       'leagueId': leagueId,
+      'goalScorer': goalScorer?.toJson(), // Serialize goalScorer
     };
   }
 

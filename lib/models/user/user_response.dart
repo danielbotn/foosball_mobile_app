@@ -14,19 +14,29 @@ class UserResponse {
   final bool? isAdmin;
   final bool isDeleted;
 
-  UserResponse(
-      {required this.id,
-      required this.email,
-      required this.firstName,
-      required this.lastName,
-      required this.createdAt,
-      required this.currentOrganisationId,
-      required this.photoUrl,
-      this.isAdmin,
-      required this.isDeleted});
+  UserResponse({
+    required this.id,
+    required this.email,
+    required this.firstName,
+    required this.lastName,
+    required this.createdAt,
+    required this.currentOrganisationId,
+    required this.photoUrl,
+    this.isAdmin,
+    required this.isDeleted,
+  });
 
-  factory UserResponse.fromJson(Map<String, dynamic> item) =>
-      _$UserResponseFromJson(item);
+  /// Factory method to create an instance of UserResponse from JSON
+  factory UserResponse.fromJson(Map<String, dynamic> json) =>
+      _$UserResponseFromJson(json);
 
-  Map<String, dynamic> toJson(item) => _$UserResponseToJson(item);
+  /// Method to convert an instance of UserResponse to JSON
+  /// Handles both the case with or without the `item` parameter
+  Map<String, dynamic> toJson([dynamic item]) {
+    if (item != null) {
+      return _$UserResponseToJson(item);
+    } else {
+      return _$UserResponseToJson(this);
+    }
+  }
 }
