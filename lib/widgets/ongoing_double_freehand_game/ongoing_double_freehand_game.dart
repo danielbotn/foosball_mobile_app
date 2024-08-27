@@ -16,8 +16,7 @@ import '../extended_Text.dart';
 class OngoingDoubleFreehandGame extends StatefulWidget {
   final OngoingDoubleGameObject ongoingDoubleGameObject;
   const OngoingDoubleFreehandGame(
-      {Key? key, required this.ongoingDoubleGameObject})
-      : super(key: key);
+      {super.key, required this.ongoingDoubleGameObject});
 
   @override
   State<OngoingDoubleFreehandGame> createState() =>

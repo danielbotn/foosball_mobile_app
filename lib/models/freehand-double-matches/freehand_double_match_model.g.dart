@@ -28,8 +28,10 @@ FreehandDoubleMatchModel _$FreehandDoubleMatchModelFromJson(
       playerTwoTeamBPhotoUrl: json['playerTwoTeamBPhotoUrl'] as String?,
       organisationId: (json['organisationId'] as num).toInt(),
       startTime: DateTime.parse(json['startTime'] as String),
-      endTime: DateTime.parse(json['endTime'] as String),
-      totalPlayingTime: json['totalPlayingTime'] as String,
+      endTime: json['endTime'] == null
+          ? null
+          : DateTime.parse(json['endTime'] as String),
+      totalPlayingTime: json['totalPlayingTime'] as String?,
       teamAScore: (json['teamAScore'] as num).toInt(),
       teamBScore: (json['teamBScore'] as num).toInt(),
       nicknameTeamA: json['nicknameTeamA'] as String,
@@ -61,7 +63,7 @@ Map<String, dynamic> _$FreehandDoubleMatchModelToJson(
       'playerTwoTeamBPhotoUrl': instance.playerTwoTeamBPhotoUrl,
       'organisationId': instance.organisationId,
       'startTime': instance.startTime.toIso8601String(),
-      'endTime': instance.endTime.toIso8601String(),
+      'endTime': instance.endTime?.toIso8601String(),
       'totalPlayingTime': instance.totalPlayingTime,
       'teamAScore': instance.teamAScore,
       'teamBScore': instance.teamBScore,

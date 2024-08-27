@@ -118,7 +118,7 @@ class _MatchDetailsState extends State<MatchDetails> {
                   ),
                   TotalPlayingTime(
                     userState: widget.data.userState,
-                    totalPlayingTime: match.totalPlayingTime,
+                    totalPlayingTime: match.totalPlayingTime ?? "",
                     totalPlayingTimeLabel:
                         widget.data.userState.hardcodedStrings.totalPlayingTime,
                   ),

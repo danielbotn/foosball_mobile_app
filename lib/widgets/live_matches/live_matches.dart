@@ -1,4 +1,5 @@
 import 'package:dano_foosball/utils/preferences_service.dart';
+import 'package:dano_foosball/widgets/live_matches/live_double_freehand_match.dart';
 import 'package:dano_foosball/widgets/live_matches/live_freehand_match.dart';
 import 'package:flutter/material.dart';
 import 'package:dano_foosball/api/LiveMatchesApi.dart';
@@ -115,6 +116,19 @@ class _LiveMatchesState extends State<LiveMatches> {
         builder: (context) => LiveFreehandMatch(
           userState: widget.userState,
           hubConnection: _hubConnection,
+          matchId: matchId,
+        ),
+      ),
+    );
+  }
+
+  goToLiveDoubleFreehandMatch(BuildContext context, int matchId) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => LiveDoubleFreehandMatch(
+          userState: widget.userState,
+          // hubConnection: _hubConnection,
           matchId: matchId,
         ),
       ),
@@ -239,6 +253,9 @@ class _LiveMatchesState extends State<LiveMatches> {
         // Implement navigation or actions for the match tile tap
         if (match.typeOfMatch == ETypeOfMatch.freehandMatch) {
           goToLiveFreehandMatch(context, match.matchId);
+        }
+        if (match.typeOfMatch == ETypeOfMatch.doubleFreehandMatch) {
+          goToLiveDoubleFreehandMatch(context, match.matchId);
         }
       },
     );

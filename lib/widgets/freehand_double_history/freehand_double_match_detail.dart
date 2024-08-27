@@ -227,7 +227,7 @@ class _FreehandDoubleMatchDetailState extends State<FreehandDoubleMatchDetail> {
                         ),
                         TotalPlayingTime(
                           userState: widget.twoPlayersObject.userState,
-                          totalPlayingTime: match.totalPlayingTime,
+                          totalPlayingTime: match.totalPlayingTime ?? "",
                           totalPlayingTimeLabel: widget.twoPlayersObject
                               .userState.hardcodedStrings.totalPlayingTime,
                         ),

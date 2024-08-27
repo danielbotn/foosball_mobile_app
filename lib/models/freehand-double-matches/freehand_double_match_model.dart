@@ -23,8 +23,8 @@ class FreehandDoubleMatchModel {
   final String? playerTwoTeamBPhotoUrl;
   final int organisationId;
   final DateTime startTime;
-  final DateTime endTime;
-  final String totalPlayingTime;
+  final DateTime? endTime; // Changed to nullable DateTime
+  final String? totalPlayingTime; // Changed to nullable String
   final int teamAScore;
   final int teamBScore;
   final String nicknameTeamA;
@@ -32,8 +32,6 @@ class FreehandDoubleMatchModel {
   final int upTo;
   final bool gameFinished;
   final bool gamePaused;
-  
-  
 
   FreehandDoubleMatchModel(
       {required this.id,
@@ -55,16 +53,15 @@ class FreehandDoubleMatchModel {
       required this.playerTwoTeamBPhotoUrl,
       required this.organisationId,
       required this.startTime,
-      required this.endTime,
-      required this.totalPlayingTime,
+      this.endTime, // Made this optional in the constructor
+      this.totalPlayingTime, // Made this optional in the constructor
       required this.teamAScore,
       required this.teamBScore,
       required this.nicknameTeamA,
       required this.nicknameTeamB,
       required this.upTo,
       required this.gameFinished,
-      required this.gamePaused
-      });
+      required this.gamePaused});
 
   factory FreehandDoubleMatchModel.fromJson(Map<String, dynamic> item) =>
       _$FreehandDoubleMatchModelFromJson(item);

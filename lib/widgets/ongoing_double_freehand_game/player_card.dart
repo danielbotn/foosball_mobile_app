@@ -19,15 +19,14 @@ class PlayerCard extends StatefulWidget {
   final Function() notifyParent;
   final Function() stopClockFromChild;
   const PlayerCard(
-      {Key? key,
+      {super.key,
       required this.ongoingDoubleGameObject,
       required this.userState,
       required this.ongoingState,
       required this.player,
       required this.whichPlayer,
       required this.notifyParent,
-      required this.stopClockFromChild})
-      : super(key: key);
+      required this.stopClockFromChild});
 
   @override
   State<PlayerCard> createState() => _PlayerCardState();
