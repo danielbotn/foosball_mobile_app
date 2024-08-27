@@ -16,16 +16,17 @@ class PlayerCard extends StatefulWidget {
   final OngoingFreehandState counter;
   final Function() notifyParent;
   final Function() stopClockFromChild;
+  final bool disableScoreIncrease;
 
-  const PlayerCard({
-    Key? key,
-    required this.ongoingGameObject,
-    required this.userState,
-    required this.isPlayerOne,
-    required this.counter,
-    required this.notifyParent,
-    required this.stopClockFromChild,
-  }) : super(key: key);
+  const PlayerCard(
+      {super.key,
+      required this.ongoingGameObject,
+      required this.userState,
+      required this.isPlayerOne,
+      required this.counter,
+      required this.notifyParent,
+      required this.stopClockFromChild,
+      this.disableScoreIncrease = false});
 
   @override
   State<PlayerCard> createState() => _PlayerCardState();
@@ -60,6 +61,7 @@ class _PlayerCardState extends State<PlayerCard> {
   }
 
   void increaseScore() async {
+    if (widget.disableScoreIncrease) return;
     int upTo = widget.ongoingGameObject.freehandMatchCreateResponse!.upTo;
 
     if (widget.isPlayerOne) {
@@ -122,22 +124,22 @@ class _PlayerCardState extends State<PlayerCard> {
                 // Use Visibility to show the image if photoUrl is not empty
                 Visibility(
                   visible: player.photoUrl.isNotEmpty,
+                  replacement: const Icon(Icons.person, size: 60),
                   child: Image.network(
                     player.photoUrl,
                     width: 60,
                     height: 60,
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) {
-                      return Icon(Icons.person,
+                      return const Icon(Icons.person,
                           size: 60); // Handle image load error
                     },
-                  ),
-                  replacement: Icon(Icons.person,
-                      size: 60), // Placeholder if photoUrl is empty
+                  ), // Placeholder if photoUrl is empty
                 ),
               ],
             ),
-            SizedBox(width: 10), // Add some spacing between the image and text
+            const SizedBox(
+                width: 10), // Add some spacing between the image and text
             Column(
               crossAxisAlignment:
                   CrossAxisAlignment.start, // Align text to the start

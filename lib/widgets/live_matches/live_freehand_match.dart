@@ -216,19 +216,18 @@ class _LiveFreehandMatchState extends State<LiveFreehandMatch> {
                       Expanded(
                         flex: 1,
                         child: PlayerCard(
-                          ongoingGameObject: OngoingGameObject(
-                              playerOne: playerOne,
-                              playerTwo: playerTwo,
-                              userState: widget.userState,
-                              freehandMatchCreateResponse:
-                                  freehandMatchCreateResponse),
-                          userState: widget.userState,
-                          isPlayerOne: true,
-                          counter: counter,
-                          notifyParent: () {},
-                          stopClockFromChild: () {},
-                          // isLiveView: true,
-                        ),
+                            ongoingGameObject: OngoingGameObject(
+                                playerOne: playerOne,
+                                playerTwo: playerTwo,
+                                userState: widget.userState,
+                                freehandMatchCreateResponse:
+                                    freehandMatchCreateResponse),
+                            userState: widget.userState,
+                            isPlayerOne: true,
+                            counter: counter,
+                            notifyParent: () {},
+                            stopClockFromChild: () {},
+                            disableScoreIncrease: true),
                       ),
                       Expanded(
                         flex: 1,
@@ -248,18 +247,18 @@ class _LiveFreehandMatchState extends State<LiveFreehandMatch> {
                       Expanded(
                         flex: 1,
                         child: PlayerCard(
-                          ongoingGameObject: OngoingGameObject(
-                              playerOne: playerOne,
-                              playerTwo: playerTwo,
-                              userState: widget.userState,
-                              freehandMatchCreateResponse:
-                                  freehandMatchCreateResponse),
-                          userState: widget.userState,
-                          isPlayerOne: false,
-                          counter: counter,
-                          notifyParent: () {},
-                          stopClockFromChild: () {},
-                        ),
+                            ongoingGameObject: OngoingGameObject(
+                                playerOne: playerOne,
+                                playerTwo: playerTwo,
+                                userState: widget.userState,
+                                freehandMatchCreateResponse:
+                                    freehandMatchCreateResponse),
+                            userState: widget.userState,
+                            isPlayerOne: false,
+                            counter: counter,
+                            notifyParent: () {},
+                            stopClockFromChild: () {},
+                            disableScoreIncrease: true),
                       ),
                       Expanded(
                         flex: 1,

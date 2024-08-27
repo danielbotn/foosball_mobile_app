@@ -98,11 +98,8 @@ class _LiveMatchesState extends State<LiveMatches> {
       setState(() {
         if (_matches != null) {
           _matches = _matches!.map((match) {
-            var m = match.matchId;
-            print("printend MATCH: $m");
             if (match.matchId == updatedMatch.matchId) {
-              print("UPDATED MATCH: $updatedMatch");
-              return updatedMatch; // Update match with new data
+              return updatedMatch;
             }
             return match;
           }).toList();
