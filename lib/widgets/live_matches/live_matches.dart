@@ -98,12 +98,22 @@ class _LiveMatchesState extends State<LiveMatches> {
 
       setState(() {
         if (_matches != null) {
+          bool matchExists = false;
+
           _matches = _matches!.map((match) {
             if (match.matchId == updatedMatch.matchId) {
-              return updatedMatch;
+              matchExists = true;
+              return updatedMatch; // Update existing match
             }
             return match;
           }).toList();
+
+          if (!matchExists) {
+            _matches!.add(updatedMatch); // Add new match if it doesn't exist
+          }
+        } else {
+          // If _matches is null, initialize it with the new match
+          _matches = [updatedMatch];
         }
       });
     }
