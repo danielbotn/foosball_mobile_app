@@ -1,3 +1,4 @@
+import 'package:dano_foosball/models/live-matches/goal_info.dart';
 import 'package:dano_foosball/models/user/user_response.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -42,33 +43,34 @@ class Match {
   final int? leagueId; // Nullable field
 
   final UserResponse? goalScorer; // Nullable field for goalScorer
+  final GoalInfo? lastGoal;
 
-  Match({
-    required this.typeOfMatch,
-    required this.typeOfMatchName,
-    required this.userId,
-    required this.userFirstName, // Initialize new field
-    required this.userLastName, // Initialize new field
-    required this.userPhotoUrl, // Initialize new field
-    this.teamMateId, // Nullable field
-    this.teamMateFirstName, // Nullable field
-    this.teamMateLastName, // Nullable field
-    this.teamMatePhotoUrl, // Nullable field
-    required this.matchId,
-    required this.opponentId,
-    this.opponentTwoId, // Nullable field
-    required this.opponentOneFirstName,
-    required this.opponentOneLastName,
-    required this.opponentOnePhotoUrl,
-    this.opponentTwoFirstName, // Nullable field
-    this.opponentTwoLastName, // Nullable field
-    this.opponentTwoPhotoUrl, // Nullable field
-    required this.userScore,
-    required this.opponentUserOrTeamScore,
-    required this.dateOfGame,
-    this.leagueId,
-    this.goalScorer, // Initialize goalScorer field
-  });
+  Match(
+      {required this.typeOfMatch,
+      required this.typeOfMatchName,
+      required this.userId,
+      required this.userFirstName, // Initialize new field
+      required this.userLastName, // Initialize new field
+      required this.userPhotoUrl, // Initialize new field
+      this.teamMateId, // Nullable field
+      this.teamMateFirstName, // Nullable field
+      this.teamMateLastName, // Nullable field
+      this.teamMatePhotoUrl, // Nullable field
+      required this.matchId,
+      required this.opponentId,
+      this.opponentTwoId, // Nullable field
+      required this.opponentOneFirstName,
+      required this.opponentOneLastName,
+      required this.opponentOnePhotoUrl,
+      this.opponentTwoFirstName, // Nullable field
+      this.opponentTwoLastName, // Nullable field
+      this.opponentTwoPhotoUrl, // Nullable field
+      required this.userScore,
+      required this.opponentUserOrTeamScore,
+      required this.dateOfGame,
+      this.leagueId,
+      this.goalScorer, // Initialize goalScorer field
+      this.lastGoal});
 
   /// Factory method for converting JSON to a Match object
   factory Match.fromJson(Map<String, dynamic> json) {
@@ -101,6 +103,8 @@ class Match {
       goalScorer: json['goalScorer'] == null
           ? null
           : UserResponse.fromJson(json['goalScorer']), // Deserialize goalScorer
+      lastGoal:
+          json['lastGoal'] == null ? null : GoalInfo.fromJson(json['lastGoal']),
     );
   }
 
@@ -131,6 +135,7 @@ class Match {
       'dateOfGame': dateOfGame.toIso8601String(),
       'leagueId': leagueId,
       'goalScorer': goalScorer?.toJson(), // Serialize goalScorer
+      'lastGoal': lastGoal?.toJson(),
     };
   }
 

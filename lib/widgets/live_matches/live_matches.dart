@@ -128,7 +128,7 @@ class _LiveMatchesState extends State<LiveMatches> {
       MaterialPageRoute(
         builder: (context) => LiveDoubleFreehandMatch(
           userState: widget.userState,
-          // hubConnection: _hubConnection,
+          hubConnection: _hubConnection,
           matchId: matchId,
         ),
       ),
@@ -285,24 +285,29 @@ class _LiveMatchesState extends State<LiveMatches> {
         iconTheme: IconThemeData(
             color: isDarkMode ? AppColors.white : Colors.grey[700]),
       ),
-      body: _matches == null
-          ? Center(
-              child: Loading(userState: widget.userState),
-            )
-          : (_matches!.isEmpty
-              ? Center(
-                  child: Text('No live matches available',
-                      style: TextStyle(
-                          color: isDarkMode
-                              ? AppColors.white
-                              : AppColors.textBlack)))
-              : ListView.builder(
-                  itemCount: _matches!.length,
-                  itemBuilder: (context, index) {
-                    final match = _matches![index];
-                    return _buildMatchTile(match);
-                  },
-                )),
+      body: Container(
+        color: isDarkMode
+            ? AppColors.darkModeBackground
+            : AppColors.white, // Set background color here
+        child: _matches == null
+            ? Center(
+                child: Loading(userState: widget.userState),
+              )
+            : (_matches!.isEmpty
+                ? Center(
+                    child: Text('No live matches available',
+                        style: TextStyle(
+                            color: isDarkMode
+                                ? AppColors.white
+                                : AppColors.textBlack)))
+                : ListView.builder(
+                    itemCount: _matches!.length,
+                    itemBuilder: (context, index) {
+                      final match = _matches![index];
+                      return _buildMatchTile(match);
+                    },
+                  )),
+      ),
     );
   }
 }

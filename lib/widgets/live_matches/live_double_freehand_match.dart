@@ -10,17 +10,18 @@ import 'package:dano_foosball/widgets/ongoing_double_freehand_game/player_card.d
 import 'package:dano_foosball/widgets/ongoing_double_freehand_game/player_score.dart';
 import 'package:flutter/material.dart';
 import 'package:signalr_netcore/signalr_client.dart' as signalr;
+import 'package:dano_foosball/models/live-matches/match.dart';
 
 class LiveDoubleFreehandMatch extends StatefulWidget {
   final UserState userState;
   final int matchId;
-  // final signalr.HubConnection hubConnection;
+  final signalr.HubConnection hubConnection;
 
   const LiveDoubleFreehandMatch({
     super.key,
     required this.userState,
     required this.matchId,
-    // required this.hubConnection,
+    required this.hubConnection,
   });
 
   @override
@@ -30,6 +31,9 @@ class LiveDoubleFreehandMatch extends StatefulWidget {
 
 class _LiveDoubleFreehandMatchState extends State<LiveDoubleFreehandMatch> {
   late Future<FreehandDoubleMatchModel?> matchFuture;
+  // STATE
+  int teamOneScore = 0;
+  int teamTwoScore = 0;
 
   @override
   void initState() {
@@ -37,6 +41,52 @@ class _LiveDoubleFreehandMatchState extends State<LiveDoubleFreehandMatch> {
     // Call the API and store the future
     matchFuture =
         FreehandDoubleMatchApi().getDoubleFreehandMatch(widget.matchId);
+
+    // Handle the future result
+    matchFuture.then((data) {
+      if (data != null) {
+        setState(() {
+          teamOneScore = data.teamAScore;
+          teamTwoScore = data.teamBScore;
+        });
+      }
+    }).catchError((error) {
+      // Handle errors here
+      print('Error: $error');
+    });
+
+    widget.hubConnection.on('SendLiveMatches', _handleScoreUpdate);
+  }
+
+  String constructSnackbarMessage(Match updatedMatch) {
+    if (updatedMatch.lastGoal != null) {
+      return '${updatedMatch.lastGoal?.scorer.firstName} ${updatedMatch.lastGoal?.scorer.lastName} scored a goal!';
+    }
+    return '';
+  }
+
+  void _handleScoreUpdate(List<Object?>? message) {
+    if (message != null && message.isNotEmpty) {
+      // Extract the match data from the message
+      final matchData = message[0] as Map<String, dynamic>;
+
+      // Parse the match data into a Match object
+      final updatedMatch = Match.fromJson(matchData);
+
+      // Check if the received match update corresponds to the current match
+      if (updatedMatch.matchId == widget.matchId) {
+        Helpers helpers = Helpers();
+        var snackbarMessage = constructSnackbarMessage(updatedMatch);
+        if (snackbarMessage != '') {
+          helpers.showSnackbar(context, snackbarMessage, false);
+        }
+
+        setState(() {
+          teamOneScore = updatedMatch.userScore;
+          teamTwoScore = updatedMatch.opponentUserOrTeamScore;
+        });
+      }
+    }
   }
 
   @override
@@ -47,23 +97,13 @@ class _LiveDoubleFreehandMatchState extends State<LiveDoubleFreehandMatch> {
       appBar: AppBar(
         title: ExtendedText(text: 'Live match', userState: widget.userState),
         leading: IconButton(
-          icon: const Icon(Icons.close),
-          onPressed: () {},
+          icon: const Icon(Icons.chevron_left),
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
         iconTheme: helpers.getIconTheme(widget.userState.darkmode),
         backgroundColor: helpers.getBackgroundColor(widget.userState.darkmode),
-        actions: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(right: 20.0),
-            child: GestureDetector(
-              onTap: () {},
-              child: const Icon(
-                Icons.undo,
-                size: 26.0,
-              ),
-            ),
-          ),
-        ],
       ),
       body: FutureBuilder<FreehandDoubleMatchModel?>(
         future: matchFuture,
@@ -187,6 +227,7 @@ class _LiveDoubleFreehandMatchState extends State<LiveDoubleFreehandMatch> {
                               whichPlayer: 'teamOnePlayerOne',
                               notifyParent: refreshScoreWidget,
                               stopClockFromChild: stopClockFromChild,
+                              preventScoreIncrease: true,
                             ),
                             PlayerCard(
                               ongoingDoubleGameObject: ongoingDoubleGameObject,
@@ -196,6 +237,7 @@ class _LiveDoubleFreehandMatchState extends State<LiveDoubleFreehandMatch> {
                               whichPlayer: 'teamOnePlayerTwo',
                               notifyParent: refreshScoreWidget,
                               stopClockFromChild: stopClockFromChild,
+                              preventScoreIncrease: true,
                             ),
                           ],
                         ),
@@ -206,6 +248,7 @@ class _LiveDoubleFreehandMatchState extends State<LiveDoubleFreehandMatch> {
                           userState: widget.userState,
                           isTeamOne: true,
                           ongoingState: ongoingState,
+                          overrideScore: teamOneScore,
                         ),
                       ),
                     ],
@@ -225,6 +268,7 @@ class _LiveDoubleFreehandMatchState extends State<LiveDoubleFreehandMatch> {
                               whichPlayer: 'teamTwoPlayerOne',
                               notifyParent: refreshScoreWidget,
                               stopClockFromChild: stopClockFromChild,
+                              preventScoreIncrease: true,
                             ),
                             PlayerCard(
                               ongoingDoubleGameObject: ongoingDoubleGameObject,
@@ -245,6 +289,7 @@ class _LiveDoubleFreehandMatchState extends State<LiveDoubleFreehandMatch> {
                               whichPlayer: 'teamTwoPlayerTwo',
                               notifyParent: refreshScoreWidget,
                               stopClockFromChild: stopClockFromChild,
+                              preventScoreIncrease: true,
                             ),
                           ],
                         ),
@@ -255,6 +300,7 @@ class _LiveDoubleFreehandMatchState extends State<LiveDoubleFreehandMatch> {
                           userState: widget.userState,
                           isTeamOne: false,
                           ongoingState: ongoingState,
+                          overrideScore: teamTwoScore,
                         ),
                       ),
                     ],

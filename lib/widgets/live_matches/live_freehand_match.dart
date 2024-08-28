@@ -68,7 +68,7 @@ class _LiveFreehandMatchState extends State<LiveFreehandMatch> {
     _matchFuture = _fetchMatchData();
     counter = OngoingFreehandState();
 
-    widget.hubConnection.on('UpdateScore', _handleScoreUpdate);
+    widget.hubConnection.on('SendLiveMatches', _handleScoreUpdate);
   }
 
   Future<FreehandMatchModel?> _fetchMatchData() async {
@@ -122,10 +122,6 @@ class _LiveFreehandMatchState extends State<LiveFreehandMatch> {
   }
 
   String constructSnackbarMessage(Match updatedMatch) {
-    // Assume playerOneScore and playerTwoScore are state variables.
-    // These should be passed into the function or be available in the widget's state.
-
-    // Construct the message based on the comparison of scores
     if (updatedMatch.userScore > playerOneScore) {
       // If the userScore in updatedMatch is greater than the current playerOneScore
       return '${updatedMatch.userFirstName} ${updatedMatch.userLastName} scored a goal!';

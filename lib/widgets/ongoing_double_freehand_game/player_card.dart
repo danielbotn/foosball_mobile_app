@@ -18,15 +18,18 @@ class PlayerCard extends StatefulWidget {
   final String whichPlayer;
   final Function() notifyParent;
   final Function() stopClockFromChild;
-  const PlayerCard(
-      {super.key,
-      required this.ongoingDoubleGameObject,
-      required this.userState,
-      required this.ongoingState,
-      required this.player,
-      required this.whichPlayer,
-      required this.notifyParent,
-      required this.stopClockFromChild});
+  final bool preventScoreIncrease;
+  const PlayerCard({
+    super.key,
+    required this.ongoingDoubleGameObject,
+    required this.userState,
+    required this.ongoingState,
+    required this.player,
+    required this.whichPlayer,
+    required this.notifyParent,
+    required this.stopClockFromChild,
+    this.preventScoreIncrease = false,
+  });
 
   @override
   State<PlayerCard> createState() => _PlayerCardState();
@@ -78,6 +81,9 @@ class _PlayerCardState extends State<PlayerCard> {
   }
 
   void increaseScore() async {
+    if (widget.preventScoreIncrease) {
+      return;
+    }
     int upTo =
         widget.ongoingDoubleGameObject.freehandDoubleMatchCreateResponse!.upTo;
     var update = await updateScoreToDatabase();
