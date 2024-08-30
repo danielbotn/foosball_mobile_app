@@ -17,7 +17,7 @@ import 'freehand_history/freehand_match_detail.dart';
 
 class History extends StatefulWidget {
   final UserState userState;
-  const History({Key? key, required this.userState}) : super(key: key);
+  const History({super.key, required this.userState});
 
   @override
   // ignore: library_private_types_in_public_api
@@ -270,7 +270,7 @@ class _HistoryState extends State<History> {
               // Display your UI with the data
               return Container(
                 color: widget.userState.darkmode
-                    ? AppColors.darkModeLighterBackground
+                    ? AppColors.darkModeBackground
                     : AppColors.white,
                 child: ListView(
                   controller: _controller,
