@@ -5,7 +5,10 @@ import 'package:dano_foosball/models/user/user_response.dart';
 import 'package:dano_foosball/state/ongoing_double_freehand_state.dart';
 import 'package:dano_foosball/state/user_state.dart';
 import 'package:dano_foosball/utils/helpers.dart';
+import 'package:dano_foosball/widgets/UI/Error/ServerError.dart';
+import 'package:dano_foosball/widgets/emptyData/emptyData.dart';
 import 'package:dano_foosball/widgets/extended_Text.dart';
+import 'package:dano_foosball/widgets/loading.dart';
 import 'package:dano_foosball/widgets/ongoing_double_freehand_game/player_card.dart';
 import 'package:dano_foosball/widgets/ongoing_double_freehand_game/player_score.dart';
 import 'package:flutter/material.dart';
@@ -110,11 +113,11 @@ class _LiveDoubleFreehandMatchState extends State<LiveDoubleFreehandMatch> {
         builder: (context, snapshot) {
           // While the future is loading, show a progress indicator
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return Loading(userState: widget.userState);
           }
           // If there was an error, display an error message
           else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
+            return ServerError(userState: widget.userState);
           }
           // If the future is complete and has data, build the UI with the data
           else if (snapshot.hasData && snapshot.data != null) {
@@ -311,7 +314,10 @@ class _LiveDoubleFreehandMatchState extends State<LiveDoubleFreehandMatch> {
           }
           // If the data is null, display a message
           else {
-            return const Center(child: Text('No match data found'));
+            return EmptyData(
+                userState: widget.userState,
+                message: 'Match data not available',
+                iconData: Icons.person_off_sharp);
           }
         },
       ),

@@ -3,6 +3,9 @@ import 'package:dano_foosball/models/other/ongoing_game_object.dart';
 import 'package:dano_foosball/models/user/user_response.dart';
 import 'package:dano_foosball/state/user_state.dart';
 import 'package:dano_foosball/utils/app_color.dart';
+import 'package:dano_foosball/widgets/UI/Error/ServerError.dart';
+import 'package:dano_foosball/widgets/emptyData/emptyData.dart';
+import 'package:dano_foosball/widgets/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:dano_foosball/api/FreehandMatchApi.dart';
 import 'package:dano_foosball/models/freehand-matches/freehand_match_model.dart';
@@ -192,11 +195,18 @@ class _LiveFreehandMatchState extends State<LiveFreehandMatch> {
         future: _matchFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return Loading(
+              userState: widget.userState,
+            );
           } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
+            return ServerError(
+              userState: widget.userState,
+            );
           } else if (!snapshot.hasData) {
-            return const Center(child: Text('Match data not available'));
+            return EmptyData(
+                userState: widget.userState,
+                message: 'Match data not available',
+                iconData: Icons.person_off_sharp);
           } else {
             FreehandMatchModel match = snapshot.data!;
             counter.updatePlayerOneScore(match.playerOneScore);

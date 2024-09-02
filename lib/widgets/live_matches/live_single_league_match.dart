@@ -4,9 +4,12 @@ import 'package:dano_foosball/models/single-league-matches/single_league_match_m
 import 'package:dano_foosball/models/user/user_response.dart';
 import 'package:dano_foosball/state/user_state.dart';
 import 'package:dano_foosball/utils/app_color.dart';
+import 'package:dano_foosball/widgets/UI/Error/ServerError.dart';
+import 'package:dano_foosball/widgets/emptyData/emptyData.dart';
 import 'package:dano_foosball/widgets/extended_Text.dart';
 import 'package:dano_foosball/widgets/league/ongoing_game/player_card/playerCard.dart';
 import 'package:dano_foosball/widgets/league/ongoing_game/player_score/player_score.dart';
+import 'package:dano_foosball/widgets/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:signalr_netcore/signalr_client.dart' as signalr;
 import 'package:dano_foosball/utils/helpers.dart';
@@ -141,42 +144,53 @@ class _LiveSingleLeagueMatchState extends State<LiveSingleLeagueMatch> {
   @override
   Widget build(BuildContext context) {
     Helpers helpers = Helpers();
-    final isDarkMode = widget.userState.darkmode;
 
     return Scaffold(
       appBar: AppBar(
         title: Text(
           'Live Match',
           style: TextStyle(
-            color: isDarkMode ? AppColors.white : AppColors.textBlack,
+            color: widget.userState.darkmode
+                ? AppColors.white
+                : AppColors.textBlack,
           ),
         ),
         leading: IconButton(
           icon: Icon(
             Icons.chevron_left,
-            color: isDarkMode ? AppColors.white : Colors.grey[700],
+            color:
+                widget.userState.darkmode ? AppColors.white : Colors.grey[700],
           ),
           onPressed: () {
             Navigator.pop(context, widget.userState);
           },
         ),
-        backgroundColor:
-            isDarkMode ? AppColors.darkModeBackground : AppColors.white,
+        backgroundColor: widget.userState.darkmode
+            ? AppColors.darkModeBackground
+            : AppColors.white,
         iconTheme: IconThemeData(
-            color: isDarkMode ? AppColors.white : Colors.grey[700]),
+            color:
+                widget.userState.darkmode ? AppColors.white : Colors.grey[700]),
       ),
       body: FutureBuilder<SingleLeagueMatchModel?>(
         future: _matchFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return Loading(userState: widget.userState);
           } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
+            return ServerError(
+              userState: widget.userState,
+            );
           } else if (!snapshot.hasData) {
-            return const Center(child: Text('Match data not available'));
+            return EmptyData(
+                userState: widget.userState,
+                message: 'Match data not available',
+                iconData: Icons.person_off_sharp);
           } else {
             return Container(
-              color: helpers.getBackgroundColor(isDarkMode),
+              color: widget.userState.darkmode
+                  ? AppColors.darkModeBackground
+                  : AppColors.white,
               child: Column(
                 children: [
                   Row(

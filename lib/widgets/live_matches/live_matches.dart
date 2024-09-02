@@ -290,30 +290,34 @@ class _LiveMatchesState extends State<LiveMatches> {
 
   @override
   Widget build(BuildContext context) {
-    final isDarkMode = widget.userState.darkmode;
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
           'Live Matches',
           style: TextStyle(
-            color: isDarkMode ? AppColors.white : AppColors.textBlack,
+            color: widget.userState.darkmode
+                ? AppColors.white
+                : AppColors.textBlack,
           ),
         ),
         leading: IconButton(
           icon: Icon(Icons.chevron_left,
-              color: isDarkMode ? AppColors.white : Colors.grey[700]),
+              color: widget.userState.darkmode
+                  ? AppColors.white
+                  : Colors.grey[700]),
           onPressed: () {
             Navigator.pop(context, widget.userState);
           },
         ),
-        backgroundColor:
-            isDarkMode ? AppColors.darkModeBackground : AppColors.white,
+        backgroundColor: widget.userState.darkmode
+            ? AppColors.darkModeBackground
+            : AppColors.white,
         iconTheme: IconThemeData(
-            color: isDarkMode ? AppColors.white : Colors.grey[700]),
+            color:
+                widget.userState.darkmode ? AppColors.white : Colors.grey[700]),
       ),
       body: Container(
-        color: isDarkMode
+        color: widget.userState.darkmode
             ? AppColors.darkModeBackground
             : AppColors.white, // Set background color here
         child: _matches == null
@@ -324,7 +328,7 @@ class _LiveMatchesState extends State<LiveMatches> {
                 ? Center(
                     child: Text('No live matches available',
                         style: TextStyle(
-                            color: isDarkMode
+                            color: widget.userState.darkmode
                                 ? AppColors.white
                                 : AppColors.textBlack)))
                 : ListView.builder(
