@@ -1,5 +1,6 @@
 import 'package:dano_foosball/utils/preferences_service.dart';
 import 'package:dano_foosball/widgets/live_matches/live_double_freehand_match.dart';
+import 'package:dano_foosball/widgets/live_matches/live_double_league_match.dart';
 import 'package:dano_foosball/widgets/live_matches/live_freehand_match.dart';
 import 'package:dano_foosball/widgets/live_matches/live_single_league_match.dart';
 import 'package:flutter/material.dart';
@@ -159,6 +160,19 @@ class _LiveMatchesState extends State<LiveMatches> {
     );
   }
 
+  goToLiveDoubleLeagudMatch(BuildContext context, int matchId) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => LiveDoubleLeagueMatch(
+          userState: widget.userState,
+          hubConnection: _hubConnection,
+          matchId: matchId,
+        ),
+      ),
+    );
+  }
+
   Widget _buildMatchTile(Match match) {
     final isDarkMode = widget.userState.darkmode;
 
@@ -283,6 +297,9 @@ class _LiveMatchesState extends State<LiveMatches> {
         }
         if (match.typeOfMatch == ETypeOfMatch.singleLeagueMatch) {
           goToLiveSingleLeagudMatch(context, match.matchId);
+        }
+        if (match.typeOfMatch == ETypeOfMatch.doubleLeagueMatch) {
+          goToLiveDoubleLeagudMatch(context, match.matchId);
         }
       },
     );
