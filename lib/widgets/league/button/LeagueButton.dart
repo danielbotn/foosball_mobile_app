@@ -36,10 +36,8 @@ class _LeagueButtonState extends State<LeagueButton> {
   Widget build(BuildContext context) {
     return Container(
       color: widget.userState.darkmode
-          ? AppColors
-              .darkModeBackground // Replace with your desired dark mode background color
-          : AppColors
-              .white, // Replace with your desired light mode background color
+          ? AppColors.darkModeBackground
+          : AppColors.white,
       child: Row(
         children: <Widget>[
           Expanded(
@@ -47,21 +45,35 @@ class _LeagueButtonState extends State<LeagueButton> {
             child: ElevatedButton(
               onPressed: () {
                 widget.hideButton();
-                showDialog(
+                showModalBottomSheet(
                   context: context,
-                  builder: (context) => CreateLeagueDialog(
-                    onSubmit: onSubmit,
-                    onCancel: onCancel,
-                    userState: widget.userState,
+                  isScrollControlled: true,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(20),
+                    ),
                   ),
+                  builder: (BuildContext context) {
+                    return Padding(
+                      padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).viewInsets.bottom,
+                        left: 16.0,
+                        right: 16.0,
+                        top: 16.0,
+                      ),
+                      child: CreateLeagueDialog(
+                        onSubmit: onSubmit,
+                        onCancel: onCancel,
+                        userState: widget.userState,
+                      ),
+                    );
+                  },
                 );
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: widget.userState.darkmode
-                    ? AppColors
-                        .darkModeButtonColor // Replace with your dark mode button color
-                    : AppColors
-                        .buttonsLightTheme, // Replace with your light mode button color
+                    ? AppColors.darkModeButtonColor
+                    : AppColors.buttonsLightTheme,
                 minimumSize: const Size(100, 50),
               ),
               child: Text(widget.userState.hardcodedStrings.createNewLeague),

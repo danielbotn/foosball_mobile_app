@@ -1,4 +1,3 @@
-// InputWidget.dart
 import 'package:flutter/material.dart';
 import 'package:dano_foosball/state/user_state.dart';
 import 'package:dano_foosball/utils/app_color.dart';
@@ -28,8 +27,7 @@ class _InputWidgetState extends State<InputWidget> {
   @override
   void didUpdateWidget(InputWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.clearInputText == true) {
-      _inputController.text = "";
+    if (widget.clearInputText) {
       _inputController.clear();
     }
   }
@@ -40,6 +38,7 @@ class _InputWidgetState extends State<InputWidget> {
       style: TextStyle(
         color:
             widget.userState.darkmode ? AppColors.white : AppColors.textBlack,
+        fontSize: 16.0,
       ),
       focusNode: focusNode,
       controller: _inputController,
@@ -47,24 +46,35 @@ class _InputWidgetState extends State<InputWidget> {
         widget.onChangeInput(value);
       },
       decoration: InputDecoration(
-        labelText: widget.hintText,
-        labelStyle: TextStyle(
+        filled: true,
+        fillColor: widget.userState.darkmode
+            ? AppColors.darkModeLighterBackground
+            : AppColors.lightGrey,
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 18.0, horizontal: 16.0),
+        hintText: widget.hintText,
+        hintStyle: TextStyle(
           color:
-              widget.userState.darkmode ? AppColors.white : AppColors.textBlack,
+              widget.userState.darkmode ? AppColors.grey2 : AppColors.textGrey,
+          fontSize: 14.0,
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: widget.userState.darkmode
-                ? AppColors.white
-                : AppColors.textBlack,
+                ? AppColors.leagueDarkModeColorTwo
+                : AppColors.lightGreyDarkMode,
+            width: 1.5,
           ),
+          borderRadius: BorderRadius.circular(12.0),
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: widget.userState.darkmode
                 ? AppColors.white
-                : AppColors.textBlack,
+                : AppColors.buttonsLightTheme,
+            width: 2.0,
           ),
+          borderRadius: BorderRadius.circular(12.0),
         ),
         suffixIcon: IconButton(
           onPressed: () {

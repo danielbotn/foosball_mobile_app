@@ -1,5 +1,4 @@
-// ignore_for_file: deprecated_member_use
-
+import 'package:dano_foosball/utils/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:dano_foosball/api/LeagueApi.dart';
 import 'package:dano_foosball/models/leagues/create-league-body.dart';
@@ -13,12 +12,13 @@ class CreateLeagueDialog extends StatefulWidget {
   final UserState userState;
   final MyFormCallback onSubmit;
   final MyFormCallback onCancel;
-  const CreateLeagueDialog(
-      {Key? key,
-      required this.onSubmit,
-      required this.userState,
-      required this.onCancel})
-      : super(key: key);
+
+  const CreateLeagueDialog({
+    Key? key,
+    required this.onSubmit,
+    required this.userState,
+    required this.onCancel,
+  }) : super(key: key);
 
   @override
   State<CreateLeagueDialog> createState() => _CreateLeagueDialogState();
@@ -41,91 +41,125 @@ class _CreateLeagueDialogState extends State<CreateLeagueDialog> {
 
     // Create payload
     CreateLeagueBody payload = CreateLeagueBody(
-        name: leagueName,
-        typeOfLeague: option.index,
-        upTo: 10,
-        organisationId: widget.userState.currentOrganisationId,
-        howManyRounds: 2);
+      name: leagueName,
+      typeOfLeague: option.index,
+      upTo: 10,
+      organisationId: widget.userState.currentOrganisationId,
+      howManyRounds: 2,
+    );
 
     CreateLeagueResponse? response = await api.createLeague(payload);
 
-    if (response != null) {
-      return response;
-    } else {
-      return null;
-    }
+    return response;
   }
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text(widget.userState.hardcodedStrings.createLeague),
-      content: SingleChildScrollView(
-        child: ListBody(
-          children: <Widget>[
-            InputWidget(
-              userState: widget.userState,
-              onChangeInput: setLeagueName,
-              clearInputText: false,
-              hintText: widget.userState.hardcodedStrings.leagueName,
-            ),
-            Column(
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            widget.userState.hardcodedStrings.createLeague,
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+          SizedBox(height: 20),
+          InputWidget(
+            userState: widget.userState,
+            onChangeInput: setLeagueName,
+            clearInputText: false,
+            hintText: widget.userState.hardcodedStrings.leagueName,
+          ),
+          SizedBox(height: 20),
+          Center(
+            // Center the toggle buttons
+            child: ToggleButtons(
               children: [
-                ListTile(
-                  title: const Text('Single league'),
-                  leading: Radio<SingleOrDouble?>(
-                    value: SingleOrDouble.single,
-                    groupValue: option,
-                    onChanged: (value) {
-                      setState(() {
-                        option = value!;
-                      });
-                    },
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  child: Text(
+                    'Single League',
+                    style: TextStyle(
+                      color: option == SingleOrDouble.single
+                          ? Colors.white
+                          : widget.userState.darkmode
+                              ? AppColors.white
+                              : AppColors.textBlack,
+                    ),
                   ),
                 ),
-                ListTile(
-                  title: const Text('Double league'),
-                  leading: Radio<SingleOrDouble>(
-                    value: SingleOrDouble.double,
-                    groupValue: option,
-                    onChanged: (value) {
-                      setState(() {
-                        option = value!;
-                      });
-                    },
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  child: Text(
+                    'Double League',
+                    style: TextStyle(
+                      color: option == SingleOrDouble.double
+                          ? Colors.white
+                          : widget.userState.darkmode
+                              ? AppColors.white
+                              : AppColors.textBlack,
+                    ),
                   ),
                 ),
               ],
-            )
-          ],
-        ),
+              isSelected: [
+                option == SingleOrDouble.single,
+                option == SingleOrDouble.double,
+              ],
+              onPressed: (int index) {
+                setState(() {
+                  option = SingleOrDouble.values[index];
+                });
+              },
+              selectedColor: Colors.white,
+              fillColor: widget.userState.darkmode
+                  ? AppColors.darkModeButtonColor // Button color in dark mode
+                  : AppColors.buttonsLightTheme, // Button color in light mode
+              color: widget.userState.darkmode
+                  ? AppColors.white
+                  : AppColors.textBlack,
+              borderColor: widget.userState.darkmode
+                  ? AppColors.grey2 // Border color in dark mode
+                  : AppColors.lightGrey, // Border color in light mode
+              borderWidth: 1.0,
+              borderRadius: BorderRadius.circular(8.0),
+              constraints: BoxConstraints(
+                minWidth: 80, // Minimum width for each button
+                minHeight: 36, // Minimum height for each button
+              ),
+            ),
+          ),
+          SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              TextButton(
+                child: Text(widget.userState.hardcodedStrings.cancel),
+                onPressed: () {
+                  widget.onCancel(true);
+                  Navigator.of(context).pop();
+                },
+              ),
+              ElevatedButton(
+                child: Text(widget.userState.hardcodedStrings.create),
+                onPressed: () async {
+                  var newLeague = await createNewLeague();
+
+                  if (newLeague != null) {
+                    widget.onSubmit(true);
+                  } else {
+                    widget.onSubmit(false);
+                  }
+
+                  if (mounted) {
+                    Navigator.of(context).pop();
+                  }
+                },
+              ),
+            ],
+          ),
+        ],
       ),
-      actions: <Widget>[
-        TextButton(
-          child: Text(widget.userState.hardcodedStrings.cancel),
-          onPressed: () {
-            widget.onCancel(true);
-            Navigator.of(context).pop();
-          },
-        ),
-        TextButton(
-          child: Text(widget.userState.hardcodedStrings.create),
-          onPressed: () async {
-            var newLeague = await createNewLeague();
-
-            if (newLeague != null) {
-              widget.onSubmit(true);
-            } else {
-              widget.onSubmit(false);
-            }
-
-            if (mounted) {
-              Navigator.of(context).pop();
-            }
-            // deleteMatch();
-          },
-        ),
-      ],
     );
   }
 }
