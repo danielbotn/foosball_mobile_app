@@ -121,7 +121,7 @@ class _CreateLeagueDialogState extends State<CreateLeagueDialog> {
               borderColor: widget.userState.darkmode
                   ? AppColors.grey2 // Border color in dark mode
                   : AppColors.lightGrey, // Border color in light mode
-              borderWidth: 1.0,
+              borderWidth: 0.5, // Decreased border width
               borderRadius: BorderRadius.circular(8.0),
               constraints: BoxConstraints(
                 minWidth: 80, // Minimum width for each button
