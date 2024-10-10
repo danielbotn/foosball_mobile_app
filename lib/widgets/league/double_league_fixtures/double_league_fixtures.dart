@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:dano_foosball/api/DoubleLeagueMatchApi.dart';
 import 'package:dano_foosball/main.dart';
 import 'package:dano_foosball/models/double-league-matches/double_league_match_model.dart';
-import 'package:dano_foosball/models/single-league-matches/single_league_match_model.dart';
 import 'package:dano_foosball/state/user_state.dart';
 import 'package:dano_foosball/utils/helpers.dart';
 import 'package:dano_foosball/widgets/UI/Error/ServerError.dart';
 import 'package:dano_foosball/widgets/league/ongoing_double_game/ongoing_double_game.dart';
-import 'package:dano_foosball/widgets/league/ongoing_game/ongoing_game.dart';
 import 'package:dano_foosball/widgets/loading.dart';
 
 class DoubleLeagueFixtures extends StatefulWidget {
@@ -46,10 +44,11 @@ class _DoubleLeagueFixturesState extends State<DoubleLeagueFixtures> {
   }
 
   void goToGame(DoubleLeagueMatchModel? matchData) {
-    if (matchData!.teamOne[0].userId == widget.userState.userId ||
-        matchData.teamOne[1].userId == widget.userState.userId ||
-        matchData.teamTwo[0].userId == widget.userState.userId ||
-        matchData.teamTwo[1].userId == widget.userState.userId) {
+    if ((matchData!.teamOne[0].userId == widget.userState.userId ||
+            matchData.teamOne[1].userId == widget.userState.userId ||
+            matchData.teamTwo[0].userId == widget.userState.userId ||
+            matchData.teamTwo[1].userId == widget.userState.userId) &&
+        matchData.matchStarted == false) {
       Navigator.push(
           context,
           MaterialPageRoute(

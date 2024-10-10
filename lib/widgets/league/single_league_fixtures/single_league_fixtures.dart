@@ -45,7 +45,8 @@ class _SingleLeagueFixturesState extends State<SingleLeagueFixtures> {
 
   void goToGame(SingleLeagueMatchModel? matchData) {
     if (matchData?.playerOne == widget.userState.userId ||
-        matchData?.playerTwo == widget.userState.userId) {
+        matchData?.playerTwo == widget.userState.userId &&
+            matchData?.matchStarted == false) {
       Navigator.push(
           context,
           MaterialPageRoute(
