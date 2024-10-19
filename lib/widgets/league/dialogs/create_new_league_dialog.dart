@@ -1,3 +1,4 @@
+import 'package:dano_foosball/main.dart';
 import 'package:dano_foosball/utils/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:dano_foosball/api/LeagueApi.dart';
@@ -14,11 +15,11 @@ class CreateLeagueDialog extends StatefulWidget {
   final MyFormCallback onCancel;
 
   const CreateLeagueDialog({
-    Key? key,
+    super.key,
     required this.onSubmit,
     required this.userState,
     required this.onCancel,
-  }) : super(key: key);
+  });
 
   @override
   State<CreateLeagueDialog> createState() => _CreateLeagueDialogState();
@@ -63,45 +64,17 @@ class _CreateLeagueDialogState extends State<CreateLeagueDialog> {
             widget.userState.hardcodedStrings.createLeague,
             style: Theme.of(context).textTheme.bodyMedium,
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           InputWidget(
             userState: widget.userState,
             onChangeInput: setLeagueName,
             clearInputText: false,
             hintText: widget.userState.hardcodedStrings.leagueName,
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Center(
             // Center the toggle buttons
             child: ToggleButtons(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                  child: Text(
-                    'Single League',
-                    style: TextStyle(
-                      color: option == SingleOrDouble.single
-                          ? Colors.white
-                          : widget.userState.darkmode
-                              ? AppColors.white
-                              : AppColors.textBlack,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                  child: Text(
-                    'Double League',
-                    style: TextStyle(
-                      color: option == SingleOrDouble.double
-                          ? Colors.white
-                          : widget.userState.darkmode
-                              ? AppColors.white
-                              : AppColors.textBlack,
-                    ),
-                  ),
-                ),
-              ],
               isSelected: [
                 option == SingleOrDouble.single,
                 option == SingleOrDouble.double,
@@ -123,10 +96,38 @@ class _CreateLeagueDialogState extends State<CreateLeagueDialog> {
                   : AppColors.lightGrey, // Border color in light mode
               borderWidth: 0.5, // Decreased border width
               borderRadius: BorderRadius.circular(8.0),
-              constraints: BoxConstraints(
+              constraints: const BoxConstraints(
                 minWidth: 80, // Minimum width for each button
                 minHeight: 36, // Minimum height for each button
               ),
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  child: Text(
+                    userState.hardcodedStrings.singleLeague,
+                    style: TextStyle(
+                      color: option == SingleOrDouble.single
+                          ? Colors.white
+                          : widget.userState.darkmode
+                              ? AppColors.white
+                              : AppColors.textBlack,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  child: Text(
+                    userState.hardcodedStrings.doubleLeague,
+                    style: TextStyle(
+                      color: option == SingleOrDouble.double
+                          ? Colors.white
+                          : widget.userState.darkmode
+                              ? AppColors.white
+                              : AppColors.textBlack,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
           SizedBox(height: 20),

@@ -155,6 +155,8 @@ HardcodedStrings _$HardcodedStringsFromJson(Map<String, dynamic> json) =>
       slackWebhookUpdated: json['slackWebhookUpdated'] as String,
       finished: json['finished'] as String,
       ongoing: json['ongoing'] as String,
+      singleLeague: json['singleLeague'] as String,
+      doubleLeague: json['doubleLeague'] as String,
     );
 
 Map<String, dynamic> _$HardcodedStringsToJson(HardcodedStrings instance) =>
@@ -300,4 +302,6 @@ Map<String, dynamic> _$HardcodedStringsToJson(HardcodedStrings instance) =>
       'slackWebhookUpdated': instance.slackWebhookUpdated,
       'finished': instance.finished,
       'ongoing': instance.ongoing,
+      'singleLeague': instance.singleLeague,
+      'doubleLeague': instance.doubleLeague,
     };

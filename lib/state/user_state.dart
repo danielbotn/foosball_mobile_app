@@ -173,7 +173,9 @@ abstract class _UserState with Store {
       slackWebhookError: "",
       slackWebhookUpdated: "",
       finished: "",
-      ongoing: "");
+      ongoing: "",
+      doubleLeague: "",
+      singleLeague: "");
 
   @observable
   bool darkmode = false;
