@@ -1,3 +1,4 @@
+import 'package:dano_foosball/widgets/extended_Text.dart';
 import 'package:flutter/material.dart';
 import 'package:dano_foosball/api/FreehandDoubleMatchApi.dart';
 import 'package:dano_foosball/api/FreehandMatchApi.dart';
@@ -116,7 +117,11 @@ class StartGameButton extends StatelessWidget {
                     : AppColors.buttonsLightTheme,
                 minimumSize: const Size(100, 50),
               ),
-              child: Text(buttonText),
+              child: ExtendedText(
+                text: buttonText,
+                userState: userState,
+                colorOverride: AppColors.white,
+              ),
             ),
           ),
         ),

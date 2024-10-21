@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:dano_foosball/main.dart';
+import 'package:dano_foosball/widgets/extended_Text.dart';
+import 'package:flutter/material.dart';
 import 'package:dano_foosball/state/user_state.dart';
 import 'package:dano_foosball/utils/app_color.dart';
 import 'package:dano_foosball/widgets/league/dialogs/create_new_league_dialog.dart';
@@ -10,11 +11,11 @@ class LeagueButton extends StatefulWidget {
   final Function() hideButton;
 
   const LeagueButton({
-    Key? key,
+    super.key,
     required this.userState,
     required this.newLeaugeCreated,
     required this.hideButton,
-  }) : super(key: key);
+  });
 
   @override
   State<LeagueButton> createState() => _LeagueButtonState();
@@ -48,7 +49,7 @@ class _LeagueButtonState extends State<LeagueButton> {
                 showModalBottomSheet(
                   context: context,
                   isScrollControlled: true,
-                  shape: RoundedRectangleBorder(
+                  shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.vertical(
                       top: Radius.circular(20),
                     ),
@@ -76,7 +77,11 @@ class _LeagueButtonState extends State<LeagueButton> {
                     : AppColors.buttonsLightTheme,
                 minimumSize: const Size(100, 50),
               ),
-              child: Text(widget.userState.hardcodedStrings.createNewLeague),
+              child: ExtendedText(
+                text: widget.userState.hardcodedStrings.createNewLeague,
+                userState: userState,
+                colorOverride: AppColors.white,
+              ),
             ),
           ),
         ],
