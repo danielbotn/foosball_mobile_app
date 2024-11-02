@@ -138,7 +138,12 @@ class _PlayerCardState extends State<PlayerCard> {
             children: [
               Column(
                 children: [
-                  Image.network(widget.player.photoUrl, width: 40, height: 40),
+                  Image.network(
+                    widget.player.photoUrl,
+                    width: 40,
+                    height: 40,
+                    key: Key("freehandGame${widget.player.firstName}"),
+                  ),
                 ],
               ),
               Column(

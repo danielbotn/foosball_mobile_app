@@ -1,3 +1,5 @@
+import 'package:dano_foosball/models/leagues/get-league-response.dart';
+import 'package:dano_foosball/widgets/league/add_league_players/add_league_players.dart';
 import 'package:flutter/material.dart';
 import 'package:dano_foosball/state/user_state.dart';
 import 'package:dano_foosball/utils/app_color.dart';
@@ -5,6 +7,7 @@ import 'package:dano_foosball/utils/helpers.dart';
 import 'package:dano_foosball/widgets/extended_Text.dart';
 import 'package:dano_foosball/widgets/league/button/LeagueButton.dart';
 import 'package:dano_foosball/widgets/league/dashbaord/LeagueDashboard.dart';
+import 'package:tuple/tuple.dart';
 
 class League extends StatefulWidget {
   final UserState userState;
@@ -19,11 +22,33 @@ class _LeagueState extends State<League> {
   String randomNumber = "";
   bool showButton = true;
 
-  void updateLeagueList() {
+  void updateLeagueList(Tuple2<bool, GetLeagueResponse?> result) {
     Helpers helpers = Helpers();
     setState(() {
       randomNumber = helpers.generateRandomString();
     });
+    // test
+    if (result.item2 != null) {
+      GetLeagueResponse tmp = GetLeagueResponse(
+        id: result.item2!.id,
+        name: result.item2!.name,
+        typeOfLeague: result.item2!.typeOfLeague,
+        createdAt: result.item2!.createdAt,
+        organisationId: result.item2!.organisationId,
+        upTo: result.item2!.upTo,
+        hasLeagueStarted: result.item2!.hasLeagueStarted,
+        howManyRounds: result.item2!.howManyRounds,
+      );
+      if (result.item2!.typeOfLeague == 0) {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => AddLeaguePlayers(
+                      userState: widget.userState,
+                      leagueData: tmp,
+                    )));
+      }
+    }
   }
 
   void hideButton() {

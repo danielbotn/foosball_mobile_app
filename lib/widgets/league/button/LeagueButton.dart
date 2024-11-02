@@ -1,13 +1,17 @@
 import 'package:dano_foosball/main.dart';
+import 'package:dano_foosball/models/leagues/get-league-response.dart';
 import 'package:dano_foosball/widgets/extended_Text.dart';
 import 'package:flutter/material.dart';
 import 'package:dano_foosball/state/user_state.dart';
 import 'package:dano_foosball/utils/app_color.dart';
 import 'package:dano_foosball/widgets/league/dialogs/create_new_league_dialog.dart';
+import 'package:tuple/tuple.dart';
+
+typedef MyFormCallback = void Function(Tuple2<bool, GetLeagueResponse?> result);
 
 class LeagueButton extends StatefulWidget {
   final UserState userState;
-  final Function() newLeaugeCreated;
+  final MyFormCallback newLeaugeCreated;
   final Function() hideButton;
 
   const LeagueButton({
@@ -22,9 +26,9 @@ class LeagueButton extends StatefulWidget {
 }
 
 class _LeagueButtonState extends State<LeagueButton> {
-  void onSubmit(bool createdLeagueSuccessful) {
-    if (createdLeagueSuccessful == true) {
-      widget.newLeaugeCreated();
+  void onSubmit(Tuple2<bool, GetLeagueResponse?> createdLeagueSuccessful) {
+    if (createdLeagueSuccessful.item1 == true) {
+      widget.newLeaugeCreated(createdLeagueSuccessful);
     }
     widget.hideButton();
   }

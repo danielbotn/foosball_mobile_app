@@ -7,9 +7,10 @@ class InputWidget extends StatefulWidget {
   final Function(String value) onChangeInput;
   final bool clearInputText;
   final String hintText;
+  final Key? key; // Optional key parameter
 
   const InputWidget({
-    Key? key,
+    this.key, // Assign the key to the widget itself, not the internal TextField
     required this.userState,
     required this.onChangeInput,
     required this.clearInputText,

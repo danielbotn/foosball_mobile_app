@@ -1,4 +1,5 @@
 import 'package:dano_foosball/main.dart';
+import 'package:dano_foosball/models/leagues/get-league-response.dart';
 import 'package:dano_foosball/utils/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:dano_foosball/api/LeagueApi.dart';
@@ -6,13 +7,15 @@ import 'package:dano_foosball/models/leagues/create-league-body.dart';
 import 'package:dano_foosball/models/leagues/create-league-response.dart';
 import 'package:dano_foosball/state/user_state.dart';
 import 'package:dano_foosball/widgets/inputs/InputWidget.dart';
+import 'package:tuple/tuple.dart';
 
-typedef MyFormCallback = void Function(bool result);
+typedef MyFormCallback = void Function(Tuple2<bool, GetLeagueResponse?> result);
+typedef MyFormCallback2 = void Function(bool result);
 
 class CreateLeagueDialog extends StatefulWidget {
   final UserState userState;
   final MyFormCallback onSubmit;
-  final MyFormCallback onCancel;
+  final MyFormCallback2 onCancel;
 
   const CreateLeagueDialog({
     super.key,
@@ -35,6 +38,37 @@ class _CreateLeagueDialogState extends State<CreateLeagueDialog> {
     setState(() {
       leagueName = name;
     });
+  }
+
+  Future createLeague(BuildContext context) async {
+    var newLeague = await createNewLeague();
+    if (!mounted) {
+      return;
+    }
+
+    // Prepare the result tuple
+    Tuple2<bool, GetLeagueResponse?> result;
+    if (newLeague != null) {
+      GetLeagueResponse leagueData = GetLeagueResponse(
+        id: newLeague.id,
+        name: newLeague.name,
+        typeOfLeague: newLeague.typeOfLeague,
+        createdAt: newLeague.createdAt,
+        organisationId: newLeague.organisationId,
+        upTo: newLeague.upTo,
+        hasLeagueStarted: newLeague.hasLeagueStarted,
+        howManyRounds: newLeague.howManyRounds,
+      );
+      result = Tuple2(true, leagueData);
+    } else {
+      result = const Tuple2(false, null);
+    }
+    if (context.mounted) {
+      Navigator.of(context).pop();
+    }
+
+    // Call the callback with the tuple result
+    widget.onSubmit(result);
   }
 
   Future<CreateLeagueResponse?> createNewLeague() async {
@@ -70,6 +104,7 @@ class _CreateLeagueDialogState extends State<CreateLeagueDialog> {
             onChangeInput: setLeagueName,
             clearInputText: false,
             hintText: widget.userState.hardcodedStrings.leagueName,
+            key: const Key('leagueNameInput'),
           ),
           const SizedBox(height: 20),
           Center(
@@ -130,7 +165,7 @@ class _CreateLeagueDialogState extends State<CreateLeagueDialog> {
               ],
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -144,17 +179,7 @@ class _CreateLeagueDialogState extends State<CreateLeagueDialog> {
               ElevatedButton(
                 child: Text(widget.userState.hardcodedStrings.create),
                 onPressed: () async {
-                  var newLeague = await createNewLeague();
-
-                  if (newLeague != null) {
-                    widget.onSubmit(true);
-                  } else {
-                    widget.onSubmit(false);
-                  }
-
-                  if (mounted) {
-                    Navigator.of(context).pop();
-                  }
+                  await createLeague(context);
                 },
               ),
             ],

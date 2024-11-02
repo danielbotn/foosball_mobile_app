@@ -85,7 +85,7 @@ class _AddLeaguePlayersState extends State<AddLeaguePlayers> {
           backgroundColor:
               helpers.getBackgroundColor(widget.userState.darkmode),
           title: ExtendedText(
-            text: "add players",
+            text: widget.userState.hardcodedStrings.addPlayers,
             userState: widget.userState,
             colorOverride: widget.userState.darkmode
                 ? AppColors.white
