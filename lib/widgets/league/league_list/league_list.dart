@@ -108,7 +108,8 @@ class LeagueList extends StatelessWidget {
     );
   }
 
-  void deleteLeague(BuildContext context, GetLeagueResponse leagueData) async {
+  Future<void> deleteLeague(
+      BuildContext context, GetLeagueResponse leagueData) async {
     Helpers helper = Helpers();
     LeagueApi api = LeagueApi();
 
@@ -116,7 +117,6 @@ class LeagueList extends StatelessWidget {
       var response = await api.deleteLeagueById(leagueData.id);
       if (response == true) {
         onLeagueDeleted(leagueData);
-        if (context.mounted) {}
       } else {
         if (context.mounted) {
           helper.showSnackbar(
@@ -135,8 +135,8 @@ class LeagueList extends StatelessWidget {
     }
   }
 
-  Future updateLeagueName(BuildContext context, GetLeagueResponse leagueData,
-      String newName) async {
+  Future<void> updateLeagueName(BuildContext context,
+      GetLeagueResponse leagueData, String newName) async {
     Helpers helper = Helpers();
     LeagueApi api = LeagueApi();
 
@@ -193,7 +193,7 @@ class LeagueList extends StatelessWidget {
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      deleteLeague(context, leagueData);
+                      await deleteLeague(context, leagueData);
                     },
                     child: Text(userState.hardcodedStrings.delete),
                   ),
