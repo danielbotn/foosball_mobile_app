@@ -14,8 +14,7 @@ class LeagueDashboard extends StatefulWidget {
   final UserState userState;
   final String randomNumber;
   const LeagueDashboard(
-      {Key? key, required this.userState, required this.randomNumber})
-      : super(key: key);
+      {super.key, required this.userState, required this.randomNumber});
 
   @override
   State<LeagueDashboard> createState() => _LeagueDashboardState();
@@ -106,6 +105,11 @@ class _LeagueDashboardState extends State<LeagueDashboard> {
                         userState: userState,
                         data: leaguelist,
                         randomNumber: widget.randomNumber,
+                        onLeagueDeleted: (league) {
+                          // Handle the league deletion here, e.g., update UI or state
+                          print("League deleted: ${league.name}");
+                          leaguesFuture = getLeagues();
+                        },
                       ),
                     );
                   } else {

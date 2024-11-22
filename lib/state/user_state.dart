@@ -175,7 +175,11 @@ abstract class _UserState with Store {
       finished: "",
       ongoing: "",
       doubleLeague: "",
-      singleLeague: "");
+      singleLeague: "",
+      delete: "",
+      edit: "",
+      deleteLeague: "",
+      deleteLeagueAreYouSure: "");
 
   @observable
   bool darkmode = false;

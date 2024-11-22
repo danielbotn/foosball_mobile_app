@@ -143,10 +143,14 @@ class HardcodedStrings {
   final String slackWebhookUpdated;
   final String finished;
   final String ongoing;
-
-  // New properties
   final String singleLeague;
   final String doubleLeague;
+
+  // New properties
+  final String delete;
+  final String deleteLeague;
+  final String edit;
+  final String deleteLeagueAreYouSure;
 
   HardcodedStrings({
     required this.matches,
@@ -207,8 +211,8 @@ class HardcodedStrings {
     required this.addPlayers,
     required this.nameOfNewOrganisation,
     required this.create,
-    required this.newOrganisationErrorMessage,
     required this.newOrganisationSuccessMessage,
+    required this.newOrganisationErrorMessage,
     required this.organisationSettings,
     required this.createNewOrganisation,
     required this.joinExistingOrganisation,
@@ -288,9 +292,12 @@ class HardcodedStrings {
     required this.slackWebhookUpdated,
     required this.finished,
     required this.ongoing,
-    // New properties in the constructor
     required this.singleLeague,
     required this.doubleLeague,
+    required this.delete,
+    required this.deleteLeague,
+    required this.edit,
+    required this.deleteLeagueAreYouSure,
   });
 
   factory HardcodedStrings.fromJson(Map<String, dynamic> item) =>

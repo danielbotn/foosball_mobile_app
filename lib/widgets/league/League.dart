@@ -11,7 +11,7 @@ import 'package:tuple/tuple.dart';
 
 class League extends StatefulWidget {
   final UserState userState;
-  const League({Key? key, required this.userState}) : super(key: key);
+  const League({super.key, required this.userState});
 
   @override
   State<League> createState() => _LeagueState();

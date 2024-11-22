@@ -156,6 +156,47 @@ class LeagueApi {
     return result;
   }
 
+  Future<bool> updateLeagueName(
+    int leagueId,
+    String leagueName,
+  ) async {
+    bool result = false;
+
+    var url = '$baseUrl/api/Leagues/$leagueId';
+
+    // Create a list with a single operation to update the name
+    final List<Map<String, dynamic>> operations = [
+      {
+        "op": "replace",
+        "path": "/Name",
+        "value": leagueName,
+      }
+    ];
+
+    try {
+      final response = await Api().dio.patch(
+            url,
+            data: operations,
+            options: Options(
+              headers: {
+                "Accept": "application/json",
+                "content-type": "application/json",
+              },
+            ),
+          );
+
+      if (response.statusCode == 204) {
+        result = true; // Successfully updated
+      } else {
+        result = false; // Handle non-success status
+      }
+    } catch (e) {
+      rethrow; // Propagate the error for handling elsewhere
+    }
+
+    return result;
+  }
+
   Future<List<SingleLeagueStandingsModel>?> getSingleLeagueStandings(
       int leagueId) async {
     late List<SingleLeagueStandingsModel>? result;
@@ -224,5 +265,30 @@ class LeagueApi {
     }
 
     return result;
+  }
+
+  Future<bool> deleteLeagueById(int leagueId) async {
+    String url = '$baseUrl/api/Leagues/$leagueId';
+
+    try {
+      final response = await Api().dio.delete(
+            url,
+            options: Options(
+              headers: {
+                "Accept": "application/json",
+                "content-type": "application/json",
+              },
+            ),
+          );
+
+      if (response.statusCode == 204) {
+        return true;
+      } else {
+        throw Exception('Failed to delete freehand match');
+      }
+    } catch (e) {
+      // rethrow the caught exception
+      rethrow;
+    }
   }
 }

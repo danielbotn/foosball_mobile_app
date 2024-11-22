@@ -66,10 +66,10 @@ HardcodedStrings _$HardcodedStringsFromJson(Map<String, dynamic> json) =>
       addPlayers: json['addPlayers'] as String,
       nameOfNewOrganisation: json['nameOfNewOrganisation'] as String,
       create: json['create'] as String,
-      newOrganisationErrorMessage:
-          json['newOrganisationErrorMessage'] as String,
       newOrganisationSuccessMessage:
           json['newOrganisationSuccessMessage'] as String,
+      newOrganisationErrorMessage:
+          json['newOrganisationErrorMessage'] as String,
       organisationSettings: json['organisationSettings'] as String,
       createNewOrganisation: json['createNewOrganisation'] as String,
       joinExistingOrganisation: json['joinExistingOrganisation'] as String,
@@ -157,6 +157,10 @@ HardcodedStrings _$HardcodedStringsFromJson(Map<String, dynamic> json) =>
       ongoing: json['ongoing'] as String,
       singleLeague: json['singleLeague'] as String,
       doubleLeague: json['doubleLeague'] as String,
+      delete: json['delete'] as String,
+      deleteLeague: json['deleteLeague'] as String,
+      edit: json['edit'] as String,
+      deleteLeagueAreYouSure: json['deleteLeagueAreYouSure'] as String,
     );
 
 Map<String, dynamic> _$HardcodedStringsToJson(HardcodedStrings instance) =>
@@ -304,4 +308,8 @@ Map<String, dynamic> _$HardcodedStringsToJson(HardcodedStrings instance) =>
       'ongoing': instance.ongoing,
       'singleLeague': instance.singleLeague,
       'doubleLeague': instance.doubleLeague,
+      'delete': instance.delete,
+      'deleteLeague': instance.deleteLeague,
+      'edit': instance.edit,
+      'deleteLeagueAreYouSure': instance.deleteLeagueAreYouSure,
     };
