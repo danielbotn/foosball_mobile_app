@@ -128,13 +128,19 @@ class _ChangeOrganisationState extends State<ChangeOrganisation> {
           ),
           actions: <Widget>[
             TextButton(
-              child: Text(widget.userState.hardcodedStrings.cancel),
+              child: ExtendedText(
+                text: widget.userState.hardcodedStrings.cancel,
+                userState: widget.userState,
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text(widget.userState.hardcodedStrings.yes),
+              child: ExtendedText(
+                text: widget.userState.hardcodedStrings.yes,
+                userState: widget.userState,
+              ),
               onPressed: () async {
                 Organisation api = Organisation();
                 var changeStatement = await api.changeOrganisation(
@@ -213,6 +219,12 @@ class _ChangeOrganisationState extends State<ChangeOrganisation> {
                             activeColor: helpers
                                 .getCheckMarkColor(widget.userState.darkmode),
                             value: checkIfCurrentOrganisation(orgData![index]),
+                            side: BorderSide(
+                              color: widget.userState.darkmode
+                                  ? Colors.white
+                                  : AppColors.textGrey,
+                              width: 2, // Adjust width as needed
+                            ),
                             onChanged: (bool? value) async {
                               // to do
                               await changeOrg(orgData![index]);
