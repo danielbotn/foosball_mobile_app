@@ -1,3 +1,4 @@
+import 'package:dano_foosball/widgets/Settings/ChangeUserInfoScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:settings_ui/settings_ui.dart';
 
@@ -20,6 +21,8 @@ import 'package:dano_foosball/widgets/Settings/DiscordSettings.dart';
 import 'package:dano_foosball/widgets/Settings/MicrosoftTeamsSettings.dart';
 import 'package:dano_foosball/widgets/Settings/SlackSettings.dart';
 import 'package:dano_foosball/widgets/change_password/ChangePassword.dart';
+import 'package:dano_foosball/widgets/organisation/organisation.dart'
+    as orgWidget;
 
 class Settings extends StatefulWidget {
   final UserState userState;
@@ -99,6 +102,25 @@ class _SettingsState extends State<Settings> with RouteAware {
     setSelectedLanguage(value);
     widget.userState.setLanguage(value);
     changeHardcodedStrings(value);
+  }
+
+  void goToChangeUserInformation(BuildContext context) {
+    var screen = ChangeUserInfoScreen(userState: widget.userState);
+
+    navigateToPage(
+      screen,
+      context,
+    );
+  }
+
+  void goToOrganisationSettings(BuildContext context) {
+    var organisationWidget =
+        orgWidget.OrganisationScreen(userState: widget.userState);
+
+    navigateToPage(
+      organisationWidget,
+      context,
+    );
   }
 
   Future<void> selectLanguagePopup(BuildContext context) async {
@@ -230,6 +252,37 @@ class _SettingsState extends State<Settings> with RouteAware {
     );
   }
 
+  SettingsTile buildSettingsTile({
+    required String title,
+    required String description,
+    required IconData leadingIcon,
+    required UserState userState,
+    VoidCallback? onPressed,
+  }) {
+    return SettingsTile(
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ExtendedText(
+            text: title,
+            userState: userState,
+            fontSize: 14,
+          ),
+          SizedBox(height: 4), // Adds a small gap between title and description
+          ExtendedText(
+            text: description,
+            userState: userState,
+            fontSize: 12,
+          ),
+        ],
+      ),
+      leading: Icon(leadingIcon),
+      onPressed: (BuildContext context) {
+        if (onPressed != null) onPressed();
+      },
+    );
+  }
+
   SettingsSection _buildPersonalInfoSection(
       HardcodedStrings? hardcodedStrings) {
     return SettingsSection(
@@ -239,46 +292,27 @@ class _SettingsState extends State<Settings> with RouteAware {
         fontSize: 14,
       ),
       tiles: [
-        SettingsTile(
-          title: ExtendedText(
-            text: hardcodedStrings?.username ?? "Username",
-            userState: widget.userState,
-            fontSize: 14,
-          ),
-          description: ExtendedText(
-            text: widget.userState.userInfoGlobal.email,
-            userState: widget.userState,
-            fontSize: 12,
-          ),
-          leading: const Icon(Icons.email),
-          onPressed: (BuildContext context) => selectLanguagePopup(context),
+        buildSettingsTile(
+          title: hardcodedStrings?.username ?? "Username",
+          description: widget.userState.userInfoGlobal.email,
+          leadingIcon: Icons.email,
+          userState: widget.userState,
+          onPressed: () => selectLanguagePopup(context),
         ),
-        SettingsTile(
-          title: ExtendedText(
-            text: hardcodedStrings?.user ?? "User",
-            userState: widget.userState,
-            fontSize: 14,
-          ),
-          description: ExtendedText(
-            text:
-                "${widget.userState.userInfoGlobal.firstName} ${widget.userState.userInfoGlobal.lastName}",
-            userState: widget.userState,
-            fontSize: 12,
-          ),
-          leading: const Icon(Icons.person),
+        buildSettingsTile(
+          title: hardcodedStrings?.user ?? "User",
+          description:
+              "${widget.userState.userInfoGlobal.firstName} ${widget.userState.userInfoGlobal.lastName}",
+          leadingIcon: Icons.person,
+          userState: widget.userState,
+          onPressed: () => goToChangeUserInformation(context),
         ),
-        SettingsTile(
-          title: ExtendedText(
-            text: hardcodedStrings?.organisation ?? "Organisation",
-            userState: widget.userState,
-            fontSize: 14,
-          ),
-          description: ExtendedText(
-            text: widget.userState.userInfoGlobal.currentOrganisationName,
-            userState: widget.userState,
-            fontSize: 12,
-          ),
-          leading: const Icon(Icons.business),
+        buildSettingsTile(
+          title: hardcodedStrings?.organisation ?? "Organisation",
+          description: widget.userState.userInfoGlobal.currentOrganisationName,
+          leadingIcon: Icons.business,
+          userState: widget.userState,
+          onPressed: () => goToOrganisationSettings(context),
         ),
       ],
     );
