@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:dano_foosball/api/AuthApi.dart';
-import 'package:dano_foosball/main.dart';
 import 'package:dano_foosball/models/auth/update_password_request.dart';
 import 'package:dano_foosball/state/user_state.dart';
 import 'package:dano_foosball/utils/app_color.dart';

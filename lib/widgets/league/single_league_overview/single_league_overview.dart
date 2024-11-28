@@ -1,3 +1,4 @@
+import 'package:dano_foosball/widgets/dashboard/New_Dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:dano_foosball/models/leagues/get-league-response.dart';
 import 'package:dano_foosball/state/user_state.dart';
@@ -10,8 +11,12 @@ import 'package:dano_foosball/widgets/league/single_league_standings/single_leag
 class SingleLeagueOverview extends StatefulWidget {
   final UserState userState;
   final GetLeagueResponse leagueData;
+  final bool leagueNewlyCreated; // New parameter
   const SingleLeagueOverview(
-      {super.key, required this.userState, required this.leagueData});
+      {super.key,
+      required this.userState,
+      required this.leagueData,
+      this.leagueNewlyCreated = false});
 
   @override
   State<SingleLeagueOverview> createState() => _SingleLeagueOverviewState();
@@ -24,7 +29,7 @@ class _SingleLeagueOverviewState extends State<SingleLeagueOverview>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
   }
 
   @override
@@ -42,7 +47,18 @@ class _SingleLeagueOverviewState extends State<SingleLeagueOverview>
         leading: IconButton(
           icon: const Icon(Icons.chevron_left),
           onPressed: () {
-            Navigator.pop(context);
+            if (widget.leagueNewlyCreated == false) {
+              Navigator.pop(context);
+            } else {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => NewDashboard(
+                    userState: widget.userState,
+                  ),
+                ),
+              );
+            }
           },
         ),
         iconTheme: helpers.getIconTheme(widget.userState.darkmode),
@@ -63,7 +79,12 @@ class _SingleLeagueOverviewState extends State<SingleLeagueOverview>
             )),
             Tab(
                 child: ExtendedText(
-              text: widget.userState.hardcodedStrings.fixtures,
+              text: "My fixtures",
+              userState: widget.userState,
+            )),
+            Tab(
+                child: ExtendedText(
+              text: "All fixtures",
               userState: widget.userState,
             )),
           ],
@@ -77,6 +98,11 @@ class _SingleLeagueOverviewState extends State<SingleLeagueOverview>
             SingleLeagueStandings(
               userState: widget.userState,
               leagueId: widget.leagueData.id,
+            ),
+            SingleLeagueFixtures(
+              userState: widget.userState,
+              leagueId: widget.leagueData.id,
+              showOnlyMyFixtures: true,
             ),
             SingleLeagueFixtures(
               userState: widget.userState,

@@ -12,11 +12,11 @@ class PlayersList extends StatefulWidget {
   final Function(UserResponse userResponse, bool checkedOrNot) playerChecked;
 
   const PlayersList({
-    Key? key,
+    super.key,
     required this.userState,
     required this.players,
     required this.playerChecked,
-  }) : super(key: key);
+  });
 
   @override
   State<PlayersList> createState() => _PlayersListState();
@@ -40,6 +40,7 @@ class _PlayersListState extends State<PlayersList> {
     for (var i = 0; i < users!.length; i++) {
       if (users[i].isDeleted == false) {
         list.add(ListTile(
+          key: Key('player_${users[i].id}'), // Add a unique key here
           title: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,7 +50,10 @@ class _PlayersListState extends State<PlayersList> {
           ),
           subtitle: Text(users[i].email),
           leading: SizedBox(
-              height: 100, width: 50, child: Image.network(users[i].photoUrl)),
+            height: 100,
+            width: 50,
+            child: Image.network(users[i].photoUrl),
+          ),
           trailing: SizedBox(
             width: 60,
             child: Column(
@@ -129,6 +133,7 @@ class _PlayersListState extends State<PlayersList> {
         height: 230,
         // add listview with variable two
         child: ListView(
+          key: const Key('playerListScroll'),
           scrollDirection: Axis.vertical,
           shrinkWrap: true,
           padding: const EdgeInsets.all(8),

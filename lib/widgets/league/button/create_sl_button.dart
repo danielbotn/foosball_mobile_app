@@ -40,6 +40,7 @@ class _CreateSingleLeagueButtonState extends State<CreateSingleLeagueButton> {
         builder: (context) => SingleLeagueOverview(
           userState: widget.userState,
           leagueData: widget.leagueData,
+          leagueNewlyCreated: true,
         ),
       ),
     );

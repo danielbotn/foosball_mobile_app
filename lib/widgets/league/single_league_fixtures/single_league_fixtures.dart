@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:dano_foosball/api/SingleLeagueMatchApi.dart';
-import 'package:dano_foosball/main.dart';
 import 'package:dano_foosball/models/single-league-matches/single_league_match_model.dart';
 import 'package:dano_foosball/state/user_state.dart';
 import 'package:dano_foosball/utils/helpers.dart';
@@ -11,8 +10,14 @@ import 'package:dano_foosball/widgets/loading.dart';
 class SingleLeagueFixtures extends StatefulWidget {
   final UserState userState;
   final int leagueId;
-  const SingleLeagueFixtures(
-      {super.key, required this.userState, required this.leagueId});
+  final bool showOnlyMyFixtures; // New parameter
+
+  const SingleLeagueFixtures({
+    super.key,
+    required this.userState,
+    required this.leagueId,
+    this.showOnlyMyFixtures = false, // Default value
+  });
 
   @override
   State<SingleLeagueFixtures> createState() => _SingleLeagueFixturesState();
@@ -44,14 +49,16 @@ class _SingleLeagueFixturesState extends State<SingleLeagueFixtures> {
   }
 
   void goToGame(SingleLeagueMatchModel? matchData) {
-    if (matchData?.playerOne == widget.userState.userId ||
-        matchData?.playerTwo == widget.userState.userId &&
-            matchData?.matchStarted == false) {
+    if (matchData?.playerOne == widget.userState.userInfoGlobal.userId ||
+        (matchData?.playerTwo == widget.userState.userInfoGlobal.userId &&
+            matchData?.matchStarted == false)) {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) =>
-                  OngoingGame(userState: userState, matchModel: matchData)));
+              builder: (context) => OngoingGame(
+                    userState: widget.userState,
+                    matchModel: matchData!,
+                  )));
     }
   }
 
@@ -69,36 +76,49 @@ class _SingleLeagueFixturesState extends State<SingleLeagueFixtures> {
         }
         if (snapshot.hasData) {
           List<SingleLeagueMatchModel>? data = snapshot.data;
+
+          // Apply filtering if showOnlyMyFixtures is true
+          if (widget.showOnlyMyFixtures) {
+            int userId = widget.userState.userInfoGlobal.userId;
+            data = data
+                ?.where((match) =>
+                    match.playerOne == userId || match.playerTwo == userId)
+                .toList();
+          }
+
+          if (data == null || data.isEmpty) {
+            return const Center(child: Text('No fixtures available.'));
+          }
+
           return Container(
-              color: helpers.getBackgroundColor(widget.userState.darkmode),
-              height: double.infinity,
-              child: ListView.builder(
-                itemCount: data?.length,
-                itemBuilder: (BuildContext context, int index) {
-                  SingleLeagueMatchModel? match = data?[index];
-                  return ListTile(
-                    onTap: () => {goToGame(match)},
-                    leading: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        CircleAvatar(
-                          backgroundImage:
-                              NetworkImage(match?.playerOnePhotoUrl ?? ''),
-                        ),
-                        const SizedBox(width: 16),
-                        CircleAvatar(
-                          backgroundImage:
-                              NetworkImage(match?.playerTwoPhotoUrl ?? ''),
-                        ),
-                      ],
-                    ),
-                    title: Text(
-                      '${match?.playerOneFirstName ?? 'No first name'} ${match?.playerOneLastName ?? 'No last name'} vs ${match?.playerTwoFirstName ?? 'No first name'} ${match?.playerTwoLastName ?? 'No last name'}',
-                    ),
-                    subtitle: Text(getSubtitle(match)),
-                  );
-                },
-              ));
+            color: helpers.getBackgroundColor(widget.userState.darkmode),
+            height: double.infinity,
+            child: ListView.builder(
+              itemCount: data.length,
+              itemBuilder: (BuildContext context, int index) {
+                final match = data![index]; // Use a non-null assertion
+                return ListTile(
+                  onTap: () => goToGame(match),
+                  leading: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      CircleAvatar(
+                        backgroundImage: NetworkImage(match.playerOnePhotoUrl),
+                      ),
+                      const SizedBox(width: 16),
+                      CircleAvatar(
+                        backgroundImage: NetworkImage(match.playerTwoPhotoUrl),
+                      ),
+                    ],
+                  ),
+                  title: Text(
+                    '${match.playerOneFirstName} ${match.playerOneLastName} vs ${match.playerTwoFirstName} ${match.playerTwoLastName}',
+                  ),
+                  subtitle: Text(getSubtitle(match)),
+                );
+              },
+            ),
+          );
         } else if (snapshot.hasError) {
           return ServerError(userState: widget.userState);
         } else {

@@ -6,8 +6,7 @@ class SelectedPlayers extends StatefulWidget {
   final UserState userState;
   final List<UserResponse> players;
   const SelectedPlayers(
-      {Key? key, required this.userState, required this.players})
-      : super(key: key);
+      {super.key, required this.userState, required this.players});
 
   @override
   State<SelectedPlayers> createState() => _SelectedPlayersState();
@@ -19,6 +18,7 @@ class _SelectedPlayersState extends State<SelectedPlayers> {
     for (var i = 0; i < users!.length; i++) {
       if (users[i].isDeleted == false) {
         list.add(ListTile(
+          key: Key('selectedPlayer_${users[i].id}'),
           title: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,9 +37,7 @@ class _SelectedPlayersState extends State<SelectedPlayers> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 230,
-      // add listview with variable two
+    return Expanded(
       child: ListView(
         scrollDirection: Axis.vertical,
         shrinkWrap: true,

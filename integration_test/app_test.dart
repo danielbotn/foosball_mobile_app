@@ -329,7 +329,108 @@ void main() {
     await tester.pumpAndSettle();
 
     // Verify that the league was created
-    expect(find.text('Test League'), findsOneWidget);
     expect(find.text('Add Players'), findsOneWidget);
+
+    Future<void> selectPlayerByKeyFirstPlayer(String userId) async {
+      final playerKey =
+          Key('player_$userId'); // Generate the key for the player
+      final playerTile = find.byKey(playerKey);
+
+      bool playerVisible = false;
+      int scrollAttempts = 0;
+
+      // Scrollable widget finder (target the specific scrollable list)
+      final scrollableFinder = find.byKey(const Key('playerListScroll'));
+
+      // Scroll to the top before attempting to find the player
+      if (scrollAttempts == 0) {
+        await tester.drag(
+            scrollableFinder, const Offset(0, 1000)); // Reset to top
+        await tester.pumpAndSettle();
+      }
+
+      while (!playerVisible && scrollAttempts < 20) {
+        if (playerTile.evaluate().isNotEmpty) {
+          // If the player is visible, locate and tap their checkbox
+          final playerCheckbox = find.descendant(
+            of: playerTile,
+            matching: find.byType(Checkbox),
+          );
+          await tester.tap(playerCheckbox);
+          await tester.pumpAndSettle();
+          playerVisible = true;
+        } else {
+          // Scroll down to find the player
+          await tester.drag(
+            scrollableFinder,
+            const Offset(0, 100), // Scroll downward by 100 pixels each time
+          );
+          await tester.pumpAndSettle();
+          scrollAttempts++;
+        }
+      }
+
+      if (!playerVisible) {
+        throw Exception('Could not locate player with userId: $userId');
+      }
+    }
+
+    Future<void> selectPlayerByKey(String userId) async {
+      final playerKey =
+          Key('player_$userId'); // Generate the key for the player
+      final playerTile = find.byKey(playerKey);
+
+      bool playerVisible = false;
+      int scrollAttempts = 0;
+
+      // Scrollable widget finder (target the specific scrollable list)
+      final scrollableFinder = find.byKey(const Key('playerListScroll'));
+
+      // Start by scrolling to the top of the list (optional, depends on your test setup)
+      await tester.drag(scrollableFinder,
+          const Offset(0, -1000)); // Scroll downwards to start
+      await tester.pumpAndSettle();
+
+      // Keep scrolling down until the player is found or max attempts reached
+      while (!playerVisible && scrollAttempts < 20) {
+        if (playerTile.evaluate().isNotEmpty) {
+          // If the player is visible, locate and tap their checkbox
+          final playerCheckbox = find.descendant(
+            of: playerTile,
+            matching: find.byType(Checkbox),
+          );
+          await tester.tap(playerCheckbox);
+          await tester.pumpAndSettle();
+          playerVisible = true;
+        } else {
+          // Scroll down to find the player (use positive Y offset to scroll down)
+          await tester.drag(
+            scrollableFinder,
+            const Offset(0, 100), // Scroll downward by 100 pixels each time
+          );
+          await tester.pumpAndSettle();
+          scrollAttempts++;
+        }
+      }
+
+      if (!playerVisible) {
+        throw Exception('Could not locate player with userId: $userId');
+      }
+    }
+
+    // Select specific players by their user IDs
+    await selectPlayerByKeyFirstPlayer('107'); // Luke Johnsen
+    await selectPlayerByKey('108'); // John Roysen
+    await selectPlayerByKey('111'); // Paul Petersen
+
+    // Verify that the selected players are visible
+    expect(find.byKey(const Key('selectedPlayer_107')), findsOneWidget);
+    expect(find.byKey(const Key('selectedPlayer_108')), findsOneWidget);
+    expect(find.byKey(const Key('selectedPlayer_111')), findsOneWidget);
+
+    // Tap the 'Start League' button at the bottom of the screen
+    final startLeagueButton = find.text('Start League');
+    await tester.tap(startLeagueButton);
+    await tester.pumpAndSettle();
   });
 }

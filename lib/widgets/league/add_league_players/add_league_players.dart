@@ -122,7 +122,6 @@ class _AddLeaguePlayersState extends State<AddLeaguePlayers> {
                                   child: SelectedPlayers(
                                       userState: widget.userState,
                                       players: selectedPlayersList)),
-                              const Spacer(),
                               Visibility(
                                   visible: selectedPlayersList.isNotEmpty,
                                   child: CreateSingleLeagueButton(
