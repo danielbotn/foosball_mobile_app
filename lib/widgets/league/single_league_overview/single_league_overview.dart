@@ -73,20 +73,29 @@ class _SingleLeagueOverviewState extends State<SingleLeagueOverview>
           controller: _tabController,
           tabs: [
             Tab(
-                child: ExtendedText(
-              text: widget.userState.hardcodedStrings.standings,
-              userState: widget.userState,
-            )),
+              key: const Key(
+                  'tab_standings'), // Added a key to the Standings tab
+              child: ExtendedText(
+                text: widget.userState.hardcodedStrings.standings,
+                userState: widget.userState,
+              ),
+            ),
             Tab(
-                child: ExtendedText(
-              text: "My fixtures",
-              userState: widget.userState,
-            )),
+              key: const Key(
+                  'tab_my_fixtures'), // Added a key to the My Fixtures tab
+              child: ExtendedText(
+                text: "My fixtures",
+                userState: widget.userState,
+              ),
+            ),
             Tab(
-                child: ExtendedText(
-              text: "All fixtures",
-              userState: widget.userState,
-            )),
+              key: const Key(
+                  'tab_all_fixtures'), // Added a key to the All Fixtures tab
+              child: ExtendedText(
+                text: "All fixtures",
+                userState: widget.userState,
+              ),
+            ),
           ],
         ),
       ),

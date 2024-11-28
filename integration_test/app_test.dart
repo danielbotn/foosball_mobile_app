@@ -432,5 +432,21 @@ void main() {
     final startLeagueButton = find.text('Start League');
     await tester.tap(startLeagueButton);
     await tester.pumpAndSettle();
+
+    // add waiting here
+    // **Add waiting here**
+    await tester.pumpAndSettle(const Duration(seconds: 15));
+
+    // Verify that the 3 tabs are visible after starting the league
+    expect(find.byKey(const Key('tab_standings')), findsOneWidget);
+    expect(find.byKey(const Key('tab_my_fixtures')), findsOneWidget);
+    expect(find.byKey(const Key('tab_all_fixtures')), findsOneWidget);
+
+    // Verify the league standings table is visible
+    expect(find.byKey(const Key('leagueStandingsTable')), findsOneWidget);
+
+    // Optionally, verify the headers or specific rows
+    expect(find.text('Name'), findsOneWidget);
+    expect(find.text('Pts'), findsOneWidget);
   });
 }

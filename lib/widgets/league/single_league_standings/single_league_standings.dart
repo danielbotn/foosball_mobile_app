@@ -49,6 +49,7 @@ class _SingleLeagueStandingsState extends State<SingleLeagueStandings> {
               height: double.infinity,
               color: helpers.getBackgroundColor(widget.userState.darkmode),
               child: Table(
+                key: const Key('leagueStandingsTable'), // Add a key here
                 columnWidths: const {
                   0: FlexColumnWidth(1),
                   1: FlexColumnWidth(5),
