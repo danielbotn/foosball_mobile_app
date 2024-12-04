@@ -14,12 +14,12 @@ class OngoingGameButton extends StatefulWidget {
   final Function(bool gameStarted) startGameFunction;
 
   const OngoingGameButton({
-    Key? key,
+    super.key,
     required this.userState,
     required this.gameStarted,
     required this.matchId,
     required this.startGameFunction,
-  }) : super(key: key);
+  });
 
   @override
   State<OngoingGameButton> createState() => _OngoingGameButtonState();
@@ -77,6 +77,7 @@ class _OngoingGameButtonState extends State<OngoingGameButton> {
             child: Padding(
               padding: const EdgeInsets.all(4.0),
               child: ElevatedButton(
+                key: const Key('single_league_button_start_game'),
                 onPressed: widget.gameStarted ? null : startMatch,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: widget.userState.darkmode

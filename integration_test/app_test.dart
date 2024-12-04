@@ -291,6 +291,7 @@ void main() {
     expect(find.text('Rematch'), findsOneWidget);
     expect(find.text('Close'), findsOneWidget);
   }, skip: true);
+
   testWidgets('verify create new league', (tester) async {
     // Start the app
     app.main();
@@ -448,5 +449,112 @@ void main() {
     // Optionally, verify the headers or specific rows
     expect(find.text('Name'), findsOneWidget);
     expect(find.text('Pts'), findsOneWidget);
-  });
+  }, skip: false);
+
+  testWidgets('verify play first game of Test League', (tester) async {
+    // Start the app
+    app.main();
+    await tester.pumpAndSettle();
+
+    // Open the sidebar by finding and tapping the hamburger menu button
+    final sidebarButton = find.byIcon(Icons.menu);
+    await tester.tap(sidebarButton);
+    await tester.pumpAndSettle();
+
+    // Find and tap on the 'Leagues' option in the sidebar
+    final leaguesOption = find.text('Leagues');
+    await tester.tap(leaguesOption);
+    await tester.pumpAndSettle();
+
+    // Find and tap on the league named 'Test League'
+    final testLeague = find.text('Test League');
+    await tester.tap(testLeague);
+    await tester.pumpAndSettle();
+
+    // Find and tap on the 'My Fixtures' tab
+    final myFixturesTab = find.byKey(const Key('tab_my_fixtures'));
+    await tester.tap(myFixturesTab);
+    await tester.pumpAndSettle();
+
+    // Find and tap on the first match in the My Fixtures list
+    final firstMatch = find.byKey(const Key('match_0'));
+    expect(firstMatch, findsOneWidget,
+        reason: "First match not found in My Fixtures.");
+    await tester.tap(firstMatch);
+    await tester.pumpAndSettle();
+
+    // Verify that two 0's are visible on the screen
+    final zeroCount = find.text('0');
+    expect(zeroCount, findsNWidgets(2),
+        reason: "Two '0' values should be visible.");
+
+    // Find and tap the 'Start Game' button
+    final startSingleLeagueGameButton =
+        find.byKey(const Key('single_league_button_start_game'));
+    expect(startSingleLeagueGameButton, findsOneWidget,
+        reason: "'Start Game' button not found.");
+    await tester.tap(startSingleLeagueGameButton);
+    await tester.pumpAndSettle();
+
+    // Simulate the match score: 10 - 5 for player one
+    int playerOneScore = 0;
+    int playerTwoScore = 0;
+
+    final playerOneKey = find.byKey(const Key('sl_match_player_one'));
+    final playerTwoKey = find.byKey(const Key('sl_match_player_two'));
+
+    while (playerOneScore < 10 || playerTwoScore < 5) {
+      if (playerOneScore < 10) {
+        await tester.tap(playerOneKey);
+        playerOneScore++;
+      }
+
+      if (playerTwoScore < 5) {
+        await tester.tap(playerTwoKey);
+        playerTwoScore++;
+      }
+
+      await tester.pump(const Duration(milliseconds: 500));
+    }
+
+    // Wait for the screen to update after player one's score reaches 10
+    await tester.pumpAndSettle();
+
+    // Verify the final score is 10 - 5
+    expect(find.text('10'), findsOneWidget,
+        reason: "Player one score should be 10.");
+    expect(find.text('5'), findsOneWidget,
+        reason: "Player two score should be 5.");
+  }, skip: false);
+
+  testWidgets('verify if first game is correct', (tester) async {
+    // Start the app
+    app.main();
+    await tester.pumpAndSettle();
+
+    // Open the sidebar by finding and tapping the hamburger menu button
+    final sidebarButton = find.byIcon(Icons.menu);
+    await tester.tap(sidebarButton);
+    await tester.pumpAndSettle();
+
+    // Find and tap on the 'Leagues' option in the sidebar
+    final leaguesOption = find.text('Leagues');
+    await tester.tap(leaguesOption);
+    await tester.pumpAndSettle();
+
+    // Find and tap on the league named 'Test League'
+    final testLeague = find.text('Test League');
+    await tester.tap(testLeague);
+    await tester.pumpAndSettle();
+
+    // Find and tap on the 'My Fixtures' tab
+    final myFixturesTab = find.byKey(const Key('tab_my_fixtures'));
+    await tester.tap(myFixturesTab);
+    await tester.pumpAndSettle();
+
+    final tenFive = find.textContaining('10-5');
+
+    // Check if the title is visible
+    expect(tenFive, findsOneWidget, reason: "10-5 text not found.");
+  }, skip: false);
 }

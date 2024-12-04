@@ -96,8 +96,12 @@ class _SingleLeagueFixturesState extends State<SingleLeagueFixtures> {
             child: ListView.builder(
               itemCount: data.length,
               itemBuilder: (BuildContext context, int index) {
-                final match = data![index]; // Use a non-null assertion
+                final match = data![index];
+
+                final matchKey =
+                    '${match.playerOneFirstName} ${match.playerOneLastName} vs ${match.playerTwoFirstName} ${match.playerTwoLastName} (${match.id})';
                 return ListTile(
+                  key: Key('match_$index'),
                   onTap: () => goToGame(match),
                   leading: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -112,9 +116,13 @@ class _SingleLeagueFixturesState extends State<SingleLeagueFixtures> {
                     ],
                   ),
                   title: Text(
+                    key: Key(matchKey),
                     '${match.playerOneFirstName} ${match.playerOneLastName} vs ${match.playerTwoFirstName} ${match.playerTwoLastName}',
                   ),
-                  subtitle: Text(getSubtitle(match)),
+                  subtitle: Text(
+                    getSubtitle(match),
+                    key: Key('${getSubtitle(match)}_${match.id}'),
+                  ),
                 );
               },
             ),

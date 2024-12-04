@@ -233,7 +233,7 @@ class LeagueList extends StatelessWidget {
           }
 
           return Dismissible(
-            key: ValueKey(league.id),
+            key: ValueKey('league_${league.id}'),
             background: Container(
               color: Colors.red,
               alignment: Alignment.centerLeft,

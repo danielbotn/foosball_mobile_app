@@ -45,6 +45,13 @@ class _OngoingGameState extends State<OngoingGame> {
     _leagueFuture = getLeagueById();
   }
 
+  @override
+  void dispose() {
+    // Cancel the timer to prevent setState being called after dispose
+    timer?.cancel();
+    super.dispose();
+  }
+
   Future<GetLeagueResponse?> getLeagueById() async {
     LeagueApi api = LeagueApi();
     var data = await api.getLeagueById(widget.matchModel!.leagueId);
@@ -267,43 +274,46 @@ class _OngoingGameState extends State<OngoingGame> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       GestureDetector(
+                        key: const Key('sl_match_player_one'),
                         onTap: () {
                           createGoalForPlayerOne();
                         },
-                        child: Expanded(
-                          flex: 1,
-                          child: PlayerCard(
-                              userState: widget.userState,
-                              player: getPlayerOne(),
-                              isPlayerOne: true),
+                        child: PlayerCard(
+                          userState: widget.userState,
+                          player: getPlayerOne(),
+                          isPlayerOne: true,
                         ),
                       ),
                       Expanded(
                         flex: 1,
                         child: PlayerScore(
-                            userState: widget.userState, score: playerOneScore),
-                      )
+                          userState: widget.userState,
+                          score: playerOneScore,
+                        ),
+                      ),
                     ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       GestureDetector(
-                          onTap: () {
-                            createGoalForPlayerTwo();
-                          },
-                          child: Expanded(
-                            flex: 1,
-                            child: PlayerCard(
-                                userState: widget.userState,
-                                player: getPlayerTwo(),
-                                isPlayerOne: false),
-                          )),
+                        key: const Key('sl_match_player_two'),
+                        onTap: () {
+                          createGoalForPlayerTwo();
+                        },
+                        child: PlayerCard(
+                          userState: widget.userState,
+                          player: getPlayerTwo(),
+                          isPlayerOne: false,
+                        ),
+                      ),
                       Expanded(
                         flex: 1,
                         child: PlayerScore(
-                            userState: widget.userState, score: playerTwoScore),
-                      )
+                          userState: widget.userState,
+                          score: playerTwoScore,
+                        ),
+                      ),
                     ],
                   ),
                   const Spacer(),
