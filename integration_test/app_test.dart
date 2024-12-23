@@ -477,7 +477,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Find and tap on the first match in the My Fixtures list
-    final firstMatch = find.byKey(const Key('match_0'));
+    final firstMatch = find.byKey(const Key('match_5'));
     expect(firstMatch, findsOneWidget,
         reason: "First match not found in My Fixtures.");
     await tester.tap(firstMatch);
@@ -556,5 +556,540 @@ void main() {
 
     // Check if the title is visible
     expect(tenFive, findsOneWidget, reason: "10-5 text not found.");
+  }, skip: false);
+
+  testWidgets('verify play second game of Test League', (tester) async {
+    // Start the app
+    app.main();
+    await tester.pumpAndSettle();
+
+    // Open the sidebar by finding and tapping the hamburger menu button
+    final sidebarButton = find.byIcon(Icons.menu);
+    await tester.tap(sidebarButton);
+    await tester.pumpAndSettle();
+
+    // Find and tap on the 'Leagues' option in the sidebar
+    final leaguesOption = find.text('Leagues');
+    await tester.tap(leaguesOption);
+    await tester.pumpAndSettle();
+
+    // Find and tap on the league named 'Test League'
+    final testLeague = find.text('Test League');
+    await tester.tap(testLeague);
+    await tester.pumpAndSettle();
+
+    // Find and tap on the 'My Fixtures' tab
+    final myFixturesTab = find.byKey(const Key('tab_my_fixtures'));
+    await tester.tap(myFixturesTab);
+    await tester.pumpAndSettle();
+
+    // Find and tap on the first match in the My Fixtures list
+    final firstMatch = find.byKey(const Key('match_5'));
+    expect(firstMatch, findsOneWidget,
+        reason: "First match not found in My Fixtures.");
+    await tester.tap(firstMatch);
+    await tester.pumpAndSettle();
+
+    // Verify that two 0's are visible on the screen
+    final zeroCount = find.text('0');
+    expect(zeroCount, findsNWidgets(2),
+        reason: "Two '0' values should be visible.");
+
+    // Find and tap the 'Start Game' button
+    final startSingleLeagueGameButton =
+        find.byKey(const Key('single_league_button_start_game'));
+    expect(startSingleLeagueGameButton, findsOneWidget,
+        reason: "'Start Game' button not found.");
+    await tester.tap(startSingleLeagueGameButton);
+    await tester.pumpAndSettle();
+
+    // Simulate the match score: 10 - 3 for player one
+    int playerOneScore = 0;
+    int playerTwoScore = 0;
+
+    final playerOneKey = find.byKey(const Key('sl_match_player_one'));
+    final playerTwoKey = find.byKey(const Key('sl_match_player_two'));
+
+    while (playerOneScore < 10 || playerTwoScore < 3) {
+      if (playerOneScore < 10) {
+        await tester.tap(playerOneKey);
+        playerOneScore++;
+      }
+
+      if (playerTwoScore < 3) {
+        await tester.tap(playerTwoKey);
+        playerTwoScore++;
+      }
+
+      await tester.pump(const Duration(milliseconds: 500));
+    }
+
+    // Wait for the screen to update after player one's score reaches 10
+    await tester.pumpAndSettle();
+
+    // Verify the final score is 10 - 3
+    expect(find.text('10'), findsOneWidget,
+        reason: "Player one score should be 10.");
+    expect(find.text('3'), findsOneWidget,
+        reason: "Player two score should be 3.");
+  }, skip: false);
+
+  testWidgets('verify if second game is correct', (tester) async {
+    // Start the app
+    app.main();
+    await tester.pumpAndSettle();
+
+    // Open the sidebar by finding and tapping the hamburger menu button
+    final sidebarButton = find.byIcon(Icons.menu);
+    await tester.tap(sidebarButton);
+    await tester.pumpAndSettle();
+
+    // Find and tap on the 'Leagues' option in the sidebar
+    final leaguesOption = find.text('Leagues');
+    await tester.tap(leaguesOption);
+    await tester.pumpAndSettle();
+
+    // Find and tap on the league named 'Test League'
+    final testLeague = find.text('Test League');
+    await tester.tap(testLeague);
+    await tester.pumpAndSettle();
+
+    // Find and tap on the 'My Fixtures' tab
+    final myFixturesTab = find.byKey(const Key('tab_my_fixtures'));
+    await tester.tap(myFixturesTab);
+    await tester.pumpAndSettle();
+
+    final tenFive = find.textContaining('10-3');
+
+    // Check if the title is visible
+    expect(tenFive, findsOneWidget, reason: "10-3 text not found.");
+  }, skip: false);
+
+  testWidgets('verify play third game of Test League', (tester) async {
+    // Start the app
+    app.main();
+    await tester.pumpAndSettle();
+
+    // Open the sidebar by finding and tapping the hamburger menu button
+    final sidebarButton = find.byIcon(Icons.menu);
+    await tester.tap(sidebarButton);
+    await tester.pumpAndSettle();
+
+    // Find and tap on the 'Leagues' option in the sidebar
+    final leaguesOption = find.text('Leagues');
+    await tester.tap(leaguesOption);
+    await tester.pumpAndSettle();
+
+    // Find and tap on the league named 'Test League'
+    final testLeague = find.text('Test League');
+    await tester.tap(testLeague);
+    await tester.pumpAndSettle();
+
+    // Find and tap on the 'My Fixtures' tab
+    final myFixturesTab = find.byKey(const Key('tab_my_fixtures'));
+    await tester.tap(myFixturesTab);
+    await tester.pumpAndSettle();
+
+    // Find and tap on the first match in the My Fixtures list
+    final firstMatch = find.byKey(const Key('match_5'));
+    expect(firstMatch, findsOneWidget,
+        reason: "First match not found in My Fixtures.");
+    await tester.tap(firstMatch);
+    await tester.pumpAndSettle();
+
+    // Verify that two 0's are visible on the screen
+    final zeroCount = find.text('0');
+    expect(zeroCount, findsNWidgets(2),
+        reason: "Two '0' values should be visible.");
+
+    // Find and tap the 'Start Game' button
+    final startSingleLeagueGameButton =
+        find.byKey(const Key('single_league_button_start_game'));
+    expect(startSingleLeagueGameButton, findsOneWidget,
+        reason: "'Start Game' button not found.");
+    await tester.tap(startSingleLeagueGameButton);
+    await tester.pumpAndSettle();
+
+    // Simulate the match score: 10 - 3 for player one
+    int playerOneScore = 0;
+    int playerTwoScore = 0;
+
+    final playerOneKey = find.byKey(const Key('sl_match_player_one'));
+    final playerTwoKey = find.byKey(const Key('sl_match_player_two'));
+
+    while (playerOneScore < 10 || playerTwoScore < 2) {
+      if (playerOneScore < 10) {
+        await tester.tap(playerOneKey);
+        playerOneScore++;
+      }
+
+      if (playerTwoScore < 2) {
+        await tester.tap(playerTwoKey);
+        playerTwoScore++;
+      }
+
+      await tester.pump(const Duration(milliseconds: 500));
+    }
+
+    // Wait for the screen to update after player one's score reaches 10
+    await tester.pumpAndSettle();
+
+    // Verify the final score is 10 - 3
+    expect(find.text('10'), findsOneWidget,
+        reason: "Player one score should be 10.");
+    expect(find.text('2'), findsOneWidget,
+        reason: "Player two score should be 2.");
+  }, skip: false);
+
+  testWidgets('verify if third game is correct', (tester) async {
+    // Start the app
+    app.main();
+    await tester.pumpAndSettle();
+
+    // Open the sidebar by finding and tapping the hamburger menu button
+    final sidebarButton = find.byIcon(Icons.menu);
+    await tester.tap(sidebarButton);
+    await tester.pumpAndSettle();
+
+    // Find and tap on the 'Leagues' option in the sidebar
+    final leaguesOption = find.text('Leagues');
+    await tester.tap(leaguesOption);
+    await tester.pumpAndSettle();
+
+    // Find and tap on the league named 'Test League'
+    final testLeague = find.text('Test League');
+    await tester.tap(testLeague);
+    await tester.pumpAndSettle();
+
+    // Find and tap on the 'My Fixtures' tab
+    final myFixturesTab = find.byKey(const Key('tab_my_fixtures'));
+    await tester.tap(myFixturesTab);
+    await tester.pumpAndSettle();
+
+    final tenFive = find.textContaining('10-2');
+
+    // Check if the title is visible
+    expect(tenFive, findsOneWidget, reason: "10-2 text not found.");
+  }, skip: false);
+
+  testWidgets('verify play fourth game of Test League', (tester) async {
+    // Start the app
+    app.main();
+    await tester.pumpAndSettle();
+
+    // Open the sidebar by finding and tapping the hamburger menu button
+    final sidebarButton = find.byIcon(Icons.menu);
+    await tester.tap(sidebarButton);
+    await tester.pumpAndSettle();
+
+    // Find and tap on the 'Leagues' option in the sidebar
+    final leaguesOption = find.text('Leagues');
+    await tester.tap(leaguesOption);
+    await tester.pumpAndSettle();
+
+    // Find and tap on the league named 'Test League'
+    final testLeague = find.text('Test League');
+    await tester.tap(testLeague);
+    await tester.pumpAndSettle();
+
+    // Find and tap on the 'My Fixtures' tab
+    final myFixturesTab = find.byKey(const Key('tab_my_fixtures'));
+    await tester.tap(myFixturesTab);
+    await tester.pumpAndSettle();
+
+    // Find and tap on the first match in the My Fixtures list
+    final firstMatch = find.byKey(const Key('match_5'));
+    expect(firstMatch, findsOneWidget,
+        reason: "First match not found in My Fixtures.");
+    await tester.tap(firstMatch);
+    await tester.pumpAndSettle();
+
+    // Verify that two 0's are visible on the screen
+    final zeroCount = find.text('0');
+    expect(zeroCount, findsNWidgets(2),
+        reason: "Two '0' values should be visible.");
+
+    // Find and tap the 'Start Game' button
+    final startSingleLeagueGameButton =
+        find.byKey(const Key('single_league_button_start_game'));
+    expect(startSingleLeagueGameButton, findsOneWidget,
+        reason: "'Start Game' button not found.");
+    await tester.tap(startSingleLeagueGameButton);
+    await tester.pumpAndSettle();
+
+    // Simulate the match score: 10 - 3 for player one
+    int playerOneScore = 0;
+    int playerTwoScore = 0;
+
+    final playerOneKey = find.byKey(const Key('sl_match_player_one'));
+    final playerTwoKey = find.byKey(const Key('sl_match_player_two'));
+
+    while (playerOneScore < 10 || playerTwoScore < 1) {
+      if (playerOneScore < 10) {
+        await tester.tap(playerOneKey);
+        playerOneScore++;
+      }
+
+      if (playerTwoScore < 1) {
+        await tester.tap(playerTwoKey);
+        playerTwoScore++;
+      }
+
+      await tester.pump(const Duration(milliseconds: 500));
+    }
+
+    // Wait for the screen to update after player one's score reaches 10
+    await tester.pumpAndSettle();
+
+    // Verify the final score is 10 - 3
+    expect(find.text('10'), findsOneWidget,
+        reason: "Player one score should be 10.");
+    expect(find.text('1'), findsOneWidget,
+        reason: "Player two score should be 1.");
+  }, skip: false);
+
+  testWidgets('verify if fourth game is correct', (tester) async {
+    // Start the app
+    app.main();
+    await tester.pumpAndSettle();
+
+    // Open the sidebar by finding and tapping the hamburger menu button
+    final sidebarButton = find.byIcon(Icons.menu);
+    await tester.tap(sidebarButton);
+    await tester.pumpAndSettle();
+
+    // Find and tap on the 'Leagues' option in the sidebar
+    final leaguesOption = find.text('Leagues');
+    await tester.tap(leaguesOption);
+    await tester.pumpAndSettle();
+
+    // Find and tap on the league named 'Test League'
+    final testLeague = find.text('Test League');
+    await tester.tap(testLeague);
+    await tester.pumpAndSettle();
+
+    // Find and tap on the 'My Fixtures' tab
+    final myFixturesTab = find.byKey(const Key('tab_my_fixtures'));
+    await tester.tap(myFixturesTab);
+    await tester.pumpAndSettle();
+
+    final tenFive = find.textContaining('10-1');
+
+    // Check if the title is visible
+    expect(tenFive, findsOneWidget, reason: "10-1 text not found.");
+  }, skip: false);
+
+  testWidgets('verify play fifth game of Test League', (tester) async {
+    // Start the app
+    app.main();
+    await tester.pumpAndSettle();
+
+    // Open the sidebar by finding and tapping the hamburger menu button
+    final sidebarButton = find.byIcon(Icons.menu);
+    await tester.tap(sidebarButton);
+    await tester.pumpAndSettle();
+
+    // Find and tap on the 'Leagues' option in the sidebar
+    final leaguesOption = find.text('Leagues');
+    await tester.tap(leaguesOption);
+    await tester.pumpAndSettle();
+
+    // Find and tap on the league named 'Test League'
+    final testLeague = find.text('Test League');
+    await tester.tap(testLeague);
+    await tester.pumpAndSettle();
+
+    // Find and tap on the 'My Fixtures' tab
+    final myFixturesTab = find.byKey(const Key('tab_my_fixtures'));
+    await tester.tap(myFixturesTab);
+    await tester.pumpAndSettle();
+
+    // Find and tap on the first match in the My Fixtures list
+    final firstMatch = find.byKey(const Key('match_5'));
+    expect(firstMatch, findsOneWidget,
+        reason: "First match not found in My Fixtures.");
+    await tester.tap(firstMatch);
+    await tester.pumpAndSettle();
+
+    // Verify that two 0's are visible on the screen
+    final zeroCount = find.text('0');
+    expect(zeroCount, findsNWidgets(2),
+        reason: "Two '0' values should be visible.");
+
+    // Find and tap the 'Start Game' button
+    final startSingleLeagueGameButton =
+        find.byKey(const Key('single_league_button_start_game'));
+    expect(startSingleLeagueGameButton, findsOneWidget,
+        reason: "'Start Game' button not found.");
+    await tester.tap(startSingleLeagueGameButton);
+    await tester.pumpAndSettle();
+
+    // Simulate the match score: 10 - 3 for player one
+    int playerOneScore = 0;
+    int playerTwoScore = 0;
+
+    final playerOneKey = find.byKey(const Key('sl_match_player_one'));
+    final playerTwoKey = find.byKey(const Key('sl_match_player_two'));
+
+    while (playerOneScore < 10 || playerTwoScore < 4) {
+      if (playerOneScore < 10) {
+        await tester.tap(playerOneKey);
+        playerOneScore++;
+      }
+
+      if (playerTwoScore < 4) {
+        await tester.tap(playerTwoKey);
+        playerTwoScore++;
+      }
+
+      await tester.pump(const Duration(milliseconds: 500));
+    }
+
+    // Wait for the screen to update after player one's score reaches 10
+    await tester.pumpAndSettle();
+
+    // Verify the final score is 10 - 3
+    expect(find.text('10'), findsOneWidget,
+        reason: "Player one score should be 10.");
+    expect(find.text('4'), findsOneWidget,
+        reason: "Player two score should be 4.");
+  }, skip: false);
+
+  testWidgets('verify if fifth game is correct', (tester) async {
+    // Start the app
+    app.main();
+    await tester.pumpAndSettle();
+
+    // Open the sidebar by finding and tapping the hamburger menu button
+    final sidebarButton = find.byIcon(Icons.menu);
+    await tester.tap(sidebarButton);
+    await tester.pumpAndSettle();
+
+    // Find and tap on the 'Leagues' option in the sidebar
+    final leaguesOption = find.text('Leagues');
+    await tester.tap(leaguesOption);
+    await tester.pumpAndSettle();
+
+    // Find and tap on the league named 'Test League'
+    final testLeague = find.text('Test League');
+    await tester.tap(testLeague);
+    await tester.pumpAndSettle();
+
+    // Find and tap on the 'My Fixtures' tab
+    final myFixturesTab = find.byKey(const Key('tab_my_fixtures'));
+    await tester.tap(myFixturesTab);
+    await tester.pumpAndSettle();
+
+    final tenFive = find.textContaining('10-4');
+
+    // Check if the title is visible
+    expect(tenFive, findsOneWidget, reason: "10-4 text not found.");
+  }, skip: false);
+
+  testWidgets('verify play sixth game of Test League', (tester) async {
+    // Start the app
+    app.main();
+    await tester.pumpAndSettle();
+
+    // Open the sidebar by finding and tapping the hamburger menu button
+    final sidebarButton = find.byIcon(Icons.menu);
+    await tester.tap(sidebarButton);
+    await tester.pumpAndSettle();
+
+    // Find and tap on the 'Leagues' option in the sidebar
+    final leaguesOption = find.text('Leagues');
+    await tester.tap(leaguesOption);
+    await tester.pumpAndSettle();
+
+    // Find and tap on the league named 'Test League'
+    final testLeague = find.text('Test League');
+    await tester.tap(testLeague);
+    await tester.pumpAndSettle();
+
+    // Find and tap on the 'My Fixtures' tab
+    final myFixturesTab = find.byKey(const Key('tab_my_fixtures'));
+    await tester.tap(myFixturesTab);
+    await tester.pumpAndSettle();
+
+    // Find and tap on the first match in the My Fixtures list
+    final firstMatch = find.byKey(const Key('match_5'));
+    expect(firstMatch, findsOneWidget,
+        reason: "First match not found in My Fixtures.");
+    await tester.tap(firstMatch);
+    await tester.pumpAndSettle();
+
+    // Verify that two 0's are visible on the screen
+    final zeroCount = find.text('0');
+    expect(zeroCount, findsNWidgets(2),
+        reason: "Two '0' values should be visible.");
+
+    // Find and tap the 'Start Game' button
+    final startSingleLeagueGameButton =
+        find.byKey(const Key('single_league_button_start_game'));
+    expect(startSingleLeagueGameButton, findsOneWidget,
+        reason: "'Start Game' button not found.");
+    await tester.tap(startSingleLeagueGameButton);
+    await tester.pumpAndSettle();
+
+    // Simulate the match score: 10 - 3 for player one
+    int playerOneScore = 0;
+    int playerTwoScore = 0;
+
+    final playerOneKey = find.byKey(const Key('sl_match_player_one'));
+    final playerTwoKey = find.byKey(const Key('sl_match_player_two'));
+
+    while (playerOneScore < 10 || playerTwoScore < 6) {
+      if (playerOneScore < 10) {
+        await tester.tap(playerOneKey);
+        playerOneScore++;
+      }
+
+      if (playerTwoScore < 6) {
+        await tester.tap(playerTwoKey);
+        playerTwoScore++;
+      }
+
+      await tester.pump(const Duration(milliseconds: 500));
+    }
+
+    // Wait for the screen to update after player one's score reaches 10
+    await tester.pumpAndSettle();
+
+    // Verify the final score is 10 - 3
+    expect(find.text('10'), findsOneWidget,
+        reason: "Player one score should be 10.");
+    expect(find.text('6'), findsOneWidget,
+        reason: "Player two score should be 6.");
+  }, skip: false);
+
+  testWidgets('verify if sixth game is correct', (tester) async {
+    // Start the app
+    app.main();
+    await tester.pumpAndSettle();
+
+    // Open the sidebar by finding and tapping the hamburger menu button
+    final sidebarButton = find.byIcon(Icons.menu);
+    await tester.tap(sidebarButton);
+    await tester.pumpAndSettle();
+
+    // Find and tap on the 'Leagues' option in the sidebar
+    final leaguesOption = find.text('Leagues');
+    await tester.tap(leaguesOption);
+    await tester.pumpAndSettle();
+
+    // Find and tap on the league named 'Test League'
+    final testLeague = find.text('Test League');
+    await tester.tap(testLeague);
+    await tester.pumpAndSettle();
+
+    // Find and tap on the 'My Fixtures' tab
+    final myFixturesTab = find.byKey(const Key('tab_my_fixtures'));
+    await tester.tap(myFixturesTab);
+    await tester.pumpAndSettle();
+
+    final tenFive = find.textContaining('10-6');
+
+    // Check if the title is visible
+    expect(tenFive, findsOneWidget, reason: "10-6 text not found.");
   }, skip: false);
 }

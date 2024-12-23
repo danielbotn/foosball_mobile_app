@@ -1,3 +1,5 @@
+import 'package:dano_foosball/models/other/TwoPlayersObject.dart';
+import 'package:dano_foosball/widgets/single_league_history/single_league_match_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:dano_foosball/api/SingleLeagueMatchApi.dart';
 import 'package:dano_foosball/models/single-league-matches/single_league_match_model.dart';
@@ -49,16 +51,34 @@ class _SingleLeagueFixturesState extends State<SingleLeagueFixtures> {
   }
 
   void goToGame(SingleLeagueMatchModel? matchData) {
-    if (matchData?.playerOne == widget.userState.userInfoGlobal.userId ||
-        (matchData?.playerTwo == widget.userState.userInfoGlobal.userId &&
-            matchData?.matchStarted == false)) {
-      Navigator.push(
+    if (matchData != null) {
+      if (matchData.matchStarted == false &&
+          (matchData.playerOne == widget.userState.userInfoGlobal.userId ||
+              matchData.playerTwo == widget.userState.userInfoGlobal.userId)) {
+        Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => OngoingGame(
-                    userState: widget.userState,
-                    matchModel: matchData!,
-                  )));
+            builder: (context) => OngoingGame(
+              userState: widget.userState,
+              matchModel: matchData,
+            ),
+          ),
+        );
+      } else if (matchData.matchEnded == true) {
+        TwoPlayersObject tpo = TwoPlayersObject(
+            userState: widget.userState,
+            typeOfMatch: "single_league_matchs",
+            matchId: matchData.id,
+            leagueId: matchData.leagueId);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SingleLeagueMatchDetail(
+              twoPlayersObject: tpo,
+            ),
+          ),
+        );
+      }
     }
   }
 
