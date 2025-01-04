@@ -254,6 +254,7 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
               },
             ),
             ListTile(
+              key: const Key("logout"),
               tileColor: userState.darkmode
                   ? AppColors.darkModeLighterBackground
                   : AppColors.white,
