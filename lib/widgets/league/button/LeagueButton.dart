@@ -47,43 +47,45 @@ class _LeagueButtonState extends State<LeagueButton> {
         children: <Widget>[
           Expanded(
             flex: 5,
-            child: ElevatedButton(
-              onPressed: () {
-                widget.hideButton();
-                showModalBottomSheet(
-                  context: context,
-                  isScrollControlled: true,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(20),
-                    ),
-                  ),
-                  builder: (BuildContext context) {
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CreateLeagueDialog(
-                        onSubmit: onSubmit,
-                        onCancel: onCancel,
-                        userState: widget.userState,
+            child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    widget.hideButton();
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(20),
+                        ),
                       ),
+                      builder: (BuildContext context) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: CreateLeagueDialog(
+                            onSubmit: onSubmit,
+                            onCancel: onCancel,
+                            userState: widget.userState,
+                          ),
+                        );
+                      },
                     );
                   },
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: widget.userState.darkmode
-                    ? AppColors.darkModeButtonColor
-                    : AppColors.buttonsLightTheme,
-                minimumSize: const Size(100, 50),
-              ),
-              child: ExtendedText(
-                text: widget.userState.hardcodedStrings.createNewLeague,
-                userState: userState,
-                colorOverride: AppColors.white,
-                fontSize: 14,
-                isBold: true,
-              ),
-            ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: widget.userState.darkmode
+                        ? AppColors.darkModeButtonColor
+                        : AppColors.buttonsLightTheme,
+                    minimumSize: const Size(100, 50),
+                  ),
+                  child: ExtendedText(
+                    text: widget.userState.hardcodedStrings.createNewLeague,
+                    userState: userState,
+                    colorOverride: AppColors.white,
+                    fontSize: 14,
+                    isBold: true,
+                  ),
+                )),
           ),
         ],
       ),
