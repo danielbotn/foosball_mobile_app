@@ -1,3 +1,4 @@
+import 'package:dano_foosball/widgets/extended_Text.dart';
 import 'package:flutter/material.dart';
 import 'package:dano_foosball/api/SingleLeagueMatchApi.dart';
 import 'package:dano_foosball/api/SingleLeaguePlayersApi.dart';
@@ -15,11 +16,11 @@ class CreateSingleLeagueButton extends StatefulWidget {
   final GetLeagueResponse leagueData;
 
   const CreateSingleLeagueButton({
-    Key? key,
+    super.key,
     required this.userState,
     required this.selectedPlayersList,
     required this.leagueData,
-  }) : super(key: key);
+  });
 
   @override
   State<CreateSingleLeagueButton> createState() =>
@@ -89,7 +90,13 @@ class _CreateSingleLeagueButtonState extends State<CreateSingleLeagueButton> {
                       : AppColors.buttonsLightTheme,
                   minimumSize: const Size(100, 50),
                 ),
-                child: Text(widget.userState.hardcodedStrings.startLeague),
+                child: ExtendedText(
+                  text: widget.userState.hardcodedStrings.startLeague,
+                  userState: widget.userState,
+                  colorOverride: AppColors.white,
+                  fontSize: 14,
+                  isBold: true,
+                ),
               ),
             ),
           ),

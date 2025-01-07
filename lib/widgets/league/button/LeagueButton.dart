@@ -60,12 +60,7 @@ class _LeagueButtonState extends State<LeagueButton> {
                   ),
                   builder: (BuildContext context) {
                     return Padding(
-                      padding: EdgeInsets.only(
-                        bottom: MediaQuery.of(context).viewInsets.bottom,
-                        left: 16.0,
-                        right: 16.0,
-                        top: 16.0,
-                      ),
+                      padding: const EdgeInsets.all(8.0),
                       child: CreateLeagueDialog(
                         onSubmit: onSubmit,
                         onCancel: onCancel,
@@ -85,6 +80,8 @@ class _LeagueButtonState extends State<LeagueButton> {
                 text: widget.userState.hardcodedStrings.createNewLeague,
                 userState: userState,
                 colorOverride: AppColors.white,
+                fontSize: 14,
+                isBold: true,
               ),
             ),
           ),
