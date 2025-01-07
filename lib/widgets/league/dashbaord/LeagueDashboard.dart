@@ -106,8 +106,6 @@ class _LeagueDashboardState extends State<LeagueDashboard> {
                         data: leaguelist,
                         randomNumber: widget.randomNumber,
                         onLeagueDeleted: (league) {
-                          // Handle the league deletion here, e.g., update UI or state
-                          print("League deleted: ${league.name}");
                           leaguesFuture = getLeagues();
                         },
                       ),

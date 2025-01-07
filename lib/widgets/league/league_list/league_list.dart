@@ -266,11 +266,17 @@ class LeagueList extends StatelessWidget {
                 text: league.name,
                 userState: userState,
               ),
-              subtitle: Text(league.hasLeagueStarted
-                  ? (league.hasLeagueEnded!
-                      ? userState.hardcodedStrings.finished
-                      : userState.hardcodedStrings.ongoing)
-                  : userState.hardcodedStrings.notStarted),
+              subtitle: ExtendedText(
+                fontSize: 14,
+                key: Key(
+                    '${league.id}_${league.name}_${league.hasLeagueStarted ? (league.hasLeagueEnded! ? "finished" : "ongoing") : "notStarted"}'),
+                text: league.hasLeagueStarted
+                    ? (league.hasLeagueEnded!
+                        ? userState.hardcodedStrings.finished
+                        : userState.hardcodedStrings.ongoing)
+                    : userState.hardcodedStrings.notStarted,
+                userState: userState,
+              ),
             ),
           );
         },

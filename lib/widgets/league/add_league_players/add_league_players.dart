@@ -73,66 +73,64 @@ class _AddLeaguePlayersState extends State<AddLeaguePlayers> {
   Widget build(BuildContext context) {
     bool darkMode = widget.userState.darkmode;
     Helpers helpers = Helpers();
+
     return Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.chevron_left),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-          iconTheme: helpers.getIconTheme(widget.userState.darkmode),
-          backgroundColor:
-              helpers.getBackgroundColor(widget.userState.darkmode),
-          title: ExtendedText(
-            text: widget.userState.hardcodedStrings.addPlayers,
-            userState: widget.userState,
-            colorOverride: widget.userState.darkmode
-                ? AppColors.white
-                : AppColors.textBlack,
-          ),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.chevron_left),
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
-        body: Theme(
-            data: darkMode ? ThemeData.dark() : ThemeData.light(),
-            child: FutureBuilder(
-                future: usersFuture,
-                builder:
-                    (context, AsyncSnapshot<List<UserResponse>?> snapshot) {
-                  if (snapshot.hasData) {
-                    return Container(
-                        color: helpers
-                            .getBackgroundColor(widget.userState.darkmode),
-                        child: Theme(
-                            data: widget.userState.darkmode
-                                ? ThemeData.dark()
-                                : ThemeData.light(),
-                            child: Column(children: <Widget>[
-                              PlayersList(
-                                userState: widget.userState,
-                                players: snapshot.data as List<UserResponse>,
-                                playerChecked: playerChecked,
-                              ),
-                              Visibility(
-                                  visible: selectedPlayersList.isNotEmpty,
-                                  child: Headline(
-                                      headline: 'Selected players',
-                                      userState: widget.userState)),
-                              Visibility(
-                                  visible: selectedPlayersList.isNotEmpty,
-                                  child: SelectedPlayers(
-                                      userState: widget.userState,
-                                      players: selectedPlayersList)),
-                              Visibility(
-                                  visible: selectedPlayersList.isNotEmpty,
-                                  child: CreateSingleLeagueButton(
-                                    userState: widget.userState,
-                                    selectedPlayersList: selectedPlayersList,
-                                    leagueData: widget.leagueData,
-                                  ))
-                            ])));
-                  } else {
-                    return Center(child: Loading(userState: widget.userState));
-                  }
-                })));
+        iconTheme: helpers.getIconTheme(widget.userState.darkmode),
+        backgroundColor: helpers.getBackgroundColor(widget.userState.darkmode),
+        title: ExtendedText(
+          text: widget.userState.hardcodedStrings.addPlayers,
+          userState: widget.userState,
+          colorOverride:
+              widget.userState.darkmode ? AppColors.white : AppColors.textBlack,
+        ),
+      ),
+      body: Theme(
+        data: darkMode ? ThemeData.dark() : ThemeData.light(),
+        child: FutureBuilder(
+          future: usersFuture,
+          builder: (context, AsyncSnapshot<List<UserResponse>?> snapshot) {
+            if (snapshot.hasData) {
+              return Container(
+                color: helpers.getBackgroundColor(widget.userState.darkmode),
+                child: Column(
+                  children: [
+                    // The list of players (Expanded to take all available space)
+                    Expanded(
+                      child: PlayersList(
+                        userState: widget.userState,
+                        players: snapshot.data as List<UserResponse>,
+                        playerChecked: playerChecked,
+                      ),
+                    ),
+
+                    // The button
+                    Visibility(
+                      visible: selectedPlayersList.isNotEmpty,
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: CreateSingleLeagueButton(
+                          userState: widget.userState,
+                          selectedPlayersList: selectedPlayersList,
+                          leagueData: widget.leagueData,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            } else {
+              return Center(child: Loading(userState: widget.userState));
+            }
+          },
+        ),
+      ),
+    );
   }
 }

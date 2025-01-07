@@ -40,7 +40,7 @@ class _PlayersListState extends State<PlayersList> {
     for (var i = 0; i < users!.length; i++) {
       if (users[i].isDeleted == false) {
         list.add(ListTile(
-          key: Key('player_${users[i].id}'), // Add a unique key here
+          key: Key('player_${users[i].id}'),
           title: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -109,8 +109,6 @@ class _PlayersListState extends State<PlayersList> {
     widget.playerChecked(user, value!);
   }
 
-  void setTeamsInStore(bool value, int index, UserResponse user) {}
-
   int findIndexOfUser() {
     int index = 0;
     List<UserResponse> tmpPlayers;
@@ -129,16 +127,11 @@ class _PlayersListState extends State<PlayersList> {
   @override
   Widget build(BuildContext context) {
     return Observer(builder: (_) {
-      return SizedBox(
-        height: 230,
-        // add listview with variable two
-        child: ListView(
-          key: const Key('playerListScroll'),
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-          padding: const EdgeInsets.all(8),
-          children: _buildPlayersList(widget.players),
-        ),
+      return ListView(
+        key: const Key('playerListScroll'),
+        scrollDirection: Axis.vertical,
+        padding: const EdgeInsets.all(8),
+        children: _buildPlayersList(widget.players),
       );
     });
   }

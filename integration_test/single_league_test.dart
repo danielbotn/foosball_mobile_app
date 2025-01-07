@@ -1424,4 +1424,26 @@ void main() {
     expect(find.text('6'), findsOneWidget,
         reason: "Player two score should be 6.");
   }, skip: false);
+
+  testWidgets('verify Test League is finished', (tester) async {
+    // Start the app
+    app.main();
+    await tester.pumpAndSettle();
+
+    // Open the sidebar by finding and tapping the hamburger menu button
+    final sidebarButton = find.byIcon(Icons.menu);
+    await tester.tap(sidebarButton);
+    await tester.pumpAndSettle();
+
+    // Find and tap on the 'Leagues' option in the sidebar
+    final leaguesOption = find.text('Leagues');
+    await tester.tap(leaguesOption);
+    await tester.pumpAndSettle();
+
+    // Verify that the text 'Finished' appears
+    final finishedText = find.text('Finished');
+    expect(finishedText, findsOneWidget,
+        reason:
+            "'Finished' status should be displayed for the selected league.");
+  }, skip: false);
 }
