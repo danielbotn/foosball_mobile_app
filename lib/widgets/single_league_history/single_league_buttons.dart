@@ -6,8 +6,7 @@ import 'package:dano_foosball/widgets/extended_Text.dart';
 class SingleLeagueButtons extends StatelessWidget {
   final UserState userState;
 
-  const SingleLeagueButtons({Key? key, required this.userState})
-      : super(key: key);
+  const SingleLeagueButtons({super.key, required this.userState});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +19,7 @@ class SingleLeagueButtons extends StatelessWidget {
         Expanded(
           flex: 5,
           child: Padding(
-            padding: const EdgeInsets.all(4.0),
+            padding: const EdgeInsets.all(16.0),
             child: ElevatedButton(
               onPressed: close,
               style: ElevatedButton.styleFrom(
@@ -33,6 +32,7 @@ class SingleLeagueButtons extends StatelessWidget {
                 text: userState.hardcodedStrings.close,
                 userState: userState,
                 colorOverride: Colors.white,
+                isBold: true,
               ),
             ),
           ),

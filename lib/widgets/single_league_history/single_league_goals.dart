@@ -8,8 +8,7 @@ class SingleLeagueGoals extends StatelessWidget {
   final UserState userState;
   final List<SingleLeagueGoalModel?> singleLeagueGoals;
   const SingleLeagueGoals(
-      {Key? key, required this.userState, required this.singleLeagueGoals})
-      : super(key: key);
+      {super.key, required this.userState, required this.singleLeagueGoals});
 
   @override
   Widget build(BuildContext context) {

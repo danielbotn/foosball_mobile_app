@@ -123,7 +123,7 @@ class FreehandDoubleMatchButtons extends StatelessWidget {
         Expanded(
           flex: 5,
           child: Padding(
-            padding: const EdgeInsets.all(4.0),
+            padding: const EdgeInsets.all(16.0),
             child: ElevatedButton(
               onPressed: newMatch,
               style: ElevatedButton.styleFrom(
@@ -136,6 +136,7 @@ class FreehandDoubleMatchButtons extends StatelessWidget {
                 text: userState.hardcodedStrings.newMatch,
                 userState: userState,
                 colorOverride: AppColors.white,
+                isBold: true,
               ),
             ),
           ),
@@ -143,7 +144,7 @@ class FreehandDoubleMatchButtons extends StatelessWidget {
         Expanded(
           flex: 5,
           child: Padding(
-            padding: const EdgeInsets.all(4.0),
+            padding: const EdgeInsets.all(16.0),
             child: ElevatedButton(
               onPressed: rematch,
               style: ElevatedButton.styleFrom(
@@ -156,6 +157,7 @@ class FreehandDoubleMatchButtons extends StatelessWidget {
                 text: userState.hardcodedStrings.rematch,
                 userState: userState,
                 colorOverride: AppColors.white,
+                isBold: true,
               ),
             ),
           ),

@@ -125,52 +125,55 @@ class _SingleLeagueMatchDetailState extends State<SingleLeagueMatchDetail> {
               }
               return Container(
                   color: helper.getBackgroundColor(userState.darkmode),
-                  child: Column(children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        MatchCard(
+                  child: Column(
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          MatchCard(
+                            userState: widget.twoPlayersObject.userState,
+                            userFirstName: userInfo.firstName,
+                            userLastName: userInfo.lastName,
+                            userPhotoUrl: userInfo.photoUrl,
+                            lefOrRight: true,
+                          ),
+                          MatchCard(
+                            userState: widget.twoPlayersObject.userState,
+                            userFirstName: opponentFirstName,
+                            userLastName: opponentLastName,
+                            userPhotoUrl: opponentPhotoUrl,
+                            lefOrRight: false,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          MatchScore(
+                            userState: widget.twoPlayersObject.userState,
+                            userScore: userScore,
+                          ),
+                          MatchScore(
+                            userState: widget.twoPlayersObject.userState,
+                            userScore: opponentScore,
+                          ),
+                        ],
+                      ),
+                      TotalPlayingTime(
+                        userState: widget.twoPlayersObject.userState,
+                        totalPlayingTime: totalPlayingTime,
+                        totalPlayingTimeLabel: widget.twoPlayersObject.userState
+                            .hardcodedStrings.totalPlayingTime,
+                      ),
+                      Expanded(
+                        child: SingleLeagueGoals(
                           userState: widget.twoPlayersObject.userState,
-                          userFirstName: userInfo.firstName,
-                          userLastName: userInfo.lastName,
-                          userPhotoUrl: userInfo.photoUrl,
-                          lefOrRight: true,
+                          singleLeagueGoals: goals,
                         ),
-                        MatchCard(
-                          userState: widget.twoPlayersObject.userState,
-                          userFirstName: opponentFirstName,
-                          userLastName: opponentLastName,
-                          userPhotoUrl: opponentPhotoUrl,
-                          lefOrRight: false,
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        MatchScore(
-                          userState: widget.twoPlayersObject.userState,
-                          userScore: userScore,
-                        ),
-                        MatchScore(
-                          userState: widget.twoPlayersObject.userState,
-                          userScore: opponentScore,
-                        ),
-                      ],
-                    ),
-                    TotalPlayingTime(
-                      userState: widget.twoPlayersObject.userState,
-                      totalPlayingTime: totalPlayingTime,
-                      totalPlayingTimeLabel: widget.twoPlayersObject.userState
-                          .hardcodedStrings.totalPlayingTime,
-                    ),
-                    SingleLeagueGoals(
-                      userState: widget.twoPlayersObject.userState,
-                      singleLeagueGoals: goals,
-                    ),
-                    const Spacer(),
-                    SingleLeagueButtons(userState: userState)
-                  ]));
+                      ),
+                      SingleLeagueButtons(userState: userState),
+                    ],
+                  ));
             } else {
               return Center(child: Loading(userState: userState));
             }

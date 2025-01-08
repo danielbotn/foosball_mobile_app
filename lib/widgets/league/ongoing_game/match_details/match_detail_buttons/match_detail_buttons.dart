@@ -39,6 +39,7 @@ class MatchDetailButtons extends StatelessWidget {
                 text: userState.hardcodedStrings.close,
                 userState: userState,
                 colorOverride: AppColors.white,
+                isBold: true,
               ),
             ),
           ),

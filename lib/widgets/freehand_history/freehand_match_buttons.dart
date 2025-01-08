@@ -15,8 +15,7 @@ class FreehandMatchButtons extends StatelessWidget {
   final UserState userState;
   final FreehandMatchModel freehandMatchData;
   const FreehandMatchButtons(
-      {Key? key, required this.userState, required this.freehandMatchData})
-      : super(key: key);
+      {super.key, required this.userState, required this.freehandMatchData});
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +87,7 @@ class FreehandMatchButtons extends StatelessWidget {
         Expanded(
             flex: 5,
             child: Padding(
-              padding: const EdgeInsets.all(4.0),
+              padding: const EdgeInsets.all(16.0),
               child: ElevatedButton(
                 onPressed: () => {newMatch()},
                 style: ElevatedButton.styleFrom(
@@ -100,13 +99,14 @@ class FreehandMatchButtons extends StatelessWidget {
                   text: userState.hardcodedStrings.newMatch,
                   userState: userState,
                   colorOverride: AppColors.white,
+                  isBold: true,
                 ),
               ),
             )),
         Expanded(
             flex: 5,
             child: Padding(
-              padding: const EdgeInsets.all(4.0),
+              padding: const EdgeInsets.all(16.0),
               child: ElevatedButton(
                 onPressed: () => {rematch()},
                 style: ElevatedButton.styleFrom(
@@ -118,6 +118,7 @@ class FreehandMatchButtons extends StatelessWidget {
                   text: userState.hardcodedStrings.rematch,
                   userState: userState,
                   colorOverride: AppColors.white,
+                  isBold: true,
                 ),
               ),
             )),
