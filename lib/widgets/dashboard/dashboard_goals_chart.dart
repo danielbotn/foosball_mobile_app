@@ -10,8 +10,7 @@ class DashboardGoalsChart extends StatefulWidget {
   final UserState userState;
   final UserStatsResponse? userStatsResponse;
   const DashboardGoalsChart(
-      {Key? key, required this.userState, required this.userStatsResponse})
-      : super(key: key);
+      {super.key, required this.userState, required this.userStatsResponse});
 
   @override
   State<DashboardGoalsChart> createState() => _DashboardGoalsChartState();
@@ -64,6 +63,7 @@ class _DashboardGoalsChartState extends State<DashboardGoalsChart> {
         child: Container(
           padding: const EdgeInsets.all(0),
           child: Card(
+            elevation: 0,
             color: widget.userState.darkmode
                 ? AppColors.darkModeBackground
                 : AppColors.white,

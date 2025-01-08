@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:community_charts_flutter/community_charts_flutter.dart'
     as charts;
-import 'package:dano_foosball/main.dart';
 import 'package:dano_foosball/models/charts/user_stats_response.dart';
 import 'package:dano_foosball/models/charts/matches_chart.dart';
 import 'package:dano_foosball/state/user_state.dart';
@@ -11,8 +10,7 @@ class DashboardMatchesChart extends StatefulWidget {
   final UserState userState;
   final UserStatsResponse? userStatsResponse;
   const DashboardMatchesChart(
-      {Key? key, required this.userState, required this.userStatsResponse})
-      : super(key: key);
+      {super.key, required this.userState, required this.userStatsResponse});
 
   @override
   State<DashboardMatchesChart> createState() => _DashboardMatchesChartState();
@@ -76,6 +74,7 @@ class _DashboardMatchesChartState extends State<DashboardMatchesChart> {
         child: Container(
           padding: const EdgeInsets.all(0),
           child: Card(
+            elevation: 0,
             color: widget.userState.darkmode
                 ? AppColors.darkModeBackground
                 : AppColors.white,

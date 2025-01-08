@@ -15,7 +15,7 @@ import 'package:dano_foosball/widgets/loading.dart';
 
 class NewDashboard extends StatefulWidget {
   final UserState userState;
-  const NewDashboard({Key? key, required this.userState}) : super(key: key);
+  const NewDashboard({super.key, required this.userState});
 
   @override
   State<NewDashboard> createState() => _NewDashboardState();

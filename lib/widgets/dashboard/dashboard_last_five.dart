@@ -13,8 +13,7 @@ import 'package:dano_foosball/models/other/TwoPlayersObject.dart';
 import 'package:intl/intl.dart';
 
 class DashBoardLastFive extends StatefulWidget {
-  const DashBoardLastFive({Key? key, required this.userState})
-      : super(key: key);
+  const DashBoardLastFive({super.key, required this.userState});
   final UserState userState;
 
   @override
@@ -112,6 +111,7 @@ class _DashBoardLastFiveState extends State<DashBoardLastFive> {
                   colorOfMatch == Colors.green[400] ? 'W' : 'L';
 
               return Card(
+                elevation: 0,
                 color: widget.userState.darkmode
                     ? AppColors.darkModeBackground
                     : AppColors.white,

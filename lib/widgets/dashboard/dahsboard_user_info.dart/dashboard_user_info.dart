@@ -10,8 +10,7 @@ import 'package:dano_foosball/widgets/loading.dart';
 
 class DashBoardUserInfo extends StatefulWidget {
   final UserState userState;
-  const DashBoardUserInfo({Key? key, required this.userState})
-      : super(key: key);
+  const DashBoardUserInfo({super.key, required this.userState});
 
   @override
   State<DashBoardUserInfo> createState() => _DashBoardUserInfoState();
@@ -69,6 +68,7 @@ class _DashBoardUserInfoState extends State<DashBoardUserInfo> {
             organistionName = orgData.name;
           }
           return Card(
+            elevation: 0,
             color: widget.userState.darkmode
                 ? AppColors.darkModeBackground
                 : AppColors.white,
