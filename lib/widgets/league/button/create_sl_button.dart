@@ -94,7 +94,6 @@ class _CreateSingleLeagueButtonState extends State<CreateSingleLeagueButton> {
                   text: widget.userState.hardcodedStrings.startLeague,
                   userState: widget.userState,
                   colorOverride: AppColors.white,
-                  fontSize: 14,
                   isBold: true,
                 ),
               ),

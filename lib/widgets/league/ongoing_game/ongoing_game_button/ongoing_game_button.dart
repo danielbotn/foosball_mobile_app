@@ -75,7 +75,7 @@ class _OngoingGameButtonState extends State<OngoingGameButton> {
           Expanded(
             flex: 5,
             child: Padding(
-              padding: const EdgeInsets.all(4.0),
+              padding: const EdgeInsets.all(16.0),
               child: ElevatedButton(
                 key: const Key('single_league_button_start_game'),
                 onPressed: widget.gameStarted ? null : startMatch,
@@ -91,6 +91,7 @@ class _OngoingGameButtonState extends State<OngoingGameButton> {
                       : widget.userState.hardcodedStrings.startGame,
                   userState: widget.userState,
                   colorOverride: AppColors.white,
+                  isBold: true,
                 ),
               ),
             ),

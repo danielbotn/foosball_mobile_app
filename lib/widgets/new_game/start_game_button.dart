@@ -18,11 +18,11 @@ class StartGameButton extends StatelessWidget {
   final String buttonText;
 
   const StartGameButton({
-    Key? key,
+    super.key,
     required this.userState,
     required this.newGameState,
     required this.buttonText,
-  }) : super(key: key);
+  });
 
   void _startFreehandSingleGame(BuildContext context) {
     FreehandMatchApi matchApi = FreehandMatchApi();
@@ -108,7 +108,7 @@ class StartGameButton extends StatelessWidget {
         Expanded(
           flex: 5,
           child: Padding(
-            padding: const EdgeInsets.all(4.0),
+            padding: const EdgeInsets.all(20.0),
             child: ElevatedButton(
               onPressed: () => _startGame(context),
               style: ElevatedButton.styleFrom(
@@ -121,6 +121,7 @@ class StartGameButton extends StatelessWidget {
                 text: buttonText,
                 userState: userState,
                 colorOverride: AppColors.white,
+                isBold: true,
               ),
             ),
           ),

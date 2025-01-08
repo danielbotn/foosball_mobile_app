@@ -82,7 +82,6 @@ class _LeagueButtonState extends State<LeagueButton> {
                     text: widget.userState.hardcodedStrings.createNewLeague,
                     userState: userState,
                     colorOverride: AppColors.white,
-                    fontSize: 14,
                     isBold: true,
                   ),
                 )),
