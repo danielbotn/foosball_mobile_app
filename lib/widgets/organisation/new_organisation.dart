@@ -1,6 +1,7 @@
+import 'package:dano_foosball/widgets/UI/Buttons/Button.dart';
+import 'package:dano_foosball/widgets/inputs/InputWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:dano_foosball/api/Organisation.dart';
-import 'package:dano_foosball/main.dart';
 
 import '../../state/user_state.dart';
 import '../../utils/app_color.dart';
@@ -11,17 +12,16 @@ class NewOrganisation extends StatefulWidget {
   final UserState userState;
   final Function() notifyOrganisationButtons;
   const NewOrganisation(
-      {Key? key,
+      {super.key,
       required this.userState,
-      required this.notifyOrganisationButtons})
-      : super(key: key);
+      required this.notifyOrganisationButtons});
 
   @override
   State<NewOrganisation> createState() => _NewOrganisationState();
 }
 
 class _NewOrganisationState extends State<NewOrganisation> {
-  final _textController = TextEditingController();
+  String _inputText = "";
 
   // Dialog for success or error message when
   // user creates a new organisation
@@ -52,6 +52,33 @@ class _NewOrganisationState extends State<NewOrganisation> {
     );
   }
 
+  void _onChangeInput(String value) {
+    setState(() {
+      _inputText = value;
+    });
+  }
+
+  Future<void> _onButtonClick() async {
+    if (_inputText.isNotEmpty) {
+      Organisation api = Organisation();
+      var result = await api.createNewOrganisation(_inputText);
+
+      if (result.statusCode == 201) {
+        // success
+        setState(() {
+          _inputText = "";
+        });
+        await _showMyDialog(
+            widget.userState.hardcodedStrings.newOrganisationSuccessMessage);
+        widget.notifyOrganisationButtons();
+      } else {
+        // error handling
+        await _showMyDialog(
+            widget.userState.hardcodedStrings.newOrganisationErrorMessage);
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Helpers helpers = Helpers();
@@ -79,81 +106,26 @@ class _NewOrganisationState extends State<NewOrganisation> {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.all(20.0),
-              child: TextField(
-                controller: _textController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: widget.userState.darkmode
-                          ? Colors.white
-                          : Colors.grey,
-                    ),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: widget.userState.darkmode
-                          ? Colors.white
-                          : Colors.grey,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: widget.userState.darkmode
-                          ? Colors.white
-                          : Colors.blue,
-                    ),
-                  ),
-                  errorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color:
-                          widget.userState.darkmode ? Colors.white : Colors.red,
-                    ),
-                  ),
-                  suffixIcon: IconButton(
-                    onPressed: () {
-                      _textController.clear();
-                    },
-                    icon: const Icon(Icons.clear),
-                  ),
-                  hintText:
-                      widget.userState.hardcodedStrings.nameOfNewOrganisation,
-                ),
+              child: InputWidget(
+                userState: widget.userState,
+                onChangeInput: _onChangeInput,
+                clearInputText: true,
+                hintText:
+                    widget.userState.hardcodedStrings.nameOfNewOrganisation,
               ),
             ),
             Expanded(child: Container()), // This takes up the remaining space
             Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: SizedBox(
-                height: 50, // Adjust the height as needed
-                child: MaterialButton(
-                  onPressed: () async {
-                    String inputText = _textController.text;
-                    if (inputText.isNotEmpty) {
-                      Organisation api = Organisation();
-                      var result = await api.createNewOrganisation(inputText);
-
-                      if (result.statusCode == 201) {
-                        // success
-                        _textController.clear();
-                        await _showMyDialog(widget.userState.hardcodedStrings
-                            .newOrganisationSuccessMessage);
-                        widget.notifyOrganisationButtons();
-                      } else {
-                        // error handling
-                        await _showMyDialog(widget.userState.hardcodedStrings
-                            .newOrganisationErrorMessage);
-                      }
-                    }
-                  },
-                  color: widget.userState.darkmode
-                      ? AppColors.darkModeButtonColor
-                      : AppColors.buttonsLightTheme,
-                  child: ExtendedText(
-                    text: widget.userState.hardcodedStrings.create,
-                    userState: widget.userState,
-                    colorOverride: AppColors.white,
-                  ),
-                ),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
+              child: Button(
+                userState: widget.userState,
+                onClick: _onButtonClick,
+                text: widget.userState.hardcodedStrings.create,
+                paddingBottom: 10,
+                paddingLeft: 10,
+                paddingRight: 10,
+                paddingTop: 10,
               ),
             ),
           ],
