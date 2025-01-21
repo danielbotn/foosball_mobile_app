@@ -41,7 +41,8 @@ class _DashBoardUserInfoState extends State<DashBoardUserInfo> {
           userData.lastName,
           userData.email,
           orgData?.id ?? 0,
-          orgData?.name ?? ""); // Pass null if orgData is null
+          orgData?.name ?? "",
+          userData.photoUrl); // Pass null if orgData is null
       return {'user': userData, 'org': orgData};
     } catch (error) {
       throw Exception('Failed to load user data: $error');

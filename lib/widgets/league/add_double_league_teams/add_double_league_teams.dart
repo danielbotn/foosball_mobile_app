@@ -190,14 +190,7 @@ class _AddDoubleLeagueTeamsState extends State<AddDoubleLeagueTeams> {
                 child: Column(
                   children: <Widget>[
                     TeamsSelecter(userState: userState, addTeam: teamReady),
-                    Visibility(
-                      visible: selectedPlayers.isNotEmpty,
-                      child: Headline(
-                          headline: userState.hardcodedStrings.selectedPlayers,
-                          userState: userState),
-                    ),
-                    TeamOverview(userState: userState, team: selectedPlayers),
-                    const Spacer(),
+                    // const Spacer(),
                     Visibility(
                       visible: totalTeams >= 2,
                       child: ExtendedText(

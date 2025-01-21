@@ -129,13 +129,14 @@ mixin _$UserState on _UserState, Store {
       String firstName,
       String lastName,
       String email,
-      int currrentOrganisationId,
-      String currentOrganisationName) {
+      int currentOrganisationId,
+      String currentOrganisationName,
+      String? photoUrl) {
     final _$actionInfo = _$_UserStateActionController.startAction(
         name: '_UserState.setUserInfoGlobalObject');
     try {
       return super.setUserInfoGlobalObject(userId, firstName, lastName, email,
-          currrentOrganisationId, currentOrganisationName);
+          currentOrganisationId, currentOrganisationName, photoUrl);
     } finally {
       _$_UserStateActionController.endAction(_$actionInfo);
     }

@@ -75,7 +75,7 @@ class DashboardState extends State<Dashboard> {
 
         // Set user information to global state??
         widget.param.setUserInfoGlobalObject(int.parse(userId), value.firstName,
-            value.lastName, value.email, currentOID, organisationName);
+            value.lastName, value.email, currentOID, organisationName, null);
       });
 
       getTheme();
@@ -123,7 +123,7 @@ class DashboardState extends State<Dashboard> {
   setGlobal(
       int userId, int currrentOrganisationId, String currentOrganisationName) {
     widget.param.setUserInfoGlobalObject(userId, firstName, lastName, email,
-        currrentOrganisationId, currentOrganisationName);
+        currrentOrganisationId, currentOrganisationName, null);
   }
 
   void updateAllState() {

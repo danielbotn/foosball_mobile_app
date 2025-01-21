@@ -1,4 +1,5 @@
 import 'package:dano_foosball/models/leagues/get-league-response.dart';
+import 'package:dano_foosball/widgets/league/add_double_league_teams/add_double_league_teams.dart';
 import 'package:dano_foosball/widgets/league/add_league_players/add_league_players.dart';
 import 'package:flutter/material.dart';
 import 'package:dano_foosball/state/user_state.dart';
@@ -22,6 +23,26 @@ class _LeagueState extends State<League> {
   String randomNumber = "";
   bool showButton = true;
 
+  void goToAddDoubleLeagueTeams(GetLeagueResponse leagueData) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => AddDoubleLeagueTeams(
+                  userState: widget.userState,
+                  leagueData: leagueData,
+                )));
+  }
+
+  void goToAddSingleLeaguePlayers(GetLeagueResponse leagueData) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => AddLeaguePlayers(
+                  userState: widget.userState,
+                  leagueData: leagueData,
+                )));
+  }
+
   void updateLeagueList(Tuple2<bool, GetLeagueResponse?> result) {
     Helpers helpers = Helpers();
     setState(() {
@@ -40,13 +61,11 @@ class _LeagueState extends State<League> {
         howManyRounds: result.item2!.howManyRounds,
       );
       if (result.item2!.typeOfLeague == 0) {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => AddLeaguePlayers(
-                      userState: widget.userState,
-                      leagueData: tmp,
-                    )));
+        goToAddSingleLeaguePlayers(tmp);
+      }
+
+      if (result.item2!.typeOfLeague == 1) {
+        goToAddDoubleLeagueTeams(tmp);
       }
     }
   }

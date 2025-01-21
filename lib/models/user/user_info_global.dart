@@ -5,6 +5,7 @@ class UserInfoGlobal {
   final String email;
   final int currentOrganisationId;
   final String currentOrganisationName;
+  final String? photoUrl;
 
   UserInfoGlobal(
       {required this.userId,
@@ -12,5 +13,6 @@ class UserInfoGlobal {
       required this.lastName,
       required this.email,
       required this.currentOrganisationId,
-      required this.currentOrganisationName});
+      required this.currentOrganisationName,
+      this.photoUrl});
 }

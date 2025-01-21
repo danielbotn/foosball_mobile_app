@@ -77,7 +77,6 @@ class _TeamsSelecterState extends State<TeamsSelecter> {
         Tuple2<UserResponse, bool> player = Tuple2(user, false);
         allPlayers.add(player);
       });
-      // Perform any further operations with the selected players here
     });
   }
 
@@ -165,9 +164,8 @@ class _TeamsSelecterState extends State<TeamsSelecter> {
         future: usersFuture,
         builder: (context, AsyncSnapshot<List<UserResponse>?> snapshot) {
           if (snapshot.hasData) {
-            return SizedBox(
-              height: 230,
-              // add listview with variable two
+            return Expanded(
+              // Ensures the ListView takes all available space in its parent
               child: ListView(
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,

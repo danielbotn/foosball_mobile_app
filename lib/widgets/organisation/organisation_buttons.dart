@@ -42,7 +42,7 @@ class _OrganisationButtonsState extends State<OrganisationButtons> {
         Expanded(
           flex: 5,
           child: Padding(
-            padding: const EdgeInsets.all(4.0),
+            padding: const EdgeInsets.all(16.0),
             child: ElevatedButton(
               onPressed: () {
                 Navigator.push(
@@ -65,6 +65,8 @@ class _OrganisationButtonsState extends State<OrganisationButtons> {
                 userState: widget.userState,
                 text: widget.userState.hardcodedStrings.newOrganisation,
                 colorOverride: AppColors.white,
+                isBold: true,
+                fontSize: 12,
               ),
             ),
           ),
@@ -74,7 +76,7 @@ class _OrganisationButtonsState extends State<OrganisationButtons> {
           child: Expanded(
             flex: 5,
             child: Padding(
-              padding: const EdgeInsets.all(4.0),
+              padding: const EdgeInsets.all(16.0),
               child: ElevatedButton(
                 onPressed: _goToCreateGroupUser,
                 style: ElevatedButton.styleFrom(
@@ -87,6 +89,8 @@ class _OrganisationButtonsState extends State<OrganisationButtons> {
                   userState: widget.userState,
                   text: widget.userState.hardcodedStrings.addPlayers,
                   colorOverride: AppColors.white,
+                  isBold: true,
+                  fontSize: 12,
                 ),
               ),
             ),

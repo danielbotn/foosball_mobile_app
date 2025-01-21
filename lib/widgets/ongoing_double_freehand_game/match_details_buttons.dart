@@ -71,7 +71,7 @@ class MatchDetailButtons extends StatelessWidget {
         Expanded(
           flex: 5,
           child: Padding(
-            padding: const EdgeInsets.all(4.0),
+            padding: const EdgeInsets.all(16.0),
             child: ElevatedButton(
               onPressed: rematch,
               style: ElevatedButton.styleFrom(
@@ -83,6 +83,8 @@ class MatchDetailButtons extends StatelessWidget {
               child: ExtendedText(
                 text: userState.hardcodedStrings.rematch,
                 userState: userState,
+                colorOverride: AppColors.white,
+                isBold: true,
               ),
             ),
           ),
@@ -90,7 +92,7 @@ class MatchDetailButtons extends StatelessWidget {
         Expanded(
           flex: 5,
           child: Padding(
-            padding: const EdgeInsets.all(4.0),
+            padding: const EdgeInsets.all(16.0),
             child: ElevatedButton(
               onPressed: close,
               style: ElevatedButton.styleFrom(
@@ -102,6 +104,8 @@ class MatchDetailButtons extends StatelessWidget {
               child: ExtendedText(
                 text: userState.hardcodedStrings.close,
                 userState: userState,
+                colorOverride: AppColors.white,
+                isBold: true,
               ),
             ),
           ),

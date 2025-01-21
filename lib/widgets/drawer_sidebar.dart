@@ -141,113 +141,193 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
             : AppColors.white,
         child: ListView(
           children: <Widget>[
-            UserAccountsDrawerHeader(
-              margin: const EdgeInsets.only(bottom: 0.0),
-              accountName: Text("$firstName $lastName",
-                  style: TextStyle(
-                      color: userState.darkmode ? Colors.white : Colors.blue)),
-              accountEmail: Text(email,
-                  style: TextStyle(
+            Container(
+              padding: const EdgeInsets.fromLTRB(16, 40, 16, 8),
+              color: userState.darkmode
+                  ? AppColors.darkModeLighterBackground
+                  : AppColors.white,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CircleAvatar(
+                    child: Image.network(
+                      widget.userState.userInfoGlobal.photoUrl ?? "",
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    "$firstName $lastName",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
                       color: userState.darkmode
                           ? Colors.white
-                          : const Color.fromRGBO(33, 150, 243, 1))),
-              decoration: BoxDecoration(
-                  color: userState.darkmode
-                      ? AppColors.darkModeLighterBackground
-                      : AppColors.white),
-              currentAccountPicture: CircleAvatar(child: Text(initials)),
+                          : AppColors.textBlack,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    email,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: userState.darkmode
+                          ? Colors.white
+                          : AppColors.textBlack,
+                    ),
+                  ),
+                ],
+              ),
             ),
             ListTile(
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              dense: true,
               tileColor: userState.darkmode
                   ? AppColors.darkModeLighterBackground
                   : AppColors.white,
-              leading: Icon(Icons.play_circle_filled_sharp,
-                  color: userState.darkmode ? AppColors.white : null),
-              title: Text(newGame,
-                  style: TextStyle(
-                      color: userState.darkmode
-                          ? AppColors.white
-                          : AppColors.textBlack)),
+              leading: Icon(
+                Icons.play_circle_filled_sharp,
+                color: userState.darkmode ? AppColors.white : null,
+                size: 22,
+              ),
+              title: Text(
+                newGame,
+                style: TextStyle(
+                  fontSize: 14,
+                  color: userState.darkmode
+                      ? AppColors.white
+                      : AppColors.textBlack,
+                ),
+              ),
               onTap: () {
                 Navigator.of(context).pop();
                 goToNewGame(context);
               },
             ),
             ListTile(
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              dense: true,
               tileColor: userState.darkmode
                   ? AppColors.darkModeLighterBackground
                   : AppColors.white,
-              leading: Icon(Icons.houseboat,
-                  color: userState.darkmode ? AppColors.white : null),
-              title: Text(organisation,
-                  style: TextStyle(
-                      color: userState.darkmode
-                          ? AppColors.white
-                          : AppColors.textBlack)),
+              leading: Icon(
+                Icons.houseboat,
+                color: userState.darkmode ? AppColors.white : null,
+                size: 22,
+              ),
+              title: Text(
+                organisation,
+                style: TextStyle(
+                  fontSize: 14,
+                  color: userState.darkmode
+                      ? AppColors.white
+                      : AppColors.textBlack,
+                ),
+              ),
               onTap: () {
                 Navigator.pop(context);
                 goToOrganisation(context);
               },
             ),
             ListTile(
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              dense: true,
               tileColor: userState.darkmode
                   ? AppColors.darkModeLighterBackground
                   : AppColors.white,
-              leading: Icon(Icons.history_sharp,
-                  color: userState.darkmode ? AppColors.white : null),
-              title: Text(history,
-                  style: TextStyle(
-                      color: userState.darkmode
-                          ? AppColors.white
-                          : AppColors.textBlack)),
+              leading: Icon(
+                Icons.history_sharp,
+                color: userState.darkmode ? AppColors.white : null,
+                size: 22,
+              ),
+              title: Text(
+                history,
+                style: TextStyle(
+                  fontSize: 14,
+                  color: userState.darkmode
+                      ? AppColors.white
+                      : AppColors.textBlack,
+                ),
+              ),
               onTap: () {
                 Navigator.of(context).pop();
                 goToHistory(context);
               },
             ),
             ListTile(
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              dense: true,
               tileColor: userState.darkmode
                   ? AppColors.darkModeLighterBackground
                   : AppColors.white,
-              leading: Icon(Icons.group,
-                  color: userState.darkmode ? AppColors.white : null),
-              title: Text(leagues,
-                  style: TextStyle(
-                      color: userState.darkmode
-                          ? AppColors.white
-                          : AppColors.textBlack)),
+              leading: Icon(
+                Icons.group,
+                color: userState.darkmode ? AppColors.white : null,
+                size: 22,
+              ),
+              title: Text(
+                leagues,
+                style: TextStyle(
+                  fontSize: 14,
+                  color: userState.darkmode
+                      ? AppColors.white
+                      : AppColors.textBlack,
+                ),
+              ),
               onTap: () {
                 goToLeague(context);
               },
             ),
             ListTile(
-              // New ListTile for Live Matches
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              dense: true,
               tileColor: userState.darkmode
                   ? AppColors.darkModeLighterBackground
                   : AppColors.white,
-              leading: Icon(Icons.live_tv,
-                  color: userState.darkmode ? AppColors.white : null),
-              title: Text(liveMatches,
-                  style: TextStyle(
-                      color: userState.darkmode
-                          ? AppColors.white
-                          : AppColors.textBlack)),
+              leading: Icon(
+                Icons.live_tv,
+                color: userState.darkmode ? AppColors.white : null,
+                size: 22,
+              ),
+              title: Text(
+                liveMatches,
+                style: TextStyle(
+                  fontSize: 14,
+                  color: userState.darkmode
+                      ? AppColors.white
+                      : AppColors.textBlack,
+                ),
+              ),
               onTap: () {
                 Navigator.of(context).pop();
                 goToLiveMatches(context);
               },
             ),
             ListTile(
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              dense: true,
               tileColor: userState.darkmode
                   ? AppColors.darkModeLighterBackground
                   : AppColors.white,
-              leading: Icon(Icons.settings,
-                  color: userState.darkmode ? AppColors.white : null),
-              title: Text(settings,
-                  style: TextStyle(
-                      color: userState.darkmode
-                          ? AppColors.white
-                          : AppColors.textBlack)),
+              leading: Icon(
+                Icons.settings,
+                color: userState.darkmode ? AppColors.white : null,
+                size: 22,
+              ),
+              title: Text(
+                settings,
+                style: TextStyle(
+                  fontSize: 14,
+                  color: userState.darkmode
+                      ? AppColors.white
+                      : AppColors.textBlack,
+                ),
+              ),
               onTap: () {
                 Navigator.of(context).pop();
                 goToSettings(context);
@@ -255,14 +335,24 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
             ),
             ListTile(
               key: const Key("logout"),
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              dense: true,
               tileColor: userState.darkmode
                   ? AppColors.darkModeLighterBackground
                   : AppColors.white,
-              leading: Icon(Icons.power_settings_new,
-                  color: userState.darkmode ? AppColors.white : null),
-              title: Text(logout,
-                  style: TextStyle(
-                      color: userState.darkmode ? AppColors.white : null)),
+              leading: Icon(
+                Icons.power_settings_new,
+                color: userState.darkmode ? AppColors.white : null,
+                size: 22,
+              ),
+              title: Text(
+                logout,
+                style: TextStyle(
+                  fontSize: 14,
+                  color: userState.darkmode ? AppColors.white : null,
+                ),
+              ),
               onTap: () {
                 Navigator.pop(context);
                 logoutUser();

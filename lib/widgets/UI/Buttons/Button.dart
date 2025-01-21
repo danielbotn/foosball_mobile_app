@@ -13,7 +13,7 @@ class Button extends StatefulWidget {
   final double paddingBottom;
 
   const Button({
-    Key? key,
+    super.key,
     required this.userState,
     required this.onClick,
     required this.text,
@@ -21,7 +21,7 @@ class Button extends StatefulWidget {
     required this.paddingLeft,
     required this.paddingRight,
     required this.paddingTop,
-  }) : super(key: key);
+  });
 
   @override
   State<Button> createState() => _ButtonState();
@@ -49,8 +49,12 @@ class _ButtonState extends State<Button> {
                     : AppColors.buttonsLightTheme,
                 minimumSize: const Size(100, 50),
               ),
-              child:
-                  ExtendedText(text: widget.text, userState: widget.userState),
+              child: ExtendedText(
+                text: widget.text,
+                userState: widget.userState,
+                colorOverride: AppColors.white,
+                isBold: true,
+              ),
             ),
           ),
         ),

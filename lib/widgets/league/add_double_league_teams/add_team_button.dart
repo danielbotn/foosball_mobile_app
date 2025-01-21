@@ -11,11 +11,11 @@ class AddTeamButton extends StatefulWidget {
   final int leagueId;
 
   const AddTeamButton({
-    Key? key,
+    super.key,
     required this.userState,
     required this.teamPlayers,
     required this.leagueId,
-  }) : super(key: key);
+  });
 
   @override
   State<AddTeamButton> createState() => _AddTeamButtonState();
@@ -42,7 +42,7 @@ class _AddTeamButtonState extends State<AddTeamButton> {
         Expanded(
           flex: 5,
           child: Padding(
-            padding: const EdgeInsets.all(4.0),
+            padding: const EdgeInsets.all(16.0),
             child: ElevatedButton(
               onPressed: addTeam,
               style: ElevatedButton.styleFrom(
@@ -54,6 +54,8 @@ class _AddTeamButtonState extends State<AddTeamButton> {
               child: ExtendedText(
                 text: widget.userState.hardcodedStrings.addTeam,
                 userState: widget.userState,
+                colorOverride: AppColors.white,
+                isBold: true,
               ),
             ),
           ),

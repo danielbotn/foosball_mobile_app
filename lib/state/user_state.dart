@@ -190,15 +190,18 @@ abstract class _UserState with Store {
       String firstName,
       String lastName,
       String email,
-      int currrentOrganisationId,
-      String currentOrganisationName) {
+      int currentOrganisationId,
+      String currentOrganisationName,
+      String? photoUrl) {
     UserInfoGlobal tmp = UserInfoGlobal(
-        userId: userId,
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        currentOrganisationId: currentOrganisationId,
-        currentOrganisationName: currentOrganisationName);
+      userId: userId,
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      currentOrganisationId: currentOrganisationId,
+      currentOrganisationName: currentOrganisationName,
+      photoUrl: photoUrl, // Pass photoUrl (can be null)
+    );
 
     userInfoGlobal = tmp;
   }
