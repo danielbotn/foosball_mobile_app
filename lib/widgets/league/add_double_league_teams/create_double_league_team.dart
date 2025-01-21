@@ -83,7 +83,6 @@ class _CreateDoubleLeagueTeamState extends State<CreateDoubleLeagueTeam> {
   @override
   Widget build(BuildContext context) {
     Helpers helpers = Helpers();
-    bool darkMode = widget.userState.darkmode;
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(

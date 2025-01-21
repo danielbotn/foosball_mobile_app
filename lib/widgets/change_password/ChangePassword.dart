@@ -1,8 +1,12 @@
+import 'package:dano_foosball/main.dart';
+import 'package:dano_foosball/widgets/UI/Buttons/Button.dart';
+import 'package:dano_foosball/widgets/extended_Text.dart';
 import 'package:flutter/material.dart';
 import 'package:dano_foosball/api/AuthApi.dart';
 import 'package:dano_foosball/models/auth/update_password_request.dart';
 import 'package:dano_foosball/state/user_state.dart';
 import 'package:dano_foosball/utils/app_color.dart';
+import 'package:dano_foosball/widgets/inputs/InputWidget.dart';
 
 class ChangePassword extends StatefulWidget {
   final UserState userState;
@@ -21,12 +25,10 @@ class _ChangePasswordState extends State<ChangePassword> {
   String _infoText = '';
 
   void _submitPassword() async {
-    // Assuming you have fields to capture the new password, confirm password, and verification code
     String newPassword = _passwordController.text;
     String confirmPassword = _passwordController.text;
     String verificationCode = _verificationCodeController.text;
 
-    // Create an instance of UpdatePasswordRequest
     UpdatePasswordRequest request = UpdatePasswordRequest(
       password: newPassword,
       confirmPassword: confirmPassword,
@@ -34,12 +36,10 @@ class _ChangePasswordState extends State<ChangePassword> {
     );
 
     AuthApi authApi = AuthApi();
-    // Assuming updatePassword method is implemented correctly in AuthApi
     var response = await authApi.updatePassword(request);
 
     if (response?.emailSent == true &&
         response?.verificationCodeCreated == true) {
-      // Update the UI state based on the response
       setState(() {
         _isVerificationCodeFieldVisible = true;
         _infoText =
@@ -49,8 +49,6 @@ class _ChangePasswordState extends State<ChangePassword> {
 
     if (response?.passwordUpdated == true) {
       setState(() {
-        // Clear the password controller and unfocus the input field
-        _passwordController.text = "";
         _passwordController.clear();
         FocusScope.of(context).unfocus();
         _isVerificationCodeFieldVisible = false;
@@ -64,11 +62,10 @@ class _ChangePasswordState extends State<ChangePassword> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.userState.hardcodedStrings.changePassword,
-            style: TextStyle(
-                color: widget.userState.darkmode
-                    ? AppColors.white
-                    : AppColors.textBlack)),
+        title: ExtendedText(
+          text: widget.userState.hardcodedStrings.changePassword,
+          userState: userState,
+        ),
         leading: IconButton(
           icon: const Icon(Icons.chevron_left),
           onPressed: () {
@@ -100,36 +97,11 @@ class _ChangePasswordState extends State<ChangePassword> {
               ),
             ),
             const SizedBox(height: 16.0),
-            TextField(
-              controller: _passwordController,
-              decoration: InputDecoration(
-                labelText: widget.userState.hardcodedStrings.newPassword,
-                labelStyle: TextStyle(
-                  color: widget.userState.darkmode
-                      ? AppColors.white
-                      : AppColors.textBlack,
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: widget.userState.darkmode
-                        ? AppColors.white
-                        : AppColors.textBlack,
-                  ),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: widget.userState.darkmode
-                        ? AppColors.white
-                        : AppColors.textBlack,
-                  ),
-                ),
-              ),
-              style: TextStyle(
-                color: widget.userState.darkmode
-                    ? AppColors.white
-                    : AppColors.textBlack,
-              ),
-              obscureText: true,
+            InputWidget(
+              userState: widget.userState,
+              onChangeInput: (value) => _passwordController.text = value,
+              clearInputText: true,
+              hintText: widget.userState.hardcodedStrings.newPassword,
             ),
             const SizedBox(height: 16.0),
             if (_infoText.isNotEmpty)
@@ -143,64 +115,29 @@ class _ChangePasswordState extends State<ChangePassword> {
               ),
             if (_isVerificationCodeFieldVisible) ...[
               const SizedBox(height: 16.0),
-              TextField(
-                controller: _verificationCodeController,
-                decoration: InputDecoration(
-                  labelText: widget
-                      .userState.hardcodedStrings.pleaseEnterVerificationCode,
-                  labelStyle: TextStyle(
-                    color: widget.userState.darkmode
-                        ? AppColors.white
-                        : AppColors.textBlack,
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: widget.userState.darkmode
-                          ? AppColors.white
-                          : AppColors.textBlack,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: widget.userState.darkmode
-                          ? AppColors.white
-                          : AppColors.textBlack,
-                    ),
-                  ),
-                ),
-                style: TextStyle(
-                  color: widget.userState.darkmode
-                      ? AppColors.white
-                      : AppColors.textBlack,
-                ),
+              InputWidget(
+                userState: widget.userState,
+                onChangeInput: (value) =>
+                    _verificationCodeController.text = value,
+                clearInputText: true,
+                hintText: widget
+                    .userState.hardcodedStrings.pleaseEnterVerificationCode,
               ),
             ],
             const Spacer(),
-            Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: _submitPassword,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: widget.userState.darkmode
-                        ? AppColors.darkModeButtonColor
-                        : AppColors.buttonsLightTheme,
-                    minimumSize: const Size(double.infinity, 50),
-                  ),
-                  child: Text(
-                    _isVerificationCodeFieldVisible == false
-                        ? widget
-                            .userState.hardcodedStrings.submitPasswordButtonText
-                        : widget.userState.hardcodedStrings
-                            .submitVerificationButtonText,
-                    style: TextStyle(
-                      color: widget.userState.darkmode
-                          ? AppColors.white
-                          : AppColors.white,
-                    ),
-                  ),
-                ),
+            SizedBox(
+              width: double.infinity,
+              child: Button(
+                onClick: _submitPassword,
+                text: _isVerificationCodeFieldVisible == false
+                    ? widget.userState.hardcodedStrings.submitPasswordButtonText
+                    : widget.userState.hardcodedStrings
+                        .submitVerificationButtonText,
+                userState: userState,
+                paddingBottom: 10,
+                paddingLeft: 10,
+                paddingRight: 10,
+                paddingTop: 10,
               ),
             ),
           ],

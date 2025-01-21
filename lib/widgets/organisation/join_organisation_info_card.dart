@@ -6,8 +6,7 @@ import '../../state/user_state.dart';
 
 class JoinOrganisationInfoCard extends StatelessWidget {
   final UserState userState;
-  const JoinOrganisationInfoCard({Key? key, required this.userState})
-      : super(key: key);
+  const JoinOrganisationInfoCard({super.key, required this.userState});
 
   @override
   Widget build(BuildContext context) {
@@ -34,13 +33,10 @@ class JoinOrganisationInfoCard extends StatelessWidget {
                 bottom: 16,
                 right: 16,
                 left: 16,
-                child: Text(
-                  userState.hardcodedStrings.joinExistingOrganisationWithQrCode,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    fontSize: 24,
-                  ),
+                child: ExtendedText(
+                  text: userState
+                      .hardcodedStrings.joinExistingOrganisationWithQrCode,
+                  userState: userState,
                 ),
               ),
             ],
@@ -50,7 +46,6 @@ class JoinOrganisationInfoCard extends StatelessWidget {
               child: ExtendedText(
                 userState: userState,
                 text: userState.hardcodedStrings.organisationCardInfo,
-                colorOverride: AppColors.white,
               )),
         ],
       ),

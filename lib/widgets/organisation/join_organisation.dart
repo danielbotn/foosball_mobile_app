@@ -1,6 +1,6 @@
 import 'package:dano_foosball/utils/qr_code_scanner.dart';
+import 'package:dano_foosball/widgets/UI/Buttons/Button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:dano_foosball/widgets/organisation/organisation.dart';
 import '../../api/Organisation.dart';
 import '../../state/user_state.dart';
@@ -11,7 +11,7 @@ import 'join_organisation_info_card.dart';
 
 class JoinOrganisation extends StatefulWidget {
   final UserState userState;
-  const JoinOrganisation({Key? key, required this.userState}) : super(key: key);
+  const JoinOrganisation({super.key, required this.userState});
 
   @override
   State<JoinOrganisation> createState() => _JoinOrganisationState();
@@ -107,57 +107,6 @@ class _JoinOrganisationState extends State<JoinOrganisation> {
     ));
   }
 
-/*
-  Future scanQR(BuildContext context) async {
-    try {
-      String? qrResult = await MajaScan.startScan(
-          title: "QRcode scanner",
-          titleColor: Colors.amberAccent[700],
-          qRCornerColor: Colors.orange,
-          qRScannerColor: Colors.orange);
-      setState(() {
-        result = qrResult ?? 'null string';
-      });
-
-      if (result.isNotEmpty &&
-          result.contains('organisationCode') &&
-          result.contains('organisationId')) {
-        bool wasJoiningSuccessful = await joinOrganisation();
-
-        // let user know
-        if (wasJoiningSuccessful) {
-          await showMyDialog(
-              'You have joined a new organisation. Congratulations',
-              widget.userState.hardcodedStrings.success);
-          if (!mounted) return;
-          goToOrganisation(context);
-        } else {
-          await showMyDialog(widget.userState.hardcodedStrings.obsFailure,
-              widget.userState.hardcodedStrings.failure);
-        }
-      }
-    } on PlatformException catch (ex) {
-      if (ex.code == MajaScan.CameraAccessDenied) {
-        setState(() {
-          result = widget.userState.hardcodedStrings.cameraPermissionWasDenied;
-        });
-      } else {
-        setState(() {
-          result = "${widget.userState.hardcodedStrings.unknownError}$ex";
-        });
-      }
-    } on FormatException {
-      setState(() {
-        result = widget.userState.hardcodedStrings.youPressedTheBackButton;
-      });
-    } catch (ex) {
-      setState(() {
-        result = "${widget.userState.hardcodedStrings.unknownError}$ex";
-      });
-    }
-  }
-  */
-
   // state
   bool qrScanInProgress = false;
   @override
@@ -186,32 +135,19 @@ class _JoinOrganisationState extends State<JoinOrganisation> {
           children: [
             JoinOrganisationInfoCard(userState: widget.userState),
             const Spacer(),
-            Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Container(
-                height: 60,
-                width: double.infinity,
-                color: Colors.blue[800],
-                child: ElevatedButton(
-                  onPressed: () => {
-                    setState(() {
-                      qrScanInProgress = !qrScanInProgress;
-                      scanQrWithContext(context);
-                    })
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: widget.userState.darkmode
-                        ? AppColors.darkModeButtonColor
-                        : AppColors.buttonsLightTheme,
-                    minimumSize: const Size(200, 50),
-                  ),
-                  child: ExtendedText(
-                    userState: widget.userState,
-                    text: widget.userState.hardcodedStrings.scanQrCode,
-                    colorOverride: AppColors.white,
-                  ),
-                ),
-              ),
+            Button(
+              userState: widget.userState,
+              onClick: () => {
+                setState(() {
+                  qrScanInProgress = !qrScanInProgress;
+                  scanQrWithContext(context);
+                })
+              },
+              text: widget.userState.hardcodedStrings.scanQrCode,
+              paddingBottom: 16,
+              paddingLeft: 16,
+              paddingRight: 16,
+              paddingTop: 16,
             ),
           ],
         ),
