@@ -1,3 +1,4 @@
+import 'package:dano_foosball/widgets/UI/Inputs/custom_input.dart';
 import 'package:flutter/material.dart';
 import 'package:dano_foosball/api/Organisation.dart';
 import 'package:dano_foosball/models/organisation/organisation_response.dart';
@@ -19,7 +20,6 @@ class _SlackSettingsState extends State<SlackSettings> {
   final TextEditingController _slackWebhookController = TextEditingController();
   late Future<OrganisationResponse?> organisationFuture;
   String _infoText = '';
-  String _slackWebhook = '';
 
   @override
   void initState() {
@@ -36,7 +36,6 @@ class _SlackSettingsState extends State<SlackSettings> {
         data.slackWebhookUrl != null &&
         data.slackWebhookUrl != "") {
       setState(() {
-        _slackWebhook = data.slackWebhookUrl!;
         _slackWebhookController.text = data.slackWebhookUrl!;
       });
     }
@@ -52,7 +51,6 @@ class _SlackSettingsState extends State<SlackSettings> {
     if (existingData != null) {
       String updatedSlackWebhook = _slackWebhookController.text;
 
-      // Assuming you have an OrganisationUpdateRequest model that matches your API's expected update request body
       var organisationUpdateRequest = OrganisationResponse(
           id: widget.userState.currentOrganisationId,
           name: existingData.name,
@@ -69,20 +67,18 @@ class _SlackSettingsState extends State<SlackSettings> {
           false,
           false);
 
-      if (!mounted) return; // Ensure the widget is still mounted
+      if (!mounted) return;
 
       if (response == true) {
-        // success
-        FocusScope.of(context).unfocus(); // Close the keyboard
+        FocusScope.of(context).unfocus();
         helpers.showSnackbar(context,
             widget.userState.hardcodedStrings.slackWebhookUpdated, false);
       } else {
-        // failure
         helpers.showSnackbar(
             context, widget.userState.hardcodedStrings.slackWebhookError, true);
       }
     } else {
-      if (!mounted) return; // Ensure the widget is still mounted
+      if (!mounted) return;
       helpers.showSnackbar(
           context, widget.userState.hardcodedStrings.unknownError, false);
     }
@@ -139,36 +135,10 @@ class _SlackSettingsState extends State<SlackSettings> {
                     ),
                   ),
                   const SizedBox(height: 16.0),
-                  TextField(
+                  CustomInput(
                     controller: _slackWebhookController,
-                    decoration: InputDecoration(
-                      labelText: widget.userState.hardcodedStrings.slackWebhook,
-                      labelStyle: TextStyle(
-                        color: widget.userState.darkmode
-                            ? AppColors.white
-                            : AppColors.textBlack,
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: widget.userState.darkmode
-                              ? AppColors.white
-                              : AppColors.textBlack,
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: widget.userState.darkmode
-                              ? AppColors.white
-                              : AppColors.textBlack,
-                        ),
-                      ),
-                    ),
-                    style: TextStyle(
-                      color: widget.userState.darkmode
-                          ? AppColors.white
-                          : AppColors.textBlack,
-                    ),
-                    obscureText: false,
+                    labelText: widget.userState.hardcodedStrings.slackWebhook,
+                    userState: widget.userState,
                   ),
                   const SizedBox(height: 16.0),
                   if (_infoText.isNotEmpty)

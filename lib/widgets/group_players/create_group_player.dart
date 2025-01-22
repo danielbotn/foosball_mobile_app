@@ -1,3 +1,5 @@
+import 'package:dano_foosball/main.dart';
+import 'package:dano_foosball/widgets/UI/Buttons/Button.dart';
 import 'package:flutter/material.dart';
 import 'package:dano_foosball/api/UserApi.dart';
 import 'package:dano_foosball/models/user/create_group_user_model.dart';
@@ -13,8 +15,7 @@ import 'package:dano_foosball/widgets/inputs/InputWidget.dart';
 
 class CreateGroupPlayer extends StatefulWidget {
   final UserState userState;
-  const CreateGroupPlayer({Key? key, required this.userState})
-      : super(key: key);
+  const CreateGroupPlayer({super.key, required this.userState});
 
   @override
   State<CreateGroupPlayer> createState() => _CreateGroupPlayerState();
@@ -95,97 +96,98 @@ class _CreateGroupPlayerState extends State<CreateGroupPlayer> {
   Widget build(BuildContext context) {
     Helpers helpers = Helpers();
     return Scaffold(
-        appBar: AppBar(
-            title: ExtendedText(
-                text: widget.userState.hardcodedStrings.createGroupPlayer,
-                userState: widget.userState),
-            leading: IconButton(
-              icon: const Icon(Icons.chevron_left),
-              onPressed: () {
-                Navigator.pop(context);
-              },
+      appBar: AppBar(
+        title: ExtendedText(
+          text: widget.userState.hardcodedStrings.createGroupPlayer,
+          userState: widget.userState,
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.chevron_left),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        iconTheme: helpers.getIconTheme(widget.userState.darkmode),
+        backgroundColor: helpers.getBackgroundColor(widget.userState.darkmode),
+      ),
+      body: Container(
+        color: widget.userState.darkmode
+            ? AppColors.darkModeBackground
+            : AppColors.white,
+        child: Column(
+          children: [
+            Visibility(
+              visible: !isKeyPadOpen,
+              child: InfoCard(userState: widget.userState),
             ),
-            iconTheme: helpers.getIconTheme(widget.userState.darkmode),
-            backgroundColor:
-                helpers.getBackgroundColor(widget.userState.darkmode)),
-        body: Container(
-          color: widget.userState.darkmode
-              ? AppColors.darkModeBackground
-              : AppColors.white,
-          child: Column(
-            children: [
-              Visibility(
-                visible: !isKeyPadOpen,
-                child: InfoCard(userState: widget.userState),
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: InputWidget(
+                userState: widget.userState,
+                onChangeInput: (value) {
+                  setState(() {
+                    firstNameText = value;
+                    clearInputs = false;
+                  });
+                },
+                hintText: widget.userState.hardcodedStrings.firstName,
+                clearInputText: clearInputs,
               ),
-              Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: InputWidget(
-                      userState: widget.userState,
-                      onChangeInput: (value) {
-                        setState(() {
-                          firstNameText = value;
-                          clearInputs = false;
-                        });
-                      },
-                      hintText: widget.userState.hardcodedStrings.firstName,
-                      clearInputText: clearInputs)),
-              Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: InputWidget(
-                      userState: widget.userState,
-                      hintText: widget.userState.hardcodedStrings.lastName,
-                      onChangeInput: (value) {
-                        setState(() {
-                          lastNameText = value;
-                          clearInputs = false;
-                        });
-                      },
-                      clearInputText: clearInputs)),
-              const Spacer(),
-              Visibility(
-                  visible: firstNameText.isNotEmpty &&
-                      lastNameText.isNotEmpty &&
-                      !isKeyPadOpen,
-                  child: Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Container(
-                        height: 60,
-                        width: double.infinity,
-                        color: Colors.blue[800],
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            UserApi userApi = UserApi();
-                            CreateGroupUserModel groupUser =
-                                CreateGroupUserModel(
-                                    firstName: firstNameText,
-                                    lastName: lastNameText);
+            ),
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: InputWidget(
+                userState: widget.userState,
+                hintText: widget.userState.hardcodedStrings.lastName,
+                onChangeInput: (value) {
+                  setState(() {
+                    lastNameText = value;
+                    clearInputs = false;
+                  });
+                },
+                clearInputText: clearInputs,
+              ),
+            ),
+            const Spacer(),
+            Visibility(
+              visible: firstNameText.isNotEmpty &&
+                  lastNameText.isNotEmpty &&
+                  !isKeyPadOpen,
+              child: Button(
+                text: widget.userState.hardcodedStrings.create,
+                onClick: () async {
+                  UserApi userApi = UserApi();
+                  CreateGroupUserModel groupUser = CreateGroupUserModel(
+                    firstName: firstNameText,
+                    lastName: lastNameText,
+                  );
 
-                            var response =
-                                await userApi.createGroupUser(groupUser);
-                            if (response != null) {
-                              await showMyDialog(
-                                  widget.userState.hardcodedStrings
-                                      .groupPlayerCreateSuccess,
-                                  true);
-                            } else {
-                              await showMyDialog(
-                                  widget.userState.hardcodedStrings
-                                      .groupPlayerCreateFailure,
-                                  false);
-                            }
-                            clearAllInputs();
-                          },
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: widget.userState.darkmode
-                                  ? AppColors.darkModeButtonColor
-                                  : AppColors.buttonsLightTheme,
-                              minimumSize: const Size(200, 50)),
-                          child: Text(widget.userState.hardcodedStrings.create),
-                        ),
-                      )))
-            ],
-          ),
-        ));
+                  var response = await userApi.createGroupUser(groupUser);
+                  if (response != null) {
+                    await showMyDialog(
+                      widget
+                          .userState.hardcodedStrings.groupPlayerCreateSuccess,
+                      true,
+                    );
+                  } else {
+                    await showMyDialog(
+                      widget
+                          .userState.hardcodedStrings.groupPlayerCreateFailure,
+                      false,
+                    );
+                  }
+                  clearAllInputs();
+                },
+                userState: userState,
+                paddingBottom: 16,
+                paddingLeft: 16,
+                paddingRight: 16,
+                paddingTop: 16,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

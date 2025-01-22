@@ -331,7 +331,7 @@ class _OrganisationSettingsState extends State<OrganisationSettings> {
                     child: buildSettingsList(userData, organisationData),
                   ));
             } else {
-              return Center(child: Text('No data available'));
+              return const Center(child: Text('No data available'));
             }
           },
         ));
