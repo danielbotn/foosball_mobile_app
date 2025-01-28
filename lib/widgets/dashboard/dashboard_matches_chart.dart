@@ -1,3 +1,5 @@
+import 'package:dano_foosball/main.dart';
+import 'package:dano_foosball/widgets/extended_Text.dart';
 import 'package:flutter/material.dart';
 import 'package:community_charts_flutter/community_charts_flutter.dart'
     as charts;
@@ -74,10 +76,11 @@ class _DashboardMatchesChartState extends State<DashboardMatchesChart> {
               padding: const EdgeInsets.all(2.0),
               child: Column(
                 children: <Widget>[
-                  Text(
-                    widget.userState.hardcodedStrings.matches,
-                    style:
-                        Theme.of(context).textTheme.bodyLarge, // Updated line
+                  ExtendedText(
+                    text: widget.userState.hardcodedStrings.matches,
+                    userState: userState,
+                    isBold: true,
+                    fontSize: 14,
                   ),
                   // change label style of BarChart to fit the theme
                   Expanded(

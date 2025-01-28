@@ -82,6 +82,7 @@ class _DashBoardUserInfoState extends State<DashBoardUserInfo> {
                 text: '${userData.firstName} ${userData.lastName}',
                 userState: userState,
                 isBold: true,
+                fontSize: 14,
               ),
               subtitle: Text(userData.email),
               trailing: Text(organistionName),

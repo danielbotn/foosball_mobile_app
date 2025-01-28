@@ -1,3 +1,5 @@
+import 'package:dano_foosball/main.dart';
+import 'package:dano_foosball/widgets/extended_Text.dart';
 import 'package:flutter/material.dart';
 import 'package:community_charts_flutter/community_charts_flutter.dart'
     as charts;
@@ -69,10 +71,11 @@ class _DashboardGoalsChartState extends State<DashboardGoalsChart> {
               padding: const EdgeInsets.all(2.0),
               child: Column(
                 children: <Widget>[
-                  Text(
-                    widget.userState.hardcodedStrings.goals,
-                    style:
-                        Theme.of(context).textTheme.bodyLarge, // Updated line
+                  ExtendedText(
+                    text: widget.userState.hardcodedStrings.goals,
+                    userState: userState,
+                    isBold: true,
+                    fontSize: 14,
                   ),
                   Expanded(
                     child: charts.BarChart(series,
