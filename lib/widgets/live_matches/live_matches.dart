@@ -178,17 +178,25 @@ class _LiveMatchesState extends State<LiveMatches> {
 
     Icon matchIcon;
     if (match.typeOfMatch == ETypeOfMatch.freehandMatch) {
-      matchIcon = Icon(Icons.person,
-          color: isDarkMode ? AppColors.white : AppColors.textBlack);
+      matchIcon = Icon(
+        Icons.person,
+        color: isDarkMode ? AppColors.white : AppColors.surfaceDark,
+      );
     } else if (match.typeOfMatch == ETypeOfMatch.doubleFreehandMatch) {
-      matchIcon = Icon(Icons.people,
-          color: isDarkMode ? AppColors.white : AppColors.textBlack);
+      matchIcon = Icon(
+        Icons.people,
+        color: isDarkMode ? AppColors.white : AppColors.surfaceDark,
+      );
     } else if (match.typeOfMatch == ETypeOfMatch.singleLeagueMatch) {
-      matchIcon = Icon(Icons.group,
-          color: isDarkMode ? AppColors.white : AppColors.textBlack);
+      matchIcon = Icon(
+        Icons.group,
+        color: isDarkMode ? AppColors.white : AppColors.surfaceDark,
+      );
     } else {
-      matchIcon = Icon(Icons.group_add,
-          color: isDarkMode ? AppColors.white : AppColors.textBlack);
+      matchIcon = Icon(
+        Icons.group_add,
+        color: isDarkMode ? AppColors.white : AppColors.surfaceDark,
+      );
     }
 
     String formattedDate =
@@ -261,7 +269,7 @@ class _LiveMatchesState extends State<LiveMatches> {
       title: Text(
         participants,
         style: TextStyle(
-          color: isDarkMode ? AppColors.white : AppColors.textBlack,
+          color: isDarkMode ? AppColors.white : AppColors.surfaceDark,
         ),
       ),
       subtitle: Column(
@@ -270,13 +278,13 @@ class _LiveMatchesState extends State<LiveMatches> {
           Text(
             "${match.userScore} - ${match.opponentUserOrTeamScore}",
             style: TextStyle(
-              color: isDarkMode ? AppColors.white : AppColors.textBlack,
+              color: isDarkMode ? AppColors.white : AppColors.surfaceDark,
             ),
           ),
           Text(
             formattedDate,
             style: TextStyle(
-              color: isDarkMode ? AppColors.white : AppColors.textBlack,
+              color: isDarkMode ? AppColors.white : AppColors.surfaceDark,
               fontSize: 12.0,
             ),
           ),
@@ -314,7 +322,7 @@ class _LiveMatchesState extends State<LiveMatches> {
           style: TextStyle(
             color: widget.userState.darkmode
                 ? AppColors.white
-                : AppColors.textBlack,
+                : AppColors.surfaceDark,
           ),
         ),
         leading: IconButton(
@@ -345,9 +353,10 @@ class _LiveMatchesState extends State<LiveMatches> {
                 ? Center(
                     child: Text('No live matches available',
                         style: TextStyle(
-                            color: widget.userState.darkmode
-                                ? AppColors.white
-                                : AppColors.textBlack)))
+                          color: widget.userState.darkmode
+                              ? AppColors.white
+                              : AppColors.surfaceDark,
+                        )))
                 : ListView.builder(
                     itemCount: _matches!.length,
                     itemBuilder: (context, index) {

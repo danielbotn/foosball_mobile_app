@@ -26,7 +26,7 @@ class Headline extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         color: userState.darkmode
                             ? AppColors.white
-                            : AppColors.primaryDark)),
+                            : AppColors.textLight)),
               ),
             ),
           ),

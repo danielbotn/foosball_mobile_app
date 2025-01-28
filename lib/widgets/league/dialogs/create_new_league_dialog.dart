@@ -125,7 +125,7 @@ class _CreateLeagueDialogState extends State<CreateLeagueDialog> {
                   : AppColors.buttonsLightTheme, // Button color in light mode
               color: widget.userState.darkmode
                   ? AppColors.white
-                  : AppColors.textBlack,
+                  : AppColors.surfaceDark,
               borderColor: widget.userState.darkmode
                   ? AppColors.grey2 // Border color in dark mode
                   : AppColors.lightGrey, // Border color in light mode
@@ -145,7 +145,7 @@ class _CreateLeagueDialogState extends State<CreateLeagueDialog> {
                           ? Colors.white
                           : widget.userState.darkmode
                               ? AppColors.white
-                              : AppColors.textBlack,
+                              : AppColors.surfaceDark,
                     ),
                   ),
                 ),
@@ -158,7 +158,7 @@ class _CreateLeagueDialogState extends State<CreateLeagueDialog> {
                           ? Colors.white
                           : widget.userState.darkmode
                               ? AppColors.white
-                              : AppColors.textBlack,
+                              : AppColors.surfaceDark,
                     ),
                   ),
                 ),

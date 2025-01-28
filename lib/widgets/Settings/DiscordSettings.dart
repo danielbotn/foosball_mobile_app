@@ -95,9 +95,10 @@ class _DiscordSettingsState extends State<DiscordSettings> {
       appBar: AppBar(
         title: Text(widget.userState.hardcodedStrings.discord,
             style: TextStyle(
-                color: widget.userState.darkmode
-                    ? AppColors.white
-                    : AppColors.textBlack)),
+              color: widget.userState.darkmode
+                  ? AppColors.white
+                  : AppColors.surfaceDark,
+            )),
         leading: IconButton(
           icon: const Icon(Icons.chevron_left),
           onPressed: () {
@@ -135,7 +136,7 @@ class _DiscordSettingsState extends State<DiscordSettings> {
                     style: TextStyle(
                       color: widget.userState.darkmode
                           ? AppColors.white
-                          : AppColors.textBlack,
+                          : AppColors.surfaceDark,
                       fontSize: 16.0,
                     ),
                   ),
@@ -148,27 +149,27 @@ class _DiscordSettingsState extends State<DiscordSettings> {
                       labelStyle: TextStyle(
                         color: widget.userState.darkmode
                             ? AppColors.white
-                            : AppColors.textBlack,
+                            : AppColors.surfaceDark,
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color: widget.userState.darkmode
                               ? AppColors.white
-                              : AppColors.textBlack,
+                              : AppColors.surfaceDark,
                         ),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color: widget.userState.darkmode
                               ? AppColors.white
-                              : AppColors.textBlack,
+                              : AppColors.surfaceDark,
                         ),
                       ),
                     ),
                     style: TextStyle(
                       color: widget.userState.darkmode
                           ? AppColors.white
-                          : AppColors.textBlack,
+                          : AppColors.surfaceDark,
                     ),
                     obscureText: false,
                   ),
@@ -179,7 +180,7 @@ class _DiscordSettingsState extends State<DiscordSettings> {
                       style: TextStyle(
                         color: widget.userState.darkmode
                             ? AppColors.white
-                            : AppColors.textBlack,
+                            : AppColors.surfaceDark,
                       ),
                     ),
                   const Spacer(),

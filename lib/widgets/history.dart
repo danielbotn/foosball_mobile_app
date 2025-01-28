@@ -171,26 +171,29 @@ class _HistoryState extends State<History> {
             Text(
                 "${history[i]!.opponentOneFirstName} ${history[i]!.opponentOneLastName}",
                 style: TextStyle(
-                    color: this.widget.userState.darkmode
-                        ? AppColors.white
-                        : AppColors.textBlack)),
+                  color: this.widget.userState.darkmode
+                      ? AppColors.white
+                      : AppColors.surfaceDark,
+                )),
             Visibility(
               visible: opponentTwoName.isNotEmpty,
               child: Text(
                 opponentTwoName,
                 style: TextStyle(
-                    color: widget.userState.darkmode
-                        ? AppColors.white
-                        : AppColors.textBlack),
+                  color: widget.userState.darkmode
+                      ? AppColors.white
+                      : AppColors.surfaceDark,
+                ),
               ),
             ),
           ],
         ),
         subtitle: Text(formattedDate,
             style: TextStyle(
-                color: widget.userState.darkmode
-                    ? AppColors.white
-                    : AppColors.textBlack)),
+              color: widget.userState.darkmode
+                  ? AppColors.white
+                  : AppColors.surfaceDark,
+            )),
         leading: singleOrDoubleMatch(history[i]!),
         trailing: SizedBox(
           width: 60,
@@ -203,9 +206,10 @@ class _HistoryState extends State<History> {
                   Text(
                       "${history[i]!.userScore} - ${history[i]!.opponentUserOrTeamScore}",
                       style: TextStyle(
-                          color: widget.userState.darkmode
-                              ? AppColors.white
-                              : AppColors.textBlack)),
+                        color: widget.userState.darkmode
+                            ? AppColors.white
+                            : AppColors.surfaceDark,
+                      )),
                 ],
               ),
               const SizedBox(
@@ -213,9 +217,9 @@ class _HistoryState extends State<History> {
               ),
               winner == true
                   ? Text(widget.userState.hardcodedStrings.won,
-                      style: const TextStyle(color: Colors.green))
+                      style: const TextStyle(color: AppColors.primary))
                   : Text(widget.userState.hardcodedStrings.lost,
-                      style: const TextStyle(color: Colors.red)),
+                      style: const TextStyle(color: AppColors.losingRed)),
             ],
           ),
         ),
@@ -230,9 +234,10 @@ class _HistoryState extends State<History> {
       appBar: AppBar(
           title: Text(widget.userState.hardcodedStrings.history,
               style: TextStyle(
-                  color: widget.userState.darkmode
-                      ? AppColors.white
-                      : AppColors.textBlack)),
+                color: widget.userState.darkmode
+                    ? AppColors.white
+                    : AppColors.surfaceDark,
+              )),
           leading: IconButton(
             icon: const Icon(Icons.chevron_left),
             onPressed: () {

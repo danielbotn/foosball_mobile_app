@@ -9,13 +9,12 @@ class ExtendedText extends StatelessWidget {
   final Color? colorOverride;
   final bool isBold;
   const ExtendedText(
-      {Key? key,
+      {super.key,
       required this.text,
       required this.userState,
       this.fontSize,
       this.colorOverride,
-      this.isBold = false})
-      : super(key: key);
+      this.isBold = false});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +30,7 @@ class ExtendedText extends StatelessWidget {
     } else {
       return Text(text,
           style: TextStyle(
-            color: userState.darkmode ? AppColors.white : AppColors.textBlack,
+            color: userState.darkmode ? AppColors.white : AppColors.surfaceDark,
             fontSize: fontSize ?? 16,
             fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
           ));

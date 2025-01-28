@@ -82,7 +82,7 @@ class _ChangeUserInfoScreenState extends State<ChangeUserInfoScreen> {
           style: TextStyle(
             color: widget.userState.darkmode
                 ? AppColors.white
-                : AppColors.textBlack,
+                : AppColors.surfaceDark,
           ),
         ),
         leading: IconButton(
@@ -111,7 +111,7 @@ class _ChangeUserInfoScreenState extends State<ChangeUserInfoScreen> {
               style: TextStyle(
                 color: widget.userState.darkmode
                     ? AppColors.white
-                    : AppColors.textBlack,
+                    : AppColors.surfaceDark,
                 fontSize: 16.0,
               ),
             ),
@@ -126,7 +126,7 @@ class _ChangeUserInfoScreenState extends State<ChangeUserInfoScreen> {
               style: TextStyle(
                 color: widget.userState.darkmode
                     ? AppColors.white
-                    : AppColors.textBlack,
+                    : AppColors.surfaceDark,
                 fontSize: 16.0,
               ),
             ),
@@ -142,7 +142,7 @@ class _ChangeUserInfoScreenState extends State<ChangeUserInfoScreen> {
                 style: TextStyle(
                   color: widget.userState.darkmode
                       ? AppColors.white
-                      : AppColors.textBlack,
+                      : AppColors.surfaceDark,
                 ),
               ),
             const Spacer(),
@@ -184,27 +184,28 @@ class _ChangeUserInfoScreenState extends State<ChangeUserInfoScreen> {
       decoration: InputDecoration(
         labelText: labelText,
         labelStyle: TextStyle(
-          color:
-              widget.userState.darkmode ? AppColors.white : AppColors.textBlack,
+          color: widget.userState.darkmode
+              ? AppColors.white
+              : AppColors.surfaceDark,
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: widget.userState.darkmode
                 ? AppColors.white
-                : AppColors.textBlack,
+                : AppColors.surfaceDark,
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: widget.userState.darkmode
                 ? AppColors.white
-                : AppColors.textBlack,
+                : AppColors.surfaceDark,
           ),
         ),
       ),
       style: TextStyle(
         color:
-            widget.userState.darkmode ? AppColors.white : AppColors.textBlack,
+            widget.userState.darkmode ? AppColors.white : AppColors.surfaceDark,
       ),
     );
   }

@@ -162,7 +162,7 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
                       fontWeight: FontWeight.bold,
                       color: userState.darkmode
                           ? Colors.white
-                          : AppColors.textBlack,
+                          : AppColors.surfaceDark,
                     ),
                   ),
                   const SizedBox(height: 4),
@@ -172,7 +172,7 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
                       fontSize: 14,
                       color: userState.darkmode
                           ? Colors.white
-                          : AppColors.textBlack,
+                          : AppColors.surfaceDark,
                     ),
                   ),
                 ],
@@ -196,7 +196,7 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
                   fontSize: 14,
                   color: userState.darkmode
                       ? AppColors.white
-                      : AppColors.textBlack,
+                      : AppColors.surfaceDark,
                 ),
               ),
               onTap: () {
@@ -222,7 +222,7 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
                   fontSize: 14,
                   color: userState.darkmode
                       ? AppColors.white
-                      : AppColors.textBlack,
+                      : AppColors.surfaceDark,
                 ),
               ),
               onTap: () {
@@ -248,7 +248,7 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
                   fontSize: 14,
                   color: userState.darkmode
                       ? AppColors.white
-                      : AppColors.textBlack,
+                      : AppColors.surfaceDark,
                 ),
               ),
               onTap: () {
@@ -274,7 +274,7 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
                   fontSize: 14,
                   color: userState.darkmode
                       ? AppColors.white
-                      : AppColors.textBlack,
+                      : AppColors.surfaceDark,
                 ),
               ),
               onTap: () {
@@ -299,7 +299,7 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
                   fontSize: 14,
                   color: userState.darkmode
                       ? AppColors.white
-                      : AppColors.textBlack,
+                      : AppColors.surfaceDark,
                 ),
               ),
               onTap: () {
@@ -325,7 +325,7 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
                   fontSize: 14,
                   color: userState.darkmode
                       ? AppColors.white
-                      : AppColors.textBlack,
+                      : AppColors.surfaceDark,
                 ),
               ),
               onTap: () {

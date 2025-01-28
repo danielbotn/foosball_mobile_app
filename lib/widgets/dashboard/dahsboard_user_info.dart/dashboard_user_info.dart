@@ -1,3 +1,5 @@
+import 'package:dano_foosball/main.dart';
+import 'package:dano_foosball/widgets/extended_Text.dart';
 import 'package:flutter/material.dart';
 import 'package:dano_foosball/api/Organisation.dart';
 import 'package:dano_foosball/api/UserApi.dart';
@@ -76,7 +78,11 @@ class _DashBoardUserInfoState extends State<DashBoardUserInfo> {
             // elevation: 5,
             child: ListTile(
               leading: const Icon(Icons.email, color: Colors.grey),
-              title: Text('${userData.firstName} ${userData.lastName}'),
+              title: ExtendedText(
+                text: '${userData.firstName} ${userData.lastName}',
+                userState: userState,
+                isBold: true,
+              ),
               subtitle: Text(userData.email),
               trailing: Text(organistionName),
             ),

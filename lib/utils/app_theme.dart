@@ -6,15 +6,16 @@ class AppTheme {
   get darkTheme => ThemeData(
         primarySwatch: Colors.grey,
         appBarTheme: AppBarTheme(
-          color: AppColors.textBlack,
-          systemOverlayStyle: SystemUiOverlayStyle.light, // Use this instead of brightness
+          color: AppColors.surfaceDark,
+          systemOverlayStyle:
+              SystemUiOverlayStyle.light, // Use this instead of brightness
         ),
         inputDecorationTheme: InputDecorationTheme(
           hintStyle: TextStyle(color: AppColors.textGrey),
           labelStyle: TextStyle(color: AppColors.white),
         ),
         brightness: Brightness.dark,
-        canvasColor: AppColors.textBlack,
+        canvasColor: AppColors.surfaceDark,
         colorScheme: ColorScheme.dark(
           primary: AppColors.darkPink,
           onPrimary: Colors.white,
@@ -27,7 +28,8 @@ class AppTheme {
         primarySwatch: Colors.grey,
         appBarTheme: AppBarTheme(
           color: AppColors.grey2,
-          systemOverlayStyle: SystemUiOverlayStyle.dark, // Use this instead of brightness
+          systemOverlayStyle:
+              SystemUiOverlayStyle.dark, // Use this instead of brightness
         ),
         inputDecorationTheme: InputDecorationTheme(
           hintStyle: TextStyle(color: AppColors.textGrey),

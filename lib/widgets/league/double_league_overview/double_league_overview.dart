@@ -50,8 +50,9 @@ class _DoubleLeagueOverviewState extends State<DoubleLeagueOverview>
         title: ExtendedText(
           text: widget.leagueData.name,
           userState: widget.userState,
-          colorOverride:
-              widget.userState.darkmode ? AppColors.white : AppColors.textBlack,
+          colorOverride: widget.userState.darkmode
+              ? AppColors.white
+              : AppColors.surfaceDark,
         ),
         bottom: TabBar(
           controller: _tabController,

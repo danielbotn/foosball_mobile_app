@@ -90,9 +90,10 @@ class _SlackSettingsState extends State<SlackSettings> {
       appBar: AppBar(
         title: Text(widget.userState.hardcodedStrings.slack,
             style: TextStyle(
-                color: widget.userState.darkmode
-                    ? AppColors.white
-                    : AppColors.textBlack)),
+              color: widget.userState.darkmode
+                  ? AppColors.white
+                  : AppColors.surfaceDark,
+            )),
         leading: IconButton(
           icon: const Icon(Icons.chevron_left),
           onPressed: () {
@@ -130,7 +131,7 @@ class _SlackSettingsState extends State<SlackSettings> {
                     style: TextStyle(
                       color: widget.userState.darkmode
                           ? AppColors.white
-                          : AppColors.textBlack,
+                          : AppColors.surfaceDark,
                       fontSize: 16.0,
                     ),
                   ),
@@ -147,7 +148,7 @@ class _SlackSettingsState extends State<SlackSettings> {
                       style: TextStyle(
                         color: widget.userState.darkmode
                             ? AppColors.white
-                            : AppColors.textBlack,
+                            : AppColors.surfaceDark,
                       ),
                     ),
                   const Spacer(),

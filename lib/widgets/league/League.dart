@@ -94,8 +94,9 @@ class _LeagueState extends State<League> {
         title: ExtendedText(
           text: widget.userState.hardcodedStrings.league,
           userState: widget.userState,
-          colorOverride:
-              widget.userState.darkmode ? AppColors.white : AppColors.textBlack,
+          colorOverride: widget.userState.darkmode
+              ? AppColors.white
+              : AppColors.surfaceDark,
         ),
       ),
       body: Theme(

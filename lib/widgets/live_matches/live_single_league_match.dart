@@ -152,7 +152,7 @@ class _LiveSingleLeagueMatchState extends State<LiveSingleLeagueMatch> {
           style: TextStyle(
             color: widget.userState.darkmode
                 ? AppColors.white
-                : AppColors.textBlack,
+                : AppColors.surfaceDark,
           ),
         ),
         leading: IconButton(

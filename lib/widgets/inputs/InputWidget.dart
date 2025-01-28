@@ -38,7 +38,7 @@ class _InputWidgetState extends State<InputWidget> {
     return TextField(
       style: TextStyle(
         color:
-            widget.userState.darkmode ? AppColors.white : AppColors.textBlack,
+            widget.userState.darkmode ? AppColors.white : AppColors.surfaceDark,
         fontSize: 16.0,
       ),
       focusNode: focusNode,

@@ -247,6 +247,7 @@ class _SettingsState extends State<Settings> with RouteAware {
           leading: const Icon(Icons.phone_android),
           initialValue: widget.userState.darkmode,
           onToggle: changeTheme,
+          activeSwitchColor: AppColors.primary,
         ),
       ],
     );

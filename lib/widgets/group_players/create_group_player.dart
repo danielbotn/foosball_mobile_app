@@ -1,5 +1,6 @@
 import 'package:dano_foosball/main.dart';
 import 'package:dano_foosball/widgets/UI/Buttons/Button.dart';
+import 'package:dano_foosball/widgets/UI/Inputs/custom_input_two.dart';
 import 'package:flutter/material.dart';
 import 'package:dano_foosball/api/UserApi.dart';
 import 'package:dano_foosball/models/user/create_group_user_model.dart';
@@ -11,7 +12,6 @@ import 'package:dano_foosball/widgets/extended_Text.dart';
 import 'package:dano_foosball/widgets/group_players/info_card.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'dart:async';
-import 'package:dano_foosball/widgets/inputs/InputWidget.dart';
 
 class CreateGroupPlayer extends StatefulWidget {
   final UserState userState;
@@ -122,7 +122,7 @@ class _CreateGroupPlayerState extends State<CreateGroupPlayer> {
             ),
             Padding(
               padding: const EdgeInsets.all(4.0),
-              child: InputWidget(
+              child: CustomInputTwo(
                 userState: widget.userState,
                 onChangeInput: (value) {
                   setState(() {
@@ -130,15 +130,15 @@ class _CreateGroupPlayerState extends State<CreateGroupPlayer> {
                     clearInputs = false;
                   });
                 },
-                hintText: widget.userState.hardcodedStrings.firstName,
+                labelText: widget.userState.hardcodedStrings.firstName,
                 clearInputText: clearInputs,
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(4.0),
-              child: InputWidget(
+              child: CustomInputTwo(
                 userState: widget.userState,
-                hintText: widget.userState.hardcodedStrings.lastName,
+                labelText: widget.userState.hardcodedStrings.lastName,
                 onChangeInput: (value) {
                   setState(() {
                     lastNameText = value;

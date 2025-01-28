@@ -7,9 +7,7 @@ import 'package:dano_foosball/state/user_state.dart';
 import 'package:dano_foosball/utils/app_color.dart';
 import 'package:dano_foosball/utils/helpers.dart';
 import 'package:dano_foosball/widgets/extended_Text.dart';
-import 'package:dano_foosball/widgets/headline.dart';
 import 'package:dano_foosball/widgets/league/add_league_players/players_list.dart';
-import 'package:dano_foosball/widgets/league/add_league_players/selected_players.dart';
 import 'package:dano_foosball/widgets/league/button/create_sl_button.dart';
 import 'package:dano_foosball/widgets/loading.dart';
 
@@ -17,8 +15,7 @@ class AddLeaguePlayers extends StatefulWidget {
   final UserState userState;
   final GetLeagueResponse leagueData;
   const AddLeaguePlayers(
-      {Key? key, required this.userState, required this.leagueData})
-      : super(key: key);
+      {super.key, required this.userState, required this.leagueData});
 
   @override
   State<AddLeaguePlayers> createState() => _AddLeaguePlayersState();
@@ -87,8 +84,9 @@ class _AddLeaguePlayersState extends State<AddLeaguePlayers> {
         title: ExtendedText(
           text: widget.userState.hardcodedStrings.addPlayers,
           userState: widget.userState,
-          colorOverride:
-              widget.userState.darkmode ? AppColors.white : AppColors.textBlack,
+          colorOverride: widget.userState.darkmode
+              ? AppColors.white
+              : AppColors.surfaceDark,
         ),
       ),
       body: Theme(

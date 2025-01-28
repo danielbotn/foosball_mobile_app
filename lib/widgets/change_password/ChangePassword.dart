@@ -92,7 +92,7 @@ class _ChangePasswordState extends State<ChangePassword> {
               style: TextStyle(
                 color: widget.userState.darkmode
                     ? AppColors.white
-                    : AppColors.textBlack,
+                    : AppColors.surfaceDark,
                 fontSize: 16.0,
               ),
             ),
@@ -110,7 +110,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                 style: TextStyle(
                   color: widget.userState.darkmode
                       ? AppColors.white
-                      : AppColors.textBlack,
+                      : AppColors.surfaceDark,
                 ),
               ),
             if (_isVerificationCodeFieldVisible) ...[

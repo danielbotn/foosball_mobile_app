@@ -26,14 +26,12 @@ class _DashboardGoalsChartState extends State<DashboardGoalsChart> {
         GoalsChart(
           name: widget.userState.hardcodedStrings.scored,
           goals: widget.userStatsResponse!.totalGoalsScored,
-          barColor: charts.ColorUtil.fromDartColor(
-              const Color.fromRGBO(127, 211, 29, .9)),
+          barColor: charts.ColorUtil.fromDartColor(AppColors.primary),
         ),
         GoalsChart(
           name: widget.userState.hardcodedStrings.recieved,
           goals: widget.userStatsResponse!.totalGoalsReceived,
-          barColor: charts.ColorUtil.fromDartColor(
-              const Color.fromRGBO(112, 193, 255, .9)),
+          barColor: charts.ColorUtil.fromDartColor(AppColors.losingRed),
         )
       ];
     });
@@ -86,7 +84,7 @@ class _DashboardGoalsChartState extends State<DashboardGoalsChart> {
                               color: charts.ColorUtil.fromDartColor(
                                 widget.userState.darkmode
                                     ? AppColors.white
-                                    : AppColors.textBlack,
+                                    : AppColors.surfaceDark,
                               ),
                             ),
                           ),
@@ -96,9 +94,10 @@ class _DashboardGoalsChartState extends State<DashboardGoalsChart> {
                             labelStyle: charts.TextStyleSpec(
                               fontSize: 12,
                               color: charts.ColorUtil.fromDartColor(
-                                  widget.userState.darkmode
-                                      ? AppColors.white
-                                      : AppColors.textBlack),
+                                widget.userState.darkmode
+                                    ? AppColors.white
+                                    : AppColors.surfaceDark,
+                              ),
                             ),
                           ),
                         )),

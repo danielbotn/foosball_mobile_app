@@ -11,8 +11,7 @@ class QuicActions extends StatelessWidget {
   final UserState userState;
   final Function() notifyParent;
   const QuicActions(
-      {Key? key, required this.userState, required this.notifyParent})
-      : super(key: key);
+      {super.key, required this.userState, required this.notifyParent});
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +70,7 @@ class QuicActions extends StatelessWidget {
                       margin: const EdgeInsets.all(3.0),
                       height: 60,
                       width: 50,
-                      color: const Color.fromRGBO(127, 211, 29, .9),
+                      color: AppColors.primary,
                       alignment: Alignment.center,
                       child: const Icon(Icons.play_circle_filled_rounded,
                           color: Colors.white)),
@@ -84,7 +83,7 @@ class QuicActions extends StatelessWidget {
                       margin: const EdgeInsets.all(3.0),
                       height: 60,
                       width: 50,
-                      color: const Color.fromRGBO(255, 136, 0, .9),
+                      color: AppColors.primary,
                       alignment: Alignment.center,
                       child: const Icon(Icons.history, color: Colors.white)),
                 ),
@@ -96,7 +95,7 @@ class QuicActions extends StatelessWidget {
                       margin: const EdgeInsets.all(3.0),
                       height: 60,
                       width: 50,
-                      color: const Color.fromRGBO(112, 193, 255, .9),
+                      color: AppColors.primary,
                       alignment: Alignment.center,
                       child: const Icon(Icons.groups, color: Colors.white)),
                 ),
@@ -108,7 +107,7 @@ class QuicActions extends StatelessWidget {
                       margin: const EdgeInsets.all(3.0),
                       height: 60,
                       width: 50,
-                      color: const Color.fromRGBO(112, 193, 255, .9),
+                      color: AppColors.primary,
                       alignment: Alignment.center,
                       child: const Icon(Icons.settings, color: Colors.white)),
                 ),

@@ -91,9 +91,10 @@ class _TeamsSettingsState extends State<TeamsSettings> {
       appBar: AppBar(
         title: Text("Teams",
             style: TextStyle(
-                color: widget.userState.darkmode
-                    ? AppColors.white
-                    : AppColors.textBlack)),
+              color: widget.userState.darkmode
+                  ? AppColors.white
+                  : AppColors.surfaceDark,
+            )),
         leading: IconButton(
           icon: const Icon(Icons.chevron_left),
           onPressed: () {
@@ -131,7 +132,7 @@ class _TeamsSettingsState extends State<TeamsSettings> {
                     style: TextStyle(
                       color: widget.userState.darkmode
                           ? AppColors.white
-                          : AppColors.textBlack,
+                          : AppColors.surfaceDark,
                       fontSize: 16.0,
                     ),
                   ),
@@ -143,27 +144,27 @@ class _TeamsSettingsState extends State<TeamsSettings> {
                       labelStyle: TextStyle(
                         color: widget.userState.darkmode
                             ? AppColors.white
-                            : AppColors.textBlack,
+                            : AppColors.surfaceDark,
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color: widget.userState.darkmode
                               ? AppColors.white
-                              : AppColors.textBlack,
+                              : AppColors.surfaceDark,
                         ),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color: widget.userState.darkmode
                               ? AppColors.white
-                              : AppColors.textBlack,
+                              : AppColors.surfaceDark,
                         ),
                       ),
                     ),
                     style: TextStyle(
                       color: widget.userState.darkmode
                           ? AppColors.white
-                          : AppColors.textBlack,
+                          : AppColors.surfaceDark,
                     ),
                     obscureText: false,
                   ),
@@ -174,7 +175,7 @@ class _TeamsSettingsState extends State<TeamsSettings> {
                       style: TextStyle(
                         color: widget.userState.darkmode
                             ? AppColors.white
-                            : AppColors.textBlack,
+                            : AppColors.surfaceDark,
                       ),
                     ),
                   const Spacer(),

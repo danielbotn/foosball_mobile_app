@@ -23,21 +23,21 @@ class CustomInput extends StatelessWidget {
       decoration: InputDecoration(
         labelText: labelText,
         labelStyle: TextStyle(
-          color: userState.darkmode ? AppColors.white : AppColors.textBlack,
+          color: userState.darkmode ? AppColors.white : AppColors.surfaceDark,
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: userState.darkmode ? AppColors.white : AppColors.textBlack,
+            color: userState.darkmode ? AppColors.white : AppColors.surfaceDark,
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: userState.darkmode ? AppColors.white : AppColors.textBlack,
+            color: userState.darkmode ? AppColors.white : AppColors.surfaceDark,
           ),
         ),
       ),
       style: TextStyle(
-        color: userState.darkmode ? AppColors.white : AppColors.textBlack,
+        color: userState.darkmode ? AppColors.white : AppColors.surfaceDark,
       ),
       obscureText: obscureText,
     );

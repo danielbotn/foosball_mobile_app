@@ -24,22 +24,14 @@ class _DashboardMatchesChartState extends State<DashboardMatchesChart> {
   _setChartData() {
     var d = [
       MatchesChart(
-        name: widget.userState.hardcodedStrings.matches,
-        matches: widget.userStatsResponse!.totalMatches,
-        barColor: charts.ColorUtil.fromDartColor(
-            const Color.fromRGBO(255, 136, 0, .9)),
-      ),
-      MatchesChart(
         name: widget.userState.hardcodedStrings.won,
         matches: widget.userStatsResponse!.totalMatchesWon,
-        barColor: charts.ColorUtil.fromDartColor(
-            const Color.fromRGBO(127, 211, 29, .9)),
+        barColor: charts.ColorUtil.fromDartColor(AppColors.primary),
       ),
       MatchesChart(
         name: widget.userState.hardcodedStrings.lost,
         matches: widget.userStatsResponse!.totalMatchesLost,
-        barColor: charts.ColorUtil.fromDartColor(
-            const Color.fromRGBO(112, 193, 255, .9)),
+        barColor: charts.ColorUtil.fromDartColor(AppColors.losingRed),
       )
     ];
 
@@ -98,7 +90,7 @@ class _DashboardMatchesChartState extends State<DashboardMatchesChart> {
                               color: charts.ColorUtil.fromDartColor(
                                 widget.userState.darkmode
                                     ? AppColors.white
-                                    : AppColors.textBlack,
+                                    : AppColors.surfaceDark,
                               ),
                             ),
                           ),
@@ -108,9 +100,10 @@ class _DashboardMatchesChartState extends State<DashboardMatchesChart> {
                             labelStyle: charts.TextStyleSpec(
                               fontSize: 12,
                               color: charts.ColorUtil.fromDartColor(
-                                  widget.userState.darkmode
-                                      ? AppColors.white
-                                      : AppColors.textBlack),
+                                widget.userState.darkmode
+                                    ? AppColors.white
+                                    : AppColors.surfaceDark,
+                              ),
                             ),
                           ),
                         )),

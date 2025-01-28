@@ -99,7 +99,7 @@ class _CreateDoubleLeagueTeamState extends State<CreateDoubleLeagueTeam> {
             userState: widget.userState,
             colorOverride: widget.userState.darkmode
                 ? AppColors.white
-                : AppColors.textBlack,
+                : AppColors.surfaceDark,
           ),
         ),
         body: Container(

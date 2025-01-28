@@ -1,3 +1,4 @@
+import 'package:dano_foosball/utils/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:dano_foosball/state/user_state.dart';
 import 'package:dano_foosball/utils/helpers.dart';
@@ -5,7 +6,7 @@ import 'package:loading_indicator/loading_indicator.dart';
 
 class Loading extends StatelessWidget {
   final UserState userState;
-  const Loading({Key? key, required this.userState}) : super(key: key);
+  const Loading({super.key, required this.userState});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class Loading extends StatelessWidget {
             child: Center(
                 child: LoadingIndicator(
                     indicatorType: Indicator.ballPulse,
-                    colors: [Colors.lightGreen],
+                    colors: [AppColors.primary],
                     strokeWidth: 2,
                     pathBackgroundColor: Colors.black))));
   }

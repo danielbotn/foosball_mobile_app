@@ -6,15 +6,15 @@ class CustomInputTwo extends StatefulWidget {
   final UserState userState;
   final String labelText;
   final bool obscureText;
-  final Function(String value)
-      onChangeInput; // Added the onChangeInput parameter
-
+  final bool clearInputText; // Added the clearInputText parameter
+  final Function(String value) onChangeInput;
   const CustomInputTwo({
     super.key,
     required this.userState,
     required this.labelText,
     this.obscureText = false,
-    required this.onChangeInput, // Added onChangeInput to constructor
+    this.clearInputText = false, // Default value set to false
+    required this.onChangeInput,
   });
 
   @override
@@ -37,37 +37,46 @@ class _CustomInputTwoState extends State<CustomInputTwo> {
   }
 
   @override
+  void didUpdateWidget(covariant CustomInputTwo oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.clearInputText) {
+      _controller.clear(); // Clear the input text if clearInputText is true
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return TextField(
       controller: _controller,
       decoration: InputDecoration(
         labelText: widget.labelText,
         labelStyle: TextStyle(
-          color:
-              widget.userState.darkmode ? AppColors.white : AppColors.textBlack,
+          color: widget.userState.darkmode
+              ? AppColors.white
+              : AppColors.surfaceDark,
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: widget.userState.darkmode
                 ? AppColors.white
-                : AppColors.textBlack,
+                : AppColors.surfaceDark,
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: widget.userState.darkmode
                 ? AppColors.white
-                : AppColors.textBlack,
+                : AppColors.surfaceDark,
           ),
         ),
       ),
       style: TextStyle(
         color:
-            widget.userState.darkmode ? AppColors.white : AppColors.textBlack,
+            widget.userState.darkmode ? AppColors.white : AppColors.surfaceDark,
       ),
       obscureText: widget.obscureText,
       onChanged: (value) {
-        widget.onChangeInput(value); // Calling the onChangeInput function
+        widget.onChangeInput(value);
       },
     );
   }

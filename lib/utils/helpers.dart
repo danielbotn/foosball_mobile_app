@@ -152,7 +152,7 @@ class Helpers {
       return AppColors.white;
     } else {
       if (isTwoPlayers) {
-        return AppColors.textBlack;
+        return AppColors.surfaceDark;
       } else {
         return AppColors.white;
       }
@@ -162,7 +162,7 @@ class Helpers {
   Color getNewGameButtonColor(bool darkMode, bool isTwoPlayers) {
     if (darkMode) {
       if (isTwoPlayers) {
-        return AppColors.textBlack;
+        return AppColors.surfaceDark;
       } else {
         return AppColors.textGrey;
       }

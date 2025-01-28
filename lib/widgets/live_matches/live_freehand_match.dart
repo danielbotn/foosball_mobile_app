@@ -174,7 +174,7 @@ class _LiveFreehandMatchState extends State<LiveFreehandMatch> {
         title: Text(
           'Live Match',
           style: TextStyle(
-            color: isDarkMode ? AppColors.white : AppColors.textBlack,
+            color: isDarkMode ? AppColors.white : AppColors.surfaceDark,
           ),
         ),
         leading: IconButton(

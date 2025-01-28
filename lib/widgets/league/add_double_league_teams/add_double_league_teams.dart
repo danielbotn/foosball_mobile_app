@@ -14,9 +14,7 @@ import 'package:dano_foosball/widgets/UI/Buttons/Button.dart';
 import 'package:dano_foosball/widgets/UI/Error/ServerError.dart';
 import 'package:dano_foosball/widgets/dashboard/New_Dashboard.dart';
 import 'package:dano_foosball/widgets/extended_Text.dart';
-import 'package:dano_foosball/widgets/headline.dart';
 import 'package:dano_foosball/widgets/league/add_double_league_teams/add_team_button.dart';
-import 'package:dano_foosball/widgets/league/add_double_league_teams/team_overview.dart';
 import 'package:dano_foosball/widgets/league/add_double_league_teams/teams_selecter.dart';
 import 'package:dano_foosball/widgets/league/double_league_overview/double_league_overview.dart';
 import 'package:dano_foosball/widgets/loading.dart';
@@ -167,7 +165,7 @@ class _AddDoubleLeagueTeamsState extends State<AddDoubleLeagueTeams> {
             userState: widget.userState,
             colorOverride: widget.userState.darkmode
                 ? AppColors.white
-                : AppColors.textBlack,
+                : AppColors.surfaceDark,
           ),
         ),
         body: FutureBuilder<List<DoubleLeaguePlayerModel>?>(

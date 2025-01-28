@@ -57,8 +57,8 @@ class _DashBoardLastFiveState extends State<DashBoardLastFive> {
   Color? getColorOfMatch(UserLastTen userLastTenObject) {
     return userLastTenObject.userScore >
             userLastTenObject.opponentUserOrTeamScore
-        ? Colors.green[400]
-        : Colors.red[400];
+        ? AppColors.primary
+        : AppColors.losingRed;
   }
 
   void navigateToHistoryDetails(UserLastTen data) {

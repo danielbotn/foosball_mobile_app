@@ -22,10 +22,12 @@ class TotalPlayingTime extends StatelessWidget {
           children: <Widget>[
             Expanded(
               child: ListTile(
-                leading: Icon(Icons.timer,
-                    color: userState.darkmode
-                        ? AppColors.white
-                        : AppColors.textBlack),
+                leading: Icon(
+                  Icons.timer,
+                  color: userState.darkmode
+                      ? AppColors.white
+                      : AppColors.surfaceDark,
+                ),
                 title: ExtendedText(
                     text: totalPlayingTimeLabel, userState: userState),
                 subtitle:
