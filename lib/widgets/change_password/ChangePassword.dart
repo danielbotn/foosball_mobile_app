@@ -1,12 +1,12 @@
 import 'package:dano_foosball/main.dart';
 import 'package:dano_foosball/widgets/UI/Buttons/Button.dart';
+import 'package:dano_foosball/widgets/UI/Inputs/custom_input_two.dart';
 import 'package:dano_foosball/widgets/extended_Text.dart';
 import 'package:flutter/material.dart';
 import 'package:dano_foosball/api/AuthApi.dart';
 import 'package:dano_foosball/models/auth/update_password_request.dart';
 import 'package:dano_foosball/state/user_state.dart';
 import 'package:dano_foosball/utils/app_color.dart';
-import 'package:dano_foosball/widgets/inputs/InputWidget.dart';
 
 class ChangePassword extends StatefulWidget {
   final UserState userState;
@@ -97,11 +97,11 @@ class _ChangePasswordState extends State<ChangePassword> {
               ),
             ),
             const SizedBox(height: 16.0),
-            InputWidget(
+            CustomInputTwo(
               userState: widget.userState,
               onChangeInput: (value) => _passwordController.text = value,
               clearInputText: true,
-              hintText: widget.userState.hardcodedStrings.newPassword,
+              labelText: widget.userState.hardcodedStrings.newPassword,
             ),
             const SizedBox(height: 16.0),
             if (_infoText.isNotEmpty)
@@ -115,12 +115,12 @@ class _ChangePasswordState extends State<ChangePassword> {
               ),
             if (_isVerificationCodeFieldVisible) ...[
               const SizedBox(height: 16.0),
-              InputWidget(
+              CustomInputTwo(
                 userState: widget.userState,
                 onChangeInput: (value) =>
                     _verificationCodeController.text = value,
                 clearInputText: true,
-                hintText: widget
+                labelText: widget
                     .userState.hardcodedStrings.pleaseEnterVerificationCode,
               ),
             ],

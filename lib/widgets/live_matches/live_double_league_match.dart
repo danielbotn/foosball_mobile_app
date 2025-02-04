@@ -53,7 +53,6 @@ class _LiveDoubleLeagueMatchState extends State<LiveDoubleLeagueMatch> {
       }
     }).catchError((error) {
       // Handle errors here
-      print('Error: $error');
     });
 
     widget.hubConnection.on('SendLiveMatches', _handleScoreUpdate);

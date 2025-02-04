@@ -45,8 +45,6 @@ class _TeamOverviewState extends State<TeamOverview> {
   @override
   void didUpdateWidget(TeamOverview old) {
     super.didUpdateWidget(old);
-
-    var gaur = widget.team;
   }
 
   @override

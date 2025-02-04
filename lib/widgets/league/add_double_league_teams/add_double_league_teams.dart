@@ -43,8 +43,6 @@ class _AddDoubleLeagueTeamsState extends State<AddDoubleLeagueTeams> {
     setState(() {
       selectedPlayers = teamPlayers;
     });
-
-    var tmp = await getLeaguePlayers();
   }
 
   bool checkIfUserIsInLeague() {
