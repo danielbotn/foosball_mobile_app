@@ -1,3 +1,4 @@
+import 'package:dano_foosball/widgets/UI/Buttons/Button.dart';
 import 'package:flutter/material.dart';
 import 'package:dano_foosball/api/FreehandMatchApi.dart';
 import 'package:dano_foosball/models/freehand-matches/freehand_match_body.dart';
@@ -14,10 +15,10 @@ class MatchDetailButtons extends StatelessWidget {
   final UserState userState;
 
   const MatchDetailButtons({
-    Key? key,
+    super.key,
     required this.userState,
     required this.freehandMatchDetailObject,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -67,44 +68,26 @@ class MatchDetailButtons extends StatelessWidget {
       children: <Widget>[
         Expanded(
           flex: 5,
-          child: Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: ElevatedButton(
-              onPressed: rematch,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: userState.darkmode
-                    ? AppColors.darkModeButtonColor
-                    : AppColors.buttonsLightTheme,
-                minimumSize: const Size(100, 50),
-              ),
-              child: ExtendedText(
-                text: userState.hardcodedStrings.rematch,
-                userState: userState,
-                colorOverride:
-                    userState.darkmode ? AppColors.white : AppColors.white,
-              ),
-            ),
+          child: Button(
+            onClick: rematch,
+            userState: userState,
+            text: userState.hardcodedStrings.rematch,
+            paddingBottom: 16,
+            paddingLeft: 16,
+            paddingRight: 16,
+            paddingTop: 16,
           ),
         ),
         Expanded(
           flex: 5,
-          child: Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: ElevatedButton(
-              onPressed: close,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: userState.darkmode
-                    ? AppColors.darkModeButtonColor
-                    : AppColors.buttonsLightTheme,
-                minimumSize: const Size(100, 50),
-              ),
-              child: ExtendedText(
-                text: userState.hardcodedStrings.close,
-                userState: userState,
-                colorOverride:
-                    userState.darkmode ? AppColors.white : AppColors.white,
-              ),
-            ),
+          child: Button(
+            onClick: close,
+            text: userState.hardcodedStrings.close,
+            userState: userState,
+            paddingBottom: 16,
+            paddingLeft: 16,
+            paddingRight: 16,
+            paddingTop: 16,
           ),
         ),
       ],

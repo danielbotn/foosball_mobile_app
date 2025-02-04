@@ -15,12 +15,16 @@ class Loading extends StatelessWidget {
     bool darkMode = userState.darkmode;
     return Container(
         color: helpers.getBackgroundColor(darkMode),
-        child: const Padding(
-            padding: EdgeInsets.all(64),
+        child: Padding(
+            padding: const EdgeInsets.all(64),
             child: Center(
                 child: LoadingIndicator(
                     indicatorType: Indicator.ballPulse,
-                    colors: [AppColors.primary],
+                    colors: [
+                      userState.darkmode
+                          ? AppColors.wonDarkMode
+                          : AppColors.primary
+                    ],
                     strokeWidth: 2,
                     pathBackgroundColor: Colors.black))));
   }

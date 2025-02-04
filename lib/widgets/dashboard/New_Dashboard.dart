@@ -84,6 +84,8 @@ class _NewDashboardState extends State<NewDashboard> {
                         headline:
                             widget.userState.hardcodedStrings.quickActions,
                         userState: widget.userState,
+                        alignment: Alignment.center,
+                        hideIcon: true,
                       ),
                       QuicActions(
                         userState: widget.userState,
@@ -94,6 +96,7 @@ class _NewDashboardState extends State<NewDashboard> {
                           headline:
                               widget.userState.hardcodedStrings.lastTenMatches,
                           userState: widget.userState,
+                          hideIcon: true,
                         ),
                       if (widget.userState.currentOrganisationId != 0)
                         DashBoardLastFive(userState: widget.userState),

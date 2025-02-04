@@ -28,12 +28,15 @@ class _DashboardGoalsChartState extends State<DashboardGoalsChart> {
         GoalsChart(
           name: widget.userState.hardcodedStrings.scored,
           goals: widget.userStatsResponse!.totalGoalsScored,
-          barColor: charts.ColorUtil.fromDartColor(AppColors.primary),
+          barColor: charts.ColorUtil.fromDartColor(
+              userState.darkmode ? AppColors.wonDarkMode : AppColors.primary),
         ),
         GoalsChart(
           name: widget.userState.hardcodedStrings.recieved,
           goals: widget.userStatsResponse!.totalGoalsReceived,
-          barColor: charts.ColorUtil.fromDartColor(AppColors.losingRed),
+          barColor: charts.ColorUtil.fromDartColor(userState.darkmode
+              ? AppColors.lostDarkMode
+              : AppColors.losingRed),
         )
       ];
     });

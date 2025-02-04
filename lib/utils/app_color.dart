@@ -51,4 +51,7 @@ class AppColors {
   static const primaryDark = Color.fromARGB(255, 102, 209, 112);
 
   static const losingRedDark = Color.fromARGB(255, 225, 173, 173);
+
+  static const wonDarkMode = Color.fromARGB(255, 180, 180, 180);
+  static const lostDarkMode = Color.fromARGB(255, 100, 100, 100);
 }

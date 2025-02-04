@@ -70,7 +70,9 @@ class QuicActions extends StatelessWidget {
                       margin: const EdgeInsets.all(3.0),
                       height: 60,
                       width: 50,
-                      color: AppColors.primary,
+                      color: userState.darkmode
+                          ? AppColors.lostDarkMode
+                          : AppColors.primary,
                       alignment: Alignment.center,
                       child: const Icon(Icons.play_circle_filled_rounded,
                           color: Colors.white)),
@@ -83,7 +85,9 @@ class QuicActions extends StatelessWidget {
                       margin: const EdgeInsets.all(3.0),
                       height: 60,
                       width: 50,
-                      color: AppColors.primary,
+                      color: userState.darkmode
+                          ? AppColors.lostDarkMode
+                          : AppColors.primary,
                       alignment: Alignment.center,
                       child: const Icon(Icons.history, color: Colors.white)),
                 ),
@@ -95,7 +99,9 @@ class QuicActions extends StatelessWidget {
                       margin: const EdgeInsets.all(3.0),
                       height: 60,
                       width: 50,
-                      color: AppColors.primary,
+                      color: userState.darkmode
+                          ? AppColors.lostDarkMode
+                          : AppColors.primary,
                       alignment: Alignment.center,
                       child: const Icon(Icons.groups, color: Colors.white)),
                 ),
@@ -107,7 +113,9 @@ class QuicActions extends StatelessWidget {
                       margin: const EdgeInsets.all(3.0),
                       height: 60,
                       width: 50,
-                      color: AppColors.primary,
+                      color: userState.darkmode
+                          ? AppColors.lostDarkMode
+                          : AppColors.primary,
                       alignment: Alignment.center,
                       child: const Icon(Icons.settings, color: Colors.white)),
                 ),

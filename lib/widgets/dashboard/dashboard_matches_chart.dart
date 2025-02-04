@@ -28,12 +28,14 @@ class _DashboardMatchesChartState extends State<DashboardMatchesChart> {
       MatchesChart(
         name: widget.userState.hardcodedStrings.won,
         matches: widget.userStatsResponse!.totalMatchesWon,
-        barColor: charts.ColorUtil.fromDartColor(AppColors.primary),
+        barColor: charts.ColorUtil.fromDartColor(
+            userState.darkmode ? AppColors.wonDarkMode : AppColors.primary),
       ),
       MatchesChart(
         name: widget.userState.hardcodedStrings.lost,
         matches: widget.userStatsResponse!.totalMatchesLost,
-        barColor: charts.ColorUtil.fromDartColor(AppColors.losingRed),
+        barColor: charts.ColorUtil.fromDartColor(
+            userState.darkmode ? AppColors.lostDarkMode : AppColors.losingRed),
       )
     ];
 

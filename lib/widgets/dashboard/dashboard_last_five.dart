@@ -57,8 +57,12 @@ class _DashBoardLastFiveState extends State<DashBoardLastFive> {
   Color? getColorOfMatch(UserLastTen userLastTenObject) {
     return userLastTenObject.userScore >
             userLastTenObject.opponentUserOrTeamScore
-        ? AppColors.primary
-        : AppColors.losingRed;
+        ? (widget.userState.darkmode
+            ? AppColors.wonDarkMode
+            : AppColors.primary)
+        : (widget.userState.darkmode
+            ? AppColors.lostDarkMode
+            : AppColors.losingRed);
   }
 
   void navigateToHistoryDetails(UserLastTen data) {
@@ -107,8 +111,12 @@ class _DashBoardLastFiveState extends State<DashBoardLastFive> {
               Color? colorOfMatch = getColorOfMatch(match);
               String formattedDate =
                   DateFormat('dd-MM-yyyy | kk:mm').format(match.dateOfGame);
-              String wonOrLostSymbol =
-                  colorOfMatch == Colors.green[400] ? 'W' : 'L';
+              String wonOrLostSymbol = colorOfMatch ==
+                      (widget.userState.darkmode
+                          ? AppColors.wonDarkMode
+                          : AppColors.primary)
+                  ? 'W'
+                  : 'L';
 
               return Card(
                 elevation: 0,
