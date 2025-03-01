@@ -40,7 +40,7 @@ class _ChangeUserInfoScreenState extends State<ChangeUserInfoScreen> {
 
     if (firstName.isEmpty || lastName.isEmpty) {
       setState(() {
-        _infoText = "Please fill out all fields";
+        _infoText = widget.userState.hardcodedStrings.pleaseFillOutAllFields;
       });
       return;
     }
@@ -54,14 +54,14 @@ class _ChangeUserInfoScreenState extends State<ChangeUserInfoScreen> {
       FocusScope.of(context).unfocus(); // Close the keyboard
       helpers.showSnackbar(
         context,
-        "Successfully updated user information",
+        widget.userState.hardcodedStrings.successfullyUpdatedUserInformation,
         false,
       );
       Navigator.pop(context); // Go back to the previous screen
     } else {
       helpers.showSnackbar(
         context,
-        "could not update user information",
+        widget.userState.hardcodedStrings.couldNotUpdateUserInformation,
         true,
       );
     }
@@ -78,7 +78,7 @@ class _ChangeUserInfoScreenState extends State<ChangeUserInfoScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Change user info",
+          widget.userState.hardcodedStrings.changeUserInfo,
           style: TextStyle(
             color: widget.userState.darkmode
                 ? AppColors.white
@@ -107,7 +107,7 @@ class _ChangeUserInfoScreenState extends State<ChangeUserInfoScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Enter first name",
+              widget.userState.hardcodedStrings.enterFirstName,
               style: TextStyle(
                 color: widget.userState.darkmode
                     ? AppColors.white
@@ -122,7 +122,7 @@ class _ChangeUserInfoScreenState extends State<ChangeUserInfoScreen> {
             ),
             const SizedBox(height: 16.0),
             Text(
-              "Enter last name",
+              widget.userState.hardcodedStrings.enterLastName,
               style: TextStyle(
                 color: widget.userState.darkmode
                     ? AppColors.white

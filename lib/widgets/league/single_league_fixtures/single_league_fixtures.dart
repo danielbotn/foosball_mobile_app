@@ -1,3 +1,4 @@
+import 'package:dano_foosball/main.dart';
 import 'package:dano_foosball/models/other/TwoPlayersObject.dart';
 import 'package:dano_foosball/widgets/single_league_history/single_league_match_detail.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +45,7 @@ class _SingleLeagueFixturesState extends State<SingleLeagueFixtures> {
       } else if (match.matchStarted == false) {
         result = widget.userState.hardcodedStrings.notStarted;
       } else if (match.matchPaused == true) {
-        result = "Match Paused";
+        result = userState.hardcodedStrings.matchPaused;
       }
     }
     return result;

@@ -179,7 +179,16 @@ abstract class _UserState with Store {
       delete: "",
       edit: "",
       deleteLeague: "",
-      deleteLeagueAreYouSure: "");
+      deleteLeagueAreYouSure: "",
+      allFixtures: "",
+      myFixtures: "",
+      matchPaused: "",
+      pleaseFillOutAllFields: "",
+      successfullyUpdatedUserInformation: "",
+      changeUserInfo: "",
+      enterFirstName: "",
+      enterLastName: "",
+      couldNotUpdateUserInformation: "");
 
   @observable
   bool darkmode = false;

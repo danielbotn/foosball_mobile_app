@@ -1,3 +1,4 @@
+import 'package:dano_foosball/main.dart';
 import 'package:dano_foosball/widgets/dashboard/New_Dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:dano_foosball/models/leagues/get-league-response.dart';
@@ -85,7 +86,7 @@ class _SingleLeagueOverviewState extends State<SingleLeagueOverview>
               key: const Key(
                   'tab_my_fixtures'), // Added a key to the My Fixtures tab
               child: ExtendedText(
-                text: "My fixtures",
+                text: userState.hardcodedStrings.myFixtures,
                 userState: widget.userState,
               ),
             ),
@@ -93,7 +94,7 @@ class _SingleLeagueOverviewState extends State<SingleLeagueOverview>
               key: const Key(
                   'tab_all_fixtures'), // Added a key to the All Fixtures tab
               child: ExtendedText(
-                text: "All fixtures",
+                text: userState.hardcodedStrings.allFixtures,
                 userState: widget.userState,
               ),
             ),

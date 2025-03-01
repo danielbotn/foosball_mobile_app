@@ -11,8 +11,12 @@ import 'package:dano_foosball/widgets/loading.dart';
 class DoubleLeagueFixtures extends StatefulWidget {
   final UserState userState;
   final int leagueId;
+  final bool showOnlyMyFixtures;
   const DoubleLeagueFixtures(
-      {super.key, required this.userState, required this.leagueId});
+      {super.key,
+      required this.userState,
+      required this.leagueId,
+      this.showOnlyMyFixtures = false});
 
   @override
   State<DoubleLeagueFixtures> createState() => _DoubleLeagueFixturesState();
@@ -37,7 +41,7 @@ class _DoubleLeagueFixturesState extends State<DoubleLeagueFixtures> {
       } else if (match.matchStarted == false) {
         result = widget.userState.hardcodedStrings.notStarted;
       } else if (match.matchPaused == true) {
-        result = "Match Paused";
+        result = userState.hardcodedStrings.matchPaused;
       }
     }
     return result;
@@ -71,6 +75,17 @@ class _DoubleLeagueFixturesState extends State<DoubleLeagueFixtures> {
         }
         if (snapshot.hasData) {
           List<DoubleLeagueMatchModel>? data = snapshot.data;
+
+          if (widget.showOnlyMyFixtures) {
+            data = data
+                ?.where((match) =>
+                    match.teamOne
+                        .any((p) => p.userId == widget.userState.userId) ||
+                    match.teamTwo
+                        .any((p) => p.userId == widget.userState.userId))
+                .toList();
+          }
+
           return Container(
               color: helpers.getBackgroundColor(widget.userState.darkmode),
               height: double.infinity,

@@ -1,3 +1,4 @@
+import 'package:dano_foosball/main.dart';
 import 'package:flutter/material.dart';
 import 'package:dano_foosball/models/leagues/get-league-response.dart';
 import 'package:dano_foosball/state/user_state.dart';
@@ -24,7 +25,7 @@ class _DoubleLeagueOverviewState extends State<DoubleLeagueOverview>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
   }
 
   @override
@@ -64,7 +65,12 @@ class _DoubleLeagueOverviewState extends State<DoubleLeagueOverview>
             )),
             Tab(
                 child: ExtendedText(
-              text: widget.userState.hardcodedStrings.fixtures,
+              text: userState.hardcodedStrings.allFixtures,
+              userState: widget.userState,
+            )),
+            Tab(
+                child: ExtendedText(
+              text: userState.hardcodedStrings.myFixtures,
               userState: widget.userState,
             )),
           ],
@@ -78,7 +84,11 @@ class _DoubleLeagueOverviewState extends State<DoubleLeagueOverview>
             DoubleLeagueStandings(
                 userState: widget.userState, leagueId: widget.leagueData.id),
             DoubleLeagueFixtures(
-                userState: widget.userState, leagueId: widget.leagueData.id)
+                userState: widget.userState, leagueId: widget.leagueData.id),
+            DoubleLeagueFixtures(
+                userState: widget.userState,
+                leagueId: widget.leagueData.id,
+                showOnlyMyFixtures: true),
           ],
         ),
       ),

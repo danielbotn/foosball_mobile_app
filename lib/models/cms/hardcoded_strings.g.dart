@@ -161,6 +161,17 @@ HardcodedStrings _$HardcodedStringsFromJson(Map<String, dynamic> json) =>
       deleteLeague: json['deleteLeague'] as String,
       edit: json['edit'] as String,
       deleteLeagueAreYouSure: json['deleteLeagueAreYouSure'] as String,
+      allFixtures: json['allFixtures'] as String,
+      myFixtures: json['myFixtures'] as String,
+      matchPaused: json['matchPaused'] as String,
+      pleaseFillOutAllFields: json['pleaseFillOutAllFields'] as String,
+      successfullyUpdatedUserInformation:
+          json['successfullyUpdatedUserInformation'] as String,
+      couldNotUpdateUserInformation:
+          json['couldNotUpdateUserInformation'] as String,
+      changeUserInfo: json['changeUserInfo'] as String,
+      enterFirstName: json['enterFirstName'] as String,
+      enterLastName: json['enterLastName'] as String,
     );
 
 Map<String, dynamic> _$HardcodedStringsToJson(HardcodedStrings instance) =>
@@ -312,4 +323,14 @@ Map<String, dynamic> _$HardcodedStringsToJson(HardcodedStrings instance) =>
       'deleteLeague': instance.deleteLeague,
       'edit': instance.edit,
       'deleteLeagueAreYouSure': instance.deleteLeagueAreYouSure,
+      'allFixtures': instance.allFixtures,
+      'myFixtures': instance.myFixtures,
+      'matchPaused': instance.matchPaused,
+      'pleaseFillOutAllFields': instance.pleaseFillOutAllFields,
+      'successfullyUpdatedUserInformation':
+          instance.successfullyUpdatedUserInformation,
+      'couldNotUpdateUserInformation': instance.couldNotUpdateUserInformation,
+      'changeUserInfo': instance.changeUserInfo,
+      'enterFirstName': instance.enterFirstName,
+      'enterLastName': instance.enterLastName,
     };

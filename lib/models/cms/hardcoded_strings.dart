@@ -145,12 +145,21 @@ class HardcodedStrings {
   final String ongoing;
   final String singleLeague;
   final String doubleLeague;
-
-  // New properties
   final String delete;
   final String deleteLeague;
   final String edit;
   final String deleteLeagueAreYouSure;
+
+  // Newly added properties
+  final String allFixtures;
+  final String myFixtures;
+  final String matchPaused;
+  final String pleaseFillOutAllFields;
+  final String successfullyUpdatedUserInformation;
+  final String couldNotUpdateUserInformation;
+  final String changeUserInfo;
+  final String enterFirstName;
+  final String enterLastName;
 
   HardcodedStrings({
     required this.matches,
@@ -298,6 +307,15 @@ class HardcodedStrings {
     required this.deleteLeague,
     required this.edit,
     required this.deleteLeagueAreYouSure,
+    required this.allFixtures,
+    required this.myFixtures,
+    required this.matchPaused,
+    required this.pleaseFillOutAllFields,
+    required this.successfullyUpdatedUserInformation,
+    required this.couldNotUpdateUserInformation,
+    required this.changeUserInfo,
+    required this.enterFirstName,
+    required this.enterLastName,
   });
 
   factory HardcodedStrings.fromJson(Map<String, dynamic> item) =>
