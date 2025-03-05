@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:dano_foosball/widgets/foosball_table/foosball_dashboard/foosball_dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:dano_foosball/models/auth/jwt_model.dart';
 import 'package:dano_foosball/route_generator.dart';
@@ -78,26 +79,25 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   HttpOverrides.global = MyHttpOverrides();
   await dotenv.load(fileName: ".env");
-  String? tokenData = await _getJwtToken();
+
   String theRoute = 'login';
-  String? token = tokenData;
-  if (token != null) {
-    await setJwtInfo(token);
+
+  // Check if platform is desktop
+  if (Platform.isLinux || Platform.isMacOS || Platform.isWindows) {
     await setLanguageInfo();
     await setTheme();
-    theRoute = 'dashboard';
-    // is this code now redundant?
-    // bool isTokenExpired = JwtDecoder.isExpired(token);
-    // if (isTokenExpired == false) {
-    //   theRoute = 'dashboard';
-    // } else {
-    //   // to do, use refresh token to log user back in
-    // }
+    theRoute = 'foosball-dashboard';
+  } else {
+    String? tokenData = await _getJwtToken();
+    if (tokenData != null) {
+      await setJwtInfo(tokenData);
+      await setLanguageInfo();
+      await setTheme();
+      theRoute = 'dashboard';
+    }
   }
 
-  runApp(
-    MyApp(initialRoute: theRoute),
-  );
+  runApp(MyApp(initialRoute: theRoute));
 }
 
 class MyApp extends StatefulWidget {
@@ -119,6 +119,7 @@ class _MyAppState extends State<MyApp> {
       darkTheme: AppTheme().darkTheme,
       initialRoute: widget.initialRoute,
       routes: {
+        'foosball-dashboard': (context) => FoosballDashboard(userState: param),
         'dashboard': (context) => NewDashboard(userState: param),
         'login': (context) => Login(userState: userState),
         'settings': (context) => Settings(userState: userState),

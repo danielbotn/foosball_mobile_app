@@ -1,3 +1,4 @@
+import 'package:dano_foosball/widgets/foosball_table/foosball_dashboard/foosball_dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:dano_foosball/main.dart';
 import 'package:dano_foosball/state/user_state.dart';
@@ -16,6 +17,13 @@ class RouteGenerator {
       case 'login':
         if (args is UserState) {
           return MaterialPageRoute(builder: (_) => Login(userState: args));
+        } else {
+          return _errorRoute();
+        }
+      case 'foosball-dashboard':
+        if (args is UserState) {
+          return MaterialPageRoute(
+              builder: (_) => FoosballDashboard(userState: args));
         } else {
           return _errorRoute();
         }
