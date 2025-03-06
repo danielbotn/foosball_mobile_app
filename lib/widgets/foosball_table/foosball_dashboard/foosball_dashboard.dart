@@ -1,7 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-
-import 'package:dano_foosball/main.dart';
 import 'package:dano_foosball/widgets/foosball_table/Other/Other.dart';
 import 'package:dano_foosball/widgets/foosball_table/matchlog/matchlog.dart';
 import 'package:dano_foosball/widgets/foosball_table/scoreboard/scoreboard.dart';
@@ -24,6 +22,7 @@ class _FoosballDashboardState extends State<FoosballDashboard> {
   // State
   bool gameStarted = false;
   bool gamePaused = false;
+  bool gameFinished = false;
   Duration duration = const Duration();
   Timer? timer;
   int teamOneScore = 0;
@@ -44,7 +43,50 @@ class _FoosballDashboardState extends State<FoosballDashboard> {
   void initState() {
     super.initState();
     // Connect to the WebSocket server when the widget initializes
+    // We are using two servers for the 2 goals
     connectToWebSocket();
+    connectToWebSocketTwo();
+  }
+
+  void connectToWebSocketTwo() {
+    try {
+      _channel = WebSocketChannel.connect(
+        Uri.parse('ws://localhost:8764'),
+      );
+
+      setState(() {
+        serverConnected = true;
+      });
+
+      // Listen for messages from the server
+      _channel!.stream.listen(
+        (message) {
+          handleWebSocketMessage(message);
+        },
+        onDone: () {
+          setState(() {
+            serverConnected = false;
+          });
+          // Try to reconnect after a delay
+          scheduleReconnect();
+        },
+        onError: (error) {
+          print("WebSocket error: $error");
+          setState(() {
+            serverConnected = false;
+          });
+          // Try to reconnect after a delay
+          scheduleReconnect();
+        },
+      );
+    } catch (e) {
+      print("WebSocket connection error: $e");
+      setState(() {
+        serverConnected = false;
+      });
+      // Try to reconnect after a delay
+      scheduleReconnect();
+    }
   }
 
   void connectToWebSocket() {
@@ -107,27 +149,29 @@ class _FoosballDashboardState extends State<FoosballDashboard> {
             "Received: ${data['sensor']} ${data['state'] ?? data['distance']}";
       });
 
-      // For testing purposes, update score on any sensor event
-      // In a real implementation, you'd have more specific logic
-      if (data['sensor'] == 'BEAM1') {
-        _updateScore('teamOne');
-        setState(() {
-          goalOneConnected = true;
-        });
-      } else if (data['sensor'] == 'BEAM2') {
-        _updateScore('teamTwo');
-        setState(() {
-          goalTwoConnected = true;
-        });
-      }
-
-      // Start the game if it's not started and we receive sensor data
-      if (!gameStarted) {
-        startGame();
+      if (gameFinished == false) {
+        // For testing purposes, update score on any sensor event
+        // In a real implementation, you'd have more specific logic
+        if (data['sensor'] == 'BEAM1') {
+          _updateScore('teamOne');
+        } else if (data['sensor'] == 'BEAM2') {
+          _updateScore('teamTwo');
+        }
       }
     } catch (e) {
       print("Error parsing WebSocket message: $e");
     }
+  }
+
+  bool _checkIfGameIsOver() {
+    bool result = false;
+    if (gameStarted) {
+      if (teamOneScore >= upTo || teamTwoScore >= upTo) {
+        result = true;
+      }
+    }
+
+    return result;
   }
 
   void _updateScore(String team) {
@@ -139,13 +183,17 @@ class _FoosballDashboardState extends State<FoosballDashboard> {
           teamTwoScore++;
         }
       });
+      gameFinished = _checkIfGameIsOver();
     }
   }
 
-  void stopTimer() {
+  // Called from child widget
+  // Fires when game is finished
+  void onGameOver() {
     setState(() {
       gameStarted = false;
       gamePaused = false;
+      gameFinished = true;
       duration = const Duration();
     });
 
@@ -158,6 +206,7 @@ class _FoosballDashboardState extends State<FoosballDashboard> {
     setState(() {
       gameStarted = true;
       gamePaused = false;
+      gameFinished = false;
       duration = const Duration(); // Reset duration when starting
     });
 
@@ -238,7 +287,7 @@ class _FoosballDashboardState extends State<FoosballDashboard> {
                       gamePaused: gamePaused,
                       gameStarted: gameStarted,
                       upTo: upTo,
-                      onGameOver: stopTimer),
+                      onGameOver: onGameOver),
                   const SizedBox(height: 16),
                   Expanded(
                       child: Matchlog(
