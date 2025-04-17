@@ -6,7 +6,7 @@ import 'package:dano_foosball/widgets/Settings.dart';
 import 'package:dano_foosball/widgets/Single_game.dart';
 import 'package:dano_foosball/widgets/dashboard/New_Dashboard.dart';
 import 'package:dano_foosball/widgets/freehand_history/freehand_match_detail.dart';
-import 'package:dano_foosball/widgets/login.dart';
+import 'package:dano_foosball/widgets/Login.dart';
 
 import 'models/other/TwoPlayersObject.dart';
 

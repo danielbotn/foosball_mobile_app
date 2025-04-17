@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:dano_foosball/widgets/foosball_table/Other/Other.dart';
+import 'package:dano_foosball/widgets/foosball_table/other/other.dart';
 import 'package:dano_foosball/widgets/foosball_table/matchlog/matchlog.dart';
 import 'package:dano_foosball/widgets/foosball_table/scoreboard/scoreboard.dart';
 import 'package:dano_foosball/widgets/foosball_table/sidebar/sidebar.dart';
