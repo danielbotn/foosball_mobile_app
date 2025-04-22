@@ -65,11 +65,16 @@ Future<void> setLanguageInfo() async {
 Future<void> setTheme() async {
   PreferencesService preferencesService = PreferencesService();
   bool? darkTheme = await preferencesService.getDarkTheme();
-
-  if (darkTheme == true) {
+  ('dark> ');
+  if (darkTheme == null) {
     userState.setDarkmode(true);
+    await preferencesService.setDarkTheme(true);
   } else {
-    userState.setDarkmode(false);
+     if (darkTheme == true) {
+      userState.setDarkmode(true);
+    } else {
+      userState.setDarkmode(false);
+    }
   }
 }
 
