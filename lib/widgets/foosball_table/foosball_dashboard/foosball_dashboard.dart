@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:dano_foosball/models/foosball-table/game_score.dart';
 import 'package:dano_foosball/widgets/foosball_table/other/other.dart';
 import 'package:dano_foosball/widgets/foosball_table/matchlog/matchlog.dart';
 import 'package:dano_foosball/widgets/foosball_table/scoreboard/scoreboard.dart';
@@ -28,6 +29,7 @@ class _FoosballDashboardState extends State<FoosballDashboard> {
   int teamOneScore = 0;
   int teamTwoScore = 0;
   int upTo = 10;
+  List<GameScore> matchLogScore = [];
 
   // Connections state
   bool goalOneConnected = false;
@@ -174,13 +176,35 @@ class _FoosballDashboardState extends State<FoosballDashboard> {
     return result;
   }
 
+  String _formatDuration(Duration duration) {
+    // Format the duration as HH:MM:SS
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    String twoDigitHours = twoDigits(duration.inHours);
+    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+    return "$twoDigitHours:$twoDigitMinutes:$twoDigitSeconds";
+  }
+
+  GameScore _createGameScore(String teamName, int teamScore, int opponentTeamScore) {
+    return GameScore(
+      teamName : teamName,
+      teamScore : teamScore,
+      timeOfGoal : _formatDuration(duration),
+      opponentTeamScore: opponentTeamScore
+    );
+  }
+
   void _updateScore(String team) {
     if (gameStarted && !gamePaused) {
       setState(() {
         if (team == 'teamOne') {
           teamOneScore++;
+          var teamOneLog = _createGameScore("Team Grey", teamOneScore, teamTwoScore);
+          matchLogScore.add(teamOneLog);
         } else if (team == 'teamTwo') {
           teamTwoScore++;
+          var teamTwoLog = _createGameScore("Team Blue", teamTwoScore, teamOneScore);
+          matchLogScore.add(teamTwoLog);
         }
       });
       gameFinished = _checkIfGameIsOver();
@@ -195,6 +219,7 @@ class _FoosballDashboardState extends State<FoosballDashboard> {
       gamePaused = false;
       gameFinished = true;
       duration = const Duration();
+      matchLogScore = [];
     });
 
     timer?.cancel();
@@ -293,6 +318,11 @@ class _FoosballDashboardState extends State<FoosballDashboard> {
                       child: Matchlog(
                     userState: widget.userState,
                     matchStarted: gameStarted,
+                    matchEnded: gameFinished,
+                    matchLogScore: matchLogScore,
+                    teamOneScore: teamOneScore,
+                    teamTwoScore: teamTwoScore,
+                    gameDuration: duration,
                   )),
                 ],
               ),
