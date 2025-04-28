@@ -71,11 +71,21 @@ class TimerControls extends StatelessWidget {
   }
 
   String _formatDuration(Duration duration) {
+    int hours = duration.inHours;
     String minutes =
         duration.inMinutes.remainder(60).toString().padLeft(2, '0');
     String seconds =
         duration.inSeconds.remainder(60).toString().padLeft(2, '0');
-    return "$minutes:$seconds";
+
+    if (hours > 0) {
+      return '${hours.toString().padLeft(2, '0')}:$minutes:$seconds';
+    } else {
+      return '$minutes:$seconds';
+    }
+  }
+
+  bool _hasHours(Duration duration) {
+    return duration.inHours > 0;
   }
 
   Widget _buildTimerControls(
@@ -91,7 +101,8 @@ class TimerControls extends StatelessWidget {
           Text(
             _formatDuration(duration),
             style: TextStyle(
-              fontSize: 48,
+              fontSize:
+                  _hasHours(duration) ? 40 : 48, // smaller if hours are shown
               fontWeight: FontWeight.bold,
               color: textColor,
             ),

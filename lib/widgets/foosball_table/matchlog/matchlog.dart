@@ -14,16 +14,15 @@ class Matchlog extends StatelessWidget {
   final int teamTwoScore;
   final Duration gameDuration; // Duration of the game
 
-  const Matchlog({
-    super.key,
-    required this.userState,
-    this.matchStarted = false,
-    this.matchEnded = false,
-    required this.matchLogScore,
-    required this.teamOneScore,
-    required this.teamTwoScore,
-    required this.gameDuration
-  });
+  const Matchlog(
+      {super.key,
+      required this.userState,
+      this.matchStarted = false,
+      this.matchEnded = false,
+      required this.matchLogScore,
+      required this.teamOneScore,
+      required this.teamTwoScore,
+      required this.gameDuration});
 
   BoxDecoration _boxDecoration({
     Color? borderColor,
@@ -51,80 +50,83 @@ class Matchlog extends StatelessWidget {
     );
   }
 
-Widget _buildMatchLog(Color textColor, Color boxColor, Color borderColor) {
-  return Container(
-    decoration: _boxDecoration(boxColor: boxColor, borderColor: borderColor),
-    padding: const EdgeInsets.all(16),
-    child: Column(
-      children: [
-        if (matchLogScore.isNotEmpty)
-          Text(
-            "${matchEnded ? 'FT' : ''} ${teamOneScore.toString()} - ${teamTwoScore.toString()}",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: textColor,
+  Widget _buildMatchLog(Color textColor, Color boxColor, Color borderColor) {
+    return Container(
+      decoration: _boxDecoration(boxColor: boxColor, borderColor: borderColor),
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        children: [
+          if (matchLogScore.isNotEmpty)
+            Text(
+              "${matchEnded ? 'FT' : ''} ${teamOneScore.toString()} - ${teamTwoScore.toString()}",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: textColor,
+              ),
+            ),
+          const SizedBox(height: 16),
+          Expanded(
+            child: ListView.builder(
+              itemCount: matchLogScore.length,
+              itemBuilder: (context, index) {
+                final entry = matchLogScore[matchLogScore.length - 1 - index];
+                final isTeamGrey = entry.teamName == "Team Grey";
+
+                // Content widgets
+                final children = <Widget>[
+                  Text(entry.teamName, style: TextStyle(color: textColor)),
+                  const SizedBox(width: 8),
+                  _scoreBox(entry),
+                  const SizedBox(width: 12),
+                  const Icon(Icons.sports_soccer,
+                      color: Colors.white, size: 20),
+                  const SizedBox(width: 12),
+                  Text(entry.timeOfGoal, style: TextStyle(color: textColor)),
+                ];
+
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Row(
+                    mainAxisAlignment: isTeamGrey
+                        ? MainAxisAlignment.start
+                        : MainAxisAlignment.end,
+                    children: [
+                      // Wrap in Flexible so it doesn't overflow
+                      Flexible(
+                        child: Row(
+                          mainAxisAlignment: isTeamGrey
+                              ? MainAxisAlignment.start
+                              : MainAxisAlignment.end,
+                          children: isTeamGrey
+                              ? children
+                              : children.reversed.toList(),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
             ),
           ),
-        const SizedBox(height: 16),
-        Expanded(
-          child: ListView.builder(
-            itemCount: matchLogScore.length,
-            itemBuilder: (context, index) {
-              final entry = matchLogScore[matchLogScore.length - 1 - index];
-              final isTeamGrey = entry.teamName == "Team Grey";
+        ],
+      ),
+    );
+  }
 
-              // Content widgets
-              final children = <Widget>[
-                Text(entry.teamName, style: TextStyle(color: textColor)),
-                const SizedBox(width: 8),
-                _scoreBox(entry),
-                const SizedBox(width: 12),
-                const Icon(Icons.sports_soccer,
-                    color: Colors.white, size: 20),
-                const SizedBox(width: 12),
-                Text(entry.timeOfGoal, style: TextStyle(color: textColor)),
-              ];
-
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Row(
-                  mainAxisAlignment:
-                      isTeamGrey ? MainAxisAlignment.start : MainAxisAlignment.end,
-                  children: [
-                    // Wrap in Flexible so it doesn't overflow
-                    Flexible(
-                      child: Row(
-                        mainAxisAlignment: isTeamGrey
-                            ? MainAxisAlignment.start
-                            : MainAxisAlignment.end,
-                        children: isTeamGrey ? children : children.reversed.toList(),
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
-        ),
-      ],
-    ),
-  );
-}
-
-Widget _scoreBox(entry) {
-  return Container(
-    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-    decoration: BoxDecoration(
-      color: Colors.green,
-      borderRadius: BorderRadius.circular(4),
-    ),
-    child: Text(
-      "(${entry.teamScore}-${entry.opponentTeamScore})",
-      style: const TextStyle(color: Colors.white, fontSize: 14),
-    ),
-  );
-}
+  Widget _scoreBox(entry) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+      decoration: BoxDecoration(
+        color: Colors.green,
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: Text(
+        "(${entry.teamScore}-${entry.opponentTeamScore})",
+        style: const TextStyle(color: Colors.white, fontSize: 14),
+      ),
+    );
+  }
 
   Widget _buildMatchInvitation(
       Color textColor, Color boxColor, Color borderColor) {

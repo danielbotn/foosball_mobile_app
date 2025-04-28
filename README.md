@@ -6,18 +6,19 @@ The mobile app interacts with a `Dot net core REST api`.
 
 [![forthebadge](http://forthebadge.com/images/badges/built-with-love.svg)](http://forthebadge.com) [![forthebadge](http://forthebadge.com/images/badges/makes-people-smile.svg)](http://forthebadge.com)
 
-[![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](http://forthebadge.com)
+[![Flutter](https://img.shields.io/badge/Flutter-3.29.3-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](http://forthebadge.com)
 
-[![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)](http://forthebadge.com)
+[![Dart](https://img.shields.io/badge/Dart-3.7.2-%230175C2.svg?style=for-the-badge&logo=Dart&logoColor=white)](http://forthebadge.com)
 
 </div>
 
 # Development
 
-Run the project with the following command
+Run the project with the following command.
+OBS! We are now using Flutter version Manager
 
 ```sh
-flutter run
+fvm flutter run
 ```
 
 or run the program with the debugger withing `Visual studio code` if you have the `Flutter` and `Dart` extension.
@@ -25,7 +26,7 @@ or run the program with the debugger withing `Visual studio code` if you have th
 # Run build runner
 
 ```sh
-flutter packages pub run build_runner build
+fvm flutter packages pub run build_runner build
 ```
 
 ## Env variables

@@ -177,21 +177,27 @@ class _FoosballDashboardState extends State<FoosballDashboard> {
   }
 
   String _formatDuration(Duration duration) {
-    // Format the duration as HH:MM:SS
     String twoDigits(int n) => n.toString().padLeft(2, '0');
-    String twoDigitHours = twoDigits(duration.inHours);
-    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
-    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
-    return "$twoDigitHours:$twoDigitMinutes:$twoDigitSeconds";
+    int hours = duration.inHours;
+    int minutes = duration.inMinutes.remainder(60);
+    int seconds = duration.inSeconds.remainder(60);
+
+    if (hours > 0) {
+      return '${twoDigits(hours)}:${twoDigits(minutes)}:${twoDigits(seconds)}';
+    } else if (minutes > 0) {
+      return '${twoDigits(minutes)}:${twoDigits(seconds)}';
+    } else {
+      return '$seconds';
+    }
   }
 
-  GameScore _createGameScore(String teamName, int teamScore, int opponentTeamScore) {
+  GameScore _createGameScore(
+      String teamName, int teamScore, int opponentTeamScore) {
     return GameScore(
-      teamName : teamName,
-      teamScore : teamScore,
-      timeOfGoal : _formatDuration(duration),
-      opponentTeamScore: opponentTeamScore
-    );
+        teamName: teamName,
+        teamScore: teamScore,
+        timeOfGoal: _formatDuration(duration),
+        opponentTeamScore: opponentTeamScore);
   }
 
   void _updateScore(String team) {
@@ -199,11 +205,13 @@ class _FoosballDashboardState extends State<FoosballDashboard> {
       setState(() {
         if (team == 'teamOne') {
           teamOneScore++;
-          var teamOneLog = _createGameScore("Team Grey", teamOneScore, teamTwoScore);
+          var teamOneLog =
+              _createGameScore("Team Grey", teamOneScore, teamTwoScore);
           matchLogScore.add(teamOneLog);
         } else if (team == 'teamTwo') {
           teamTwoScore++;
-          var teamTwoLog = _createGameScore("Team Blue", teamTwoScore, teamOneScore);
+          var teamTwoLog =
+              _createGameScore("Team Blue", teamTwoScore, teamOneScore);
           matchLogScore.add(teamTwoLog);
         }
       });
@@ -233,6 +241,7 @@ class _FoosballDashboardState extends State<FoosballDashboard> {
       gamePaused = false;
       gameFinished = false;
       duration = const Duration(); // Reset duration when starting
+      matchLogScore = [];
     });
 
     timer?.cancel(); // Cancel any existing timer
@@ -272,6 +281,7 @@ class _FoosballDashboardState extends State<FoosballDashboard> {
       duration = const Duration();
       teamOneScore = 0;
       teamTwoScore = 0;
+      matchLogScore = [];
     });
 
     timer?.cancel();
