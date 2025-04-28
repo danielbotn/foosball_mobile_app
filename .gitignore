@@ -47,3 +47,9 @@ app.*.map.json
 
 #dotenv file
 *.env
+
+# FVM Version Cache
+.fvm/
+
+# vscode folders
+.vscode/
