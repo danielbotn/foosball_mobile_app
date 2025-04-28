@@ -52,12 +52,17 @@ class Scoreboard extends StatelessWidget {
   }
 
   String _formatDuration(Duration duration) {
-    // Format the duration as HH:MM:SS
-    String twoDigits(int n) => n.toString().padLeft(2, '0');
-    String twoDigitHours = twoDigits(duration.inHours);
-    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
-    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
-    return "$twoDigitHours:$twoDigitMinutes:$twoDigitSeconds";
+    int hours = duration.inHours;
+    String minutes =
+        duration.inMinutes.remainder(60).toString().padLeft(2, '0');
+    String seconds =
+        duration.inSeconds.remainder(60).toString().padLeft(2, '0');
+
+    if (hours > 0) {
+      return '${hours.toString().padLeft(2, '0')}:$minutes:$seconds';
+    } else {
+      return '$minutes:$seconds';
+    }
   }
 
   Widget _buildScoreboard(Color textColor, Color boxColor, Color borderColor) {
