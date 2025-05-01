@@ -1,12 +1,24 @@
 import 'package:dano_foosball/state/user_state.dart';
 import 'package:dano_foosball/utils/app_color.dart';
+import 'package:dano_foosball/widgets/Login.dart';
 import 'package:flutter/material.dart';
 
 class Sidebar extends StatelessWidget {
   final UserState userState;
   const Sidebar({super.key, required this.userState});
 
-  Widget _buildSidebar() {
+  goToLoginScreen(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => Login(
+          userState: userState,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSidebar(BuildContext context) {
     return Container(
       width: 100,
       color: AppColors.darkModeBackground.withOpacity(0.9),
@@ -21,8 +33,10 @@ class Sidebar extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           IconButton(
-            icon: const Icon(Icons.calendar_today, color: Colors.white),
-            onPressed: () {},
+            icon: const Icon(Icons.login, color: Colors.white),
+            onPressed: () {
+              goToLoginScreen(context);
+            },
           ),
           const SizedBox(height: 8),
           IconButton(
@@ -36,6 +50,6 @@ class Sidebar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _buildSidebar();
+    return _buildSidebar(context);
   }
 }

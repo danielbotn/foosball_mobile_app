@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:dano_foosball/widgets/foosball_table/foosball_dashboard/foosball_dashboard.dart';
 import 'package:dano_foosball/widgets/live_matches/live_matches.dart';
 import 'package:flutter/material.dart';
 import 'package:dano_foosball/main.dart';
@@ -50,14 +53,26 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
     userState.setToken('');
     userState.setCurrentOrganisationId(0);
     userState.setUserId(0);
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => Login(
-          userState: userState,
+
+    if (Platform.isMacOS || Platform.isWindows || Platform.isLinux) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => FoosballDashboard(
+            userState: userState,
+          ),
         ),
-      ),
-    );
+      );
+    } else {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Login(
+            userState: userState,
+          ),
+        ),
+      );
+    }
   }
 
   goToOrganisation(BuildContext context) {
