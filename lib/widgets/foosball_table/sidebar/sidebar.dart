@@ -5,7 +5,10 @@ import 'package:flutter/material.dart';
 
 class Sidebar extends StatelessWidget {
   final UserState userState;
-  const Sidebar({super.key, required this.userState});
+  final void Function(bool) setDarkMode;
+
+  const Sidebar(
+      {super.key, required this.userState, required this.setDarkMode});
 
   goToLoginScreen(BuildContext context) {
     Navigator.push(
@@ -18,10 +21,20 @@ class Sidebar extends StatelessWidget {
     );
   }
 
+  toggleDarkMode(BuildContext context) {
+    bool isDarkMode = userState.darkmode;
+    userState.setDarkmode(!isDarkMode);
+    setDarkMode(!isDarkMode);
+  }
+
   Widget _buildSidebar(BuildContext context) {
+    Color iconColor = userState.darkmode ? AppColors.white : Colors.grey[700]!;
+    Color backgroundColor =
+        userState.darkmode ? AppColors.darkModeBackground : AppColors.white;
+
     return Container(
       width: 100,
-      color: AppColors.darkModeBackground.withOpacity(0.9),
+      color: backgroundColor.withAlpha((0.9 * 255).toInt()),
       padding: const EdgeInsets.symmetric(vertical: 16),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -33,15 +46,18 @@ class Sidebar extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           IconButton(
-            icon: const Icon(Icons.login, color: Colors.white),
+            icon: Icon(Icons.login, color: iconColor),
             onPressed: () {
               goToLoginScreen(context);
             },
           ),
           const SizedBox(height: 8),
           IconButton(
-            icon: const Icon(Icons.settings, color: Colors.white),
-            onPressed: () {},
+            icon: Icon(userState.darkmode ? Icons.dark_mode : Icons.light_mode,
+                color: iconColor),
+            onPressed: () {
+              toggleDarkMode(context);
+            },
           ),
         ],
       ),

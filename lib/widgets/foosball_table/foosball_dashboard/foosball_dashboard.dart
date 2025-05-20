@@ -296,6 +296,10 @@ class _FoosballDashboardState extends State<FoosballDashboard> {
     super.dispose();
   }
 
+  void handleDarkMode(bool value) {
+    widget.userState.setDarkmode(value);
+  }
+
   @override
   Widget build(BuildContext context) {
     bool isDarkMode = widget.userState.darkmode;
@@ -306,7 +310,7 @@ class _FoosballDashboardState extends State<FoosballDashboard> {
       backgroundColor: backgroundColor,
       body: Row(
         children: [
-          Sidebar(userState: widget.userState),
+          Sidebar(userState: widget.userState, setDarkMode: handleDarkMode),
           Expanded(
             flex: 3,
             child: Padding(
