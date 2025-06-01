@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'package:dano_foosball/widgets/dashboard/New_Dashboard.dart';
 import 'package:jwt_decode/jwt_decode.dart';
-
 import '../models/auth/register_response.dart';
 import '../utils/preferences_service.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Login extends StatefulWidget {
   //props
@@ -24,12 +24,15 @@ class _LoginState extends State<Login> {
   // State
   late UserState dashboardData;
   late RegisterResponse registrationData;
+  Duration get loginTime => const Duration(milliseconds: 2250);
 
   Future<String?> loginUser(LoginData data) async {
     AuthApi auth = AuthApi();
     PreferencesService preferencesService = PreferencesService();
     String? value = await preferencesService.getJwtToken();
     String? langFromStorage = await preferencesService.getLanguage();
+
+    // henda a
 
     if (value != null) {
       await preferencesService.deleteJwtToken();
@@ -152,6 +155,19 @@ class _LoginState extends State<Login> {
       // logo: 'assets/images/ecorp-lightblue.png',
       onLogin: loginUser,
       onSignup: _signupUser,
+
+      loginProviders: <LoginProvider>[
+        LoginProvider(
+          icon: FontAwesomeIcons.google,
+          label: 'Google',
+          callback: () async {
+            debugPrint('start google sign in');
+            await Future.delayed(loginTime);
+            debugPrint('stop google sign in');
+            return null;
+          },
+        ),
+      ],
       onRecoverPassword: _recoverPassword,
       onConfirmSignup: _signupConfirm,
       onSubmitAnimationCompleted: () {

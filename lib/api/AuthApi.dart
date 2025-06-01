@@ -119,6 +119,37 @@ class AuthApi {
     }
   }
 
+  Future<dynamic> google(String googleId) async {
+    var url = '$baseUrl/api/Auth/google';
+
+    try {
+      final response = await Dio().post(
+        url,
+        data: {
+          'googleId': googleId,
+        },
+        options: Options(
+          headers: {
+            "Accept": "application/json",
+            "content-type": "application/json"
+          },
+          followRedirects: false,
+          validateStatus: (status) {
+            return status! >= 200 && status <= 500;
+          },
+        ),
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return LoginResponse.fromJson(response.data);
+      } else {
+        return response.data.toString();
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   // Verify email at route verify-email with token
   // this is a post request with token as a parameter
   Future<Response> verifyEmail(String token, int userId) async {
