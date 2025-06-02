@@ -10,6 +10,8 @@ import 'package:jwt_decode/jwt_decode.dart';
 import '../models/auth/register_response.dart';
 import '../utils/preferences_service.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'dart:io';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class Login extends StatefulWidget {
   //props
@@ -96,6 +98,33 @@ class _LoginState extends State<Login> {
   Future<String?> _recoverPassword(String name) async {
     AuthApi auth = AuthApi();
     var data = await auth.forgotPassword(name);
+    if (data.statusCode == 200) {
+      return null;
+    } else {
+      return "null";
+    }
+  }
+
+  Future<String?> _google() async {
+    AuthApi auth = AuthApi();
+
+    String googleID = "";
+
+    if (Platform.isIOS) {
+      var googleIosID = dotenv.env['googleIosId'];
+
+      if (googleIosID != null) {
+        googleID = googleIosID;
+      }
+    } else if (Platform.isAndroid) {
+      String? googleAndroidID = dotenv.env['googleAndroidId'];
+
+      if (googleAndroidID != null) {
+        googleID = googleAndroidID;
+      }
+    }
+
+    var data = await auth.google(googleID);
     if (data.statusCode == 200) {
       return null;
     } else {
