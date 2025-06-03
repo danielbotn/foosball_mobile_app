@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_login/flutter_login.dart';
@@ -121,13 +122,10 @@ class AuthApi {
 
   Future<dynamic> google(String googleId) async {
     var url = '$baseUrl/api/Auth/google';
-
     try {
       final response = await Dio().post(
         url,
-        data: {
-          'googleId': googleId,
-        },
+        data: {'googleId': googleId, 'platform': Platform.localeName},
         options: Options(
           headers: {
             "Accept": "application/json",

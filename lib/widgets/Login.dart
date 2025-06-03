@@ -106,30 +106,39 @@ class _LoginState extends State<Login> {
   }
 
   Future<String?> _google() async {
-    AuthApi auth = AuthApi();
-
-    String googleID = "";
-
-    if (Platform.isIOS) {
-      var googleIosID = dotenv.env['googleIosId'];
-
-      if (googleIosID != null) {
-        googleID = googleIosID;
+    /*
+    try {
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+      if (googleUser == null) {
+        return 'Google sign in aborted';
       }
-    } else if (Platform.isAndroid) {
-      String? googleAndroidID = dotenv.env['googleAndroidId'];
 
-      if (googleAndroidID != null) {
-        googleID = googleAndroidID;
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+
+      // Send this token to your backend API
+      String? idToken = googleAuth.idToken;
+
+      if (idToken != null) {
+        final auth = AuthApi();
+        final response = await auth.google(idToken); // You must implement this
+        if (response is LoginResponse) {
+          await PreferencesService().setJwtToken(response.token);
+          widget.userState.setToken(response.token);
+          return null;
+        } else if (response is ErrorResponse) {
+          return response.message;
+        } else {
+          return "Unexpected error from backend";
+        }
+      } else {
+        return 'Missing ID token';
       }
+    } catch (error) {
+      debugPrint('Google sign-in error: $error');
+      return 'Sign-in failed';
     }
-
-    var data = await auth.google(googleID);
-    if (data.statusCode == 200) {
-      return null;
-    } else {
-      return "null";
-    }
+    */
   }
 
   Future<String?> _signupUser(SignupData data) async {
@@ -190,10 +199,7 @@ class _LoginState extends State<Login> {
           icon: FontAwesomeIcons.google,
           label: 'Google',
           callback: () async {
-            debugPrint('start google sign in');
-            await Future.delayed(loginTime);
-            debugPrint('stop google sign in');
-            return null;
+            await _google();
           },
         ),
       ],
