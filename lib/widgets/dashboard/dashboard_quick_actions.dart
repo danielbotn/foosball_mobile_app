@@ -71,7 +71,7 @@ class QuicActions extends StatelessWidget {
                       height: 60,
                       width: 50,
                       color: userState.darkmode
-                          ? AppColors.lostDarkMode
+                          ? AppColors.wonDarkMode
                           : AppColors.primary,
                       alignment: Alignment.center,
                       child: const Icon(Icons.play_circle_filled_rounded,
@@ -86,7 +86,7 @@ class QuicActions extends StatelessWidget {
                       height: 60,
                       width: 50,
                       color: userState.darkmode
-                          ? AppColors.lostDarkMode
+                          ? AppColors.wonDarkMode
                           : AppColors.primary,
                       alignment: Alignment.center,
                       child: const Icon(Icons.history, color: Colors.white)),
@@ -100,7 +100,7 @@ class QuicActions extends StatelessWidget {
                       height: 60,
                       width: 50,
                       color: userState.darkmode
-                          ? AppColors.lostDarkMode
+                          ? AppColors.wonDarkMode
                           : AppColors.primary,
                       alignment: Alignment.center,
                       child: const Icon(Icons.groups, color: Colors.white)),
@@ -114,7 +114,7 @@ class QuicActions extends StatelessWidget {
                       height: 60,
                       width: 50,
                       color: userState.darkmode
-                          ? AppColors.lostDarkMode
+                          ? AppColors.wonDarkMode
                           : AppColors.primary,
                       alignment: Alignment.center,
                       child: const Icon(Icons.settings, color: Colors.white)),
