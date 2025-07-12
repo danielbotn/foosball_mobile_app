@@ -12,6 +12,41 @@ The mobile app interacts with a `Dot net core REST api`.
 
 </div>
 
+## iOS Development Setup
+
+### Known Issue: libphonenumber_plugin Swift Compiler Error
+
+If you encounter the following error when running on iOS:
+Swift Compiler Error (Xcode): Cannot find type 'PhoneNumberKit' in scope
+
+This is caused by the `flutter_login` package dependency `libphonenumber_plugin`. Follow these steps to fix:
+
+1. **Download the patch files** from the flutter_login GitHub issue thread (Files.zip containing `SwiftLibphonenumberPlugin.swift` and `intl_phone_number_input.sh`)
+
+2. **Place the patch files** in your project root directory (same level as `pubspec.yaml`)
+
+3. **Make the script executable**:
+   ```bash
+   chmod +x intl_phone_number_input.sh
+
+Clean and rebuild:
+bashflutter clean
+flutter pub get
+cd ios
+rm -rf Pods
+rm Podfile.lock
+pod install
+cd ..
+
+If the script doesn't run automatically, execute it manually:
+bash./intl_phone_number_input.sh
+
+Then run your app:
+bashflutter run
+
+
+Note: You may need to run the intl_phone_number_input.sh script manually after each pod install if the automated execution doesn't wor
+
 # Development
 
 Run the project with the following command.
