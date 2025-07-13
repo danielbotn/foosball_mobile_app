@@ -53,3 +53,31 @@ app.*.map.json
 
 # vscode folders
 .vscode/
+
+# iOS specific
+**/ios/Pods/
+**/ios/.symlinks/
+**/ios/Flutter/Flutter.framework
+**/ios/Flutter/Flutter.podspec
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/ephemeral/
+**/ios/Flutter/app.flx
+**/ios/Flutter/app.zip
+**/ios/Flutter/flutter_assets/
+**/ios/ServiceDefinitions.json
+**/ios/Runner/GeneratedPluginRegistrant.*
+**/ios/Podfile.lock
+
+# macOS specific
+**/macos/Pods/
+**/macos/Flutter/GeneratedPluginRegistrant.swift
+**/macos/Flutter/ephemeral/
+**/macos/Flutter/Flutter-Debug.xcconfig
+**/macos/Flutter/Flutter-Release.xcconfig
+**/macos/Podfile.lock
+
+# Xcode
+**/ios/Runner.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+**/ios/Runner.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings
+**/macos/Runner.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+**/macos/Runner.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings

@@ -52,6 +52,6 @@ class AppColors {
 
   static const losingRedDark = Color.fromARGB(255, 225, 173, 173);
 
-  static const wonDarkMode = Color.fromARGB(255, 180, 180, 180);
-  static const lostDarkMode = Color.fromARGB(255, 100, 100, 100);
+  static const wonDarkMode = Color.fromARGB(255, 78, 134, 82);   // Slightly warmer green
+  static const lostDarkMode = Color.fromARGB(255, 175, 68, 65);  // Warmer red-brown
 }
