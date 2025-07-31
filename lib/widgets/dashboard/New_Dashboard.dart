@@ -26,8 +26,9 @@ class _NewDashboardState extends State<NewDashboard> {
 
   Future<HardcodedStrings?> getHardcodedStrings() async {
     DatoCMS datoCMS = DatoCMS();
-    var hardcodedStrings =
-        await datoCMS.getHardcodedStrings(widget.userState.language);
+    var hardcodedStrings = await datoCMS.getHardcodedStrings(
+      widget.userState.language,
+    );
     if (hardcodedStrings != null) {
       widget.userState.setHardcodedStrings(hardcodedStrings);
     }
@@ -52,8 +53,9 @@ class _NewDashboardState extends State<NewDashboard> {
         iconTheme: darkMode
             ? const IconThemeData(color: AppColors.white)
             : IconThemeData(color: Colors.grey[700]),
-        backgroundColor:
-            darkMode ? AppColors.darkModeBackground : AppColors.white,
+        backgroundColor: darkMode
+            ? AppColors.darkModeBackground
+            : AppColors.white,
       ),
       drawer: DrawerSideBar(
         userState: widget.userState,
@@ -69,40 +71,60 @@ class _NewDashboardState extends State<NewDashboard> {
           } else if (snapshot.hasData) {
             return Theme(
               data: darkMode ? ThemeData.dark() : ThemeData.light(),
-              child: Container(
-                color:
-                    darkMode ? AppColors.darkModeBackground : AppColors.white,
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: <Widget>[
-                      DashBoardUserInfo(userState: widget.userState),
-                      if (widget.userState.currentOrganisationId == 0)
-                        DashBoardFirstVisit(userState: widget.userState),
-                      if (widget.userState.currentOrganisationId != 0)
-                        DashboardCharts(userState: widget.userState),
-                      Headline(
-                        headline:
-                            widget.userState.hardcodedStrings.quickActions,
-                        userState: widget.userState,
-                        alignment: Alignment.center,
-                        hideIcon: true,
-                      ),
-                      QuicActions(
-                        userState: widget.userState,
-                        notifyParent: updateAllState,
-                      ),
-                      if (widget.userState.currentOrganisationId != 0)
-                        Headline(
-                          headline:
-                              widget.userState.hardcodedStrings.lastTenMatches,
-                          userState: widget.userState,
-                          hideIcon: true,
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  return Container(
+                    // Ensure full screen height is covered
+                    height: constraints.maxHeight,
+                    color: darkMode
+                        ? AppColors.darkModeBackground
+                        : AppColors.white,
+                    child: SingleChildScrollView(
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                          minHeight: constraints.maxHeight,
                         ),
-                      if (widget.userState.currentOrganisationId != 0)
-                        DashBoardLastFive(userState: widget.userState),
-                    ],
-                  ),
-                ),
+                        child: IntrinsicHeight(
+                          child: Column(
+                            children: <Widget>[
+                              DashBoardUserInfo(userState: widget.userState),
+                              if (widget.userState.currentOrganisationId == 0)
+                                DashBoardFirstVisit(
+                                  userState: widget.userState,
+                                ),
+                              if (widget.userState.currentOrganisationId != 0)
+                                DashboardCharts(userState: widget.userState),
+                              Headline(
+                                headline: widget
+                                    .userState
+                                    .hardcodedStrings
+                                    .quickActions,
+                                userState: widget.userState,
+                                alignment: Alignment.center,
+                                hideIcon: true,
+                              ),
+                              QuicActions(
+                                userState: widget.userState,
+                                notifyParent: updateAllState,
+                              ),
+                              if (widget.userState.currentOrganisationId != 0)
+                                Headline(
+                                  headline: widget
+                                      .userState
+                                      .hardcodedStrings
+                                      .lastTenMatches,
+                                  userState: widget.userState,
+                                  hideIcon: true,
+                                ),
+                              if (widget.userState.currentOrganisationId != 0)
+                                DashBoardLastFive(userState: widget.userState),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
               ),
             );
           } else {

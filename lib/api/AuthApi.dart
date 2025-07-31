@@ -14,8 +14,9 @@ import 'package:dano_foosball/utils/helpers.dart';
 class AuthApi {
   AuthApi();
   Helpers helpers = Helpers();
-  String baseUrl =
-      kReleaseMode ? Helpers().getProdUrl() : Helpers().getDevUrl();
+  String baseUrl = kReleaseMode
+      ? Helpers().getProdUrl()
+      : Helpers().getDevUrl();
 
   Future<dynamic> login(LoginData data) async {
     var url = '$baseUrl/api/Auth/login';
@@ -27,7 +28,7 @@ class AuthApi {
         options: Options(
           headers: {
             "Accept": "application/json",
-            "content-type": "application/json"
+            "content-type": "application/json",
           },
           followRedirects: false,
           validateStatus: (status) {
@@ -37,6 +38,36 @@ class AuthApi {
       );
 
       if (response.statusCode == 200) {
+        return LoginResponse.fromJson(response.data);
+      } else {
+        return ErrorResponse(message: response.data);
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<dynamic> google(String accessToken) async {
+    var url = '$baseUrl/api/Auth/google';
+    try {
+      final response = await Dio().post(
+        url,
+        data: {
+          'AccessToken': accessToken,
+        }, // Changed from 'googleId' to 'AccessToken'
+        options: Options(
+          headers: {
+            "Accept": "application/json",
+            "content-type": "application/json",
+          },
+          followRedirects: false,
+          validateStatus: (status) {
+            return status! >= 200 && status <= 500;
+          },
+        ),
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
         return LoginResponse.fromJson(response.data);
       } else {
         return ErrorResponse(message: response.data);
@@ -57,7 +88,7 @@ class AuthApi {
         options: Options(
           headers: {
             "Accept": "application/json",
-            "content-type": "application/json"
+            "content-type": "application/json",
           },
           followRedirects: false,
           validateStatus: (status) {
@@ -95,12 +126,12 @@ class AuthApi {
           'email': data.name,
           'password': data.password,
           'firstName': data.additionalSignupData!['firstName'],
-          'lastName': data.additionalSignupData!['lastName']
+          'lastName': data.additionalSignupData!['lastName'],
         },
         options: Options(
           headers: {
             "Accept": "application/json",
-            "content-type": "application/json"
+            "content-type": "application/json",
           },
           followRedirects: false,
           validateStatus: (status) {
@@ -132,7 +163,7 @@ class AuthApi {
         options: Options(
           headers: {
             "Accept": "application/json",
-            "content-type": "application/json"
+            "content-type": "application/json",
           },
           followRedirects: false,
           validateStatus: (status) {
@@ -156,13 +187,11 @@ class AuthApi {
     try {
       final response = await dio.post(
         url,
-        data: {
-          'email': email,
-        },
+        data: {'email': email},
         options: Options(
           headers: {
             "Accept": "application/json",
-            "content-type": "application/json"
+            "content-type": "application/json",
           },
           followRedirects: false,
           validateStatus: (status) {
@@ -178,27 +207,29 @@ class AuthApi {
 
   // TO DO
   Future<UpdatePasswordResponse?> updatePassword(
-      UpdatePasswordRequest body) async {
+    UpdatePasswordRequest body,
+  ) async {
     var url = '$baseUrl/api/Auth/update-password';
 
     var jsonObject = {
       "password": body.password,
       "confirmPassword": body.confirmPassword,
-      "verificationCode":
-          body.verificationCode == "" ? null : body.verificationCode
+      "verificationCode": body.verificationCode == ""
+          ? null
+          : body.verificationCode,
     };
 
     try {
       final response = await Api().dio.put(
-            url,
-            options: Options(
-              headers: {
-                "Accept": "application/json",
-                "content-type": "application/json",
-              },
-            ),
-            data: jsonEncode(jsonObject),
-          );
+        url,
+        options: Options(
+          headers: {
+            "Accept": "application/json",
+            "content-type": "application/json",
+          },
+        ),
+        data: jsonEncode(jsonObject),
+      );
 
       if (response.statusCode == 200) {
         return UpdatePasswordResponse.fromJson(response.data);

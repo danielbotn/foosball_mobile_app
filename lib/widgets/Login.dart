@@ -6,10 +6,12 @@ import 'package:dano_foosball/state/user_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'package:dano_foosball/widgets/dashboard/New_Dashboard.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 
 import '../models/auth/register_response.dart';
 import '../utils/preferences_service.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Login extends StatefulWidget {
   //props
@@ -30,6 +32,8 @@ class _LoginState extends State<Login> {
     PreferencesService preferencesService = PreferencesService();
     String? value = await preferencesService.getJwtToken();
     String? langFromStorage = await preferencesService.getLanguage();
+
+    final GoogleSignIn signIn = GoogleSignIn.instance;
 
     if (value != null) {
       await preferencesService.deleteJwtToken();
@@ -76,16 +80,18 @@ class _LoginState extends State<Login> {
   void setJwtInfo(LoginResponse loginResponse) async {
     Map<String, dynamic> decodedToken = Jwt.parseJwt(loginResponse.token);
     JwtModel jwtObject = JwtModel(
-        name: decodedToken["unique_name"],
-        currentOrganisationId: decodedToken["CurrentOrganisationId"],
-        nbf: decodedToken["nbf"],
-        exp: decodedToken["exp"],
-        iat: decodedToken["iat"]);
+      name: decodedToken["unique_name"],
+      currentOrganisationId: decodedToken["CurrentOrganisationId"],
+      nbf: decodedToken["nbf"],
+      exp: decodedToken["exp"],
+      iat: decodedToken["iat"],
+    );
     widget.userState.setUserId(loginResponse.id);
     // set current organisation id to mobx store if it is not null with tryParse
     if (jwtObject.currentOrganisationId != "") {
-      widget.userState
-          .setCurrentOrganisationId(int.parse(jwtObject.currentOrganisationId));
+      widget.userState.setCurrentOrganisationId(
+        int.parse(jwtObject.currentOrganisationId),
+      );
     }
     widget.userState.setToken(loginResponse.token);
   }
@@ -128,39 +134,122 @@ class _LoginState extends State<Login> {
     }
   }
 
+  Future<void> _handleSuccessfulLogin(
+    LoginResponse loginData,
+    String? langFromStorage,
+  ) async {
+    PreferencesService preferencesService = PreferencesService();
+
+    await preferencesService.setJwtToken(loginData.token);
+    await preferencesService.setRefreshToken(loginData.refreshToken);
+    setJwtInfo(loginData);
+
+    if (langFromStorage != null) {
+      widget.userState.setLanguage(langFromStorage);
+    } else {
+      await preferencesService.setLanguage('en');
+      widget.userState.setLanguage('en');
+    }
+
+    dashboardData = widget.userState;
+    await handleDarkTheme();
+  }
+
+  Future<String?> _google() async {
+    AuthApi auth = AuthApi();
+    PreferencesService preferencesService = PreferencesService();
+    String? langFromStorage = await preferencesService.getLanguage();
+    try {
+      final GoogleSignIn signIn = GoogleSignIn.instance;
+
+      // Initialize first
+      await signIn.initialize(
+        clientId:
+            '516082321577-9n66a5i8o0udejlcsgod9qfue0gml2e4.apps.googleusercontent.com',
+      );
+
+      // Check if authentication is supported on this platform
+      if (signIn.supportsAuthenticate()) {
+        await signIn.authenticate();
+
+        // After authentication, request authorization for basic profile scopes
+        const List<String> scopes = <String>[
+          'email',
+          'https://www.googleapis.com/auth/userinfo.profile',
+        ];
+
+        // This should give you access to user information
+        final authorization = await signIn.authorizationClient
+            .authorizationForScopes(scopes);
+
+        if (authorization != null) {
+          print('Authorization successful');
+          print('Access Token: ${authorization.accessToken}');
+          var loginData = await auth.google(authorization.accessToken);
+          if (loginData is LoginResponse) {
+            await _handleSuccessfulLogin(loginData, langFromStorage);
+          } else if (loginData is ErrorResponse) {
+            // Do something with the ErrorResponse
+            return loginData.message;
+          }
+          // You can use the access token to make API calls to get user info
+          // Or handle the successful authentication
+          return null;
+        }
+      }
+
+      return "Authentication not supported";
+    } catch (error) {
+      print('Google Sign-In error: $error');
+      return error.toString();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return FlutterLogin(
       theme: LoginTheme(
-          primaryColor: const Color(0xff94bd47),
-          buttonTheme: LoginButtonTheme(backgroundColor: Colors.green[300])),
+        primaryColor: const Color(0xff94bd47),
+        buttonTheme: LoginButtonTheme(backgroundColor: Colors.green[300]),
+      ),
       logo: const AssetImage('assets/images/dano-scaled.png'),
       additionalSignupFields: [
         UserFormField(
-            keyName: 'firstName',
-            displayName: 'First name',
-            fieldValidator: (value) {
-              return null;
-            }),
+          keyName: 'firstName',
+          displayName: 'First name',
+          fieldValidator: (value) {
+            return null;
+          },
+        ),
         UserFormField(
-            keyName: 'lastName',
-            displayName: 'Last name',
-            fieldValidator: (value) {
-              return null;
-            })
+          keyName: 'lastName',
+          displayName: 'Last name',
+          fieldValidator: (value) {
+            return null;
+          },
+        ),
       ],
       // logo: 'assets/images/ecorp-lightblue.png',
       onLogin: loginUser,
       onSignup: _signupUser,
+      loginProviders: <LoginProvider>[
+        LoginProvider(
+          icon: FontAwesomeIcons.google,
+          label: 'Google',
+          callback: () async {
+            return await _google();
+          },
+        ),
+      ],
       onRecoverPassword: _recoverPassword,
       onConfirmSignup: _signupConfirm,
       onSubmitAnimationCompleted: () {
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => NewDashboard(
-                      userState: widget.userState,
-                    )));
+          context,
+          MaterialPageRoute(
+            builder: (context) => NewDashboard(userState: widget.userState),
+          ),
+        );
       },
     );
   }
