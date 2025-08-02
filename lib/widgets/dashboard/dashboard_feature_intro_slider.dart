@@ -55,12 +55,13 @@ class _FeatureIntroSliderState extends State<FeatureIntroSlider> {
     final textColor = widget.darkMode ? Colors.white : Colors.black87;
 
     return Container(
-      height: 400,
       color: bgColor,
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Expanded(
+          SizedBox(
+            height: 240,
             child: PageView.builder(
               controller: _pageController,
               itemCount: slides.length,
@@ -72,14 +73,15 @@ class _FeatureIntroSliderState extends State<FeatureIntroSlider> {
               itemBuilder: (context, index) {
                 final slide = slides[index];
                 return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     FaIcon(
                       slide.icon,
                       size: 60,
                       color: widget.darkMode ? Colors.amber : Colors.blueGrey,
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 12),
                     Text(
                       slide.title,
                       style: TextStyle(
@@ -88,18 +90,21 @@ class _FeatureIntroSliderState extends State<FeatureIntroSlider> {
                         color: textColor,
                       ),
                     ),
-                    const SizedBox(height: 12),
-                    Text(
-                      slide.description,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 16, color: textColor),
+                    const SizedBox(height: 8),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: Text(
+                        slide.description,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 16, color: textColor),
+                      ),
                     ),
                   ],
                 );
               },
             ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 12),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(

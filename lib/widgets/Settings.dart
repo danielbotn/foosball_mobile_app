@@ -49,10 +49,20 @@ class _SettingsState extends State<Settings> with RouteAware {
   }
 
   Future<OrganisationResponse?> getOrganisation() async {
-    Organisation api = Organisation();
-    var data =
-        await api.getOrganisationById(widget.userState.currentOrganisationId);
-    return data;
+    if (widget.userState.currentOrganisationId == 0) {
+      return null;
+    }
+
+    try {
+      Organisation api = Organisation();
+      var data = await api.getOrganisationById(
+        widget.userState.currentOrganisationId,
+      );
+      return data;
+    } catch (e) {
+      debugPrint('Failed to fetch organisation: $e');
+      return null;
+    }
   }
 
   Future<HardcodedStrings?> getHardcodedStrings(String language) async {
@@ -107,44 +117,40 @@ class _SettingsState extends State<Settings> with RouteAware {
   void goToChangeUserInformation(BuildContext context) {
     var screen = ChangeUserInfoScreen(userState: widget.userState);
 
-    navigateToPage(
-      screen,
-      context,
-    );
+    navigateToPage(screen, context);
   }
 
   void goToOrganisationSettings(BuildContext context) {
-    var organisationWidget =
-        orgWidget.OrganisationScreen(userState: widget.userState);
-
-    navigateToPage(
-      organisationWidget,
-      context,
+    var organisationWidget = orgWidget.OrganisationScreen(
+      userState: widget.userState,
     );
+
+    navigateToPage(organisationWidget, context);
   }
 
   Future<void> selectLanguagePopup(BuildContext context) async {
     switch (await showDialog<String>(
-        context: context,
-        builder: (BuildContext context) {
-          return SimpleDialog(
-            title: const Text('Select language'),
-            children: <Widget>[
-              SimpleDialogOption(
-                onPressed: () => Navigator.pop(context, 'English'),
-                child: const Text('English'),
-              ),
-              SimpleDialogOption(
-                onPressed: () => Navigator.pop(context, 'Icelandic'),
-                child: const Text('Íslenska'),
-              ),
-              SimpleDialogOption(
-                onPressed: () => Navigator.pop(context, 'Swedish'),
-                child: const Text('Svenska'),
-              ),
-            ],
-          );
-        })) {
+      context: context,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          title: const Text('Select language'),
+          children: <Widget>[
+            SimpleDialogOption(
+              onPressed: () => Navigator.pop(context, 'English'),
+              child: const Text('English'),
+            ),
+            SimpleDialogOption(
+              onPressed: () => Navigator.pop(context, 'Icelandic'),
+              child: const Text('Íslenska'),
+            ),
+            SimpleDialogOption(
+              onPressed: () => Navigator.pop(context, 'Swedish'),
+              child: const Text('Svenska'),
+            ),
+          ],
+        );
+      },
+    )) {
       case 'English':
         await setLanguage('en');
         break;
@@ -158,14 +164,13 @@ class _SettingsState extends State<Settings> with RouteAware {
   }
 
   void navigateToPage(Widget page, BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => page),
-    ).then((_) {
-      setState(() {
-        organisationFuture = getOrganisation();
-      });
-    });
+    Navigator.push(context, MaterialPageRoute(builder: (context) => page)).then(
+      (_) {
+        setState(() {
+          organisationFuture = getOrganisation();
+        });
+      },
+    );
   }
 
   @override
@@ -188,9 +193,20 @@ class _SettingsState extends State<Settings> with RouteAware {
       body: FutureBuilder(
         future: Future.wait([hardcodedStringsFuture, organisationFuture]),
         builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: Loading(userState: widget.userState));
+          }
+
+          if (snapshot.hasError) {
+            return Center(
+              child: Text('Something went wrong loading settings.'),
+            );
+          }
+
           if (snapshot.hasData) {
             var hardcodedStrings = snapshot.data?[0] as HardcodedStrings?;
             var organisation = snapshot.data?[1] as OrganisationResponse?;
+
             return Theme(
               data: widget.userState.darkmode
                   ? ThemeData.dark()
@@ -204,11 +220,9 @@ class _SettingsState extends State<Settings> with RouteAware {
                 ],
               ),
             );
-          } else {
-            return Center(
-              child: Loading(userState: widget.userState),
-            );
           }
+
+          return Center(child: Text('No data available.'));
         },
       ),
     );
@@ -264,17 +278,9 @@ class _SettingsState extends State<Settings> with RouteAware {
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ExtendedText(
-            text: title,
-            userState: userState,
-            fontSize: 14,
-          ),
-          SizedBox(height: 4), // Adds a small gap between title and description
-          ExtendedText(
-            text: description,
-            userState: userState,
-            fontSize: 12,
-          ),
+          ExtendedText(text: title, userState: userState, fontSize: 14),
+          const SizedBox(height: 4),
+          ExtendedText(text: description, userState: userState, fontSize: 12),
         ],
       ),
       leading: Icon(leadingIcon),
@@ -285,7 +291,8 @@ class _SettingsState extends State<Settings> with RouteAware {
   }
 
   SettingsSection _buildPersonalInfoSection(
-      HardcodedStrings? hardcodedStrings) {
+    HardcodedStrings? hardcodedStrings,
+  ) {
     return SettingsSection(
       title: ExtendedText(
         text: hardcodedStrings?.personalInformation ?? "Personal Information",
@@ -320,7 +327,34 @@ class _SettingsState extends State<Settings> with RouteAware {
   }
 
   SettingsSection _buildIntegrationSection(
-      OrganisationResponse? organisation, HardcodedStrings? hardcodedStrings) {
+    OrganisationResponse? organisation,
+    HardcodedStrings? hardcodedStrings,
+  ) {
+    if (organisation == null) {
+      return SettingsSection(
+        title: ExtendedText(
+          text: hardcodedStrings?.integration ?? "Integration",
+          userState: widget.userState,
+          fontSize: 14,
+        ),
+        tiles: [
+          SettingsTile(
+            title: ExtendedText(
+              text: "No organisation",
+              userState: widget.userState,
+              fontSize: 14,
+            ),
+            leading: const Icon(Icons.info_outline),
+            description: ExtendedText(
+              text: "Join or create an organisation to enable integrations.",
+              userState: widget.userState,
+              fontSize: 12,
+            ),
+          ),
+        ],
+      );
+    }
+
     return SettingsSection(
       title: ExtendedText(
         text: hardcodedStrings?.integration ?? "Integration",
@@ -335,7 +369,7 @@ class _SettingsState extends State<Settings> with RouteAware {
             fontSize: 14,
           ),
           description: ExtendedText(
-            text: organisation?.slackWebhookUrl ?? "",
+            text: organisation.slackWebhookUrl ?? "",
             userState: widget.userState,
             fontSize: 12,
           ),
@@ -352,7 +386,7 @@ class _SettingsState extends State<Settings> with RouteAware {
             fontSize: 14,
           ),
           description: ExtendedText(
-            text: organisation?.discordWebhookUrl ?? "",
+            text: organisation.discordWebhookUrl ?? "",
             userState: widget.userState,
             fontSize: 12,
           ),
@@ -369,7 +403,7 @@ class _SettingsState extends State<Settings> with RouteAware {
             fontSize: 14,
           ),
           description: ExtendedText(
-            text: organisation?.microsoftTeamsWebhookUrl ?? "",
+            text: organisation.microsoftTeamsWebhookUrl ?? "",
             userState: widget.userState,
             fontSize: 12,
           ),

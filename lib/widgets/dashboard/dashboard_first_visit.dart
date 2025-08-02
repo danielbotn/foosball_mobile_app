@@ -41,6 +41,7 @@ class _DashBoardFirstVisitState extends State<DashBoardFirstVisit> {
             userState: widget.userState,
             fontSize: 24,
           ),
+
           const SizedBox(height: 20.0),
           // Welcome text body
           ExtendedText(
@@ -48,11 +49,6 @@ class _DashBoardFirstVisitState extends State<DashBoardFirstVisit> {
             userState: widget.userState,
             fontSize: 16,
           ),
-
-          FeatureIntroSlider(darkMode: true),
-
-          const SizedBox(height: 20.0),
-
           // Button
           ElevatedButton(
             onPressed: () {
@@ -68,6 +64,9 @@ class _DashBoardFirstVisitState extends State<DashBoardFirstVisit> {
             },
             child: Text(widget.userState.hardcodedStrings.welcomeTextButton),
           ),
+          FeatureIntroSlider(darkMode: true),
+
+          // const SizedBox(height: 20.0),
         ],
       ),
     );
