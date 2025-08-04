@@ -20,9 +20,11 @@ class DrawerSideBar extends StatefulWidget {
   // Props variables
   final UserState userState;
   final Function() notifyParent;
-  const DrawerSideBar(
-      {Key? key, required this.userState, required this.notifyParent})
-      : super(key: key);
+  const DrawerSideBar({
+    Key? key,
+    required this.userState,
+    required this.notifyParent,
+  }) : super(key: key);
 
   @override
   _DrawerSideBarState createState() => _DrawerSideBarState();
@@ -58,19 +60,13 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => FoosballDashboard(
-            userState: userState,
-          ),
+          builder: (context) => FoosballDashboard(userState: userState),
         ),
       );
     } else {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(
-          builder: (context) => Login(
-            userState: userState,
-          ),
-        ),
+        MaterialPageRoute(builder: (context) => Login(userState: userState)),
       );
     }
   }
@@ -79,9 +75,7 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => OrganisationScreen(
-          userState: userState,
-        ),
+        builder: (context) => OrganisationScreen(userState: userState),
       ),
     );
   }
@@ -89,33 +83,21 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
   goToNewGame(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: (context) => NewGame(
-          userState: userState,
-        ),
-      ),
+      MaterialPageRoute(builder: (context) => NewGame(userState: userState)),
     );
   }
 
   goToHistory(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: (context) => History(
-          userState: userState,
-        ),
-      ),
+      MaterialPageRoute(builder: (context) => History(userState: userState)),
     );
   }
 
   goToSettings(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: (context) => Settings(
-          userState: userState,
-        ),
-      ),
+      MaterialPageRoute(builder: (context) => Settings(userState: userState)),
     ).then(((value) {
       widget.notifyParent();
     }));
@@ -124,11 +106,7 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
   goToLeague(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: (context) => League(
-          userState: userState,
-        ),
-      ),
+      MaterialPageRoute(builder: (context) => League(userState: userState)),
     ).then(((value) {
       widget.notifyParent();
     }));
@@ -138,9 +116,7 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => LiveMatches(
-          userState: userState,
-        ),
+        builder: (context) => LiveMatches(userState: userState),
       ),
     ).then(((value) {
       widget.notifyParent();
@@ -194,8 +170,10 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
               ),
             ),
             ListTile(
-              contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 4,
+              ),
               dense: true,
               tileColor: userState.darkmode
                   ? AppColors.darkModeLighterBackground
@@ -220,8 +198,10 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
               },
             ),
             ListTile(
-              contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 4,
+              ),
               dense: true,
               tileColor: userState.darkmode
                   ? AppColors.darkModeLighterBackground
@@ -246,8 +226,10 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
               },
             ),
             ListTile(
-              contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 4,
+              ),
               dense: true,
               tileColor: userState.darkmode
                   ? AppColors.darkModeLighterBackground
@@ -272,8 +254,10 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
               },
             ),
             ListTile(
-              contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 4,
+              ),
               dense: true,
               tileColor: userState.darkmode
                   ? AppColors.darkModeLighterBackground
@@ -296,35 +280,42 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
                 goToLeague(context);
               },
             ),
-            ListTile(
-              contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-              dense: true,
-              tileColor: userState.darkmode
-                  ? AppColors.darkModeLighterBackground
-                  : AppColors.white,
-              leading: Icon(
-                Icons.live_tv,
-                color: userState.darkmode ? AppColors.white : null,
-                size: 22,
-              ),
-              title: Text(
-                liveMatches,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: userState.darkmode
-                      ? AppColors.white
-                      : AppColors.surfaceDark,
+            Visibility(
+              visible: userState.currentOrganisationId != 0,
+              child: ListTile(
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 4,
                 ),
+                dense: true,
+                tileColor: userState.darkmode
+                    ? AppColors.darkModeLighterBackground
+                    : AppColors.white,
+                leading: Icon(
+                  Icons.live_tv,
+                  color: userState.darkmode ? AppColors.white : null,
+                  size: 22,
+                ),
+                title: Text(
+                  liveMatches,
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: userState.darkmode
+                        ? AppColors.white
+                        : AppColors.surfaceDark,
+                  ),
+                ),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  goToLiveMatches(context);
+                },
               ),
-              onTap: () {
-                Navigator.of(context).pop();
-                goToLiveMatches(context);
-              },
             ),
             ListTile(
-              contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 4,
+              ),
               dense: true,
               tileColor: userState.darkmode
                   ? AppColors.darkModeLighterBackground
@@ -350,8 +341,10 @@ class _DrawerSideBarState extends State<DrawerSideBar> {
             ),
             ListTile(
               key: const Key("logout"),
-              contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 4,
+              ),
               dense: true,
               tileColor: userState.darkmode
                   ? AppColors.darkModeLighterBackground

@@ -24,316 +24,297 @@ import 'organisation_code.dart';
 class OrganisationSettings extends StatefulWidget {
   final UserState userState;
   const OrganisationSettings({Key? key, required this.userState})
-      : super(key: key);
+    : super(key: key);
 
   @override
   State<OrganisationSettings> createState() => _OrganisationSettingsState();
 }
 
 class _OrganisationSettingsState extends State<OrganisationSettings> {
-  // state
   late Future<UserResponse> userFuture;
-  late UserResponse playersData;
-  late Future<OrganisationResponse?> organisationFuture;
+  late Future<OrganisationResponse?>? organisationFuture;
 
   @override
   void initState() {
     super.initState();
     userFuture = getUser();
-    organisationFuture = getOrganisation();
+    if (widget.userState.currentOrganisationId != 0) {
+      organisationFuture = getOrganisation();
+    } else {
+      organisationFuture = Future.value(null);
+    }
   }
 
   Future<UserResponse> getUser() async {
     UserApi user = UserApi();
-    var data = await user.getUser(widget.userState.userId.toString());
-    playersData = data;
-    return data;
+    return await user.getUser(widget.userState.userId.toString());
   }
 
   Future<OrganisationResponse?> getOrganisation() async {
     Organisation api = Organisation();
-    var data =
-        await api.getOrganisationById(widget.userState.currentOrganisationId);
-    return data;
+    return await api.getOrganisationById(
+      widget.userState.currentOrganisationId,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     Helpers helpers = Helpers();
 
-    goToOrganisationCode(BuildContext context) {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => OrganisationCode(
-                    userState: widget.userState,
-                  )));
-    }
-
-    goToNewOrganisation(BuildContext context) {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => NewOrganisation(
-                    userState: widget.userState,
-                    notifyOrganisationButtons: () {},
-                  )));
-    }
-
-    goToJoinOrganisation(BuildContext context) {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => JoinOrganisation(
-                    userState: widget.userState,
-                  )));
-    }
-
-    goToManagePlayers(BuildContext context) {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => OrganisationManagePlayers(
-                    userState: widget.userState,
-                  )));
-    }
-
-    goToChangeOrganisation(BuildContext context) {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => ChangeOrganisation(
-                    userState: widget.userState,
-                  )));
-    }
-
-    goToCreateGroupUser(BuildContext context) {
-      if (widget.userState.currentOrganisationId != 0) {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => CreateGroupPlayer(
-                      userState: widget.userState,
-                    )));
-      }
-    }
-
-    goToChangeSlackWebHook(BuildContext context) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => SlackSettings(
-            userState: widget.userState,
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        title: ExtendedText(
+          text: widget.userState.hardcodedStrings.organisationSettings,
+          userState: widget.userState,
         ),
-      ).then((_) {
-        // Fetch new organisation data when coming back from SlackSettings
-        setState(() {
-          organisationFuture = getOrganisation();
-        });
-      });
-    }
-
-    goToChangeDiscordWebHook(BuildContext context) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => DiscordSettings(
-            userState: widget.userState,
-          ),
+        leading: IconButton(
+          icon: const Icon(Icons.chevron_left),
+          onPressed: () => Navigator.pop(context),
         ),
-      ).then((_) {
-        // Fetch new organisation data when coming back from SlackSettings
-        setState(() {
-          organisationFuture = getOrganisation();
-        });
-      });
-    }
+        iconTheme: helpers.getIconTheme(widget.userState.darkmode),
+        backgroundColor: helpers.getBackgroundColor(widget.userState.darkmode),
+      ),
+      body: FutureBuilder(
+        future: Future.wait([userFuture, organisationFuture!]),
+        builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Loading(userState: widget.userState);
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (snapshot.hasData) {
+            final userData = snapshot.data![0] as UserResponse;
+            final organisationData = snapshot.data![1] as OrganisationResponse?;
 
-    goToChangeTeamsWebHook(BuildContext context) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => TeamsSettings(
-            userState: widget.userState,
-          ),
+            return Container(
+              color: widget.userState.darkmode
+                  ? AppColors.darkModeBackground
+                  : AppColors.white,
+              child: Theme(
+                data: widget.userState.darkmode
+                    ? ThemeData.dark()
+                    : ThemeData.light(),
+                child: buildSettingsList(userData, organisationData),
+              ),
+            );
+          } else {
+            return const Center(child: Text('No data available'));
+          }
+        },
+      ),
+    );
+  }
+
+  SettingsList buildSettingsList(
+    UserResponse userData,
+    OrganisationResponse? organisationData,
+  ) {
+    List<SettingsSection> sections = [];
+
+    sections.add(
+      SettingsSection(
+        title: Text(widget.userState.hardcodedStrings.actions),
+        tiles: _setTiles(userData),
+      ),
+    );
+
+    if (widget.userState.currentOrganisationId != 0) {
+      sections.add(
+        SettingsSection(
+          title: Text(widget.userState.hardcodedStrings.information),
+          tiles: _setInformationTiles(),
         ),
-      ).then((_) {
-        // Fetch new organisation data when coming back from SlackSettings
-        setState(() {
-          organisationFuture = getOrganisation();
-        });
-      });
+      );
+
+      sections.add(
+        SettingsSection(
+          title: Text(widget.userState.hardcodedStrings.integration),
+          tiles: _setIntegrationTiles(organisationData),
+        ),
+      );
     }
 
-    List<AbstractSettingsTile> setTiles(UserResponse userData) {
-      List<AbstractSettingsTile> result = [
+    return SettingsList(sections: sections);
+  }
+
+  List<AbstractSettingsTile> _setTiles(UserResponse userData) {
+    List<AbstractSettingsTile> result = [
+      SettingsTile(
+        title: Text(widget.userState.hardcodedStrings.createNewOrganisation),
+        leading: const Icon(Icons.add_circle_outline_sharp),
+        onPressed: (_) => _goToNewOrganisation(),
+      ),
+      SettingsTile(
+        title: Text(widget.userState.hardcodedStrings.joinExistingOrganisation),
+        leading: const Icon(Icons.group_add),
+        onPressed: (_) => _goToJoinOrganisation(),
+      ),
+    ];
+
+    if (widget.userState.currentOrganisationId != 0) {
+      result.add(
         SettingsTile(
-          title: Text(widget.userState.hardcodedStrings.createNewOrganisation),
-          leading: const Icon(Icons.add_circle_outline_sharp),
-          onPressed: (BuildContext context) {
-            goToNewOrganisation(context);
-          },
-        ),
-        SettingsTile(
-          title:
-              Text(widget.userState.hardcodedStrings.joinExistingOrganisation),
-          leading: const Icon(Icons.add_circle_outline_sharp),
-          onPressed: (BuildContext context) {
-            goToJoinOrganisation(context);
-          },
-        ),
-      ];
-
-      if (widget.userState.currentOrganisationId != 0) {
-        result.add(SettingsTile(
           title: Text(widget.userState.hardcodedStrings.changeOrganisation),
           leading: const Icon(Icons.change_circle),
-          onPressed: (BuildContext context) {
-            goToChangeOrganisation(context);
-          },
-        ));
+          onPressed: (_) => _goToChangeOrganisation(),
+        ),
+      );
 
-        result.add(SettingsTile(
+      result.add(
+        SettingsTile(
           title: Text(widget.userState.hardcodedStrings.createGroupPlayer),
           leading: const Icon(Icons.emoji_people),
-          onPressed: (BuildContext context) {
-            goToCreateGroupUser(context);
-          },
-        ));
-      }
+          onPressed: (_) => _goToCreateGroupUser(),
+        ),
+      );
+    }
 
-      if (userData.isAdmin != null && userData.isAdmin == true) {
-        result.add(SettingsTile(
+    if (userData.isAdmin == true) {
+      result.add(
+        SettingsTile(
           title: Text(widget.userState.hardcodedStrings.managePlayers),
           leading: const Icon(Icons.person),
-          onPressed: (BuildContext context) {
-            goToManagePlayers(context);
-          },
-        ));
-      }
-
-      return result;
-    }
-
-    List<AbstractSettingsTile> setInformationTiles() {
-      List<AbstractSettingsTile> result = [];
-
-      if (widget.userState.currentOrganisationId != 0) {
-        result.add(SettingsTile(
-          title: Text(widget.userState.hardcodedStrings.organisationCode),
-          description: Text(widget
-              .userState.hardcodedStrings.letOtherPlayersJoinYourOrganisation),
-          leading: const Icon(Icons.qr_code),
-          onPressed: (BuildContext context) {
-            goToOrganisationCode(context);
-          },
-        ));
-      }
-
-      return result;
-    }
-
-    List<AbstractSettingsTile> setIntegrationTiles(
-        OrganisationResponse? organisation) {
-      return [
-        SettingsTile(
-          title: Text(widget.userState.hardcodedStrings.slack),
-          description: Text(organisation?.slackWebhookUrl ?? ""),
-          leading: const Icon(CustomIcons.slack),
-          onPressed: (BuildContext context) {
-            goToChangeSlackWebHook(context);
-          },
+          onPressed: (_) => _goToManagePlayers(),
         ),
-        SettingsTile(
-          title: Text(widget.userState.hardcodedStrings.discord),
-          description: Text(organisation?.discordWebhookUrl ?? ""),
-          leading: const Icon(CustomIcons.discord),
-          onPressed: (BuildContext context) {
-            goToChangeDiscordWebHook(context);
-          },
-        ),
-        SettingsTile(
-          title: const Text("Microsoft Teams"),
-          description: Text(organisation?.microsoftTeamsWebhookUrl ?? ""),
-          leading: const Icon(Icons.window),
-          onPressed: (BuildContext context) {
-            goToChangeTeamsWebHook(context);
-          },
-        ),
-      ];
+      );
     }
 
-    SettingsList buildSettingsList(
-        UserResponse userData, OrganisationResponse? organisationData) {
-      List<SettingsSection> sections = [];
+    return result;
+  }
 
-      // Actions section
-      sections.add(SettingsSection(
-        title: Text(widget.userState.hardcodedStrings.actions),
-        tiles: setTiles(userData),
-      ));
+  List<AbstractSettingsTile> _setInformationTiles() {
+    return [
+      SettingsTile(
+        title: Text(widget.userState.hardcodedStrings.organisationCode),
+        description: Text(
+          widget.userState.hardcodedStrings.letOtherPlayersJoinYourOrganisation,
+        ),
+        leading: const Icon(Icons.qr_code),
+        onPressed: (_) => _goToOrganisationCode(),
+      ),
+    ];
+  }
 
-      // Information section
-      if (widget.userState.currentOrganisationId != 0) {
-        sections.add(SettingsSection(
-          title: Text(widget.userState.hardcodedStrings.information),
-          tiles: setInformationTiles(),
-        ));
-      }
+  List<AbstractSettingsTile> _setIntegrationTiles(
+    OrganisationResponse? organisation,
+  ) {
+    return [
+      SettingsTile(
+        title: Text(widget.userState.hardcodedStrings.slack),
+        description: Text(organisation?.slackWebhookUrl ?? ""),
+        leading: const Icon(CustomIcons.slack),
+        onPressed: (_) => _goToChangeSlackWebHook(),
+      ),
+      SettingsTile(
+        title: Text(widget.userState.hardcodedStrings.discord),
+        description: Text(organisation?.discordWebhookUrl ?? ""),
+        leading: const Icon(CustomIcons.discord),
+        onPressed: (_) => _goToChangeDiscordWebHook(),
+      ),
+      SettingsTile(
+        title: const Text("Microsoft Teams"),
+        description: Text(organisation?.microsoftTeamsWebhookUrl ?? ""),
+        leading: const Icon(Icons.window),
+        onPressed: (_) => _goToChangeTeamsWebHook(),
+      ),
+    ];
+  }
 
-      // Integrations section
-      if (widget.userState.currentOrganisationId != 0) {
-        sections.add(SettingsSection(
-          title: Text(widget.userState.hardcodedStrings.integration),
-          tiles: setIntegrationTiles(organisationData),
-        ));
-      }
+  void _goToOrganisationCode() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => OrganisationCode(userState: widget.userState),
+      ),
+    );
+  }
 
-      return SettingsList(sections: sections);
+  void _goToNewOrganisation() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => NewOrganisation(
+          userState: widget.userState,
+          notifyOrganisationButtons: () {},
+        ),
+      ),
+    );
+  }
+
+  void _goToJoinOrganisation() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => JoinOrganisation(userState: widget.userState),
+      ),
+    );
+  }
+
+  void _goToChangeOrganisation() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ChangeOrganisation(userState: widget.userState),
+      ),
+    );
+  }
+
+  void _goToCreateGroupUser() {
+    if (widget.userState.currentOrganisationId != 0) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => CreateGroupPlayer(userState: widget.userState),
+        ),
+      );
     }
+  }
 
-    return Scaffold(
-        appBar: AppBar(
-            title: ExtendedText(
-                text: widget.userState.hardcodedStrings.organisationSettings,
-                userState: widget.userState),
-            leading: IconButton(
-              icon: const Icon(Icons.chevron_left),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-            iconTheme: helpers.getIconTheme(widget.userState.darkmode),
-            backgroundColor:
-                helpers.getBackgroundColor(widget.userState.darkmode)),
-        body: FutureBuilder(
-          future: Future.wait([userFuture, organisationFuture]),
-          builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Loading(
-                userState: widget.userState,
-              );
-            } else if (snapshot.hasError) {
-              return Center(child: Text('Error: ${snapshot.error}'));
-            } else if (snapshot.hasData) {
-              var userData = snapshot.data![0] as UserResponse;
-              var organisationData = snapshot.data![1] as OrganisationResponse?;
+  void _goToManagePlayers() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) =>
+            OrganisationManagePlayers(userState: widget.userState),
+      ),
+    );
+  }
 
-              return Container(
-                  color: widget.userState.darkmode
-                      ? AppColors.darkModeBackground
-                      : AppColors.white,
-                  child: Theme(
-                    data: widget.userState.darkmode
-                        ? ThemeData.dark()
-                        : ThemeData.light(),
-                    child: buildSettingsList(userData, organisationData),
-                  ));
-            } else {
-              return const Center(child: Text('No data available'));
-            }
-          },
-        ));
+  void _goToChangeSlackWebHook() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SlackSettings(userState: widget.userState),
+      ),
+    ).then((_) {
+      setState(() {
+        organisationFuture = getOrganisation();
+      });
+    });
+  }
+
+  void _goToChangeDiscordWebHook() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => DiscordSettings(userState: widget.userState),
+      ),
+    ).then((_) {
+      setState(() {
+        organisationFuture = getOrganisation();
+      });
+    });
+  }
+
+  void _goToChangeTeamsWebHook() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => TeamsSettings(userState: widget.userState),
+      ),
+    ).then((_) {
+      setState(() {
+        organisationFuture = getOrganisation();
+      });
+    });
   }
 }
