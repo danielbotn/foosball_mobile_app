@@ -1,3 +1,4 @@
+import 'package:dano_foosball/widgets/dashboard/dashboard_feature_intro_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:dano_foosball/api/Dato_CMS.dart';
 import 'package:dano_foosball/models/cms/hardcoded_strings.dart';
@@ -94,28 +95,34 @@ class _NewDashboardState extends State<NewDashboard> {
                                 ),
                               if (widget.userState.currentOrganisationId != 0)
                                 DashboardCharts(userState: widget.userState),
-                              Headline(
-                                headline: widget
-                                    .userState
-                                    .hardcodedStrings
-                                    .quickActions,
-                                userState: widget.userState,
-                                alignment: Alignment.center,
-                                hideIcon: true,
-                              ),
-                              QuicActions(
-                                userState: widget.userState,
-                                notifyParent: updateAllState,
-                              ),
+
                               if (widget.userState.currentOrganisationId != 0)
                                 Headline(
                                   headline: widget
                                       .userState
                                       .hardcodedStrings
-                                      .lastTenMatches,
+                                      .quickActions,
                                   userState: widget.userState,
+                                  alignment: Alignment.center,
                                   hideIcon: true,
                                 ),
+                              if (widget.userState.currentOrganisationId != 0)
+                                QuicActions(
+                                  userState: widget.userState,
+                                  notifyParent: updateAllState,
+                                ),
+
+                              if (widget.userState.currentOrganisationId == 0)
+                                // FeatureIntroSlider(darkMode: true),
+                                if (widget.userState.currentOrganisationId != 0)
+                                  Headline(
+                                    headline: widget
+                                        .userState
+                                        .hardcodedStrings
+                                        .lastTenMatches,
+                                    userState: widget.userState,
+                                    hideIcon: true,
+                                  ),
                               if (widget.userState.currentOrganisationId != 0)
                                 DashBoardLastFive(userState: widget.userState),
                             ],

@@ -38,13 +38,14 @@ class _DashBoardUserInfoState extends State<DashBoardUserInfo> {
       }
 
       widget.userState.setUserInfoGlobalObject(
-          userData.id,
-          userData.firstName,
-          userData.lastName,
-          userData.email,
-          orgData?.id ?? 0,
-          orgData?.name ?? "",
-          userData.photoUrl); // Pass null if orgData is null
+        userData.id,
+        userData.firstName,
+        userData.lastName,
+        userData.email,
+        orgData?.id ?? 0,
+        orgData?.name ?? "",
+        userData.photoUrl,
+      ); // Pass null if orgData is null
       return {'user': userData, 'org': orgData};
     } catch (error) {
       throw Exception('Failed to load user data: $error');
@@ -57,10 +58,7 @@ class _DashBoardUserInfoState extends State<DashBoardUserInfo> {
       future: _futureData,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(
-              child: Loading(
-            userState: widget.userState,
-          ));
+          return Center(child: Loading(userState: widget.userState));
         } else if (snapshot.hasError) {
           return ServerError(userState: widget.userState);
         } else {

@@ -52,8 +52,10 @@ class TokenHelper {
     } catch (e) {
       // If there is an error with NTP synchronization, fall back to using the device time
       DateTime currentDeviceTime = DateTime.now();
-      DateTime expirationDate =
-          DateTime.fromMillisecondsSinceEpoch(exp * 1000, isUtc: true);
+      DateTime expirationDate = DateTime.fromMillisecondsSinceEpoch(
+        exp * 1000,
+        isUtc: true,
+      );
       return expirationDate.isBefore(currentDeviceTime);
     }
   }
@@ -72,8 +74,13 @@ class TokenHelper {
       // Use default DateTime for web platform
       currentTime = DateTime.now();
     } else {
-      // Use NTP for other platforms
-      currentTime = await NTP.now();
+      try {
+        // Use NTP for other platforms
+        currentTime = await NTP.now();
+      } catch (e) {
+        // Fallback to local time if NTP fails
+        currentTime = DateTime.now();
+      }
     }
 
     DateTime expToDateTime = DateTime.fromMillisecondsSinceEpoch(exp * 1000);
@@ -89,5 +96,4 @@ class TokenHelper {
 
   // returns current token, if token is expired
   // it returns a new token
-
 }

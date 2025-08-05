@@ -102,6 +102,7 @@ flutter:
     - assets/images/dano-scaled.png
     - assets/images/player_one_transparent.png
     - assets/images/player_two_transparent.png
+    - assets/images/foosball_player.png
   fonts:
     - family: CustomIcons
       fonts:

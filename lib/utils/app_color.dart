@@ -33,10 +33,14 @@ class AppColors {
 
   static const third = Color.fromARGB(255, 66, 165, 245); // Hex: #42A5F5
 
-  static const losingRed =
-      Color.fromARGB(255, 229, 115, 115); // A balanced, muted red
+  static const losingRed = Color.fromARGB(
+    255,
+    229,
+    115,
+    115,
+  ); // A balanced, muted red
   static const fourth = Color.fromARGB(255, 238, 238, 255);
-// Hex: #9C27B0
+  // Hex: #9C27B0
 
   static const backgroundLight = Color.fromARGB(255, 255, 255, 255);
   static const backgroundDark = Color.fromARGB(255, 18, 18, 18);
@@ -52,6 +56,18 @@ class AppColors {
 
   static const losingRedDark = Color.fromARGB(255, 225, 173, 173);
 
-  static const wonDarkMode = Color.fromARGB(255, 78, 134, 82);   // Slightly warmer green
-  static const lostDarkMode = Color.fromARGB(255, 175, 68, 65);  // Warmer red-brown
+  static const wonDarkMode = Color.fromARGB(
+    255,
+    78,
+    134,
+    82,
+  ); // Slightly warmer green
+  static const lostDarkMode = Color.fromARGB(
+    255,
+    175,
+    68,
+    65,
+  ); // Warmer red-brown
+
+  static const danoLogoColorRed = Color.fromARGB(255, 199, 59, 67);
 }

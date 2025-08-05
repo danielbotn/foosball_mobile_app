@@ -1,142 +1,54 @@
+import 'package:dano_foosball/state/user_state.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class FeatureIntroSlider extends StatefulWidget {
-  final bool darkMode;
-  const FeatureIntroSlider({super.key, required this.darkMode});
-
-  @override
-  State<FeatureIntroSlider> createState() => _FeatureIntroSliderState();
-}
-
-class _FeatureIntroSliderState extends State<FeatureIntroSlider> {
-  final PageController _pageController = PageController();
-  int _currentPage = 0;
-
-  final List<_SlideData> slides = [
-    _SlideData(
-      title: "Track Matches",
-      description:
-          "Log your foosball games and keep score with precision. See history and results.",
-      icon: FontAwesomeIcons.futbol,
-    ),
-    _SlideData(
-      title: "Create Leagues",
-      description:
-          "Build leagues with friends, rank up on the leaderboard, and compete for glory.",
-      icon: FontAwesomeIcons.trophy,
-    ),
-    _SlideData(
-      title: "Team & Solo Play",
-      description:
-          "Supports both team and individual matches. Perfect for quick games or serious tournaments.",
-      icon: FontAwesomeIcons.users,
-    ),
-    _SlideData(
-      title: "Smart Stats",
-      description:
-          "See detailed stats like win rates, ELO ratings, and match streaks.",
-      icon: FontAwesomeIcons.chartLine,
-    ),
-  ];
-
-  void _nextSlide() {
-    if (_currentPage < slides.length - 1) {
-      _pageController.nextPage(
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-    }
-  }
+class FeatureIntroSlider extends StatelessWidget {
+  final UserState userState;
+  const FeatureIntroSlider({super.key, required this.userState});
 
   @override
   Widget build(BuildContext context) {
-    final bgColor = widget.darkMode ? Colors.black : Colors.white;
-    final textColor = widget.darkMode ? Colors.white : Colors.black87;
+    final bgColor = userState.darkmode ? Colors.black : Colors.white;
+    final headlineColor = userState.darkmode ? Colors.white : Colors.black87;
+    final subtextColor = userState.darkmode ? Colors.white70 : Colors.black54;
 
     return Container(
       color: bgColor,
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          // Image at the top
           SizedBox(
-            height: 240,
-            child: PageView.builder(
-              controller: _pageController,
-              itemCount: slides.length,
-              onPageChanged: (index) {
-                setState(() {
-                  _currentPage = index;
-                });
-              },
-              itemBuilder: (context, index) {
-                final slide = slides[index];
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    FaIcon(
-                      slide.icon,
-                      size: 60,
-                      color: widget.darkMode ? Colors.amber : Colors.blueGrey,
-                    ),
-                    const SizedBox(height: 12),
-                    Text(
-                      slide.title,
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        color: textColor,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      child: Text(
-                        slide.description,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 16, color: textColor),
-                      ),
-                    ),
-                  ],
-                );
-              },
+            height: 260,
+            child: Image.asset(
+              'assets/images/foosball_player.png',
+              fit: BoxFit.contain,
             ),
           ),
-          const SizedBox(height: 12),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(
-              slides.length,
-              (index) => AnimatedContainer(
-                duration: const Duration(milliseconds: 200),
-                margin: const EdgeInsets.symmetric(horizontal: 4),
-                height: 8,
-                width: _currentPage == index ? 24 : 8,
-                decoration: BoxDecoration(
-                  color: _currentPage == index
-                      ? Colors.amber
-                      : Colors.grey.withOpacity(0.5),
-                  borderRadius: BorderRadius.circular(4),
-                ),
-              ),
+
+          const SizedBox(height: 24),
+
+          // Big headline
+          Text(
+            userState.hardcodedStrings.welcomeTextHeadline,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 26,
+              fontWeight: FontWeight.bold,
+              color: headlineColor,
             ),
+          ),
+
+          const SizedBox(height: 12),
+
+          // Subheadline
+          Text(
+            userState.hardcodedStrings.welcomeTextBody,
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 16, color: subtextColor),
           ),
         ],
       ),
     );
   }
-}
-
-class _SlideData {
-  final String title;
-  final String description;
-  final IconData icon;
-
-  _SlideData({
-    required this.title,
-    required this.description,
-    required this.icon,
-  });
 }
