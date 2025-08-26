@@ -8,7 +8,7 @@ import 'package:flutter_login/flutter_login.dart';
 import 'package:dano_foosball/widgets/dashboard/New_Dashboard.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:jwt_decode/jwt_decode.dart';
-
+import 'dart:io' show Platform;
 import '../models/auth/register_response.dart';
 import '../utils/preferences_service.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -162,11 +162,13 @@ class _LoginState extends State<Login> {
     try {
       final GoogleSignIn signIn = GoogleSignIn.instance;
 
-      // Initialize first
-      await signIn.initialize(
-        clientId:
-            '516082321577-9n66a5i8o0udejlcsgod9qfue0gml2e4.apps.googleusercontent.com',
-      );
+     // Pick correct client ID based on platform
+    final String clientId = Platform.isIOS
+        ? '516082321577-dhuecsdffu1s0kc5057nqmpmq0b2ed1r.apps.googleusercontent.com' // iOS client ID
+        : '516082321577-9n66a5i8o0udejlcsgod9qfue0gml2e4.apps.googleusercontent.com'; // Android client ID
+
+    // Initialize first
+    await signIn.initialize(clientId: clientId);
 
       // Check if authentication is supported on this platform
       if (signIn.supportsAuthenticate()) {
