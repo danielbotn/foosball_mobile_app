@@ -241,6 +241,7 @@ class _LoginState extends State<Login> {
           callback: () async {
             return await _google();
           },
+          button: Buttons.google
         ),
       ],
       onRecoverPassword: _recoverPassword,
